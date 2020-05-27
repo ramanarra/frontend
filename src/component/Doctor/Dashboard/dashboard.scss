@@ -8,8 +8,9 @@
     }
 
     .my-doctors-sec{
-        // max-height: 10px;
-        // overflow: hidden;
+        max-height: calc(100vh - 248px);
+        overflow: hidden;
+        overflow: auto;
 
     }
 }
