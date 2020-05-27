@@ -1,0 +1,27 @@
+.select-role-page {
+  .select-role-view {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    height: 100vh;
+    width: 100vw;
+
+    .select-role-logo {
+    }
+    .select-role-control {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      .select-role-head {
+          text-transform: uppercase;
+          font-size: 22px;
+      }
+
+      .select-role-option {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+}
