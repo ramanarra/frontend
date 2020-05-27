@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Sidebar from "../Sidebar";
 import Tab from "./Tab";
+import MyDoctor from "./MyDoctors";
 
 class Dashboard extends Component {
   state = {
@@ -21,6 +22,9 @@ class Dashboard extends Component {
         <div className="tabbable-panel">
           <div className="tabbable-line">
             <Tab tab={tab} switchTab={ value => this.handleChange('tab', value)} />
+            <div class="tab-content">
+                {tab === 0 && <MyDoctor/>}
+            </div>
           </div>
         </div>
       </section>
