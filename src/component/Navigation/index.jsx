@@ -1,10 +1,11 @@
 import React from "react";
+import './navigation.scss'
 
 const Navigation = (props) => {
   return (
     <navbar className="app-navbar">
       <div className="logo-img">
-        <img src={require('../../assets/img/logo.png')} width="170" className="app-logo" />
+        <img src={require('../../assets/img/logo.png')} className="app-logo" />
       </div>
       <div className="left-wrapper">
         <div className="vd-wrap">

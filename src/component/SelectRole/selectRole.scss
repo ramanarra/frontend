@@ -36,7 +36,7 @@
             width: 150px;
             border-radius: 50%;
             margin: 10px;
-            // border: 2px solid #0bb5ff;
+            // border: 2px solid var(--primary);
             border: 2px solid #d8d8d8;
             display: flex;
             justify-content: center;
@@ -58,15 +58,15 @@
         .selected-option {
           transition: 0.5s;
           .option-btn {
-            border-color: #0bb5ff;
+            border-color: var(--primary);
             .btn-img {
               svg {
-                color: #0bb5ff;
+                color: var(--primary);
               }
             }
           }
           .option-title {
-            color: #0bb5ff;
+            color: var(--primary);
           }
         }
       }

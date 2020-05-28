@@ -26,18 +26,18 @@ const Tab = (props) => {
             placeholder="Search Doctors.."
             className="search-ip"
           />
-          <div className="search-ic">
-            <i className="icon-search"></i>
+          <div className="search-ic doc-nav-icon-wrap">
+            <i className="icon-search doc-nav-icon"></i>
           </div>
         </div>
-        <div className="view-wrap">
-          <i className="icon-view"></i>
+        <div className="view-wrap doc-nav-icon-wrap">
+          <i className="icon-view doc-nav-icon"></i>
         </div>
-        <div className="filter-wrap">
-          <i className="icon-filter"></i>
+        <div className="filter-wrap doc-nav-icon-wrap">
+          <i className="icon-filter doc-nav-icon"></i>
         </div>
-        <div className="menu-wrap">
-          <i className="icon-dot-menu"></i>
+        <div className="menu-wrap doc-nav-icon-wrap">
+          <i className="icon-dot-menu doc-nav-icon"></i>
         </div>
       </div>
     </div>
