@@ -6,6 +6,15 @@
     width: 100vw;
 
     .select-role-logo {
+      background: url('../../assets/img/bg.png') no-repeat;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .logo{
+        width: 300px;
+      }
     }
     .select-role-control {
       display: flex;
@@ -17,6 +26,7 @@
         font-size: 22px;
         letter-spacing: 2px;
         margin-bottom: 40px;
+        font-weight: 700;
       }
 
       .select-role-option {
@@ -25,6 +35,7 @@
         align-items: center;
 
         .option-btn-container {
+          position: relative;
           display: flex;
           flex-direction: column;
           justify-content: center;
@@ -43,10 +54,21 @@
             align-items: center;
 
             .btn-img {
-              height: 50px;
+              font-size: 50px;
+              color: var(--inactive);
+            }
+          }
+
+          .active-tick {
+            position: absolute;
+            right: 20%;
+            top: 10px;
+            img{
+              height: 20px;
               width: auto;
             }
           }
+
           .option-title {
             font-size: 22px;
             text-transform: uppercase;
@@ -60,9 +82,7 @@
           .option-btn {
             border-color: var(--primary);
             .btn-img {
-              svg {
-                color: var(--primary);
-              }
+              color: var(--primary);
             }
           }
           .option-title {

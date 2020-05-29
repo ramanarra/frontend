@@ -5,14 +5,20 @@ const Tab = (props) => {
     <div className="tab-header">
       <div className="left-wrapper">
         <ul className="nav nav-tabs ">
-          <li className={props.tab === 0? "active" : "inactive"}>
-            <a onClick={props.switchTab.bind(this, 0)}>
+          <li
+            className={props.tab === 0 ? "active" : "inactive"}
+            onClick={props.switchTab.bind(this, 0)}
+          >
+            <a>
               <i className="icon-doctor tab-ic"></i>
               My Doctors{" "}
             </a>
           </li>
-          <li className={props.tab === 1? "active" : "inactive"}>
-            <a onClick={props.switchTab.bind(this, 1)}>
+          <li
+            className={props.tab === 1 ? "active" : "inactive"}
+            onClick={props.switchTab.bind(this, 1)}
+          >
+            <a>
               <i className="icon-calendar tab-ic"></i>
               Scheduled Events{" "}
             </a>

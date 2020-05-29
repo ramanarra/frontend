@@ -3,7 +3,7 @@ import './navigation.scss'
 
 const Navigation = (props) => {
   return (
-    <navbar className="app-navbar">
+    <nav className="app-navbar">
       <div className="logo-img">
         <img src={require('../../assets/img/logo.png')} className="app-logo" />
       </div>
@@ -22,7 +22,7 @@ const Navigation = (props) => {
           </div>
         </div>
       </div>
-    </navbar>
+    </nav>
   );
 };
 

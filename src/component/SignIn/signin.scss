@@ -1,0 +1,87 @@
+.signin-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .logo {
+    padding: 30px;
+    .logo-img {
+      height: 90px;
+    }
+  }
+
+  .signin-box-wrap {
+    padding: 30px 50px 20px;
+    width: 500px;
+    .signin-box {
+      .signin-head {
+        font-size: 20px;
+        letter-spacing: 1.5px;
+        margin-bottom: 30px;
+        text-align: center;
+        margin-bottom: 50px;
+        position: relative;
+
+        &::after {
+          content: " ";
+          display: block;
+          position: absolute;
+          height: 3px;
+          width: 10%;
+          left: 0;
+          right: 0;
+          top: 28px;
+          margin-left: auto;
+          margin-right: auto;
+          bottom: 2px;
+          background: var(--primary);
+        }
+      }
+
+      .fields {
+        .field-wrap {
+          margin-bottom: 50px;
+        }
+      }
+
+      .password-field-wrap {
+        .forgot-password {
+          float: right;
+          cursor: pointer;
+          font-size: 12px;
+          text-transform: uppercase;
+          color: var(--inactive);
+          transition: 0.5s;
+          padding: 2px;
+
+          &:hover {
+            transition: 0.5s;
+            color: var(--primary);
+          }
+        }
+      }
+
+      .submit-btn-wrap {
+        padding-top: 50px;
+        .submit-btn {
+          background: var(--primary);
+          border-color: var(--primary);
+          border-radius: 0;
+          width: 100%;
+          text-transform: uppercase;
+          font-size: 12px;
+        }
+        .sign-up-wrap {
+          text-align: center;
+          font-size: 12px;
+          padding: 7px;
+          margin-bottom: 0;
+          .sign-up {
+            color: var(--primary);
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}

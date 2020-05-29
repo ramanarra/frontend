@@ -77,8 +77,8 @@ class MyDoctor extends Component {
   render() {
     const { data } = this.state;
     return (
-      <div class="tab-pane active my-doctors-sec" id="tab_default_1">
-        <div class="user-cards-wrap">
+      <div className="tab-pane active my-doctors-sec" id="tab_default_1">
+        <div className="user-cards-wrap">
           {data.map((i) => (
             <div key={i.id} className="user-card">
               <div className="user-row">

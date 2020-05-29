@@ -4,6 +4,10 @@
       .left-wrapper {
         .nav-tabs {
           cursor: pointer;
+          .tab-ic{
+              font-size: 16px;
+              margin-right: 7px;
+          }
         }
       }
 
@@ -20,7 +24,7 @@
   }
 
   .my-doctors-sec {
-    max-height: calc(100vh - 248px);
+    max-height: calc(100vh - 173px);
     overflow: hidden;
     overflow: auto;
 
@@ -43,41 +47,6 @@
 .dashboard-wrapper {
   width: 100%;
   padding: 15px 20px;
-}
-
-// ---------------- Side bar ---------------------
-
-.app-sidebar {
-  position: relative;
-  width: 60px;
-  height: 100%;
-  background-color: var(--primary);
-  transition: all 0.3s ease;
-  z-index: 9;
-  white-space: nowrap;
-}
-
-.app-sidebar .navigation-main {
-  list-style-type: none;
-  margin: 0px;
-  text-align: center;
-  padding: 20px;
-}
-.app-sidebar .nav-item {
-  font-size: 25px;
-  padding-bottom: 15px;
-}
-.app-sidebar .nav-item:last-child {
-  padding-bottom: 0px;
-}
-.app-sidebar .nav-item .menu-ic {
-  color: var(--primary-light);
-}
-.app-sidebar .nav-item.active .menu-ic {
-  color: #fff;
-}
-.app-sidebar .menu-title {
-  display: none;
 }
 
 // ------------- Tab bar ----------------------------
