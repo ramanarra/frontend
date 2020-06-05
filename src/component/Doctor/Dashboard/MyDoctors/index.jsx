@@ -1,4 +1,8 @@
 import React, { Component } from "react";
+import { Button } from "antd";
+import { paths } from "../../../../config";
+import { withRouter } from "react-router-dom";
+import './myDoctor.scss'
 
 class MyDoctor extends Component {
   state = {
@@ -8,7 +12,7 @@ class MyDoctor extends Component {
         name: "Rohit Sharma",
         job: "Physiotherapy",
         fees: "5000",
-        appointment: ["4:30 pm", "6:30 pm", "7:30 pm"],
+        appointment: ["4:30pm", "6:30pm", "7:30pm"],
         availability: 12,
         checked: false,
       },
@@ -17,7 +21,7 @@ class MyDoctor extends Component {
         name: "Rohit Sharma",
         job: "Physiotherapy",
         fees: "5000",
-        appointment: ["4:30 pm", "6:30 pm", "7:30 pm"],
+        appointment: ["4:30pm", "6:30pm", "7:30pm"],
         availability: 12,
         checked: false,
       },
@@ -26,7 +30,7 @@ class MyDoctor extends Component {
         name: "Rohit Sharma",
         job: "Physiotherapy",
         fees: "5000",
-        appointment: ["4:30 pm", "6:30 pm", "7:30 pm"],
+        appointment: ["4:30pm", "6:30pm", "7:30pm"],
         availability: 12,
         checked: false,
       },
@@ -35,7 +39,7 @@ class MyDoctor extends Component {
         name: "Rohit Sharma",
         job: "Physiotherapy",
         fees: "5000",
-        appointment: ["4:30 pm", "6:30 pm", "7:30 pm"],
+        appointment: ["4:30pm", "6:30pm", "7:30pm"],
         availability: 12,
         checked: false,
       },
@@ -44,7 +48,7 @@ class MyDoctor extends Component {
         name: "Rohit Sharma",
         job: "Physiotherapy",
         fees: "5000",
-        appointment: ["4:30 pm", "6:30 pm", "7:30 pm"],
+        appointment: ["4:30pm", "6:30pm", "7:30pm"],
         availability: 12,
         checked: false,
       },
@@ -53,7 +57,7 @@ class MyDoctor extends Component {
         name: "Rohit Sharma",
         job: "Physiotherapy",
         fees: "5000",
-        appointment: ["4:30 pm", "6:30 pm", "7:30 pm"],
+        appointment: ["4:30pm", "6:30pm", "7:30pm"],
         availability: 12,
         checked: false,
       },
@@ -83,8 +87,9 @@ class MyDoctor extends Component {
             <div key={i.id} className="user-card">
               <div className="user-row">
                 <img
-                  src={require("../../../assets/img/user-img.jpg")}
+                  src={require("../../../../assets/img/user-img.jpg")}
                   className="usr-img"
+                  alt={i.name}
                 />
                 <div className="user-detail">
                   <h1 className="user-name">{i.name}</h1>
@@ -122,7 +127,14 @@ class MyDoctor extends Component {
                   />
                   <label for={"select-card" + i.id}></label>
                 </div>
-                <button className="settings-btn">Settings</button>
+                <Button
+                  className="settings-btn"
+                  onClick={() =>
+                    this.props.history.push(paths.hospital.doctor.default)
+                  }
+                >
+                  Settings
+                </Button>
               </div>
             </div>
           ))}
@@ -132,4 +144,4 @@ class MyDoctor extends Component {
   }
 }
 
-export default MyDoctor;
+export default withRouter(MyDoctor);

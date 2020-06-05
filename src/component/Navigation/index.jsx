@@ -5,7 +5,7 @@ const Navigation = (props) => {
   return (
     <nav className="app-navbar">
       <div className="logo-img">
-        <img src={require('../../assets/img/logo.png')} className="app-logo" />
+        <img src={require('../../assets/img/logo.png')} className="app-logo" alt="logo"/>
       </div>
       <div className="left-wrapper">
         <div className="vd-wrap">
@@ -18,7 +18,7 @@ const Navigation = (props) => {
         <div className="logedin-info">
           <div className="signin-title">Amrit Medicare Pvt. Ltd.</div>
           <div className="signin-img">
-            <img src={require('../../assets/img/med.png')} className="img-sigin" />
+            <img src={require('../../assets/img/med.png')} className="img-sigin" alt="hospital logo"/>
           </div>
         </div>
       </div>

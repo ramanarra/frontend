@@ -1,0 +1,92 @@
+.settings-wrap {
+  padding: 20px 30px;
+  width: 90%;
+  .settings-head {
+    font-size: 16px;
+    padding: 30px 0;
+  }
+  .settings-area {
+    display: flex;
+
+    .profile {
+      padding: 30px 10px;
+      min-width: 15%;
+      img {
+        max-height: 120px;
+      }
+    }
+
+    .fields {
+      min-width: 55%;
+      // padding: 0 40px;
+      .set-inputs {
+        display: grid;
+        grid-template-columns: 47% 47%;
+        grid-column-gap: 6%;
+        grid-row-gap: 30px;
+        padding: 15px;
+
+        .set-field {
+          font-family: var(--fontRegular);
+          .ant-input{
+            // background: var(--field-bg);
+            // border: none;
+            font-size: 12px;
+          }
+          .ant-input[disabled]{
+            color: var(--font);
+            border-color: transparent;
+            background: var(--field-bg-disable);
+
+            &:hover{
+              cursor: default;
+            }
+          }
+          .ant-input-group-addon {
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            .ctrl-btn {
+              color: var(--primary);
+              font-size: 16px;
+            }
+          }
+        }
+      }
+      .set-discount {
+        margin: 0;
+        padding: 10px 15px;
+        font-weight: bold;
+        font-size: 12px;
+        display: inline-flex;
+        align-items: center;
+
+        .value{
+          padding-left: 10px;
+          .discount-field{
+            .ant-input{
+              border: none;
+              padding: 4px 0;
+              max-width: 40px;
+            }
+            .ant-input-group-addon{
+              cursor: pointer;
+              border: none;
+              background: transparent;
+              color: var(--primary);
+              font-size: 16px;
+            }
+            .ant-input[disabled]{
+              color: var(--font);
+              background: transparent;
+
+              &:hover{
+                cursor: default;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,19 +1,19 @@
-.txt-field-wrap{
-    border-left: none;
-    .text-label{
-        background: transparent;
-        border-right: none;
-        color: var(--inactive);
-        border-radius: 0;
-    }
-    .text-field{
-        border-radius: 0;
-        border-left: none;
+// .txt-field-wrap{
+//     border-left: none;
+//     .text-label{
+//         background: transparent;
+//         border-right: none;
+//         color: var(--inactive);
+//         border-radius: 0;
+//     }
+//     .text-field{
+//         border-radius: 0;
+//         border-left: none;
 
-        &:focus{
-            outline: none;
-            box-shadow: none;
-            border-color: var(--inactive);
-        }
-    }
-}
+//         &:focus{
+//             outline: none;
+//             box-shadow: none;
+//             border-color: var(--inactive);
+//         }
+//     }
+// }

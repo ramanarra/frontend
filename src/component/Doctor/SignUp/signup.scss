@@ -1,0 +1,62 @@
+.signup-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .logo {
+      padding: 30px;
+    .logo-img {
+      height: 90px;
+    }
+  }
+
+  .signup-box-wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 350px;
+    .signup-head {
+      font-size: 18px;
+      letter-spacing: 1.5px;
+      padding-bottom: 20px;
+    }
+    .fields {
+      width: 100%;
+      .ant-form-item-control{
+        //   padding-bottom: 10px;
+      }
+
+      .phone-field {
+        .ant-input-prefix {
+          transform: rotatey(180deg);
+        }
+      }
+
+      .contact-date {
+        width: 100%;
+        #contact_data {
+          background: url("../../../assets/img/icons/calender.svg") no-repeat
+            scroll 1px 4px;
+          background-size: 14px;
+          padding-left: 22px;
+        }
+      }
+
+      .signup-btn {
+        width: 100%;
+        text-transform: uppercase;
+      }
+      .signin-btn{
+          text-align: center;
+          padding: 5px;
+          font-size: 12px;
+          
+          span{
+              padding-left: 5px;
+              color: var(--primary);
+              cursor: pointer;
+          }
+      }
+    }
+  }
+}

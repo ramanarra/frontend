@@ -1,79 +1,98 @@
 import React from "react";
-import { FormControl, InputGroup } from "react-bootstrap";
-import './textfield.scss'
+import { Input, Form } from "antd";
+import "./textfield.scss";
 
 type Props = {
-    value: String,
-    onChange: String,
-    placeholder: String,
-    label: String,
-    labelPost: String,
-    labelId: String,
-    labelPostId: String,
-    labelClass: String,
-    labelPostClass: String,
-    className: String,
-    size: 'sm' | 'lg',
-    type: "text" | "number" | "password",
-    error: Boolean
-}
+  className: String,
+  name: String,
+  value: String,
+  onChange: String,
+  placeholder: String,
+  label: String,
+  addonBefore: String,
+  addonAfter: String,
+  prefix: String,
+  postfix: String,
+  size: "small" | "large",
+  type: "text" | "number" | "password" | "password-wicon",
+  hasFeedback: Boolean,
+  rules: Array,
+  maxLength: Number,
+  inputProps: Object,
+  error: Boolean
+};
 
 const TextField = ({
+  className,
+  name,
   value,
   onChange,
   placeholder,
   label,
-  labelPost,
-  labelId,
-  labelPostId,
-  labelClass,
-  labelPostClass,
-  className,
+  addonBefore,
+  addonAfter,
+  prefix,
+  postfix,
   size,
-  error,
   type = "text",
+  rules,
+  hasFeedback,
+  error,
+  maxLength,
+  inputProps,
 }: Props) => {
-  const randId = `txt-label-pre-${Math.floor(Math.random() * 10)}`;
-  const randIdPost = `txt-label-post-${Math.floor(Math.random() * 10)}`;
-  const isError = error? ' is-invalid' : ''
-  const inputProps = {
-    placeholder,
-    "aria-label": placeholder,
-    value,
-    onChange,
-    type,
-  };
+
+  const isError = error? "error" : undefined
+  const handleChange = (e) => {
+    if(!!maxLength){
+      if(e.target.value?.length <= parseInt(maxLength)){
+        onChange(e)
+      }
+    } else {
+      onChange(e)
+    }
+  }
+
   return (
-    <InputGroup
-      size={size}
-      className={"txt-field-wrap" + (!!className ? ` ${className}` : "")}
+    <Form.Item
+      label={label}
+      name={name}
+      rules={rules}
+      hasFeedback={hasFeedback}
+      validateStatus={isError}
     >
-      {!!label && (
-        <InputGroup.Prepend>
-          <InputGroup.Text
-            id={labelId ? labelId : randId}
-            className={
-              "text-label text-label-pre" + (!!labelClass ? ` ${labelClass}` : "")
-            }
-          >
-            {label}
-          </InputGroup.Text>
-        </InputGroup.Prepend>
+      {type !== "password-wicon" ? (
+        <Input
+          name={name}
+          className={"txt-field" + (className ? ` ${className}` : "")}
+          size={size}
+          placeholder={placeholder}
+          value={value}
+          onChange={handleChange}
+          prefix={prefix}
+          postfix={postfix}
+          addonBefore={addonBefore}
+          addonAfter={addonAfter}
+          type={type}
+          maxLength={maxLength}
+          {...inputProps}
+        />
+      ) : (
+        <Input.Password
+          name={name}
+          className={className}
+          size={size}
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+          prefix={prefix}
+          postfix={postfix}
+          addonBefore={addonBefore}
+          addonAfter={addonAfter}
+          {...inputProps}
+        />
       )}
-      <FormControl className="text-field" {...inputProps} />
-      {!!labelPost && (
-        <InputGroup.Append>
-          <InputGroup.Text
-            id={labelPostId ? labelPostId : randIdPost}
-            className={
-              "text-label text-label-post" + (!!labelPostClass ? ` ${labelPostClass}` : "")
-            }
-          >
-            {labelPost}
-          </InputGroup.Text>
-        </InputGroup.Append>
-      )}
-    </InputGroup>
+    </Form.Item>
   );
 };
 

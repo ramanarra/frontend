@@ -4,7 +4,7 @@
   align-items: center;
 
   .logo {
-    padding: 30px;
+    padding: 25px;
     .logo-img {
       height: 90px;
     }
@@ -15,12 +15,15 @@
     width: 500px;
     .signin-box {
       .signin-head {
-        font-size: 20px;
-        letter-spacing: 1.5px;
+        font-size: 18px;
+        letter-spacing: 1.7px;
         margin-bottom: 30px;
         text-align: center;
         margin-bottom: 50px;
         position: relative;
+        font-family: var(--fontBold);
+        font-weight: 700;
+        color: var(--text);
 
         &::after {
           content: " ";
@@ -40,11 +43,12 @@
 
       .fields {
         .field-wrap {
-          margin-bottom: 50px;
+          padding-bottom: 20px;
         }
       }
 
       .password-field-wrap {
+        position: relative;
         .forgot-password {
           float: right;
           cursor: pointer;
@@ -53,6 +57,9 @@
           color: var(--inactive);
           transition: 0.5s;
           padding: 2px;
+          position: absolute;
+          top: 34px;
+          right: 0;
 
           &:hover {
             transition: 0.5s;
@@ -62,7 +69,24 @@
       }
 
       .submit-btn-wrap {
+        position: relative;
         padding-top: 50px;
+        .error-status{
+          position: absolute;
+          top: 20px;
+          left: 0;
+          right: 0;
+          text-align: center;
+        }
+        .error-status.error {
+          color: red;
+        }
+        .error-status.warning {
+          color: yellow;
+        }
+        .error-status.success {
+          color: green;
+        }
         .submit-btn {
           background: var(--primary);
           border-color: var(--primary);

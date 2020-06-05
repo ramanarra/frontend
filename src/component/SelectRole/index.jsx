@@ -32,7 +32,7 @@ const SelectRole = (props) => {
               }
               onClick={handleSelect.bind(this, "doctor")}
             >
-              {option == "doctor" && (
+              {option === "doctor" && (
                 <div className="active-tick">
                   <ActiveTick />
                 </div>
@@ -50,7 +50,7 @@ const SelectRole = (props) => {
               }
               onClick={handleSelect.bind(this, "patient")}
             >
-              {option == "patient" && (
+              {option === "patient" && (
                 <div className="active-tick">
                   <ActiveTick />
                 </div>

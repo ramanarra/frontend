@@ -12,7 +12,7 @@ const Sidebar = (props) => {
 
   const handleSwitch = (id) => {
     setScreen(id)
-    changePath(paths.doctor[id])
+    changePath(paths.hospital[id])
   }
 
 

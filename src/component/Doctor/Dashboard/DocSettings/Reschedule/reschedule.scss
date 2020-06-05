@@ -1,0 +1,71 @@
+.doctor-preference {
+  padding: 20px 50px;
+
+  .pref-head {
+    font-size: 18px;
+    font-family: var(--fontRegular);
+  }
+
+  .options {
+    padding: 20px 0;
+
+    .option-sec {
+      .qus-wrap {
+        display: flex;
+        align-items: center;
+        padding: 20px 0;
+        .date-field-wrap {
+          padding-left: 20px;
+          .date-field {
+            width: auto;
+            .ant-input {
+              max-width: 40px;
+            }
+            .ant-input-group-addon {
+              border: none;
+              background: transparent;
+              padding: 0 20px 0 7px;
+            }
+          }
+          .ctrl-btn{
+              color: var(--primary);
+              font-size: 16px;
+          }
+        }
+        .toggle-btn {
+          margin-left: 20px;
+        }
+      }
+
+      .note-box{
+          background: #f7fdff;
+          padding: 10px 30px;
+          display: flex;
+          width: 500px;
+
+          .info-icon{
+              font-size: 18px;
+              color: #1b6883;
+              padding-right: 5px;
+              align-self: flex-start;
+          }
+
+          .context{
+              padding-top: 5px;
+              font-family: var(--fontRegular);
+              font-size: 12px;
+              color: #1b6883;
+              .note{
+                  font-weight: bold;
+              }
+          }
+      }
+    }
+
+    .sec-1 {
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+  }
+}
