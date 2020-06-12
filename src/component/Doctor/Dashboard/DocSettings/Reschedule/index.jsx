@@ -42,6 +42,15 @@ const Reschedule = (props) => {
     });
   };
 
+  const handleToggle = (name) => {
+    setData((prev) => {
+      return {
+        ...prev,
+        [name]: !prev[name],
+      };
+    });
+  };
+
   const handleDateChange = (e) => {
     const value = e.target.value;
     const field = e.target.name.split(" ");
@@ -110,42 +119,59 @@ const Reschedule = (props) => {
         <div className="option-sec sec-1">
           <div className="o1 qus-wrap">
             <span className="qus">Patient Cancellation Allowed</span>
-            <Switch className="cancel-toggle toggle-btn" />
+            <Switch
+              className="cancel-toggle toggle-btn"
+              checked={data.cancellation}
+              onClick={handleToggle.bind(this, "cancellation")}
+            />
           </div>
-          <div className="o2 qus-wrap">
-            <span className="qus">
-              How long before patient is allowed to cancel
-            </span>
-            {dateField("cancel_period")}
-          </div>
-          <div className="note-box">
-            <span className="info-icon">
-              <AiOutlineInfoCircle />
-            </span>
-            <span className="context">
-              <span className="note">Note:</span>
-              Cancellation within the allowed timings, the payments will be
-              refunded to the original payment method. If paid through VIRUJH
-            </span>
-          </div>
+          {data.cancellation && (
+            <>
+              <div className="o2 qus-wrap">
+                <span className="qus">
+                  How long before patient is allowed to cancel
+                </span>
+                {dateField("cancel_period")}
+              </div>
+              <div className="note-box">
+                <span className="info-icon">
+                  <AiOutlineInfoCircle />
+                </span>
+                <span className="context">
+                  <span className="note">Note:</span>
+                  Cancellation within the allowed timings, the payments will be
+                  refunded to the original payment method. If paid through
+                  VIRUJH
+                </span>
+              </div>
+            </>
+          )}
         </div>
         <div className="option-sec sec-2">
           <div className="o3 qus-wrap">
             <span className="qus">Patient Reschedule</span>
-            <Switch className="reschedule-toggle toggle-btn" />
+            <Switch
+              className="reschedule-toggle toggle-btn"
+              checked={data.reschedule}
+              onClick={handleToggle.bind(this, "reschedule")}
+            />
           </div>
-          <div className="o4 qus-wrap">
-            <span className="qus">
-              How long before patient is allowed to re-schedule
-            </span>
-            {dateField("reschedule_period")}
-          </div>
-          <div className="q5 qus-wrap">
-            <span className="ques">
-              Automatic Cancellation of appointments for unpaid bookings
-            </span>
-            {dateField("auto_cancel_period")}
-          </div>
+          {data.reschedule && (
+            <>
+              <div className="o4 qus-wrap">
+                <span className="qus">
+                  How long before patient is allowed to re-schedule
+                </span>
+                {dateField("reschedule_period")}
+              </div>
+              <div className="q5 qus-wrap">
+                <span className="ques">
+                  Automatic Cancellation of appointments for unpaid bookings
+                </span>
+                {dateField("auto_cancel_period")}
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>
