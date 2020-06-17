@@ -1,30 +1,30 @@
-import React from 'react'
-import { Route, Redirect } from 'react-router-dom'
-import { paths } from '../../config'
+import React from "react";
+import { Route, Redirect } from "react-router-dom";
+import { paths } from "../../config";
 
 const AuthRouter = ({ component: Component, ...rest }) => {
-  const isTokenGenerated = Boolean(localStorage.getItem('token'))
+  const isTokenGenerated = localStorage.getItem("accessToken");
   return (
     <Route
       {...rest}
       render={(props) => {
         if (isTokenGenerated) {
-          return <Component {...props} />
+          return <Component {...props} />;
         } else {
           return (
             <Redirect
               to={{
                 pathname: paths.role,
                 state: {
-                    from: props.location
-                }
+                  from: props.location,
+                },
               }}
             />
-          )
+          );
         }
       }}
     />
-  )
-}
+  );
+};
 
-export default AuthRouter
+export default AuthRouter;

@@ -1,10 +1,13 @@
-import React, { useState } from "react";
-import { MdMailOutline, MdLockOutline } from "react-icons/md";
-import TextField from "../UIComponents/TextField";
-import { Form, Button, Card } from "antd";
-import "./signin.scss";
-import { paths } from "../../config";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { MdMailOutline, MdLockOutline } from "react-icons/md";
+import { Form, Button, Card } from "antd";
+
+import Api from "../../api";
+import TextField from "../UIComponents/TextField";
+import { paths } from "../../config";
+import logo from "../../assets/img/logo.png";
+import "./signin.scss";
 
 const SignIn = (props) => {
   const [username, setUsername] = useState(null);
@@ -15,7 +18,7 @@ const SignIn = (props) => {
     type: null,
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (error) {
       setError({
         status: false,
@@ -26,28 +29,30 @@ const SignIn = (props) => {
   }, [username, password]);
 
   const handleSubmit = () => {
-    if (!!username && !!password) {
-      if (username === "test@softsuave.com" && password === "softsuave") {
-        localStorage.setItem("token", "true")
+    const credentials = {
+      email: username,
+      password: password,
+    };
+
+    Api.post("auth/doctorLogin", credentials)
+      .then((res) => {
+        const { data } = res;
+        localStorage.setItem("accessToken", data.accessToken);
         props.history.push(paths.hospital.dashboard);
-      } else {
+      })
+      .catch(() => {
         setError({
           status: true,
           msg: "Invalid Password or Email",
           type: "error",
         });
-      }
-    }
+      });
   };
 
   return (
     <div className="signin-container">
       <div className="logo">
-        <img
-          src={require("../../assets/img/logo.png")}
-          alt="VIRUJH"
-          className="logo-img"
-        />
+        <img src={logo} alt="VIRUJH" className="logo-img" />
       </div>
       <Card className="signin-box-wrap">
         <div className="signin-box">
@@ -106,7 +111,10 @@ const SignIn = (props) => {
                 Login
               </Button>
               <p className="sign-up-wrap">
-                I am new? <Link to="/doctor/signup" className="sign-up">Signup</Link>
+                I am new?{" "}
+                <Link to="/doctor/signup" className="sign-up">
+                  Signup
+                </Link>
               </p>
             </div>
           </Form>
