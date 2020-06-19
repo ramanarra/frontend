@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Input, Switch } from "antd";
+import { Input, Switch, Row, Col } from "antd";
 import { MdEdit } from "react-icons/md";
 import { GoCheck } from "react-icons/go";
 import {
@@ -10,230 +10,296 @@ import {
 } from "react-icons/ai";
 import { BsBriefcase } from "react-icons/bs";
 import "./profile.scss";
+import useCustomFetch from "../../../../../hooks/useCustomFetch";
+import { useMemo } from "react";
+import { useState } from "react";
 
-class Profile extends Component {
-  state = {
-    data: {
-      fname: "Arul",
-      lname: "Prakash",
-      id: "#12345678",
-      specality: "Gastroenterology",
-      edu: "MBBS, Gastroenterology",
-      exp: "2+ years",
-      phone: 987654321,
-      email: "arul1998@gmail.com",
-      fee: 2000.0,
-      profile: require("../../../../../assets/img/user-img.jpg"),
-      sign: require("../../../../../assets/img/sign.jpg"),
-      pre_consult: false,
-      pre_consult_time: {
-        hrs: 0,
-        mins: 15,
-      },
-    },
-    edit_fee: false,
-    edit_consult: false,
+const data = {
+  fname: "Arul",
+  lname: "Prakash",
+  id: "#12345678",
+  specality: "Gastroenterology",
+  edu: "MBBS, Gastroenterology",
+  exp: "2+ years",
+  phone: 987654321,
+  email: "arul1998@gmail.com",
+  fee: 2000.0,
+  profile: require("../../../../../assets/img/user-img.jpg"),
+  sign: require("../../../../../assets/img/sign.jpg"),
+  pre_consult: false,
+  pre_consult_time: {
+    hrs: 0,
+    mins: 15,
+  },
+};
+let edit_fee = false;
+let edit_consult = false;
+
+
+const key = {doctorKey: "Doc_5"}
+const Profile = (props) => {
+  const docKey = useMemo(() => {
+    return { doctorKey: props.location.state.key }
+  }, [props.location])
+  const [responseData, loading, error] = useCustomFetch(
+    "POST",
+    "calendar/doctorSettingsPersonalView",
+    docKey
+  );
+  const [preConsult, setPreConsult] = useState(false);
+  const [editConsultationBaseFees, setEditConsultationBaseFees] = useState(
+    false
+  );
+  const [editConsult, setEditConsult] = useState(false);
+  const [consultationBaseFees, setConsultationBaseFees] = useState(data.fee);
+  const [hours, setHours] = useState(data.pre_consult_time.hrs);
+  const [minutes, setMinutes] = useState(data.pre_consult_time.mins);
+  if (!responseData) {
+    return null;
+  }
+  const handleOnBaseFeesEdit = () => {
+    setEditConsultationBaseFees(!editConsultationBaseFees);
+    var element = document.getElementById("consultationBaseFees");
+    element.classList.add("border-display");
   };
 
-  handleDateChange = (e) => {
-    const { name, value } = e.target;
-    this.setState((prev) => {
-      return {
-        pre_consult_time: {
-          ...prev.pre_consult_time,
-          [name]: value,
-        },
-      };
-    });
+  const handleOnEditConsult = () => {
+    setEditConsult(!editConsult);
   };
 
-  handleEdit = (name) => {
-    this.setState((prev) => {
-      return {
-        [name]: !prev[name],
-      };
-    });
+  const handleOnBaseFeesChange = (event) => {
+    setConsultationBaseFees(event.target.value);
+  };
+  const handleHourChange = (event) => {
+    setHours(event.target.value);
+  };
+  const handleMinuteChange = (event) => {
+    setMinutes(event.target.value);
   };
 
-  render() {
-    const { data, edit_fee, edit_consult, pre_consult } = this.state;
-    const editBtn = (name) => (
-      <span
-        className={"ctrl-btn " + (this.state[name] ? "done-btn" : "edit-btn")}
-        onClick={this.handleEdit.bind(this, name)}
-      >
-        {this.state[name] ? <GoCheck /> : <MdEdit />}
-      </span>
-    );
-    const DateField = () => (
-      <span className="date-field-wrap">
-        <Input
-          name="hrs"
-          className="date-field hrs-field"
-          value={data.pre_consult_time.hrs}
-          disabled={!edit_consult}
-          onChange={this.handleDateChange}
-          addonAfter="Hrs"
-        />
-        <Input
-          name="mins"
-          className="date-field mins-field"
-          value={data.pre_consult_time.mins}
-          disabled={!edit_consult}
-          onChange={this.handleDateChange}
-          addonAfter="Mins"
-        />
-        {editBtn("edit_consult")}
-      </span>
-    );
+  const { doctorDetails } = responseData;
+
+  const editBtn = (isEdit, handleOnEdit) => {
     return (
-      <div className="doc-profile">
-        <h1 className="doc-head">Doctor Details</h1>
-        <div className="prof-area">
-          <div className="prof-img">
-            <img src={data.profile} alt={data.fname} />
+      <span
+        className={"ctrl-btn " + (isEdit ? "done-btn" : "edit-btn")}
+        onClick={handleOnEdit}
+      >
+        {isEdit ? <GoCheck /> : <MdEdit />}
+      </span>
+    );
+  };
+
+  const viewPreConsult = () => {
+    setPreConsult(!preConsult);
+  };
+
+  const doctorName = doctorDetails.doctorName.split(" ");
+  const DateField = () => (
+    <span className="date-field-wrap">
+      <Input
+        name="hrs"
+        className="date-field hrs-field"
+        type="number"
+        maxLength="2"
+        value={hours}
+        disabled={!editConsult}
+        onChange={handleHourChange}
+        addonAfter="Hrs"
+      />
+      <Input
+        name="mins"
+        className="date-field mins-field"
+        type="number"
+        value={minutes}
+        maxLength="2"
+        disabled={!editConsult}
+        onChange={handleMinuteChange}
+        addonAfter={() => (
+          <div>
+            <span>Mins</span>
+            <span>{editBtn(editConsult, setEditConsult)}</span>{" "}
           </div>
-          <div className="prof-fields">
-            <div className="fields">
-              <Input
-                className="set-field fname-field"
-                value={data.fname}
-                // size="small"
-                suffix={
-                  <img
-                    src={require("../../../../../assets/img/icons/avatar.svg")}
-                    alt="icon"
+        )}
+        style={{ paddingRight: "9px" }}
+      />
+    </span>
+  );
+  return (
+    <div className="doc-profile">
+      <h1 className="doc-head">Doctor Details</h1>
+      <div className="prof-area">
+        <div className="prof-img align">
+          <img src={data.profile} alt={doctorDetails.doctorName} />
+        </div>
+        <div className="prof-fields">
+          <div className="fields">
+            <div>
+              <Row>
+                <Col span={12}>
+                  <p>
+                    <span className="font-styles"> First Name</span>
+                  </p>
+                  <Input
+                    style={{ width: "94%" }}
+                    className="set-field fname-field"
+                    value={doctorName[0]}
+                    disabled
                   />
-                }
-                disabled
-              />
-              <Input
-                className="set-field lname-field"
-                value={data.lname}
-                // size="small"
-                suffix={
-                  <img
-                    src={require("../../../../../assets/img/icons/avatar.svg")}
-                    alt="icon"
+                </Col>
+                <Col span={12}>
+                  <p>
+                    <span className="font-styles">Last Name</span>
+                  </p>
+
+                  <Input
+                    style={{ width: "94%" }}
+                    className="set-field lname-field"
+                    value={doctorName[1]}
+                    // size="small"
+                    disabled
                   />
-                }
-                disabled
-              />
-              <Input
-                className="set-field id-field"
-                value={data.id}
-                // size="small"
-                suffix={
-                  <img
-                    src={require("../../../../../assets/img/icons/id.svg")}
-                    alt="icon"
+                </Col>
+              </Row>
+              <Row>
+                <Col span={12}>
+                  <p>
+                    <span className="font-styles">Registation Number</span>
+                  </p>
+
+                  <Input
+                    style={{ width: "94%" }}
+                    className="set-field id-field"
+                    value={doctorDetails.doctor_id}
+                    // size="small"
+                    disabled
                   />
-                }
-                disabled
-              />
-              <Input
-                className="set-field spec-field"
-                value={data.specality}
-                // size="small"
-                suffix={
-                  <img
-                    src={require("../../../../../assets/img/icons/job.svg")}
-                    alt="icon"
+                </Col>
+                <Col span={12}>
+                  <p>
+                    <span className="font-styles">Specialization</span>
+                  </p>
+
+                  <Input
+                    style={{ width: "94%" }}
+                    className="set-field spec-field"
+                    value={doctorDetails.speciality}
+                    // size="small"
+                    disabled
                   />
-                }
-                disabled
-              />
-              <Input
-                className="set-field edu-field"
-                value={data.edu}
-                // size="small"
-                suffix={
-                  <img
-                    src={require("../../../../../assets/img/icons/certificate.svg")}
-                    alt="icon"
+                </Col>
+              </Row>
+              <Row>
+                <Col span={12}>
+                  <p>
+                    <span className="font-styles">Qualification</span>
+                  </p>
+
+                  <Input
+                    style={{ width: "94%" }}
+                    className="set-field edu-field"
+                    value={doctorDetails.qualification}
+                    // size="small"
+                    disabled
                   />
-                }
-                disabled
-              />
-              <Input
-                className="set-field exp-field"
-                value={data.exp}
-                // size="small"
-                suffix={
-                  <img
-                    src={require("../../../../../assets/img/icons/exp.svg")}
-                    alt="icon"
+                </Col>
+                <Col span={12}>
+                  <p>
+                    <span className="font-styles">Year Of Experience</span>
+                  </p>
+
+                  <Input
+                    style={{ width: "94%" }}
+                    className="set-field exp-field"
+                    value={doctorDetails.experience.concat(" +years")}
+                    // size="small"
+                    disabled
                   />
-                }
-                disabled
-              />
-              <Input
-                className="set-field phone-field"
-                value={data.phone}
-                // size="small"
-                suffix={
-                  <img
-                    src={require("../../../../../assets/img/icons/phone.svg")}
-                    alt="icon"
+                </Col>
+              </Row>
+              <Row>
+                <Col span={12}>
+                  <p>
+                    <span className="font-styles">Contact Number</span>
+                  </p>
+
+                  <Input
+                    style={{ width: "94%" }}
+                    className="set-field phone-field"
+                    value={doctorDetails.number}
+                    // size="small"
+
+                    disabled
                   />
-                }
-                disabled
-              />
-              <Input
-                className="set-field email-field"
-                value={data.email}
-                // size="small"
-                suffix={
-                  <img
-                    src={require("../../../../../assets/img/icons/mail.svg")}
-                    alt="icon"
+                </Col>
+                <Col span={12}>
+                  <p>
+                    <span className="font-styles">Email Id</span>
+                  </p>
+
+                  <Input
+                    style={{ width: "94%" }}
+                    className="set-field email-field"
+                    value={data.email}
+                    disabled
                   />
-                }
-                disabled
-              />
-              <Input
-                name="fees"
-                className="set-field fees-field"
-                prefix="INR"
-                suffix={
-                  <img
-                    src={require("../../../../../assets/img/icons/rupee.svg")}
-                    alt="icon"
+                </Col>
+              </Row>
+              <Row>
+                <Col span={12}>
+                  <p>
+                    <span className="font-styles">Consultation Base Fees</span>
+                  </p>
+
+                  <Input
+                    style={{ width: "94%" }}
+                    addonAfter={editBtn(
+                      editConsultationBaseFees,
+                      handleOnBaseFeesEdit
+                    )}
+                    name="fees"
+                    id = "consultationBaseFees"
+                    className="set-field fees-field"
+                    prefix="INR"
+                    type="number"
+                    value={consultationBaseFees}
+                    disabled={!editConsultationBaseFees}
+                    placeholder="Fees"
+                    onChange={handleOnBaseFeesChange}
                   />
-                }
-                value={data.fee}
-                // size="small"
-                disabled={!edit_fee}
-                // addonAfter={editBtn('edit_fee')}
-                placeholder="Fees"
-                onChange={this.handleChange}
-              />
-              <div className="edit-btn-wrap">{editBtn("edit_fee")}</div>
+                </Col>
+              </Row>
             </div>
-            <div className="sign-box">
-              {!!data.sign && <img src={data.sign} alt="signature" />}
-            </div>
-            <div className="pre-consult">
-              Pre-consultancy
-              <Switch
-                className="consult-toggle"
-                checked={pre_consult}
-                onClick={this.handleEdit.bind(this, "pre_consult")}
-              />
-            </div>
-            {pre_consult && (
-              <div className="consult-time-wrap">
-                <div className="consult-time">
-                  Patient Pre-Consultancy Time:
-                  {DateField()}
-                </div>
+          </div>
+          <div className="sign-box">
+            {!!data.sign && <img src={data.sign} alt="signature" />}
+          </div>
+          <div className="pre-consult">
+            Pre-consultancy
+            <Switch
+              className="consult-toggle"
+              checked={preConsult}
+              onClick={viewPreConsult}
+            />
+          </div>
+          {preConsult && (
+            <div className="consult-time-wrap">
+              <div className="consult-time">
+                Patient Pre-Consultancy Time:
+                {DateField()}
               </div>
-            )}
-          </div>
+              <br />
+              <span className="font-color">*</span>
+              <span className="font-size">
+                patient has to make him self avaliable to even before the slot
+                time based on time provider
+              </span>
+            </div>
+          )}
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default Profile;
