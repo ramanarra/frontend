@@ -13,6 +13,7 @@ import "./profile.scss";
 import useCustomFetch from "../../../../../hooks/useCustomFetch";
 import { useMemo } from "react";
 import { useState } from "react";
+import { useEffect } from "react";
 
 const data = {
   fname: "Arul",
@@ -35,28 +36,38 @@ const data = {
 let edit_fee = false;
 let edit_consult = false;
 
-
-const key = {doctorKey: "Doc_5"}
+const key = { doctorKey: "Doc_5" };
 const Profile = (props) => {
+  const [preConsult, setPreConsult] = useState(null);
+  const [editConsultationBaseFees, setEditConsultationBaseFees] = useState(
+    false
+  );
+  const [editConsult, setEditConsult] = useState(false);
+  const [consultationBaseFees, setConsultationBaseFees] = useState(null);
+  const [hours, setHours] = useState(null);
+  const [minutes, setMinutes] = useState(null);
+
   const docKey = useMemo(() => {
-    return { doctorKey: props.location.state.key }
-  }, [props.location])
+    return { doctorKey: props.location.state.key };
+  }, [props.location]);
+
   const [responseData, loading, error] = useCustomFetch(
     "POST",
     "calendar/doctorSettingsPersonalView",
     docKey
   );
-  const [preConsult, setPreConsult] = useState(false);
-  const [editConsultationBaseFees, setEditConsultationBaseFees] = useState(
-    false
-  );
-  const [editConsult, setEditConsult] = useState(false);
-  const [consultationBaseFees, setConsultationBaseFees] = useState(data.fee);
-  const [hours, setHours] = useState(data.pre_consult_time.hrs);
-  const [minutes, setMinutes] = useState(data.pre_consult_time.mins);
-  if (!responseData) {
-    return null;
+  const { doctorDetails, configDetails } = responseData;
+  useEffect(() => {
+    if (configDetails && configDetails.consultationCost) {
+    setConsultationBaseFees(configDetails.consultationCost)
+    setHours(configDetails.preconsultationHours)
+    setMinutes(configDetails.preconsultationMins)
+    setPreConsult(configDetails.isPreconsultationAllowed)
   }
+  }, [configDetails])
+
+  console.log(responseData)
+
   const handleOnBaseFeesEdit = () => {
     setEditConsultationBaseFees(!editConsultationBaseFees);
     var element = document.getElementById("consultationBaseFees");
@@ -77,7 +88,7 @@ const Profile = (props) => {
     setMinutes(event.target.value);
   };
 
-  const { doctorDetails } = responseData;
+  
 
   const editBtn = (isEdit, handleOnEdit) => {
     return (
@@ -94,7 +105,7 @@ const Profile = (props) => {
     setPreConsult(!preConsult);
   };
 
-  const doctorName = doctorDetails.doctorName.split(" ");
+  const doctorName = doctorDetails ? doctorDetails.doctorName.split(" "): '';
   const DateField = () => (
     <span className="date-field-wrap">
       <Input
@@ -115,14 +126,9 @@ const Profile = (props) => {
         maxLength="2"
         disabled={!editConsult}
         onChange={handleMinuteChange}
-        addonAfter={() => (
-          <div>
-            <span>Mins</span>
-            <span>{editBtn(editConsult, setEditConsult)}</span>{" "}
-          </div>
-        )}
-        style={{ paddingRight: "9px" }}
+        addonAfter="Mins"
       />
+      <span>{editBtn(editConsult, setEditConsult)}</span>{" "}
     </span>
   );
   return (
@@ -130,7 +136,7 @@ const Profile = (props) => {
       <h1 className="doc-head">Doctor Details</h1>
       <div className="prof-area">
         <div className="prof-img align">
-          <img src={data.profile} alt={doctorDetails.doctorName} />
+          <img src={data.profile} alt={doctorDetails && doctorDetails.doctorName} />
         </div>
         <div className="prof-fields">
           <div className="fields">
@@ -143,7 +149,7 @@ const Profile = (props) => {
                   <Input
                     style={{ width: "94%" }}
                     className="set-field fname-field"
-                    value={doctorName[0]}
+                    value={doctorName && doctorName[0]}
                     disabled
                   />
                 </Col>
@@ -155,7 +161,7 @@ const Profile = (props) => {
                   <Input
                     style={{ width: "94%" }}
                     className="set-field lname-field"
-                    value={doctorName[1]}
+                    value={doctorName && doctorName[1]}
                     // size="small"
                     disabled
                   />
@@ -170,7 +176,7 @@ const Profile = (props) => {
                   <Input
                     style={{ width: "94%" }}
                     className="set-field id-field"
-                    value={doctorDetails.doctor_id}
+                    value={doctorDetails && doctorDetails.doctor_id}
                     // size="small"
                     disabled
                   />
@@ -183,7 +189,7 @@ const Profile = (props) => {
                   <Input
                     style={{ width: "94%" }}
                     className="set-field spec-field"
-                    value={doctorDetails.speciality}
+                    value={doctorDetails && doctorDetails.speciality}
                     // size="small"
                     disabled
                   />
@@ -198,7 +204,7 @@ const Profile = (props) => {
                   <Input
                     style={{ width: "94%" }}
                     className="set-field edu-field"
-                    value={doctorDetails.qualification}
+                    value={doctorDetails && doctorDetails.qualification}
                     // size="small"
                     disabled
                   />
@@ -211,7 +217,7 @@ const Profile = (props) => {
                   <Input
                     style={{ width: "94%" }}
                     className="set-field exp-field"
-                    value={doctorDetails.experience.concat(" +years")}
+                    value={doctorDetails && doctorDetails.experience.concat(" +years")}
                     // size="small"
                     disabled
                   />
@@ -226,7 +232,7 @@ const Profile = (props) => {
                   <Input
                     style={{ width: "94%" }}
                     className="set-field phone-field"
-                    value={doctorDetails.number}
+                    value={doctorDetails && doctorDetails.number}
                     // size="small"
 
                     disabled
@@ -258,7 +264,7 @@ const Profile = (props) => {
                       handleOnBaseFeesEdit
                     )}
                     name="fees"
-                    id = "consultationBaseFees"
+                    id="consultationBaseFees"
                     className="set-field fees-field"
                     prefix="INR"
                     type="number"

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import API from "../api";
 
 function useCustomFecth(apiMethod, url, params) {
-    const [data, setData] = useState(null);
+    const [data, setData] = useState({});
     const [loading, setloading] = useState(true);
     const [error, setError] = useState(null);
 
