@@ -4,27 +4,66 @@ import { MdEdit } from "react-icons/md";
 import { GoCheck } from "react-icons/go";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import "./reschedule.scss";
-
+import useCustomFetch from "../../../../../hooks/useCustomFetch";
+import { useEffect } from "react";
+const key = { doctorKey: "Doc_5" };
 const Reschedule = (props) => {
+  const [patientCancellationAllowed, setpatientCancellationAllowed] = useState(
+    null
+  );
+  const [responseData, loading, error] = useCustomFetch(
+    "POST",
+    "calendar/doctorSettingsPersonalView",
+    key
+  );
+  console.log("responsedata", responseData);
+  const { configDetails } = responseData;
   const [data, setData] = useState({
     cancellation: true,
     cancel_period: {
-      days: 0,
-      hrs: 2,
-      mins: 0,
+      days: null,
+      hrs: null,
+      mins: null,
     },
     reschedule: true,
     reschedule_period: {
-      days: 0,
-      hrs: 2,
-      mins: 0,
+      days: null,
+      hrs: null,
+      mins: null,
     },
     auto_cancel_period: {
-      days: 0,
-      hrs: 2,
-      mins: 0,
+      days: null,
+      hrs: null,
+      mins: null,
     },
   });
+  useEffect(() => {
+
+    if (configDetails && configDetails.cancellationDays) {
+      console.log(configDetails)
+      setpatientCancellationAllowed();
+      setData({
+        ...data,
+        cancellation: configDetails.isPatientCancellationAllowed,
+        cancel_period: {
+          days: configDetails.cancellationDays,
+          hrs: configDetails.cancellationHours,
+          mins: configDetails.cancellationMins,
+        },
+        reschedule: configDetails.isPatientRescheduleAllowed,
+        reschedule_period: {
+          days: configDetails.rescheduleDays,
+          hrs: configDetails.rescheduleHours,
+          mins: configDetails.rescheduleMins,
+        },
+        auto_cancel_period: {
+          days: configDetails.autoCancelDays,
+          hrs: configDetails.autoCancelHours,
+          mins: configDetails.autoCancelMins,
+        },
+      });
+    }
+  }, [configDetails]);
 
   const [edit, setEdit] = useState({
     cancel_period: false,
@@ -81,6 +120,8 @@ const Reschedule = (props) => {
     <span className="date-field-wrap">
       <Input
         name={`${name} days`}
+        type="number"
+        maxLength="2"
         className="date-field days-field"
         value={data[name].days}
         disabled={!edit[name]}
@@ -89,6 +130,8 @@ const Reschedule = (props) => {
       />
       <Input
         name={`${name} hrs`}
+        type="number"
+        maxLength="2"
         className="date-field hrs-field"
         value={data[name].hrs}
         disabled={!edit[name]}
@@ -97,6 +140,8 @@ const Reschedule = (props) => {
       />
       <Input
         name={`${name} mins`}
+        type="number"
+        maxLength="2"
         className="date-field mins-field"
         value={data[name].mins}
         disabled={!edit[name]}
