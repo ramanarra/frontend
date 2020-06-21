@@ -20,13 +20,15 @@ class Dashboard extends Component {
     return (
       <section className="content-wrapper doc-dashboard">
         <div className="dashboard-wrapper">
+          {/* #F9F9F9 */}
           <div className="tabbable-panel">
             <div className="tabbable-line">
               <Tab
                 tab={tab}
                 switchTab={(value) => this.handleChange("tab", value)}
+                
               />
-              <div className="tab-content">
+              <div className="tab-content" style={{paddingRight: '55px'}}>
                 {tab === 0 && <MyDoctor />}
                 {tab === 1 && <Schedule />}
               </div>

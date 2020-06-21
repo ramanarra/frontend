@@ -1,13 +1,13 @@
 // -------------- User card ---------------------
 .user-card {
-    width: 100%;
-    width: 100%;
+    width: 335px;
     display: inline-flex;
     background-color: #fff;
     box-shadow: 0 0 15px #00000014;
-    padding: 20px;
+    padding: 14px;
     flex-flow: column;
-    border-bottom: 3px solid var(--primary);
+    border-bottom: 2px solid var(--primary);
+    padding-top: 9px !important;
 }
 
 .user-cards-wrap {
@@ -24,8 +24,8 @@
 }
 
 .user-card .user-row .usr-img {
-    width: 75px;
-    height: 75px;
+    width: 60px;
+    height: 60px;
     border-radius: 70px;
 }
 
@@ -48,7 +48,7 @@
 .user-meet-detail {
     display: flex;
     //   justify-content: space-between;
-    padding-bottom: 15px;
+    padding-bottom: 2px;
 }
 
 .user-meet-detail>div {
@@ -94,12 +94,11 @@
     font-size: 14px;
 }
 
-.anticon svg {
-    margin-left: 300px;
-    color: #CCCCCC;
-    padding: 1.1px;
-}
-
+// .anticon svg {
+//     margin-left: 321px ! important;
+//     color: #CCCCCC;
+//     padding: 1.1px;
+// }
 .styled-checkbox {
     position: absolute;
     opacity: 0;

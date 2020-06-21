@@ -25,6 +25,7 @@ const MyDoctor = (props) => {
     "calendar/doctor_List"
   );
 
+
   const passingKey = (doctorKey) => {
     props.sampleAction(doctorKey);
     props.history.push(paths.hospital.doctor.default);
@@ -46,29 +47,29 @@ const MyDoctor = (props) => {
   );
 
   return (
-    <div className="tab-pane active my-doctors-sec" id="tab_default_1">
+    <div className="tab-pane active my-doctors-sec" id="tab_default_1" style={{overflow: 'hidden'}}>
       <div className="user-cards-wrap">
-        {mapDoctorList.map((i) => (
-          <div key={i.id} className="user-card">
+        {doctorList.map((value) => (
+          <div key={value.id} className="user-card">
             <div>
-              <SettingOutlined />
+              <SettingOutlined style={{marginLeft: '300px', color: '#CCCCCC', padding: '1.1px', marginTop: '-13px'}}/>
             </div>
             <div className="user-row">
               <img src={userImage} className="usr-img" alt="userImage" />
               <div className="user-detail">
-                <h1 className="user-name">{i.doctorName}</h1>
-                <p className="name-desg">{i.speciality}</p>
+                <h1 className="user-name">{value.doctorName}</h1>
+                <p className="name-desg">{value.speciality}</p>
               </div>
             </div>
             <div className="user-meet-detail">
               <div className="user-fees">
-                <p className="title-light">Fees</p>
-                <p className="card-text">5000</p>
+        <p className="title-light">Fees</p>
+        <p className="card-text">{value.fees}</p>
               </div>
               <div className="user-appt">
                 <p className="title-light">Today's Appointment</p>
                 <div className="card-tag">
-                  {["4:30pm", "6:30pm", "7:30pm"].map((a, index) => (
+                  {value.todaysAppointment.map((a, index) => (
                     <span key={index} className="time-tag">
                       {a}
                     </span>
@@ -77,25 +78,25 @@ const MyDoctor = (props) => {
               </div>
               <div className="user-slot">
                 <p className="title-light">Today Available slots</p>
-                <p className="card-text">12</p>
+                <p className="card-text">{value.todaysAvailabilitySeats}</p>
               </div>
             </div>
             <div className="user-btn-row">
               <div className="select-check">
                 <input
                   className="styled-checkbox"
-                  id={"select-card" + i.id}
+                  id={"select-card" + value.id}
                   type="checkbox"
                   value="false"
                 />
-                <label for={"select-card" + i.id}></label>
+                <label for={"select-card" + value.id}></label>
               </div>
               <Button
                 className="settings-btn"
                 onClick={() =>
                   props.history.push({
                     pathname: paths.hospital.doctor.default,
-                    state: { key: i.doctorKey },
+                    state: { key: value.doctorKey },
                   })
                 }
                 // onClick = {()=>passingKey(i.doctorKey)}

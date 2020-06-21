@@ -2,7 +2,7 @@ import React from "react";
 
 const Tab = (props) => {
   return (
-    <div className="tab-header">
+    <div className="tab-header" style={{marginRight: '60px', paddingTop: '10px'}}>
       <div className="left-wrapper">
         <ul className="nav nav-tabs ">
           <li
@@ -20,7 +20,7 @@ const Tab = (props) => {
           >
             <a>
               <i className="icon-calendar tab-ic"></i>
-              Scheduled Events{" "}
+              Appointments{" "}
             </a>
           </li>
         </ul>
@@ -33,7 +33,7 @@ const Tab = (props) => {
             className="search-ip"
           />
           <div className="search-ic doc-nav-icon-wrap">
-            <i className="icon-search doc-nav-icon"></i>
+            <i className="icon-search doc-nav-icon" style={{fontSize: '10px'}}></i>
           </div>
         </div>
         <div className="view-wrap doc-nav-icon-wrap">
