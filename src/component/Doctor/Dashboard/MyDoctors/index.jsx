@@ -18,6 +18,7 @@ import * as actions from "../../../../actions/sampleActions";
 import { OmitProps } from "antd/lib/transfer/renderListBody";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
+import { FaRupeeSign } from "react-icons/fa";
 
 const MyDoctor = (props) => {
   const [responseData, loading, error] = useCustomFetch(
@@ -64,7 +65,7 @@ const MyDoctor = (props) => {
             <div className="user-meet-detail">
               <div className="user-fees">
         <p className="title-light">Fees</p>
-        <p className="card-text">{value.fees}</p>
+        <p className="card-text" style={{display: 'flex'}}><FaRupeeSign style={{fontSize: '12px', marginTop: '6px'}} />{value.fees}</p>
               </div>
               <div className="user-appt">
                 <p className="title-light">Today's Appointment</p>
