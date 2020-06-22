@@ -5,13 +5,14 @@ import { GoCheck } from "react-icons/go";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import "./reschedule.scss";
 import useCustomFetch from "../../../../../hooks/useCustomFetch";
+import PatientCancellation from "./patientCancellation"
 import { useEffect } from "react";
 const key = { doctorKey: "Doc_5" };
 const Reschedule = (props) => {
   const [patientCancellationAllowed, setpatientCancellationAllowed] = useState(
     null
   );
-  let [responseData, loading, error] = useCustomFetch(
+  let [responseData, reFetch, loading, error] = useCustomFetch(
     "POST",
     "calendar/doctorSettingsPersonalView",
     key
@@ -166,37 +167,11 @@ const Reschedule = (props) => {
     <div className="doctor-preference">
       <h4 className="pref-head">Cancellation/Reschedule Options</h4>
       <div className="options">
-        <div className="option-sec sec-1">
-          <div className="o1 qus-wrap">
-            <span className="qus">Patient Cancellation Allowed</span>
-            <Switch
-              className="cancel-toggle toggle-btn"
-              checked={data.cancellation}
-              onClick={handleToggle.bind(this, "cancellation")}
-            />
-          </div>
-          {data.cancellation && (
-            <>
-              <div className="o2 qus-wrap">
-                <span className="qus">
-                  How long before patient is allowed to cancel
-                </span>
-                {dateField("cancel_period")}
-              </div>
-              <div className="note-box">
-                <span className="info-icon">
-                  <AiOutlineInfoCircle />
-                </span>
-                <span className="context">
-                  <span className="note">Note:</span>
-                  Cancellation within the allowed timings, the payments will be
-                  refunded to the original payment method. If paid through
-                  VIRUJH
-                </span>
-              </div>
-            </>
-          )}
-        </div>
+        <PatientCancellation 
+        patientCancelationData={configDetails} 
+        doctorKey={key}
+        reFetch={reFetch}
+        />
         <div className="option-sec sec-2">
           <div className="o3 qus-wrap">
             <span className="qus">Patient Reschedule</span>
