@@ -1,123 +1,172 @@
 .doc-profile {
-  padding: 10px 20px;
-  width: 87%;
-
-  .doc-head {
-    font-size: 20px;
-    padding: 10px 20px;
-  }
-
-  .prof-area {
-    padding: 10px 20px;
-    display: flex;
-    max-height: calc(100vh - 193px);
-    overflow: auto;
-
-    .prof-img {
-      img {
-        border-radius: 50%;
-        border: 5px solid var(--primary);
-        height: 150px;
-        width: 150px;
-      }
+    padding: 10px 40px;
+    width: 87%;
+    .doc-head {
+        font-size: 18px;
+        padding: 10px 17px;
     }
-
-    .prof-fields {
-      display: flex;
-      flex-direction: column;
-      padding-left: 50px;
-      flex-basis: 770px;
-
-      .fields {
-        position: relative;
-        display: grid;
-        grid-template-columns: 47% 47%;
-        column-gap: 6%;
-        row-gap: 30px;
-
-        .set-field[disabled] {
-          border-color: transparent;
-        }
-
-        .set-field {
-          .ant-input-suffix {
+    .prof-area {
+        display: flex;
+        max-height: calc(100vh - 193px);
+        overflow: auto;
+        .prof-img {
+            padding: 28px 20px 0px 21px;
             img {
-              height: 15px;
+                border-radius: 50%;
+                border: 5px solid #9de1ff;
+                height: 150px;
+                width: 150px;
             }
-          }
-          .ant-input-group-addon {
-            border: none;
-            background: transparent;
-            color: var(--primary);
-            font-size: 16px;
-          }
-          .ant-input[disabled] {
-            color: var(--font);
-            background: var(--field-bg-disable);
+        }
+        .prof-fields {
+            display: flex;
+            flex-direction: column;
+            padding-left: 50px;
+            flex-basis: 712px;
+            .fields {
+                position: relative;
+                // display: grid;
+                grid-template-columns: 47% 47%;
+                column-gap: 6%;
+                row-gap: 30px;
+                .set-field {
+                    border-color: transparent;
+                }
+                .set-field {
+                    .ant-input-suffix {
+                        img {
+                            height: 15px;
+                        }
+                    }
+                    .ant-input-group-addon {
+                        border: none;
+                        background: transparent;
+                        color: var(--primary);
+                        font-size: 16px;
+                    }
+                    .ant-input[disabled] {
+                        color: var(--font);
+                        background: var(--field-bg-disable);
+                        &:hover {
+                            cursor: default;
+                        }
+                    }
 
-            &:hover {
-              cursor: default;
+                    .ant-input {
+                        background: var(--field-bg-disable);  
+                    }
+
+                    .ant-input-affix-wrapper {
+                        background: var(--field-bg-disable); 
+                    }
+                }
+                .fees-field {
+                    .ant-input-prefix {
+                        color: var(--font);
+                    }
+                }
             }
-          }
-        }
-
-        .fees-field {
-          .ant-input-prefix {
-              color: var(--font);
-          }
-        }
-      }
-
-      .edit-btn-wrap {
-        color: var(--primary);
-        font-size: 16px;
-        position: absolute;
-        bottom: 7px;
-        right: calc(50% - 10px);
-      }
-
-      .sign-box {
-        background: var(--field-bg-disable);
-        margin: 30px 0;
-        padding: 10px;
-        text-align: center;
-
-        img {
-          max-height: 80px;
-        }
-      }
-
-      .pre-consult {
-        .consult-toggle {
-          margin-left: 10px;
-        }
-      }
-
-      .consult-time-wrap {
-        padding-top: 30px;
-        .consult-time {
-          display: flex;
-          align-items: center;
-          .date-field-wrap {
-            padding-left: 20px;
-            .date-field {
-              width: auto;
-              .ant-input {
-                max-width: 40px;
-              }
-              .ant-input-group-addon {
-                border: none;
-                background: transparent;
-                padding: 0 20px 0 7px;
-              }
+            .edit-btn-wrap {
+                color: var(--primary);
+                font-size: 16px;
+                position: absolute;
+                bottom: 7px;
+                right: calc(50% - 10px);
             }
-            .ctrl-btn {
-              color: var(--primary);
-              font-size: 16px;
+            .sign-box {
+                background: var(--field-bg-disable);
+                margin: 30px 0;
+                padding: 10px;
+                text-align: center;
+                img {
+                    max-height: 80px;
+                }
             }
-          }
+            .pre-consult {
+                .consult-toggle {
+                    margin-left: 10px;
+                }
+            }
+            .consult-time-wrap {
+                padding-top: 30px;
+                .consult-time {
+                    display: flex;
+                    align-items: center;
+                    .date-field-wrap {
+                        padding-left: 10px;
+                        .date-field {
+                            width: auto;
+                            .ant-input {
+                                max-width: 33px;
+                                padding: 4px 8px;
+                                border-color: transparent;
+                                background: var(--field-bg-disable); 
+                                font-size: 13px;
+                                font-family: var(--fontRegular);
+                                color: var(--text) !important;
+                            }
+                            .ant-input-group-addon {
+                                border: none;
+                                background: transparent;
+                                padding: 0 20px 0 7px;
+                            }
+                        }
+                        .ctrl-btn {
+                            color: var(--primary);
+                            font-size: 16px;
+                        }
+                    }
+                }
+            }
         }
-      }
     }
-  }
+}
+
+.align {
+    padding-top: 16px;
+    padding-left: 28px;
+    padding-right: 30px;
+}
+
+.ant-row {
+    margin-bottom: 15px;
+}
+
+.value-align {
+    padding-left: 10px;
+}
+
+.font-size {
+    font-size: 11px;
+}
+
+.font-color {
+    color: #FF3272;
+}
+
+.left-align {
+    padding-left: 10px;
+}
+
+.margin-left {
+    margin-left: -169px;
+}
+
+.ant-input-group-addon {
+    padding-right: 9px;
+}
+
+.color-for-heading {
+    color: #555555;
+    font-size: 13px;
+}
+
+.font-styles {
+    margin-bottom: 14px;
+    font-size: 13px;
+    font-family: var(--fontRegular);
+}
+
+.border-display {
+    border: none !important;
 }
