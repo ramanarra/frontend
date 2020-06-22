@@ -48,13 +48,13 @@ const MyDoctor = (props) => {
   );
 
   return (
-    <div className="tab-pane active my-doctors-sec" id="tab_default_1" style={{overflow: 'hidden'}}>
+    <div className="tab-pane active my-doctors-sec" id="tab_default_1">
       <div className="user-cards-wrap">
         {doctorList.map((value) => (
           <div key={value.id} className="user-card">
-            <div>
-              <SettingOutlined style={{marginLeft: '300px', color: '#CCCCCC', padding: '1.1px', marginTop: '-13px'}}/>
-            </div>
+            
+             <SettingOutlined className="setting-Outlined" />
+            
             <div className="user-row">
               <img src={userImage} className="usr-img" alt="userImage" />
               <div className="user-detail">
@@ -65,7 +65,7 @@ const MyDoctor = (props) => {
             <div className="user-meet-detail">
               <div className="user-fees">
         <p className="title-light">Fees</p>
-        <p className="card-text" style={{display: 'flex'}}><FaRupeeSign style={{fontSize: '12px', marginTop: '6px'}} />{value.fees}</p>
+        <p className="card-text display"><FaRupeeSign className="fa-rupees-sign"/>{value.fees}</p>
               </div>
               <div className="user-appt">
                 <p className="title-light">Today's Appointment</p>
@@ -100,32 +100,16 @@ const MyDoctor = (props) => {
                     state: { key: value.doctorKey },
                   })
                 }
-                // onClick = {()=>passingKey(i.doctorKey)}
+                
               >
                 Settings
               </Button>
             </div>
           </div>
         ))}
-
-        {/* <Upload
-          name="avatar"
-          listType="picture-card"
-          className="avatar-uploader"
-          showUploadList={false}
-          action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-          // beforeUpload={beforeUpload}
-          // onChange={this.handleChange}
-        >
-          {uploadButton}
-        </Upload> */}
       </div>
     </div>
   );
 };
-
-// const mapDispatchToProps = (dispatch) => {
-//   bindActionCreators({...actions}, dispatch)
-// }
 
 export default withRouter(MyDoctor);

@@ -22,13 +22,13 @@ class Dashboard extends Component {
         <div className="dashboard-wrapper">
           {/* #F9F9F9 */}
           <div className="tabbable-panel">
-            <div className="tabbable-line">
+            <div className="tabbable-line reduce-rightside">
               <Tab
                 tab={tab}
                 switchTab={(value) => this.handleChange("tab", value)}
                 
               />
-              <div className="tab-content" style={{paddingRight: '55px'}}>
+              <div className="tab-content">
                 {tab === 0 && <MyDoctor />}
                 {tab === 1 && <Schedule />}
               </div>

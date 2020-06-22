@@ -2,7 +2,7 @@ import React from "react";
 
 const Tab = (props) => {
   return (
-    <div className="tab-header" style={{marginRight: '60px', paddingTop: '10px'}}>
+    <div className="tab-header" style={{paddingTop: '10px', marginRight: '10px'}}>
       <div className="left-wrapper">
         <ul className="nav nav-tabs ">
           <li
