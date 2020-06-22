@@ -1,36 +1,22 @@
-import React, { Component } from "react";
+import React from "react";
 import { withRouter } from "react-router-dom";
-import { Button, Upload } from "antd";
+import { FaRupeeSign } from "react-icons/fa";
+import { Button } from "antd";
 import {
   SettingOutlined,
-  LoadingOutlined,
-  PlusOutlined,
 } from "@ant-design/icons";
 
 import { paths } from "../../../../config";
 import userImage from "../../../../assets/img/user-img.jpg";
 import useCustomFetch from "../../../../hooks/useCustomFetch";
 import "./myDoctor.scss";
-import api from "../../../../api";
-import { useState } from "react";
-import { useEffect } from "react";
-import * as actions from "../../../../actions/sampleActions";
-import { OmitProps } from "antd/lib/transfer/renderListBody";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import { FaRupeeSign } from "react-icons/fa";
 
 const MyDoctor = (props) => {
-  const [responseData, loading, error] = useCustomFetch(
+  const [responseData] = useCustomFetch(
     "GET",
     "calendar/doctor_List"
   );
 
-
-  const passingKey = (doctorKey) => {
-    props.sampleAction(doctorKey);
-    props.history.push(paths.hospital.doctor.default);
-  };
   if (!responseData) {
     return null;
   }
@@ -38,19 +24,11 @@ const MyDoctor = (props) => {
   const { doctorList } = responseData;
 
   const mapDoctorList = [doctorList];
-  console.log(mapDoctorList);
-
-  const uploadButton = (
-    <div>
-      {false ? <LoadingOutlined /> : <PlusOutlined />}
-      <div className="ant-upload-text">Add New Doctor</div>
-    </div>
-  );
 
   return (
     <div className="tab-pane active my-doctors-sec" id="tab_default_1">
       <div className="user-cards-wrap">
-        {doctorList.map((value) => (
+        {mapDoctorList.map((value) => (
           <div key={value.id} className="user-card">
             
              <SettingOutlined className="setting-Outlined" />

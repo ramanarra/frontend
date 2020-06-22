@@ -11,12 +11,17 @@ const Reschedule = (props) => {
   const [patientCancellationAllowed, setpatientCancellationAllowed] = useState(
     null
   );
-  const [responseData, loading, error] = useCustomFetch(
+  let [responseData, loading, error] = useCustomFetch(
     "POST",
     "calendar/doctorSettingsPersonalView",
     key
   );
-  console.log("responsedata", responseData);
+  
+  if (!responseData) {
+    responseData = {}
+  }
+
+
   const { configDetails } = responseData;
   const [data, setData] = useState({
     cancellation: true,

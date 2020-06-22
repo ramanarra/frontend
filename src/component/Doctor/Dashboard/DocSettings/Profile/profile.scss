@@ -1,16 +1,16 @@
 .doc-profile {
-    padding: 10px 20px;
+    padding: 10px 40px;
     width: 87%;
     .doc-head {
         font-size: 18px;
-        padding: 10px 20px;
+        padding: 10px 17px;
     }
     .prof-area {
-        padding: 10px 20px;
         display: flex;
         max-height: calc(100vh - 193px);
         overflow: auto;
         .prof-img {
+            padding: 28px 20px 0px 21px;
             img {
                 border-radius: 50%;
                 border: 5px solid #9de1ff;
@@ -22,14 +22,14 @@
             display: flex;
             flex-direction: column;
             padding-left: 50px;
-            flex-basis: 770px;
+            flex-basis: 712px;
             .fields {
                 position: relative;
                 // display: grid;
                 grid-template-columns: 47% 47%;
                 column-gap: 6%;
                 row-gap: 30px;
-                .set-field[disabled] {
+                .set-field {
                     border-color: transparent;
                 }
                 .set-field {
@@ -50,6 +50,14 @@
                         &:hover {
                             cursor: default;
                         }
+                    }
+
+                    .ant-input {
+                        background: var(--field-bg-disable);  
+                    }
+
+                    .ant-input-affix-wrapper {
+                        background: var(--field-bg-disable); 
                     }
                 }
                 .fees-field {
@@ -85,11 +93,17 @@
                     display: flex;
                     align-items: center;
                     .date-field-wrap {
-                        padding-left: 20px;
+                        padding-left: 10px;
                         .date-field {
                             width: auto;
                             .ant-input {
-                                max-width: 40px;
+                                max-width: 33px;
+                                padding: 4px 8px;
+                                border-color: transparent;
+                                background: var(--field-bg-disable); 
+                                font-size: 13px;
+                                font-family: var(--fontRegular);
+                                color: var(--text) !important;
                             }
                             .ant-input-group-addon {
                                 border: none;
@@ -115,7 +129,7 @@
 }
 
 .ant-row {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .value-align {
@@ -148,13 +162,11 @@
 }
 
 .font-styles {
+    margin-bottom: 14px;
     font-size: 13px;
     font-family: var(--fontRegular);
 }
 
-// .ant-input-affix-wrapper {
-//     border: none;
-// }
 .border-display {
     border: none !important;
 }
