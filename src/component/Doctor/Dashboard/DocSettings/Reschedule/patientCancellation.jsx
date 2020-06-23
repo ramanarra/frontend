@@ -9,30 +9,13 @@ const PatientCancellation = (props) => {
   const [saveDoctorConfig] = useSaveDoctorConfig();
 
   const [data, setData] = useState({
-    cancellation: null,
+    cancellation: props.patientCancelationData.isPatientCancellationAllowed,
     cancel_period: {
-      days: null,
-      hrs: null,
-      mins: null,
+      days: props.patientCancelationData.cancellationDays,
+      hrs: props.patientCancelationData.cancellationHours,
+      mins: props.patientCancelationData.cancellationMins,
     },
   });
-
-  useEffect(() => {
-    if (
-      props.patientCancelationData &&
-      props.patientCancelationData.cancellationDays
-    ) {
-      setData({
-        ...data,
-        cancellation: props.patientCancelationData.isPatientCancellationAllowed,
-        cancel_period: {
-          days: props.patientCancelationData.cancellationDays,
-          hrs: props.patientCancelationData.cancellationHours,
-          mins: props.patientCancelationData.cancellationMins,
-        },
-      });
-    }
-  }, [props.patientCancelationData]);
 
   const addToolTipText = () => {
     if (
