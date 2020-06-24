@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./reschedule.scss";
 import useCustomFetch from "../../../../../hooks/useCustomFetch";
-import PatientCancellation from "./patientCancellation";
+import PatientCancellation from "./PatientCancellation";
 import PatientReschedule from "./PatientReschedule";
 const key = { doctorKey: "Doc_5" };
 const Reschedule = (props) => {

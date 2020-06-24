@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { Input, Switch } from "antd";
-import { AiOutlineInfoCircle } from "react-icons/ai";
-import { useEffect } from "react";
 import EditSave from "../../../../EditSave";
 import useSaveDoctorConfig from "../../../hooks/useSaveDoctorConfig";
 
@@ -12,18 +10,25 @@ const PatientReschedule = (props) => {
     setEditPatientAutomaticCancelation,
   ] = useState(false);
   const [saveDoctorConfig] = useSaveDoctorConfig();
-
-  const [data, setData] = useState({
+  const [isRescheduleAllowed, setIsRescheduleAllowed] = useState({
     reschedule: props.patientRescheduleData.isPatientRescheduleAllowed,
-    reschedule_period: {
-      days: props.patientRescheduleData.rescheduleDays,
-      hrs: props.patientRescheduleData.rescheduleHours,
-      mins: props.patientRescheduleData.rescheduleMins,
-    },
+  });
+  const [
+    patientAutoCancellationValues,
+    setPatientAutoCancellationValues,
+  ] = useState({
     auto_cancel_period: {
       days: props.patientRescheduleData.autoCancelDays,
       hrs: props.patientRescheduleData.autoCancelHours,
       mins: props.patientRescheduleData.autoCancelMins,
+    },
+  });
+
+  const [patientRescheduleValues, setPatientRescheduleValues] = useState({
+    reschedule_period: {
+      days: props.patientRescheduleData.rescheduleDays,
+      hrs: props.patientRescheduleData.rescheduleHours,
+      mins: props.patientRescheduleData.rescheduleMins,
     },
   });
 
@@ -37,22 +42,22 @@ const PatientReschedule = (props) => {
   const savePatientRescheduleData = () => {
     if (
       (props.patientRescheduleData.rescheduleDays ===
-        data.reschedule_period.days ||
-        data.reschedule_period.days === "") &&
+        patientRescheduleValues.reschedule_period.days ||
+        patientRescheduleValues.reschedule_period.days === "") &&
       (props.patientRescheduleData.rescheduleHours ===
-        data.reschedule_period.hrs ||
-        data.reschedule_period.hrs === "") &&
+        patientRescheduleValues.reschedule_period.hrs ||
+        patientRescheduleValues.reschedule_period.hrs === "") &&
       (props.patientRescheduleData.rescheduleMins ===
-        data.reschedule_period.mins ||
-        data.reschedule_period.mins === "")
+        patientRescheduleValues.reschedule_period.mins ||
+        patientRescheduleValues.reschedule_period.mins === "")
     ) {
       return;
     }
     const params = {
       doctorKey: props.doctorKey.doctorKey,
-      rescheduleDays: data.reschedule_period.days,
-      rescheduleHours: data.reschedule_period.hrs,
-      rescheduleMins: data.reschedule_period.mins,
+      rescheduleDays: patientRescheduleValues.reschedule_period.days,
+      rescheduleHours: patientRescheduleValues.reschedule_period.hrs,
+      rescheduleMins: patientRescheduleValues.reschedule_period.mins,
     };
     saveDoctorConfig(params);
     setEditPatientReschedule(false);
@@ -62,22 +67,22 @@ const PatientReschedule = (props) => {
   const saveAutoCancelData = () => {
     if (
       (props.patientRescheduleData.autoCancelDays ===
-        data.auto_cancel_period.days ||
-        data.auto_cancel_period.days === "") &&
+        patientAutoCancellationValues.auto_cancel_period.days ||
+        patientAutoCancellationValues.auto_cancel_period.days === "") &&
       (props.patientRescheduleData.autoCancelHours ===
-        data.auto_cancel_period.hrs ||
-        data.auto_cancel_period.hrs === "") &&
+        patientAutoCancellationValues.auto_cancel_period.hrs ||
+        patientAutoCancellationValues.auto_cancel_period.hrs === "") &&
       (props.patientRescheduleData.autoCancelMins ===
-        data.auto_cancel_period.mins ||
-        data.auto_cancel_period.mins === "")
+        patientAutoCancellationValues.auto_cancel_period.mins ||
+        patientAutoCancellationValues.auto_cancel_period.mins === "")
     ) {
       return;
     }
     const params = {
       doctorKey: props.doctorKey.doctorKey,
-      autoCancelDays: data.auto_cancel_period.days,
-      autoCancelHours: data.auto_cancel_period.hrs,
-      autoCancelMins: data.auto_cancel_period.mins,
+      autoCancelDays: patientAutoCancellationValues.auto_cancel_period.days,
+      autoCancelHours: patientAutoCancellationValues.auto_cancel_period.hrs,
+      autoCancelMins: patientAutoCancellationValues.auto_cancel_period.mins,
     };
     saveDoctorConfig(params);
     setEditPatientAutomaticCancelation(false);
@@ -87,14 +92,14 @@ const PatientReschedule = (props) => {
   const addToolTipReschedule = () => {
     if (
       (props.patientRescheduleData.rescheduleDays ===
-        data.reschedule_period.days ||
-        data.reschedule_period.days === "") &&
+        patientRescheduleValues.reschedule_period.days ||
+        patientRescheduleValues.reschedule_period.days === "") &&
       (props.patientRescheduleData.rescheduleHours ===
-        data.reschedule_period.hrs ||
-        data.reschedule_period.hrs === "") &&
+        patientRescheduleValues.reschedule_period.hrs ||
+        patientRescheduleValues.reschedule_period.hrs === "") &&
       (props.patientRescheduleData.rescheduleMins ===
-        data.reschedule_period.mins ||
-        data.reschedule_period.mins === "")
+        patientRescheduleValues.reschedule_period.mins ||
+        patientRescheduleValues.reschedule_period.mins === "")
     ) {
       return "you have not made any changes";
     }
@@ -105,14 +110,14 @@ const PatientReschedule = (props) => {
   const addToolTipAutoCancelation = () => {
     if (
       (props.patientRescheduleData.autoCancelDays ===
-        data.auto_cancel_period.days ||
-        data.auto_cancel_period.days === "") &&
+        patientAutoCancellationValues.auto_cancel_period.days ||
+        patientAutoCancellationValues.auto_cancel_period.days === "") &&
       (props.patientRescheduleData.autoCancelHours ===
-        data.auto_cancel_period.hrs ||
-        data.auto_cancel_period.hrs === "") &&
+        patientAutoCancellationValues.auto_cancel_period.hrs ||
+        patientAutoCancellationValues.auto_cancel_period.hrs === "") &&
       (props.patientRescheduleData.autoCancelMins ===
-        data.auto_cancel_period.mins ||
-        data.auto_cancel_period.mins === "")
+        patientAutoCancellationValues.auto_cancel_period.mins ||
+        patientAutoCancellationValues.auto_cancel_period.mins === "")
     ) {
       return "you have not made any changes";
     }
@@ -121,8 +126,8 @@ const PatientReschedule = (props) => {
   };
 
   const cancelPatientRescheduleData = () => {
-    setData({
-      ...data,
+    setPatientRescheduleValues({
+      ...patientRescheduleValues,
       reschedule_period: {
         days: props.patientRescheduleData.rescheduleDays,
         hrs: props.patientRescheduleData.rescheduleHours,
@@ -133,8 +138,8 @@ const PatientReschedule = (props) => {
   };
 
   const cancelPatientAutoCancelData = () => {
-    setData({
-      ...data,
+    setPatientAutoCancellationValues({
+      ...patientAutoCancellationValues,
       auto_cancel_period: {
         days: props.patientRescheduleData.autoCancelDays,
         hrs: props.patientRescheduleData.autoCancelHours,
@@ -144,13 +149,30 @@ const PatientReschedule = (props) => {
     setEditPatientAutomaticCancelation(false);
   };
 
-  const handleDateChange = (e) => {
+  const handleDateChangeForReschedule = (e) => {
     const value = e.target.value;
     const field = e.target.name.split(" ");
     const name = field[0];
     const period = field[1];
 
-    setData((prev) => {
+    setPatientRescheduleValues((prev) => {
+      return {
+        ...prev,
+        [name]: {
+          ...prev[name],
+          [period]: value,
+        },
+      };
+    });
+  };
+
+  const handleDateChangeForAutoCancellation = (e) => {
+    const value = e.target.value;
+    const field = e.target.name.split(" ");
+    const name = field[0];
+    const period = field[1];
+
+    setPatientAutoCancellationValues((prev) => {
       return {
         ...prev,
         [name]: {
@@ -168,9 +190,9 @@ const PatientReschedule = (props) => {
         type="number"
         maxLength="2"
         className="date-field days-field"
-        value={data.reschedule_period.days}
+        value={patientRescheduleValues.reschedule_period.days}
         disabled={!editPatientReschedule}
-        onChange={handleDateChange}
+        onChange={handleDateChangeForReschedule}
         addonAfter="Days"
       />
       <Input
@@ -178,9 +200,9 @@ const PatientReschedule = (props) => {
         type="number"
         maxLength="2"
         className="date-field hrs-field"
-        value={data.reschedule_period.hrs}
+        value={patientRescheduleValues.reschedule_period.hrs}
         disabled={!editPatientReschedule}
-        onChange={handleDateChange}
+        onChange={handleDateChangeForReschedule}
         addonAfter="Hrs"
       />
       <Input
@@ -188,9 +210,9 @@ const PatientReschedule = (props) => {
         type="number"
         maxLength="2"
         className="date-field mins-field"
-        value={data.reschedule_period.mins}
+        value={patientRescheduleValues.reschedule_period.mins}
         disabled={!editPatientReschedule}
-        onChange={handleDateChange}
+        onChange={handleDateChangeForReschedule}
         addonAfter="Mins"
       />
       <EditSave
@@ -210,9 +232,9 @@ const PatientReschedule = (props) => {
         type="number"
         maxLength="2"
         className="date-field days-field"
-        value={data.auto_cancel_period.days}
+        value={patientAutoCancellationValues.auto_cancel_period.days}
         disabled={!editPatientAutomaticCancelation}
-        onChange={handleDateChange}
+        onChange={handleDateChangeForAutoCancellation}
         addonAfter="Days"
       />
       <Input
@@ -220,9 +242,9 @@ const PatientReschedule = (props) => {
         type="number"
         maxLength="2"
         className="date-field hrs-field"
-        value={data.auto_cancel_period.hrs}
+        value={patientAutoCancellationValues.auto_cancel_period.hrs}
         disabled={!editPatientAutomaticCancelation}
-        onChange={handleDateChange}
+        onChange={handleDateChangeForAutoCancellation}
         addonAfter="Hrs"
       />
       <Input
@@ -230,9 +252,9 @@ const PatientReschedule = (props) => {
         type="number"
         maxLength="2"
         className="date-field mins-field"
-        value={data.auto_cancel_period.mins}
+        value={patientAutoCancellationValues.auto_cancel_period.mins}
         disabled={!editPatientAutomaticCancelation}
-        onChange={handleDateChange}
+        onChange={handleDateChangeForAutoCancellation}
         addonAfter="Mins"
       />
       <EditSave
@@ -246,7 +268,7 @@ const PatientReschedule = (props) => {
   );
 
   const handleToggle = (name) => {
-    setData((prev) => {
+    setIsRescheduleAllowed((prev) => {
       return {
         ...prev,
         [name]: !prev[name],
@@ -260,11 +282,11 @@ const PatientReschedule = (props) => {
         <span className="qus">Patient Reschedule</span>
         <Switch
           className="reschedule-toggle toggle-btn"
-          checked={data.reschedule}
+          checked={isRescheduleAllowed.reschedule}
           onClick={handleToggle.bind(this, "reschedule")}
         />
       </div>
-      {data.reschedule && (
+      {isRescheduleAllowed.reschedule && (
         <>
           <div className="o4 qus-wrap">
             <span className="qus">
