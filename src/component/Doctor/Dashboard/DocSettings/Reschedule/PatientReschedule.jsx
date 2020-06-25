@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { Input, Switch } from "antd";
+
 import EditSave from "../../../../EditSave";
 import useSaveDoctorConfig from "../../../hooks/useSaveDoctorConfig";
+import DataField from "./DataField";
 
 const PatientReschedule = (props) => {
   const [editPatientReschedule, setEditPatientReschedule] = useState(false);
@@ -183,90 +185,6 @@ const PatientReschedule = (props) => {
     });
   };
 
-  const dateField1 = (name) => (
-    <span className="date-field-wrap">
-      <Input
-        name={`${name} days`}
-        type="number"
-        maxLength="2"
-        className="date-field days-field"
-        value={patientRescheduleValues.reschedule_period.days}
-        disabled={!editPatientReschedule}
-        onChange={handleDateChangeForReschedule}
-        addonAfter="Days"
-      />
-      <Input
-        name={`${name} hrs`}
-        type="number"
-        maxLength="2"
-        className="date-field hrs-field"
-        value={patientRescheduleValues.reschedule_period.hrs}
-        disabled={!editPatientReschedule}
-        onChange={handleDateChangeForReschedule}
-        addonAfter="Hrs"
-      />
-      <Input
-        name={`${name} mins`}
-        type="number"
-        maxLength="2"
-        className="date-field mins-field"
-        value={patientRescheduleValues.reschedule_period.mins}
-        disabled={!editPatientReschedule}
-        onChange={handleDateChangeForReschedule}
-        addonAfter="Mins"
-      />
-      <EditSave
-        isEdit={editPatientReschedule}
-        handleOnEdit={editPatientRescheduleData}
-        handleOnSave={savePatientRescheduleData}
-        handleOnCancel={cancelPatientRescheduleData}
-        tooltipText={addToolTipReschedule()}
-      />
-    </span>
-  );
-
-  const dateField2 = (name) => (
-    <span className="date-field-wrap">
-      <Input
-        name={`${name} days`}
-        type="number"
-        maxLength="2"
-        className="date-field days-field"
-        value={patientAutoCancellationValues.auto_cancel_period.days}
-        disabled={!editPatientAutomaticCancelation}
-        onChange={handleDateChangeForAutoCancellation}
-        addonAfter="Days"
-      />
-      <Input
-        name={`${name} hrs`}
-        type="number"
-        maxLength="2"
-        className="date-field hrs-field"
-        value={patientAutoCancellationValues.auto_cancel_period.hrs}
-        disabled={!editPatientAutomaticCancelation}
-        onChange={handleDateChangeForAutoCancellation}
-        addonAfter="Hrs"
-      />
-      <Input
-        name={`${name} mins`}
-        type="number"
-        maxLength="2"
-        className="date-field mins-field"
-        value={patientAutoCancellationValues.auto_cancel_period.mins}
-        disabled={!editPatientAutomaticCancelation}
-        onChange={handleDateChangeForAutoCancellation}
-        addonAfter="Mins"
-      />
-      <EditSave
-        isEdit={editPatientAutomaticCancelation}
-        handleOnEdit={editAutoCancelData}
-        handleOnSave={saveAutoCancelData}
-        handleOnCancel={cancelPatientAutoCancelData}
-        tooltipText={addToolTipAutoCancelation()}
-      />
-    </span>
-  );
-
   const handleToggle = (name) => {
     setIsRescheduleAllowed((prev) => {
       return {
@@ -289,16 +207,39 @@ const PatientReschedule = (props) => {
       {isRescheduleAllowed.reschedule && (
         <>
           <div className="o4 qus-wrap">
-            <span className="qus">
+            <span className="qus reduce-top">
               How long before patient is allowed to re-schedule
             </span>
-            {dateField1("reschedule_period")}
+            <DataField
+              name="reschedule_period"
+              days={patientRescheduleValues.reschedule_period.days}
+              hours={patientRescheduleValues.reschedule_period.hrs}
+              minutes={patientRescheduleValues.reschedule_period.mins}
+              edit={editPatientReschedule}
+              handleDateChange={handleDateChangeForReschedule}
+              handleEdit={editPatientRescheduleData}
+              handleSave={savePatientRescheduleData}
+              handleCancel={cancelPatientRescheduleData}
+              toolTip={addToolTipReschedule()}
+            />
           </div>
-          <div className="q5 qus-wrap">
+          <div className="q5 qus-wrap reduce-top">
             <span className="ques">
               Automatic Cancellation of appointments for unpaid bookings
             </span>
-            {dateField2("auto_cancel_period")}
+
+            <DataField
+              name="auto_cancel_period"
+              days={patientAutoCancellationValues.auto_cancel_period.days}
+              hours={patientAutoCancellationValues.auto_cancel_period.hrs}
+              minutes={patientAutoCancellationValues.auto_cancel_period.mins}
+              edit={editPatientAutomaticCancelation}
+              handleDateChange={handleDateChangeForAutoCancellation}
+              handleEdit={editAutoCancelData}
+              handleSave={saveAutoCancelData}
+              handleCancel={cancelPatientAutoCancelData}
+              toolTip={addToolTipAutoCancelation()}
+            />
           </div>
         </>
       )}

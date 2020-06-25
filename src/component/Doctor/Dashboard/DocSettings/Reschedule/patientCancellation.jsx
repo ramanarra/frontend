@@ -1,15 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Input, Switch } from "antd";
 import { AiOutlineInfoCircle } from "react-icons/ai";
+
 import EditSave from "../../../../EditSave";
 import useSaveDoctorConfig from "../../../hooks/useSaveDoctorConfig";
+import DataField from "./DataField";
 
 const PatientCancellation = (props) => {
   const [editPatientCancellation, setEditPatientCancellation] = useState(false);
   const [saveDoctorConfig] = useSaveDoctorConfig();
 
-  const [data, setData] = useState({
+  const [isCancellation, setisCancellation] = useState({
     cancellation: props.patientCancelationData.isPatientCancellationAllowed,
+  });
+
+  const [patientCancellation, setpatientCancelation] = useState({
     cancel_period: {
       days: props.patientCancelationData.cancellationDays,
       hrs: props.patientCancelationData.cancellationHours,
@@ -20,14 +25,14 @@ const PatientCancellation = (props) => {
   const addToolTipText = () => {
     if (
       (props.patientCancelationData.cancellationDays ===
-        data.cancel_period.days ||
-        data.cancel_period.days === "") &&
+        patientCancellation.cancel_period.days ||
+        patientCancellation.cancel_period.days === "") &&
       (props.patientCancelationData.cancellationHours ===
-        data.cancel_period.hrs ||
-        data.cancel_period.hrs === "") &&
+        patientCancellation.cancel_period.hrs ||
+        patientCancellation.cancel_period.hrs === "") &&
       (props.patientCancelationData.cancellationMins ===
-        data.cancel_period.mins ||
-        data.cancel_period.mins === "")
+        patientCancellation.cancel_period.mins ||
+        patientCancellation.cancel_period.mins === "")
     ) {
       return "you have not made any changes";
     }
@@ -42,22 +47,22 @@ const PatientCancellation = (props) => {
   const savePatientCancellationData = () => {
     if (
       (props.patientCancelationData.cancellationDays ===
-        data.cancel_period.days ||
-        data.cancel_period.days === "") &&
+        patientCancellation.cancel_period.days ||
+        patientCancellation.cancel_period.days === "") &&
       (props.patientCancelationData.cancellationHours ===
-        data.cancel_period.hrs ||
-        data.cancel_period.hrs === "") &&
+        patientCancellation.cancel_period.hrs ||
+        patientCancellation.cancel_period.hrs === "") &&
       (props.patientCancelationData.cancellationMins ===
-        data.cancel_period.mins ||
-        data.cancel_period.mins === "")
+        patientCancellation.cancel_period.mins ||
+        patientCancellation.cancel_period.mins === "")
     ) {
       return;
     }
     const params = {
       doctorKey: props.doctorKey.doctorKey,
-      cancellationDays: data.cancel_period.days,
-      cancellationHours: data.cancel_period.hrs,
-      cancellationMins: data.cancel_period.mins,
+      cancellationDays: patientCancellation.cancel_period.days,
+      cancellationHours: patientCancellation.cancel_period.hrs,
+      cancellationMins: patientCancellation.cancel_period.mins,
     };
     saveDoctorConfig(params);
     setEditPatientCancellation(false);
@@ -65,8 +70,8 @@ const PatientCancellation = (props) => {
   };
 
   const cancelPatientCancellationData = () => {
-    setData({
-      ...data,
+    setpatientCancelation({
+      ...patientCancellation,
       cancel_period: {
         days: props.patientCancelationData.cancellationDays,
         hrs: props.patientCancelationData.cancellationHours,
@@ -82,7 +87,7 @@ const PatientCancellation = (props) => {
     const name = field[0];
     const period = field[1];
 
-    setData((prev) => {
+    setpatientCancelation((prev) => {
       return {
         ...prev,
         [name]: {
@@ -92,51 +97,8 @@ const PatientCancellation = (props) => {
       };
     });
   };
-
-  const dateField = (name) => (
-    <span className="date-field-wrap">
-      <Input
-        name={`${name} days`}
-        type="number"
-        maxLength="2"
-        className="date-field days-field"
-        value={data.cancel_period.days}
-        disabled={!editPatientCancellation}
-        onChange={handleDateChange}
-        addonAfter="Days"
-      />
-      <Input
-        name={`${name} hrs`}
-        type="number"
-        maxLength="2"
-        className="date-field hrs-field"
-        value={data.cancel_period.hrs}
-        disabled={!editPatientCancellation}
-        onChange={handleDateChange}
-        addonAfter="Hrs"
-      />
-      <Input
-        name={`${name} mins`}
-        type="number"
-        maxLength="2"
-        className="date-field mins-field"
-        value={data.cancel_period.mins}
-        disabled={!editPatientCancellation}
-        onChange={handleDateChange}
-        addonAfter="Mins"
-      />
-      <EditSave
-        isEdit={editPatientCancellation}
-        handleOnEdit={editPatientCancellationData}
-        handleOnSave={savePatientCancellationData}
-        handleOnCancel={cancelPatientCancellationData}
-        tooltipText={addToolTipText()}
-      />
-    </span>
-  );
-
   const handleToggle = (name) => {
-    setData((prev) => {
+    setisCancellation((prev) => {
       return {
         ...prev,
         [name]: !prev[name],
@@ -146,21 +108,33 @@ const PatientCancellation = (props) => {
 
   return (
     <div className="option-sec sec-1">
-      <div className="o1 qus-wrap">
+      <div className="o1 qus-wrap reduce-bottom">
         <span className="qus">Patient Cancellation Allowed</span>
         <Switch
           className="cancel-toggle toggle-btn"
-          checked={data.cancellation}
+          checked={isCancellation.cancellation}
           onClick={handleToggle.bind(this, "cancellation")}
         />
       </div>
-      {data.cancellation && (
+      {isCancellation.cancellation && (
         <>
-          <div className="o2 qus-wrap">
+          <div className="o2 qus-wrap reduce-space">
             <span className="qus">
               How long before patient is allowed to cancel
             </span>
-            {dateField("cancel_period")}
+
+            <DataField
+              name="cancel_period"
+              days={patientCancellation.cancel_period.days}
+              hours={patientCancellation.cancel_period.hrs}
+              minutes={patientCancellation.cancel_period.mins}
+              edit={editPatientCancellation}
+              handleDateChange={handleDateChange}
+              handleEdit={editPatientCancellationData}
+              handleSave={savePatientCancellationData}
+              handleCancel={cancelPatientCancellationData}
+              toolTip={addToolTipText()}
+            />
           </div>
           <div className="note-box">
             <span className="info-icon">
