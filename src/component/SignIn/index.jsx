@@ -38,7 +38,7 @@ const SignIn = (props) => {
       .then((res) => {
         const { data } = res;
         localStorage.setItem("accessToken", data.accessToken);
-        props.history.push(paths.hospital.dashboard);
+        props.history.push({pathname: paths.hospital.dashboard, state: { key: data.doctorKey }});
       })
       .catch(() => {
         setError({
