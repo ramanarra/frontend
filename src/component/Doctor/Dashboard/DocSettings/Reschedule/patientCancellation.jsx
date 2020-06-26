@@ -81,7 +81,8 @@ const PatientCancellation = (props) => {
     setEditPatientCancellation(false);
   };
 
-  const handleDateChange = (e) => {
+  const handleDayChange = (e) => {
+    if(e.target.value <= 365){
     const value = e.target.value;
     const field = e.target.name.split(" ");
     const name = field[0];
@@ -96,15 +97,57 @@ const PatientCancellation = (props) => {
         },
       };
     });
+  }
   };
-  const handleToggle = (name) => {
-    setisCancellation((prev) => {
+
+  const handleHrsChange = (e) => {
+    if(e.target.value <= 12){
+    const value = e.target.value;
+    const field = e.target.name.split(" ");
+    const name = field[0];
+    const period = field[1];
+
+    setpatientCancelation((prev) => {
       return {
         ...prev,
-        [name]: !prev[name],
+        [name]: {
+          ...prev[name],
+          [period]: value,
+        },
       };
     });
+  }
   };
+
+  const handleMinsChange = (e) => {
+    if(e.target.value <= 60){
+    const value = e.target.value;
+    const field = e.target.name.split(" ");
+    const name = field[0];
+    const period = field[1];
+
+    setpatientCancelation((prev) => {
+      return {
+        ...prev,
+        [name]: {
+          ...prev[name],
+          [period]: value,
+        },
+      };
+    });
+  }
+  };
+
+  const handleOnChnage = () => {
+    const params = {
+      doctorKey: props.doctorKey.doctorKey,
+      isPatientCancellationAllowed: !isCancellation.cancellation
+    };
+
+    saveDoctorConfig(params)
+    setisCancellation(!isCancellation.cancellation);
+
+  }
 
   return (
     <div className="option-sec sec-1">
@@ -113,7 +156,7 @@ const PatientCancellation = (props) => {
         <Switch
           className="cancel-toggle toggle-btn"
           checked={isCancellation.cancellation}
-          onClick={handleToggle.bind(this, "cancellation")}
+          onClick = {handleOnChnage}
         />
       </div>
       {isCancellation.cancellation && (
@@ -129,7 +172,9 @@ const PatientCancellation = (props) => {
               hours={patientCancellation.cancel_period.hrs}
               minutes={patientCancellation.cancel_period.mins}
               edit={editPatientCancellation}
-              handleDateChange={handleDateChange}
+              handleDayChange={handleDayChange}
+              handleHrsChange={handleHrsChange}
+              handleMinsChange={handleMinsChange}
               handleEdit={editPatientCancellationData}
               handleSave={savePatientCancellationData}
               handleCancel={cancelPatientCancellationData}

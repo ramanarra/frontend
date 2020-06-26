@@ -151,7 +151,8 @@ const PatientReschedule = (props) => {
     setEditPatientAutomaticCancelation(false);
   };
 
-  const handleDateChangeForReschedule = (e) => {
+  const handleDayChangeForReschedule = (e) => {
+    if(e.target.value <= 365){
     const value = e.target.value;
     const field = e.target.name.split(" ");
     const name = field[0];
@@ -166,9 +167,49 @@ const PatientReschedule = (props) => {
         },
       };
     });
+  }
   };
 
-  const handleDateChangeForAutoCancellation = (e) => {
+  const handleHrsChangeForReschedule = (e) => {
+    if(e.target.value <= 12){
+    const value = e.target.value;
+    const field = e.target.name.split(" ");
+    const name = field[0];
+    const period = field[1];
+
+    setPatientRescheduleValues((prev) => {
+      return {
+        ...prev,
+        [name]: {
+          ...prev[name],
+          [period]: value,
+        },
+      };
+    });
+  }
+  };
+
+  const handleMinsChangeForReschedule = (e) => {
+    if(e.target.value <= 60){
+    const value = e.target.value;
+    const field = e.target.name.split(" ");
+    const name = field[0];
+    const period = field[1];
+
+    setPatientRescheduleValues((prev) => {
+      return {
+        ...prev,
+        [name]: {
+          ...prev[name],
+          [period]: value,
+        },
+      };
+    });
+  }
+  };
+
+  const handleDayChangeForAutoCancellation = (e) => {
+    if(e.target.value <= 365){
     const value = e.target.value;
     const field = e.target.name.split(" ");
     const name = field[0];
@@ -183,16 +224,57 @@ const PatientReschedule = (props) => {
         },
       };
     });
+  }
   };
 
-  const handleToggle = (name) => {
-    setIsRescheduleAllowed((prev) => {
+  const handleHrsChangeForAutoCancellation = (e) => {
+    if(e.target.value <= 12){
+    const value = e.target.value;
+    const field = e.target.name.split(" ");
+    const name = field[0];
+    const period = field[1];
+
+    setPatientAutoCancellationValues((prev) => {
       return {
         ...prev,
-        [name]: !prev[name],
+        [name]: {
+          ...prev[name],
+          [period]: value,
+        },
       };
     });
+  }
   };
+
+  const handleMinsChangeForAutoCancellation = (e) => {
+    if(e.target.value <= 60){
+    const value = e.target.value;
+    const field = e.target.name.split(" ");
+    const name = field[0];
+    const period = field[1];
+
+    setPatientAutoCancellationValues((prev) => {
+      return {
+        ...prev,
+        [name]: {
+          ...prev[name],
+          [period]: value,
+        },
+      };
+    });
+  }
+  };
+
+  const handleOnChnage = () => {
+    const params = {
+      doctorKey: props.doctorKey.doctorKey,
+      isPatientRescheduleAllowed: !isRescheduleAllowed.reschedule
+    };
+
+    saveDoctorConfig(params)
+    setIsRescheduleAllowed(!isRescheduleAllowed.reschedule);
+
+  }
 
   return (
     <div className="option-sec sec-2">
@@ -201,7 +283,7 @@ const PatientReschedule = (props) => {
         <Switch
           className="reschedule-toggle toggle-btn"
           checked={isRescheduleAllowed.reschedule}
-          onClick={handleToggle.bind(this, "reschedule")}
+          onClick={handleOnChnage}
         />
       </div>
       {isRescheduleAllowed.reschedule && (
@@ -216,7 +298,9 @@ const PatientReschedule = (props) => {
               hours={patientRescheduleValues.reschedule_period.hrs}
               minutes={patientRescheduleValues.reschedule_period.mins}
               edit={editPatientReschedule}
-              handleDateChange={handleDateChangeForReschedule}
+              handleDayChange={handleDayChangeForReschedule}
+              handleHrsChange={handleHrsChangeForReschedule}
+              handleMinsChange={handleMinsChangeForReschedule}
               handleEdit={editPatientRescheduleData}
               handleSave={savePatientRescheduleData}
               handleCancel={cancelPatientRescheduleData}
@@ -234,7 +318,9 @@ const PatientReschedule = (props) => {
               hours={patientAutoCancellationValues.auto_cancel_period.hrs}
               minutes={patientAutoCancellationValues.auto_cancel_period.mins}
               edit={editPatientAutomaticCancelation}
-              handleDateChange={handleDateChangeForAutoCancellation}
+              handleDayChange={handleDayChangeForAutoCancellation}
+              handleHrsChange={handleHrsChangeForAutoCancellation}
+              handleMinsChange={handleMinsChangeForAutoCancellation}
               handleEdit={editAutoCancelData}
               handleSave={saveAutoCancelData}
               handleCancel={cancelPatientAutoCancelData}
