@@ -1,15 +1,15 @@
-.doc-settings{
+.doc-settings {
+  width: 100%;
+  padding: 22px;
+  .doc-settings-card {
+    height: 100%;
     width: 100%;
-    padding: 22px;
-    .doc-settings-card{
-        height: 100%;
-        width: 100%;
-        .ant-card-body{
-            height: 100%;
-            padding: 0;
-        }
-        .ant-layout{
-            background: transparent;
-        }
+    .ant-card-body {
+      height: 100%;
+      padding: 0;
     }
+    .ant-layout {
+      background: transparent;
+    }
+  }
 }

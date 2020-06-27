@@ -1,27 +1,18 @@
-import React, { Component } from "react";
+import React from 'react'
 
-class Schedule extends Component {
-  state = {
-    data: [
-      {
-        name: 'Annie',
-        booked: [{
-          date: '01 may 2020'
-        }]
-      }
-    ],
-  };
-  render() {
-    return (
-      <div className="tab-pane-2" id="tab_default_2">
-        <div className="schedule-container">
-          <div className="doctor-sidebar">
+import { Button } from '@material-ui/core'
 
-          </div>
+
+function Appointments() {
+  return (
+    <div className="tab-pane-2" id="tab_default_2">
+      <div className="schedule-container">
+        <div className="doctor-sidebar">
+          <Button>name</Button>
         </div>
       </div>
-    );
-  }
+    </div>
+  )
 }
 
-export default Schedule;
+export default Appointments

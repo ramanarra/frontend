@@ -1,9 +1,9 @@
-import React, { Fragment } from "react";
-import { Tooltip } from "antd";
-import { MdEdit } from "react-icons/md";
-import { GoCheck, GoX } from "react-icons/go";
+import React, { Fragment } from 'react'
+import { Tooltip } from 'antd'
+import { MdEdit } from 'react-icons/md'
+import { GoCheck, GoX } from 'react-icons/go'
 
-import "./style.scss";
+import './style.scss'
 
 const EditSave = ({
   isEdit,
@@ -16,21 +16,18 @@ const EditSave = ({
     <span className="ctrl-btn">
       {isEdit ? (
         <Fragment>
-          <GoX onClick={handleOnCancel}/>
-          <Tooltip
-            placement="topLeft"
-            title={tooltipText} 
-          >
-          <span style={{paddingLeft: 10}}>    
-            <GoCheck onClick={handleOnSave} />
-          </span>  
+          <GoX onClick={handleOnCancel} />
+          <Tooltip placement="topLeft" title={tooltipText}>
+            <span style={{ paddingLeft: 10 }}>
+              <GoCheck onClick={handleOnSave} />
+            </span>
           </Tooltip>
         </Fragment>
       ) : (
         <MdEdit onClick={handleOnEdit} />
       )}
     </span>
-  );
-};
+  )
+}
 
-export default EditSave;
+export default EditSave

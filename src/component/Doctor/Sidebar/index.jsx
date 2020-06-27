@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { withRouter, Link } from 'react-router-dom'
-import "./sidebar.scss";
-import { paths } from "../../../config";
+import React, { useState } from 'react'
+import { withRouter } from 'react-router-dom'
+import './sidebar.scss'
+import { paths } from '../../../config'
 
 const Sidebar = (props) => {
-  const [screen, setScreen] = useState('dashboard');
+  const [screen, setScreen] = useState('dashboard')
 
   const changePath = (path) => {
     props.history.push(path)
@@ -15,13 +15,11 @@ const Sidebar = (props) => {
     changePath(paths.hospital[id])
   }
 
-
   return (
     <div className="app-sidebar">
       <ul id="main-menu-navigation" className="navigation navigation-main">
-
         <li
-          className={"nav-item" + (screen === 'dashboard' ? " active" : "")}
+          className={'nav-item' + (screen === 'dashboard' ? ' active' : '')}
           onClick={handleSwitch.bind(this, 'dashboard')}
         >
           <a>
@@ -31,7 +29,7 @@ const Sidebar = (props) => {
         </li>
 
         <li
-          className={"nav-item" + (screen === 'patients' ? " active" : "")}
+          className={'nav-item' + (screen === 'patients' ? ' active' : '')}
           onClick={handleSwitch.bind(this, 'patients')}
         >
           <a>
@@ -41,7 +39,7 @@ const Sidebar = (props) => {
         </li>
 
         <li
-          className={"nav-item" + (screen === 'reports' ? " active" : "")}
+          className={'nav-item' + (screen === 'reports' ? ' active' : '')}
           onClick={handleSwitch.bind(this, 'reports')}
         >
           <a>
@@ -51,7 +49,7 @@ const Sidebar = (props) => {
         </li>
 
         <li
-          className={"nav-item" + (screen === 'settings' ? " active" : "")}
+          className={'nav-item' + (screen === 'settings' ? ' active' : '')}
           onClick={handleSwitch.bind(this, 'settings')}
         >
           <a>
@@ -59,10 +57,9 @@ const Sidebar = (props) => {
             <span className="menu-title">Calendar</span>
           </a>
         </li>
-
       </ul>
     </div>
-  );
-};
+  )
+}
 
-export default withRouter(Sidebar);
+export default withRouter(Sidebar)

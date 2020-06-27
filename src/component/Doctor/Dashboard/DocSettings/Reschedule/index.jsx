@@ -1,28 +1,25 @@
-import React, { useState } from "react";
-import { Input, Switch } from "antd";
-import { MdEdit } from "react-icons/md";
-import { GoCheck } from "react-icons/go";
-import { AiOutlineInfoCircle } from "react-icons/ai";
-import "./reschedule.scss";
-import useCustomFetch from "../../../../../hooks/useCustomFetch";
-import { useEffect } from "react";
-const key = { doctorKey: "Doc_5" };
+import React, { useState } from 'react'
+import { Input, Switch } from 'antd'
+import { MdEdit } from 'react-icons/md'
+import { GoCheck } from 'react-icons/go'
+import { AiOutlineInfoCircle } from 'react-icons/ai'
+import './reschedule.scss'
+import useCustomFetch from '../../../../../hooks/useCustomFetch'
+import { useEffect } from 'react'
+const key = { doctorKey: 'Doc_5' }
 const Reschedule = (props) => {
-  const [patientCancellationAllowed, setpatientCancellationAllowed] = useState(
-    null
-  );
+  const [patientCancellationAllowed, setpatientCancellationAllowed] = useState(null)
   let [responseData, loading, error] = useCustomFetch(
-    "POST",
-    "calendar/doctorSettingsPersonalView",
+    'POST',
+    'calendar/doctorSettingsPersonalView',
     key
-  );
-  
+  )
+
   if (!responseData) {
     responseData = {}
   }
 
-
-  const { configDetails } = responseData;
+  const { configDetails } = responseData
   const [data, setData] = useState({
     cancellation: true,
     cancel_period: {
@@ -41,12 +38,11 @@ const Reschedule = (props) => {
       hrs: null,
       mins: null,
     },
-  });
+  })
   useEffect(() => {
-
     if (configDetails && configDetails.cancellationDays) {
       console.log(configDetails)
-      setpatientCancellationAllowed();
+      setpatientCancellationAllowed()
       setData({
         ...data,
         cancellation: configDetails.isPatientCancellationAllowed,
@@ -66,40 +62,40 @@ const Reschedule = (props) => {
           hrs: configDetails.autoCancelHours,
           mins: configDetails.autoCancelMins,
         },
-      });
+      })
     }
-  }, [configDetails]);
+  }, [configDetails])
 
   const [edit, setEdit] = useState({
     cancel_period: false,
     reschedule_period: false,
     auto_cancel_period: false,
-  });
+  })
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setData((prev) => {
       return {
         ...prev,
         [name]: value,
-      };
-    });
-  };
+      }
+    })
+  }
 
   const handleToggle = (name) => {
     setData((prev) => {
       return {
         ...prev,
         [name]: !prev[name],
-      };
-    });
-  };
+      }
+    })
+  }
 
   const handleDateChange = (e) => {
-    const value = e.target.value;
-    const field = e.target.name.split(" ");
-    const name = field[0];
-    const period = field[1];
+    const value = e.target.value
+    const field = e.target.name.split(' ')
+    const name = field[0]
+    const period = field[1]
 
     setData((prev) => {
       return {
@@ -108,18 +104,18 @@ const Reschedule = (props) => {
           ...prev[name],
           [period]: value,
         },
-      };
-    });
-  };
+      }
+    })
+  }
 
   const handleEdit = (name) => {
     setEdit((prev) => {
       return {
         ...prev,
         [name]: !prev[name],
-      };
-    });
-  };
+      }
+    })
+  }
 
   const dateField = (name) => (
     <span className="date-field-wrap">
@@ -154,13 +150,13 @@ const Reschedule = (props) => {
         addonAfter="Mins"
       />
       <span
-        className={"ctrl-btn " + (edit[name] ? "done-btn" : "edit-btn")}
+        className={'ctrl-btn ' + (edit[name] ? 'done-btn' : 'edit-btn')}
         onClick={handleEdit.bind(this, name)}
       >
         {edit[name] ? <GoCheck /> : <MdEdit />}
       </span>
     </span>
-  );
+  )
 
   return (
     <div className="doctor-preference">
@@ -172,7 +168,7 @@ const Reschedule = (props) => {
             <Switch
               className="cancel-toggle toggle-btn"
               checked={data.cancellation}
-              onClick={handleToggle.bind(this, "cancellation")}
+              onClick={handleToggle.bind(this, 'cancellation')}
             />
           </div>
           {data.cancellation && (
@@ -181,7 +177,7 @@ const Reschedule = (props) => {
                 <span className="qus">
                   How long before patient is allowed to cancel
                 </span>
-                {dateField("cancel_period")}
+                {dateField('cancel_period')}
               </div>
               <div className="note-box">
                 <span className="info-icon">
@@ -190,8 +186,7 @@ const Reschedule = (props) => {
                 <span className="context">
                   <span className="note">Note:</span>
                   Cancellation within the allowed timings, the payments will be
-                  refunded to the original payment method. If paid through
-                  VIRUJH
+                  refunded to the original payment method. If paid through VIRUJH
                 </span>
               </div>
             </>
@@ -203,7 +198,7 @@ const Reschedule = (props) => {
             <Switch
               className="reschedule-toggle toggle-btn"
               checked={data.reschedule}
-              onClick={handleToggle.bind(this, "reschedule")}
+              onClick={handleToggle.bind(this, 'reschedule')}
             />
           </div>
           {data.reschedule && (
@@ -212,20 +207,20 @@ const Reschedule = (props) => {
                 <span className="qus">
                   How long before patient is allowed to re-schedule
                 </span>
-                {dateField("reschedule_period")}
+                {dateField('reschedule_period')}
               </div>
               <div className="q5 qus-wrap">
                 <span className="ques">
                   Automatic Cancellation of appointments for unpaid bookings
                 </span>
-                {dateField("auto_cancel_period")}
+                {dateField('auto_cancel_period')}
               </div>
             </>
           )}
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Reschedule;
+export default Reschedule

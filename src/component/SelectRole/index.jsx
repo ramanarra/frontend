@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import "./selectRole.scss";
-import { withRouter } from "react-router-dom";
+import React, { useState } from 'react'
+import './selectRole.scss'
+import { withRouter } from 'react-router-dom'
 
 const SelectRole = (props) => {
-  const [option, setOption] = useState("doctor");
+  const [option, setOption] = useState('doctor')
   const ActiveTick = () => (
-    <img src={require('../../assets/img/icons/active-tick.svg')} alt="tick"/>
-  );
+    <img src={require('../../assets/img/icons/active-tick.svg')} alt="tick" />
+  )
 
   const handleSelect = (value) => {
-    if(option === value){
+    if (option === value) {
       props.history.push('/login')
     } else {
       setOption(value)
@@ -20,19 +20,23 @@ const SelectRole = (props) => {
     <div className="select-role-page">
       <div className="select-role-view">
         <div className="select-role-logo">
-          <img src={require('../../assets/img/logo-white.svg')} alt="VIRUJH" className="logo"/>
+          <img
+            src={require('../../assets/img/logo-white.svg')}
+            alt="VIRUJH"
+            className="logo"
+          />
         </div>
         <div className="select-role-control">
           <h1 className="select-role-head">Select your Role</h1>
           <div className="select-role-option">
             <div
               className={
-                "doctor-option option-btn-container" +
-                (option === "doctor" ? " selected-option" : "")
+                'doctor-option option-btn-container' +
+                (option === 'doctor' ? ' selected-option' : '')
               }
-              onClick={handleSelect.bind(this, "doctor")}
+              onClick={handleSelect.bind(this, 'doctor')}
             >
-              {option === "doctor" && (
+              {option === 'doctor' && (
                 <div className="active-tick">
                   <ActiveTick />
                 </div>
@@ -45,12 +49,12 @@ const SelectRole = (props) => {
 
             <div
               className={
-                "patient-option option-btn-container" +
-                (option === "patient" ? " selected-option" : "")
+                'patient-option option-btn-container' +
+                (option === 'patient' ? ' selected-option' : '')
               }
-              onClick={handleSelect.bind(this, "patient")}
+              onClick={handleSelect.bind(this, 'patient')}
             >
-              {option === "patient" && (
+              {option === 'patient' && (
                 <div className="active-tick">
                   <ActiveTick />
                 </div>
@@ -64,7 +68,7 @@ const SelectRole = (props) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default withRouter(SelectRole);
+export default withRouter(SelectRole)

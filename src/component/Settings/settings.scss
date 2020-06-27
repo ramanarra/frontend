@@ -28,17 +28,17 @@
 
         .set-field {
           font-family: var(--fontRegular);
-          .ant-input{
+          .ant-input {
             // background: var(--field-bg);
             // border: none;
             font-size: 12px;
           }
-          .ant-input[disabled]{
+          .ant-input[disabled] {
             color: var(--font);
             border-color: transparent;
             background: var(--field-bg-disable);
 
-            &:hover{
+            &:hover {
               cursor: default;
             }
           }
@@ -61,26 +61,26 @@
         display: inline-flex;
         align-items: center;
 
-        .value{
+        .value {
           padding-left: 10px;
-          .discount-field{
-            .ant-input{
+          .discount-field {
+            .ant-input {
               border: none;
               padding: 4px 0;
               max-width: 40px;
             }
-            .ant-input-group-addon{
+            .ant-input-group-addon {
               cursor: pointer;
               border: none;
               background: transparent;
               color: var(--primary);
               font-size: 16px;
             }
-            .ant-input[disabled]{
+            .ant-input[disabled] {
               color: var(--font);
               background: transparent;
 
-              &:hover{
+              &:hover {
                 cursor: default;
               }
             }
