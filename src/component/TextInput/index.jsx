@@ -1,5 +1,5 @@
-import React, { Fragment } from "react";
-import { Input } from "antd";
+import React, { Fragment } from 'react'
+import { Input } from 'antd'
 
 import './input.scss'
 
@@ -11,7 +11,7 @@ function TextInput(props) {
       </p>
       <Input className="input-elemet" {...props} />
     </Fragment>
-  );
+  )
 }
 
-export default TextInput;
+export default TextInput

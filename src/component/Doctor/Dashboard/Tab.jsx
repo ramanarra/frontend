@@ -1,26 +1,26 @@
-import React from "react";
+import React from 'react'
 
 const Tab = (props) => {
   return (
-    <div className="tab-header" style={{paddingTop: '10px', marginRight: '10px'}}>
+    <div className="tab-header" style={{ paddingTop: '10px', marginRight: '10px' }}>
       <div className="left-wrapper">
         <ul className="nav nav-tabs ">
           <li
-            className={props.tab === 0 ? "active" : "inactive"}
+            className={props.tab === 0 ? 'active' : 'inactive'}
             onClick={props.switchTab.bind(this, 0)}
           >
             <a>
               <i className="icon-doctor tab-ic"></i>
-              My Doctors{" "}
+              My Doctors{' '}
             </a>
           </li>
           <li
-            className={props.tab === 1 ? "active" : "inactive"}
+            className={props.tab === 1 ? 'active' : 'inactive'}
             onClick={props.switchTab.bind(this, 1)}
           >
             <a>
               <i className="icon-calendar tab-ic"></i>
-              Appointments{" "}
+              Appointments{' '}
             </a>
           </li>
         </ul>
@@ -33,7 +33,7 @@ const Tab = (props) => {
             className="search-ip"
           />
           <div className="search-ic doc-nav-icon-wrap">
-            <i className="icon-search doc-nav-icon" style={{fontSize: '10px'}}></i>
+            <i className="icon-search doc-nav-icon" style={{ fontSize: '10px' }}></i>
           </div>
         </div>
         <div className="view-wrap doc-nav-icon-wrap">
@@ -47,7 +47,7 @@ const Tab = (props) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Tab;
+export default Tab

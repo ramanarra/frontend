@@ -1,12 +1,12 @@
-import React from "react";
-import AppRoutes from "./AppRoutes";
+import React from 'react'
+import AppRoutes from './AppRoutes'
 
-const App = (props) => {
+const App = () => {
   return (
     <>
       <AppRoutes />
     </>
-  );
-};
+  )
+}
 
-export default App;
+export default App

@@ -1,23 +1,25 @@
-import React, { Component } from "react";
-import { Input } from "antd";
-import { MdEdit } from "react-icons/md";
-import { GoCheck } from "react-icons/go";
-import "./settings.scss";
+
+
+import React, { Component } from 'react'
+import { Input } from 'antd'
+import { MdEdit } from 'react-icons/md'
+import { GoCheck } from 'react-icons/go'
+import './settings.scss'
 
 class Settings extends Component {
   state = {
     data: {
-      name: "Amrit Meddcare Pvt. Ltd.",
+      name: 'Amrit Meddcare Pvt. Ltd.',
       address: {
-        street: "#89, Peddu naicken street",
-        landmark: "Near Knondithope Market",
-        city: "Chennai, Tamilnadu",
-        country: "India",
-        zipcode: "600079",
+        street: '#89, Peddu naicken street',
+        landmark: 'Near Knondithope Market',
+        city: 'Chennai, Tamilnadu',
+        country: 'India',
+        zipcode: '600079',
       },
       phone: 1234567890,
       email: `amritmedicare@gmail.com`,
-      profile: require("../../assets/img/med.png"),
+      profile: require('../../assets/img/med.png'),
       discount: 0,
     },
     edit: {
@@ -32,22 +34,22 @@ class Settings extends Component {
       profile: false,
       discount: false,
     },
-  };
+  }
 
   handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     this.setState((prev) => {
       return {
         data: {
           ...prev.data,
           [name]: value,
         },
-      };
-    });
-  };
+      }
+    })
+  }
 
   handleAddrChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     this.setState((prev) => {
       return {
         data: {
@@ -57,9 +59,9 @@ class Settings extends Component {
             [name]: value,
           },
         },
-      };
-    });
-  };
+      }
+    })
+  }
 
   handleEdit = (name) => {
     this.setState((prev) => {
@@ -68,24 +70,22 @@ class Settings extends Component {
           ...prev.edit,
           [name]: !prev.edit[name],
         },
-      };
-    });
-  };
+      }
+    })
+  }
 
   render() {
-    const { name, address, phone, email, profile, discount } = this.state.data;
-    const { edit } = this.state;
+    const { name, address, phone, email, profile, discount } = this.state.data
+    const { edit } = this.state
 
     const editBtn = (name) => (
       <span
-        className={
-          "ctrl-btn " + (this.state.edit[name] ? "done-btn" : "edit-btn")
-        }
+        className={'ctrl-btn ' + (this.state.edit[name] ? 'done-btn' : 'edit-btn')}
         onClick={this.handleEdit.bind(this, name)}
       >
         {this.state.edit[name] ? <GoCheck /> : <MdEdit />}
       </span>
-    );
+    )
 
     return (
       <div className="settings-wrap">
@@ -102,7 +102,7 @@ class Settings extends Component {
                 value={name}
                 size="large"
                 disabled={!edit.name}
-                addonAfter={editBtn("name")}
+                addonAfter={editBtn('name')}
                 placeholder="Name"
                 onChange={this.handleChange}
               />
@@ -112,7 +112,7 @@ class Settings extends Component {
                 value={address.street}
                 size="large"
                 disabled={!edit.street}
-                addonAfter={editBtn("street")}
+                addonAfter={editBtn('street')}
                 placeholder="Street Name"
                 onChange={this.handleAddrChange}
               />
@@ -122,7 +122,7 @@ class Settings extends Component {
                 value={address.landmark}
                 size="large"
                 disabled={!edit.landmark}
-                addonAfter={editBtn("landmark")}
+                addonAfter={editBtn('landmark')}
                 placeholder="Landmark"
                 onChange={this.handleAddrChange}
               />
@@ -132,7 +132,7 @@ class Settings extends Component {
                 value={address.city}
                 size="large"
                 disabled={!edit.city}
-                addonAfter={editBtn("city")}
+                addonAfter={editBtn('city')}
                 placeholder="City"
                 onChange={this.handleAddrChange}
               />
@@ -142,7 +142,7 @@ class Settings extends Component {
                 value={address.country}
                 size="large"
                 disabled={!edit.country}
-                addonAfter={editBtn("country")}
+                addonAfter={editBtn('country')}
                 placeholder="Country"
                 onChange={this.handleAddrChange}
               />
@@ -152,7 +152,7 @@ class Settings extends Component {
                 value={address.zipcode}
                 size="large"
                 disabled={!edit.zipcode}
-                addonAfter={editBtn("zipcode")}
+                addonAfter={editBtn('zipcode')}
                 placeholder="Pincode"
                 onChange={this.handleAddrChange}
               />
@@ -162,7 +162,7 @@ class Settings extends Component {
                 value={phone}
                 size="large"
                 disabled={!edit.phone}
-                addonAfter={editBtn("phone")}
+                addonAfter={editBtn('phone')}
                 placeholder="Phone number"
                 onChange={this.handleChange}
               />
@@ -172,20 +172,20 @@ class Settings extends Component {
                 value={email}
                 size="large"
                 disabled={!edit.email}
-                addonAfter={editBtn("email")}
+                addonAfter={editBtn('email')}
                 placeholder="Email address"
                 onChange={this.handleChange}
               />
             </div>
             <p className="set-discount">
-              Discount for new Patient First Consultancy{" "}
+              Discount for new Patient First Consultancy{' '}
               <span className="value">
                 <Input
                   name="discount"
                   className="discount-field"
                   value={discount}
                   disabled={!edit.discount}
-                  addonAfter={editBtn("discount")}
+                  addonAfter={editBtn('discount')}
                   onChange={this.handleChange}
                 />
               </span>
@@ -193,8 +193,8 @@ class Settings extends Component {
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
-export default Settings;
+export default Settings

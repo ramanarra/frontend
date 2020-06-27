@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { Modal, Button } from "antd";
+import React from 'react'
+import { Modal, Button } from 'antd'
 
-const AvailabilityDialog = ({ display, slots, onClose }) => {
+const AvailabilityDialog = ({ display, onClose }) => {
   return (
     <Modal visible={display} onCancel={onClose}>
       <div className="availability-dlg">
@@ -16,7 +16,7 @@ const AvailabilityDialog = ({ display, slots, onClose }) => {
         </div>
       </div>
     </Modal>
-  );
-};
+  )
+}
 
-export default AvailabilityDialog;
+export default AvailabilityDialog

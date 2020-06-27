@@ -1,14 +1,14 @@
-import { useState } from "react";
+import { useState } from 'react'
 
-import API from "../../../api";
+import API from '../../../api'
 
 function useSaveDoctorConfig() {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false)
 
   function handleOnFetch(params) {
     setLoading(true)
-    const token = localStorage.getItem("accessToken");
-    const authStr = "Bearer ".concat(token);
+    const token = localStorage.getItem('accessToken')
+    const authStr = 'Bearer '.concat(token)
 
     API.post('/calendar/doctorConfigUpdate', params, {
       headers: {
@@ -16,14 +16,14 @@ function useSaveDoctorConfig() {
       },
     })
       .then(() => {
-        setLoading(false);
+        setLoading(false)
       })
       .catch(() => {
-        setLoading(false);
-      });
+        setLoading(false)
+      })
   }
 
-  return [handleOnFetch, loading];
+  return [handleOnFetch, loading]
 }
 
-export default useSaveDoctorConfig;
+export default useSaveDoctorConfig

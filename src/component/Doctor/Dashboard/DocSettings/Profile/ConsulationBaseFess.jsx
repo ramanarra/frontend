@@ -1,71 +1,65 @@
-import React, { useState } from "react";
-import { Input, Row, Col } from "antd";
+import React, { useState } from 'react'
+import { Input, Row, Col } from 'antd'
 
-import useSaveDoctorConfig from "../../../hooks/useSaveDoctorConfig";
-import EditSave from "../../../../EditSave";
-
+import useSaveDoctorConfig from '../../../hooks/useSaveDoctorConfig'
+import EditSave from '../../../../EditSave'
 
 function ConsulationBaseFees({ configDetails, reFetch, docKey }) {
-  const [editConsultationBaseFees, setEditConsultationBaseFees] = useState(
-    false
-  );
+  const [editConsultationBaseFees, setEditConsultationBaseFees] = useState(false)
 
   const [consultationBaseFees, setConsultationBaseFees] = useState(
     configDetails.consultationCost
-  );
+  )
 
-  const [handleOnSaveDoctorConfig] = useSaveDoctorConfig();
+  const [handleOnSaveDoctorConfig] = useSaveDoctorConfig()
 
   const handleOnBaseFeesEdit = () => {
-    setEditConsultationBaseFees(!editConsultationBaseFees);
-  };
+    setEditConsultationBaseFees(!editConsultationBaseFees)
+  }
 
   const handleOnBaseFeesSave = () => {
     if (
       configDetails &&
       (configDetails.consultationCost === consultationBaseFees ||
-        consultationBaseFees == "")
+        consultationBaseFees == '')
     ) {
-      return;
+      return
     }
     const params = {
       doctorKey: docKey,
       consultationCost: consultationBaseFees,
-    };
-
-    handleOnSaveDoctorConfig(params);
-    setEditConsultationBaseFees(false);
-    reFetch();
-  };
-
-  const handleOnBaseFeesCancel = () => {
-    setConsultationBaseFees(configDetails.consultationCost);
-    setEditConsultationBaseFees(false);
-  };
-
-  const addToolTipText = () => {
-    if (
-      configDetails &&
-      configDetails.consultationCost === consultationBaseFees
-    ) {
-      return "you have not made any changes";
     }
 
-    return "";
-  };
+    handleOnSaveDoctorConfig(params)
+    setEditConsultationBaseFees(false)
+    reFetch()
+  }
+
+  const handleOnBaseFeesCancel = () => {
+    setConsultationBaseFees(configDetails.consultationCost)
+    setEditConsultationBaseFees(false)
+  }
+
+  const addToolTipText = () => {
+    if (configDetails && configDetails.consultationCost === consultationBaseFees) {
+      return 'you have not made any changes'
+    }
+
+    return ''
+  }
 
   const handleOnBaseFeesChange = (event) => {
-    setConsultationBaseFees(event.target.value);
-  };
+    setConsultationBaseFees(event.target.value)
+  }
 
   return (
     <Row>
       <Col span={12}>
-        <p style={{ marginBottom: '0.4em'}}>
+        <p style={{ marginBottom: '0.4em' }}>
           <span className="font-styles">Consultation Base Fees</span>
         </p>
         <Input
-          style={{ width: "calc(94% + 37px)", paddingBottom: '7px' }}
+          style={{ width: 'calc(94% + 37px)', paddingBottom: '7px' }}
           addonAfter={
             <EditSave
               isEdit={editConsultationBaseFees}
@@ -87,7 +81,7 @@ function ConsulationBaseFees({ configDetails, reFetch, docKey }) {
         />
       </Col>
     </Row>
-  );
+  )
 }
 
-export default ConsulationBaseFees;
+export default ConsulationBaseFees

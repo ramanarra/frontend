@@ -26,7 +26,7 @@
         color: var(--text);
 
         &::after {
-          content: " ";
+          content: ' ';
           display: block;
           position: absolute;
           height: 3px;
@@ -71,7 +71,7 @@
       .submit-btn-wrap {
         position: relative;
         padding-top: 50px;
-        .error-status{
+        .error-status {
           position: absolute;
           top: 20px;
           left: 0;

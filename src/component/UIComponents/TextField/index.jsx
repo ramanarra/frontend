@@ -1,26 +1,26 @@
-import React from "react";
-import { Input, Form } from "antd";
-import "./textfield.scss";
+import React from 'react'
+import { Input, Form } from 'antd'
+import './textfield.scss'
 
-type Props = {
-  className: String,
-  name: String,
-  value: String,
-  onChange: String,
-  placeholder: String,
-  label: String,
-  addonBefore: String,
-  addonAfter: String,
-  prefix: String,
-  postfix: String,
-  size: "small" | "large",
-  type: "text" | "number" | "password" | "password-wicon",
-  hasFeedback: Boolean,
-  rules: Array,
-  maxLength: Number,
-  inputProps: Object,
-  error: Boolean
-};
+// type Props = {
+//   className: String,
+//   name: String,
+//   value: String,
+//   onChange: String,
+//   placeholder: String,
+//   label: String,
+//   addonBefore: String,
+//   addonAfter: String,
+//   prefix: String,
+//   postfix: String,
+//   size: 'small' | 'large',
+//   type: 'text' | 'number' | 'password' | 'password-wicon',
+//   hasFeedback: Boolean,
+//   rules: Array,
+//   maxLength: Number,
+//   inputProps: Object,
+//   error: Boolean,
+// }
 
 const TextField = ({
   className,
@@ -34,18 +34,17 @@ const TextField = ({
   prefix,
   postfix,
   size,
-  type = "text",
+  type = 'text',
   rules,
   hasFeedback,
   error,
   maxLength,
   inputProps,
-}: Props) => {
-
-  const isError = error? "error" : undefined
+}) => {
+  const isError = error ? 'error' : undefined
   const handleChange = (e) => {
-    if(!!maxLength){
-      if(e.target.value?.length <= parseInt(maxLength)){
+    if (!!maxLength) {
+      if (e.target.value?.length <= parseInt(maxLength)) {
         onChange(e)
       }
     } else {
@@ -61,10 +60,10 @@ const TextField = ({
       hasFeedback={hasFeedback}
       validateStatus={isError}
     >
-      {type !== "password-wicon" ? (
+      {type !== 'password-wicon' ? (
         <Input
           name={name}
-          className={"txt-field" + (className ? ` ${className}` : "")}
+          className={'txt-field' + (className ? ` ${className}` : '')}
           size={size}
           placeholder={placeholder}
           value={value}
@@ -93,7 +92,7 @@ const TextField = ({
         />
       )}
     </Form.Item>
-  );
-};
+  )
+}
 
-export default TextField;
+export default TextField
