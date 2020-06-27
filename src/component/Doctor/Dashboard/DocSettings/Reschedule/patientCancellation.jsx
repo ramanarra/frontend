@@ -82,71 +82,70 @@ const PatientCancellation = (props) => {
   }
 
   const handleDayChange = (e) => {
-    if(e.target.value <= 365){
-    const value = e.target.value;
-    const field = e.target.name.split(" ");
-    const name = field[0];
-    const period = field[1];
+    if (e.target.value <= 365) {
+      const value = e.target.value
+      const field = e.target.name.split(' ')
+      const name = field[0]
+      const period = field[1]
 
-    setpatientCancelation((prev) => {
-      return {
-        ...prev,
-        [name]: {
-          ...prev[name],
-          [period]: value,
-        },
-      };
-    });
+      setpatientCancelation((prev) => {
+        return {
+          ...prev,
+          [name]: {
+            ...prev[name],
+            [period]: value,
+          },
+        }
+      })
+    }
   }
-  };
 
   const handleHrsChange = (e) => {
-    if(e.target.value <= 12){
-    const value = e.target.value;
-    const field = e.target.name.split(" ");
-    const name = field[0];
-    const period = field[1];
+    if (e.target.value <= 12) {
+      const value = e.target.value
+      const field = e.target.name.split(' ')
+      const name = field[0]
+      const period = field[1]
 
-    setpatientCancelation((prev) => {
-      return {
-        ...prev,
-        [name]: {
-          ...prev[name],
-          [period]: value,
-        },
-      };
-    });
+      setpatientCancelation((prev) => {
+        return {
+          ...prev,
+          [name]: {
+            ...prev[name],
+            [period]: value,
+          },
+        }
+      })
+    }
   }
-  };
 
   const handleMinsChange = (e) => {
-    if(e.target.value <= 60){
-    const value = e.target.value;
-    const field = e.target.name.split(" ");
-    const name = field[0];
-    const period = field[1];
+    if (e.target.value <= 60) {
+      const value = e.target.value
+      const field = e.target.name.split(' ')
+      const name = field[0]
+      const period = field[1]
 
-    setpatientCancelation((prev) => {
-      return {
-        ...prev,
-        [name]: {
-          ...prev[name],
-          [period]: value,
-        },
-      };
-    });
+      setpatientCancelation((prev) => {
+        return {
+          ...prev,
+          [name]: {
+            ...prev[name],
+            [period]: value,
+          },
+        }
+      })
+    }
   }
-  };
 
   const handleOnChnage = () => {
     const params = {
       doctorKey: props.doctorKey.doctorKey,
-      isPatientCancellationAllowed: !isCancellation.cancellation
-    };
+      isPatientCancellationAllowed: !isCancellation.cancellation,
+    }
 
     saveDoctorConfig(params)
-    setisCancellation(!isCancellation.cancellation);
-
+    setisCancellation(!isCancellation.cancellation)
   }
 
   return (
@@ -156,7 +155,7 @@ const PatientCancellation = (props) => {
         <Switch
           className="cancel-toggle toggle-btn"
           checked={isCancellation.cancellation}
-          onClick = {handleOnChnage}
+          onClick={handleOnChnage}
         />
       </div>
       {isCancellation.cancellation && (
