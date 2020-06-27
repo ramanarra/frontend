@@ -54,8 +54,8 @@ function PreConsult({ configDetails, reFetch, docKey }) {
   const handleOnChnage = () => {
     const params = {
       doctorKey: docKey,
-      isPreconsultationAllowed: !preConsult
-    };
+      isPreconsultationAllowed: !preConsult,
+    }
 
     saveDoctorConfig(params)
     setPreConsult(!preConsult)

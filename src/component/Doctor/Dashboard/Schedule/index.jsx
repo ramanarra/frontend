@@ -2,7 +2,6 @@ import React from 'react'
 
 import { Button } from '@material-ui/core'
 
-
 function Appointments() {
   return (
     <div className="tab-pane-2" id="tab_default_2">

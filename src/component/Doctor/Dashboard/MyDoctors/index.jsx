@@ -11,9 +11,9 @@ import './myDoctor.scss'
 
 const MyDoctor = (props) => {
   const [responseData] = useCustomFetch(
-    "GET",
+    'GET',
     `calendar/doctorList?key=${props.location.state.key}`
-  );
+  )
 
   if (!responseData) {
     return null

@@ -1,18 +1,18 @@
-import React, { useState } from "react";
-import { Input, Switch } from "antd";
-import { AiOutlineInfoCircle } from "react-icons/ai";
+import React, { useState } from 'react'
+import { Input, Switch } from 'antd'
+import { AiOutlineInfoCircle } from 'react-icons/ai'
 
-import EditSave from "../../../../EditSave";
-import useSaveDoctorConfig from "../../../hooks/useSaveDoctorConfig";
-import DataField from "./DataField";
+import EditSave from '../../../../EditSave'
+import useSaveDoctorConfig from '../../../hooks/useSaveDoctorConfig'
+import DataField from './DataField'
 
 const PatientCancellation = (props) => {
-  const [editPatientCancellation, setEditPatientCancellation] = useState(false);
-  const [saveDoctorConfig] = useSaveDoctorConfig();
+  const [editPatientCancellation, setEditPatientCancellation] = useState(false)
+  const [saveDoctorConfig] = useSaveDoctorConfig()
 
   const [isCancellation, setisCancellation] = useState({
     cancellation: props.patientCancelationData.isPatientCancellationAllowed,
-  });
+  })
 
   const [patientCancellation, setpatientCancelation] = useState({
     cancel_period: {
@@ -20,54 +20,54 @@ const PatientCancellation = (props) => {
       hrs: props.patientCancelationData.cancellationHours,
       mins: props.patientCancelationData.cancellationMins,
     },
-  });
+  })
 
   const addToolTipText = () => {
     if (
       (props.patientCancelationData.cancellationDays ===
         patientCancellation.cancel_period.days ||
-        patientCancellation.cancel_period.days === "") &&
+        patientCancellation.cancel_period.days === '') &&
       (props.patientCancelationData.cancellationHours ===
         patientCancellation.cancel_period.hrs ||
-        patientCancellation.cancel_period.hrs === "") &&
+        patientCancellation.cancel_period.hrs === '') &&
       (props.patientCancelationData.cancellationMins ===
         patientCancellation.cancel_period.mins ||
-        patientCancellation.cancel_period.mins === "")
+        patientCancellation.cancel_period.mins === '')
     ) {
-      return "you have not made any changes";
+      return 'you have not made any changes'
     }
 
-    return "";
-  };
+    return ''
+  }
 
   const editPatientCancellationData = () => {
-    setEditPatientCancellation(true);
-  };
+    setEditPatientCancellation(true)
+  }
 
   const savePatientCancellationData = () => {
     if (
       (props.patientCancelationData.cancellationDays ===
         patientCancellation.cancel_period.days ||
-        patientCancellation.cancel_period.days === "") &&
+        patientCancellation.cancel_period.days === '') &&
       (props.patientCancelationData.cancellationHours ===
         patientCancellation.cancel_period.hrs ||
-        patientCancellation.cancel_period.hrs === "") &&
+        patientCancellation.cancel_period.hrs === '') &&
       (props.patientCancelationData.cancellationMins ===
         patientCancellation.cancel_period.mins ||
-        patientCancellation.cancel_period.mins === "")
+        patientCancellation.cancel_period.mins === '')
     ) {
-      return;
+      return
     }
     const params = {
       doctorKey: props.doctorKey.doctorKey,
       cancellationDays: patientCancellation.cancel_period.days,
       cancellationHours: patientCancellation.cancel_period.hrs,
       cancellationMins: patientCancellation.cancel_period.mins,
-    };
-    saveDoctorConfig(params);
-    setEditPatientCancellation(false);
-    props.reFetch();
-  };
+    }
+    saveDoctorConfig(params)
+    setEditPatientCancellation(false)
+    props.reFetch()
+  }
 
   const cancelPatientCancellationData = () => {
     setpatientCancelation({
@@ -77,15 +77,15 @@ const PatientCancellation = (props) => {
         hrs: props.patientCancelationData.cancellationHours,
         mins: props.patientCancelationData.cancellationMins,
       },
-    });
-    setEditPatientCancellation(false);
-  };
+    })
+    setEditPatientCancellation(false)
+  }
 
   const handleDateChange = (e) => {
-    const value = e.target.value;
-    const field = e.target.name.split(" ");
-    const name = field[0];
-    const period = field[1];
+    const value = e.target.value
+    const field = e.target.name.split(' ')
+    const name = field[0]
+    const period = field[1]
 
     setpatientCancelation((prev) => {
       return {
@@ -94,17 +94,17 @@ const PatientCancellation = (props) => {
           ...prev[name],
           [period]: value,
         },
-      };
-    });
-  };
+      }
+    })
+  }
   const handleToggle = (name) => {
     setisCancellation((prev) => {
       return {
         ...prev,
         [name]: !prev[name],
-      };
-    });
-  };
+      }
+    })
+  }
 
   return (
     <div className="option-sec sec-1">
@@ -113,15 +113,13 @@ const PatientCancellation = (props) => {
         <Switch
           className="cancel-toggle toggle-btn"
           checked={isCancellation.cancellation}
-          onClick={handleToggle.bind(this, "cancellation")}
+          onClick={handleToggle.bind(this, 'cancellation')}
         />
       </div>
       {isCancellation.cancellation && (
         <>
           <div className="o2 qus-wrap reduce-space">
-            <span className="qus">
-              How long before patient is allowed to cancel
-            </span>
+            <span className="qus">How long before patient is allowed to cancel</span>
 
             <DataField
               name="cancel_period"
@@ -142,14 +140,14 @@ const PatientCancellation = (props) => {
             </span>
             <span className="context">
               <span className="note">Note:</span>
-              Cancellation within the allowed timings, the payments will be
-              refunded to the original payment method. If paid through VIRUJH
+              Cancellation within the allowed timings, the payments will be refunded
+              to the original payment method. If paid through VIRUJH
             </span>
           </div>
         </>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default PatientCancellation;
+export default PatientCancellation

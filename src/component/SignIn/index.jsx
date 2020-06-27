@@ -36,9 +36,12 @@ const SignIn = (props) => {
 
     Api.post('auth/doctorLogin', credentials)
       .then((res) => {
-        const { data } = res;
-        localStorage.setItem("accessToken", data.accessToken);
-        props.history.push({pathname: paths.hospital.dashboard, state: { key: data.doctorKey }});
+        const { data } = res
+        localStorage.setItem('accessToken', data.accessToken)
+        props.history.push({
+          pathname: paths.hospital.dashboard,
+          state: { key: data.doctorKey },
+        })
       })
       .catch(() => {
         setError({

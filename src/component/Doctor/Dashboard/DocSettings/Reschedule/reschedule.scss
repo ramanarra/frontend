@@ -1,87 +1,87 @@
 .doctor-preference {
-    padding: 20px 50px;
-    .pref-head {
-        font-size: 18px;
-        font-family: var(--fontRegular);
-    }
-    .options {
-        padding: 12px 0;
-        .option-sec {
-            .qus-wrap {
-                display: flex;
-                align-items: center;
-                padding: 20px 0;
-                color: #414141;
-                .date-field-wrap {
-                    padding-left: 20px;
-                    .date-field {
-                        width: auto;
-                        .ant-input {
-                            max-width: 33px;
-                            padding: 4px 8px;
-                            border-color: transparent;
-                            background: var(--field-bg-disable);
-                            font-size: 13px;
-                            font-family: var(--fontRegular);
-                            color: var(--text) !important;
-                        }
-                        .ant-input-group-addon {
-                            border: none;
-                            background: transparent;
-                            padding: 0 20px 0 7px;
-                        }
-                    }
-                    .ctrl-btn {
-                        color: var(--primary);
-                        font-size: 16px;
-                    }
-                }
-                .toggle-btn {
-                    margin-left: 20px;
-                }
+  padding: 20px 50px;
+  .pref-head {
+    font-size: 18px;
+    font-family: var(--fontRegular);
+  }
+  .options {
+    padding: 12px 0;
+    .option-sec {
+      .qus-wrap {
+        display: flex;
+        align-items: center;
+        padding: 20px 0;
+        color: #414141;
+        .date-field-wrap {
+          padding-left: 20px;
+          .date-field {
+            width: auto;
+            .ant-input {
+              max-width: 33px;
+              padding: 4px 8px;
+              border-color: transparent;
+              background: var(--field-bg-disable);
+              font-size: 13px;
+              font-family: var(--fontRegular);
+              color: var(--text) !important;
             }
-            .note-box {
-                background: #f7fdff;
-                padding: 10px 30px;
-                display: flex;
-                width: 500px;
-                .info-icon {
-                    font-size: 15px;
-                    color: #1b6883;
-                    padding-right: 5px;
-                    align-self: flex-start;
-                }
-                .context {
-                    padding-top: 5px;
-                    font-family: var(--fontRegular);
-                    font-size: 11px;
-                    color: #1b6883;
-                    .note {
-                        font-weight: bold;
-                    }
-                }
+            .ant-input-group-addon {
+              border: none;
+              background: transparent;
+              padding: 0 20px 0 7px;
             }
+          }
+          .ctrl-btn {
+            color: var(--primary);
+            font-size: 16px;
+          }
         }
-        .sec-1 {
-            margin-bottom: 20px;
-            padding-bottom: 23px;
-            border-bottom: 1px solid #f0f0f0;
+        .toggle-btn {
+          margin-left: 20px;
         }
+      }
+      .note-box {
+        background: #f7fdff;
+        padding: 10px 30px;
+        display: flex;
+        width: 500px;
+        .info-icon {
+          font-size: 15px;
+          color: #1b6883;
+          padding-right: 5px;
+          align-self: flex-start;
+        }
+        .context {
+          padding-top: 5px;
+          font-family: var(--fontRegular);
+          font-size: 11px;
+          color: #1b6883;
+          .note {
+            font-weight: bold;
+          }
+        }
+      }
     }
+    .sec-1 {
+      margin-bottom: 20px;
+      padding-bottom: 23px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+  }
 }
 
 .qus {
-    color: #414141;
+  color: #414141;
 }
 
 .reduce-bottom {
-    padding-bottom: 9px;
+  padding-bottom: 9px;
 }
 
 .reduce-space {
-    padding-bottom: 17px;
+  padding-bottom: 17px;
 }
 
 .reduce-top {
-    padding-top: 9px;
+  padding-top: 9px;
 }

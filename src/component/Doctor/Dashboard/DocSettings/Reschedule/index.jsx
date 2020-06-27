@@ -1,26 +1,23 @@
-import React, { useState } from "react";
+import React from 'react'
 
-import useCustomFetch from "../../../../../hooks/useCustomFetch";
-import PatientCancellation from "./PatientCancellation";
-import PatientReschedule from "./PatientReschedule";
-import "./reschedule.scss";
+import useCustomFetch from '../../../../../hooks/useCustomFetch'
+import PatientCancellation from './PatientCancellation'
+import PatientReschedule from './PatientReschedule'
+import './reschedule.scss'
 
-const key = { doctorKey: 'Doc_5' };
-const Reschedule = (props) => {
-  const [patientCancellationAllowed, setpatientCancellationAllowed] = useState(
-    null
-  );
-  let [responseData, reFetch, loading, error] = useCustomFetch(
-    "POST",
-    "calendar/doctorSettingsPersonalView",
+const key = { doctorKey: 'Doc_5' }
+const Reschedule = () => {
+  let [responseData, reFetch] = useCustomFetch(
+    'POST',
+    'calendar/doctorSettingsPersonalView',
     key
-  );
+  )
 
   if (!responseData) {
     return null
   }
 
-  const { configDetails } = responseData;
+  const { configDetails } = responseData
 
   return (
     <div className="doctor-preference">

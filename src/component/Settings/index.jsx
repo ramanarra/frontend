@@ -1,5 +1,3 @@
-
-
 import React, { Component } from 'react'
 import { Input } from 'antd'
 import { MdEdit } from 'react-icons/md'

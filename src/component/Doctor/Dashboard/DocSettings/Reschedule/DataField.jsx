@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import { Input } from "antd";
-import EditSave from "../../../../EditSave/index";
+import React from 'react'
+import { Input } from 'antd'
+import EditSave from '../../../../EditSave/index'
 const DataField = (props) => {
-    return(
+  return (
     <span className="date-field-wrap">
       <Input
         name={`${props.name} days`}
         type="number"
         maxLength="2"
         className="date-field days-field"
-        value={(props.days)}
+        value={props.days}
         disabled={!props.edit}
         onChange={props.handleDateChange}
         addonAfter="Days"
@@ -42,7 +42,7 @@ const DataField = (props) => {
         tooltipText={props.toolTip}
       />
     </span>
-    );
+  )
 }
 
 export default DataField
