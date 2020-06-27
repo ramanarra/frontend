@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import Sidebar from "./Sidebar";
-import DocSettingsRouter from "./DocSettingsRouter";
-import { Card, Layout } from "antd";
-import "./docSettings.scss";
+import React from 'react'
+import Sidebar from './Sidebar'
+import DocSettingsRouter from './DocSettingsRouter'
+import { Card, Layout } from 'antd'
+import './docSettings.scss'
 
-const DocSettings = (props) => {
+const DocSettings = () => {
   return (
     <div className="doc-settings">
       <Card className="doc-settings-card">
@@ -14,7 +14,7 @@ const DocSettings = (props) => {
         </Layout>
       </Card>
     </div>
-  );
-};
+  )
+}
 
-export default DocSettings;
+export default DocSettings

@@ -1,21 +1,23 @@
-:root {
-    --primary: #0bb5ff;
-    --primary-light: #54cbff;
-    --background: #fff;
-    --text: #494949;
-    --inactive: #d8d8d8;
-    --font: #333;
+/* eslint-disable */ 
 
-    --field-bg-disable: #f7f7f7;
+:root {
+  --primary: #0bb5ff;
+  --primary-light: #54cbff;
+  --background: #fff;
+  --text: #494949;
+  --inactive: #d8d8d8;
+  --font: #333;
+
+  --field-bg-disable: #f7f7f7;
 }
 
-:root{
+:root {
   --fontRegular: 'product-sans-regular', sans-serif;
   --fontBold: 'product-sans-bold', sans-serif;
 }
 
 $theme-colors: (
-  "primary": #0bb5ff
+  'primary': #0bb5ff,
 );
 
 @import '~bootstrap/dist/css/bootstrap.min.css';

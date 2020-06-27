@@ -1,15 +1,15 @@
-import React from "react";
-import { Route, Redirect } from "react-router-dom";
-import { paths } from "../../config";
+import React from 'react'
+import { Route, Redirect } from 'react-router-dom'
+import { paths } from '../../config'
 
 const AuthRouter = ({ component: Component, ...rest }) => {
-  const isTokenGenerated = localStorage.getItem("accessToken");
+  const isTokenGenerated = localStorage.getItem('accessToken')
   return (
     <Route
       {...rest}
       render={(props) => {
-        if (isTokenGenerated) {
-          return <Component {...props} />;
+        if (isTokenGenerated) { 
+          return <Component {...props} />
         } else {
           return (
             <Redirect
@@ -20,11 +20,11 @@ const AuthRouter = ({ component: Component, ...rest }) => {
                 },
               }}
             />
-          );
+          )
         }
       }}
     />
-  );
-};
+  )
+}
 
-export default AuthRouter;
+export default AuthRouter

@@ -1,10 +1,10 @@
-import React from "react";
-import { Row, Col } from "antd";
+import React from 'react'
+import { Row, Col } from 'antd'
 
-import TextInput from "../../../../TextInput";
+import TextInput from '../../../../TextInput'
 
 function StaticDoctorDetails({ doctorDetails }) {
-  const doctorName = doctorDetails ? doctorDetails.doctorName.split(" ") : "";
+  const doctorName = doctorDetails ? doctorDetails.doctorName.split(' ') : ''
 
   return (
     <div>
@@ -51,7 +51,7 @@ function StaticDoctorDetails({ doctorDetails }) {
         <Col span={12}>
           <TextInput
             label="Year Of Experience"
-            value={doctorDetails && doctorDetails.experience.concat(" +years")}
+            value={doctorDetails && doctorDetails.experience.concat(' +years')}
             disabled
           />
         </Col>
@@ -65,15 +65,11 @@ function StaticDoctorDetails({ doctorDetails }) {
           />
         </Col>
         <Col span={12}>
-          <TextInput
-            label="Email Id"
-            value="test@softsuave.com"
-            disabled
-          />
+          <TextInput label="Email Id" value="test@softsuave.com" disabled />
         </Col>
       </Row>
     </div>
-  );
+  )
 }
 
-export default StaticDoctorDetails;
+export default StaticDoctorDetails

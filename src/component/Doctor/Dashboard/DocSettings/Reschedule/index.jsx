@@ -42,7 +42,7 @@ const Reschedule = (props) => {
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Reschedule;
+export default Reschedule

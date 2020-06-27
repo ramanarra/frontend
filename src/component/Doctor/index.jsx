@@ -1,14 +1,14 @@
-import React from 'react';
-import Sidebar from "./Sidebar";
-import DocRoute from './DocRoute';
+import React from 'react'
+import Sidebar from './Sidebar'
+import DocRoute from './DocRoute'
 
 const Doctor = () => {
-    return ( 
-        <div className="app-content doctor-section">
-            <Sidebar />
-            <DocRoute />
-        </div>
-     );
+  return (
+    <div className="app-content doctor-section">
+      <Sidebar />
+      <DocRoute />
+    </div>
+  )
 }
- 
-export default Doctor;
+
+export default Doctor

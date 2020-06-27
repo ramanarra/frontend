@@ -1,15 +1,13 @@
-import React from "react";
-import { withRouter } from "react-router-dom";
-import { FaRupeeSign } from "react-icons/fa";
-import { Button } from "antd";
-import {
-  SettingOutlined,
-} from "@ant-design/icons";
+import React from 'react'
+import { withRouter } from 'react-router-dom'
+import { FaRupeeSign } from 'react-icons/fa'
+import { Button } from 'antd'
+import { SettingOutlined } from '@ant-design/icons'
 
-import { paths } from "../../../../config";
-import userImage from "../../../../assets/img/user-img.jpg";
-import useCustomFetch from "../../../../hooks/useCustomFetch";
-import "./myDoctor.scss";
+import { paths } from '../../../../config'
+import userImage from '../../../../assets/img/user-img.jpg'
+import useCustomFetch from '../../../../hooks/useCustomFetch'
+import './myDoctor.scss'
 
 const MyDoctor = (props) => {
   const [responseData] = useCustomFetch(
@@ -18,21 +16,20 @@ const MyDoctor = (props) => {
   );
 
   if (!responseData) {
-    return null;
+    return null
   }
 
-  const { doctorList } = responseData;
+  const { doctorList } = responseData
 
-  const mapDoctorList = [doctorList];
+  const mapDoctorList = [doctorList]
 
   return (
     <div className="tab-pane active my-doctors-sec" id="tab_default_1">
       <div className="user-cards-wrap">
         {mapDoctorList.map((value) => (
           <div key={value.id} className="user-card">
-            
-             <SettingOutlined className="setting-Outlined" />
-            
+            <SettingOutlined className="setting-Outlined" />
+
             <div className="user-row">
               <img src={userImage} className="usr-img" alt="userImage" />
               <div className="user-detail">
@@ -42,8 +39,11 @@ const MyDoctor = (props) => {
             </div>
             <div className="user-meet-detail">
               <div className="user-fees">
-        <p className="title-light">Fees</p>
-        <p className="card-text display"><FaRupeeSign className="fa-rupees-sign"/>{value.fees}</p>
+                <p className="title-light">Fees</p>
+                <p className="card-text display">
+                  <FaRupeeSign className="fa-rupees-sign" />
+                  {value.fees}
+                </p>
               </div>
               <div className="user-appt">
                 <p className="title-light">Today's Appointment</p>
@@ -64,11 +64,11 @@ const MyDoctor = (props) => {
               <div className="select-check">
                 <input
                   className="styled-checkbox"
-                  id={"select-card" + value.id}
+                  id={'select-card' + value.id}
                   type="checkbox"
                   value="false"
                 />
-                <label for={"select-card" + value.id}></label>
+                <label htmlFor={'select-card' + value.id}></label>
               </div>
               <Button
                 className="settings-btn"
@@ -78,7 +78,6 @@ const MyDoctor = (props) => {
                     state: { key: value.doctorKey },
                   })
                 }
-                
               >
                 Settings
               </Button>
@@ -87,7 +86,7 @@ const MyDoctor = (props) => {
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default withRouter(MyDoctor);
+export default withRouter(MyDoctor)

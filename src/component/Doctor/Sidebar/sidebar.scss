@@ -1,34 +1,34 @@
 // ---------------- Side bar ---------------------
 
 .app-sidebar {
-    position: relative;
-    width: 85px;
-    height: 100%;
-    background-color: var(--primary);
-    transition: all 0.3s ease;
-    z-index: 9;
-    white-space: nowrap;
-  }
-  
-  .app-sidebar .navigation-main {
-    list-style-type: none;
-    margin: 0px;
-    text-align: center;
-    padding: 20px;
-  }
-  .app-sidebar .nav-item {
-    font-size: 25px;
-    padding-bottom: 15px;
-  }
-  .app-sidebar .nav-item:last-child {
-    padding-bottom: 0px;
-  }
-  .app-sidebar .nav-item .menu-ic {
-    color: var(--primary-light);
-  }
-  .app-sidebar .nav-item.active .menu-ic {
-    color: #fff;
-  }
-  .app-sidebar .menu-title {
-    display: none;
-  }
+  position: relative;
+  width: 85px;
+  height: 100%;
+  background-color: var(--primary);
+  transition: all 0.3s ease;
+  z-index: 9;
+  white-space: nowrap;
+}
+
+.app-sidebar .navigation-main {
+  list-style-type: none;
+  margin: 0px;
+  text-align: center;
+  padding: 20px;
+}
+.app-sidebar .nav-item {
+  font-size: 25px;
+  padding-bottom: 15px;
+}
+.app-sidebar .nav-item:last-child {
+  padding-bottom: 0px;
+}
+.app-sidebar .nav-item .menu-ic {
+  color: var(--primary-light);
+}
+.app-sidebar .nav-item.active .menu-ic {
+  color: #fff;
+}
+.app-sidebar .menu-title {
+  display: none;
+}

@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { MdMailOutline, MdLockOutline } from "react-icons/md";
-import { Form, Button, Card } from "antd";
+import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import { MdMailOutline, MdLockOutline } from 'react-icons/md'
+import { Form, Button, Card } from 'antd'
 
-import Api from "../../api";
-import TextField from "../UIComponents/TextField";
-import { paths } from "../../config";
-import logo from "../../assets/img/logo.png";
-import "./signin.scss";
+import Api from '../../api'
+import TextField from '../UIComponents/TextField'
+import { paths } from '../../config'
+import logo from '../../assets/img/logo.png'
+import './signin.scss'
 
 const SignIn = (props) => {
-  const [username, setUsername] = useState(null);
-  const [password, setPassword] = useState(null);
+  const [username, setUsername] = useState(null)
+  const [password, setPassword] = useState(null)
   const [error, setError] = useState({
     status: false,
     msg: null,
     type: null,
-  });
+  })
 
   useEffect(() => {
     if (error) {
@@ -24,17 +24,17 @@ const SignIn = (props) => {
         status: false,
         msg: null,
         type: null,
-      });
+      })
     }
-  }, [username, password]);
+  }, [username, password])
 
   const handleSubmit = () => {
     const credentials = {
       email: username,
       password: password,
-    };
+    }
 
-    Api.post("auth/doctorLogin", credentials)
+    Api.post('auth/doctorLogin', credentials)
       .then((res) => {
         const { data } = res;
         localStorage.setItem("accessToken", data.accessToken);
@@ -43,11 +43,11 @@ const SignIn = (props) => {
       .catch(() => {
         setError({
           status: true,
-          msg: "Invalid Password or Email",
-          type: "error",
-        });
-      });
-  };
+          msg: 'Invalid Password or Email',
+          type: 'error',
+        })
+      })
+  }
 
   return (
     <div className="signin-container">
@@ -70,11 +70,11 @@ const SignIn = (props) => {
                 rules={[
                   {
                     required: true,
-                    message: "Please enter your email",
+                    message: 'Please enter your email',
                   },
                   {
-                    type: "email",
-                    message: "Please enter a valid email",
+                    type: 'email',
+                    message: 'Please enter a valid email',
                   },
                 ]}
               />
@@ -92,7 +92,7 @@ const SignIn = (props) => {
                 rules={[
                   {
                     required: true,
-                    message: "Please enter your password",
+                    message: 'Please enter your password',
                   },
                 ]}
               />
@@ -111,7 +111,7 @@ const SignIn = (props) => {
                 Login
               </Button>
               <p className="sign-up-wrap">
-                I am new?{" "}
+                I am new?{' '}
                 <Link to="/doctor/signup" className="sign-up">
                   Signup
                 </Link>
@@ -121,7 +121,7 @@ const SignIn = (props) => {
         </div>
       </Card>
     </div>
-  );
-};
+  )
+}
 
-export default SignIn;
+export default SignIn

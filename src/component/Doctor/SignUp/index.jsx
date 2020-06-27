@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import TextField from "../../UIComponents/TextField";
-import { Form, DatePicker, Button } from "antd";
-import { AiOutlineUser, AiOutlineMail, AiOutlinePhone } from "react-icons/ai";
-import "./signup.scss";
+import React, { Component } from 'react'
+import TextField from '../../UIComponents/TextField'
+import { Form, DatePicker, Button } from 'antd'
+import { AiOutlineUser, AiOutlineMail, AiOutlinePhone } from 'react-icons/ai'
+import './signup.scss'
 
 class Signup extends Component {
   state = {
@@ -13,48 +13,42 @@ class Signup extends Component {
       contact_data: null,
     },
     error: null,
-  };
+  }
 
   validation = () => {
-    const emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    const { name, phone, email, contact_data } = this.state.data;
-    if (
-      !!name &&
-      !!phone &&
-      !!email &&
-      emailPattern.test(email) &&
-      !!contact_data
-    ) {
-      return true;
+    const emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    const { name, phone, email, contact_data } = this.state.data
+    if (!!name && !!phone && !!email && emailPattern.test(email) && !!contact_data) {
+      return true
     }
-    return false;
-  };
+    return false
+  }
 
   handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     this.setState((prev) => {
       return {
         data: {
           ...prev.data,
           [name]: value,
         },
-      };
-    });
-  };
+      }
+    })
+  }
 
   handleSubmit = () => {
     if (this.validation()) {
-      this.props.history.push("/login");
+      this.props.history.push('/login')
     }
-  };
+  }
 
   render() {
-    const { data } = this.state;
+    const { data } = this.state
     return (
       <div className="signup-container">
         <div className="logo">
           <img
-            src={require("../../../assets/img/logo.png")}
+            src={require('../../../assets/img/logo.png')}
             alt="VIRUJH"
             className="logo-img"
           />
@@ -72,7 +66,7 @@ class Signup extends Component {
               rules={[
                 {
                   required: true,
-                  message: "Please enter your name",
+                  message: 'Please enter your name',
                 },
               ]}
             />
@@ -88,7 +82,7 @@ class Signup extends Component {
               rules={[
                 {
                   required: true,
-                  message: "Please enter your phone",
+                  message: 'Please enter your phone',
                 },
                 // {
                 //   min: 10,
@@ -110,11 +104,11 @@ class Signup extends Component {
               rules={[
                 {
                   required: true,
-                  message: "Please enter your email",
+                  message: 'Please enter your email',
                 },
                 {
-                  type: "email",
-                  message: "Please enter a valid email",
+                  type: 'email',
+                  message: 'Please enter a valid email',
                 },
               ]}
             />
@@ -123,13 +117,13 @@ class Signup extends Component {
               rules={[
                 {
                   required: true,
-                  message: "Please select a date for us to contact you",
+                  message: 'Please select a date for us to contact you',
                 },
               ]}
             >
               <DatePicker
                 className="contact-date"
-                showTime={{ format: "hh:mm" }}
+                showTime={{ format: 'hh:mm' }}
                 suffixIcon={null}
                 allowClear={false}
                 placeholder="When can we contact?"
@@ -137,7 +131,7 @@ class Signup extends Component {
                 inputReadOnly
                 onOk={(e) =>
                   this.handleChange({
-                    target: { value: e, name: "contact_data" },
+                    target: { value: e, name: 'contact_data' },
                   })
                 }
               />
@@ -152,13 +146,13 @@ class Signup extends Component {
             </Button>
             <p className="signin-btn">
               Already have an Account?
-              <span onClick={() => this.props.history.push("/login")}>Sign in</span>
+              <span onClick={() => this.props.history.push('/login')}>Sign in</span>
             </p>
           </Form>
         </div>
       </div>
-    );
+    )
   }
 }
 
-export default Signup;
+export default Signup

@@ -1,57 +1,55 @@
-import React, { useState, Fragment } from "react";
-import { Input, Switch } from "antd";
+import React, { useState, Fragment } from 'react'
+import { Input, Switch } from 'antd'
 
-import useSaveDoctorConfig from "../../../hooks/useSaveDoctorConfig";
-import EditSave from "../../../../EditSave";
-import "./profile.scss";
+import useSaveDoctorConfig from '../../../hooks/useSaveDoctorConfig'
+import EditSave from '../../../../EditSave'
+import './profile.scss'
 
 function PreConsult({ configDetails, reFetch, docKey }) {
-  const [editConsult, setEditConsult] = useState(false);
-  const [hours, setHours] = useState(configDetails.preconsultationHours);
-  const [minutes, setMinutes] = useState(configDetails.preconsultationMins);
-  const [saveDoctorConfig] = useSaveDoctorConfig();
+  const [editConsult, setEditConsult] = useState(false)
+  const [hours, setHours] = useState(configDetails.preconsultationHours)
+  const [minutes, setMinutes] = useState(configDetails.preconsultationMins)
+  const [saveDoctorConfig] = useSaveDoctorConfig()
 
   const [preConsult, setPreConsult] = useState(
     configDetails.isPreconsultationAllowed
-  );
+  )
 
   const handleHourChange = (event) => {
-    if(event.target.value <= 12) {
-    setHours(event.target.value);
+    if (event.target.value <= 12) {
+      setHours(event.target.value)
     }
-  };
+  }
   const handleMinuteChange = (event) => {
-    if(event.target.value <= 60) {
-    setMinutes(event.target.value);
+    if (event.target.value <= 60) {
+      setMinutes(event.target.value)
     }
-  };
+  }
 
   const handleOnConsultSave = () => {
     if (
-      (configDetails.preconsultationMins === minutes ||
-      minutes === "") && (configDetails.preconsultationHours === hours ||
-        hours === "")
+      (configDetails.preconsultationMins === minutes || minutes === '') &&
+      (configDetails.preconsultationHours === hours || hours === '')
     ) {
-      return;
+      return
     }
 
     const params = {
       doctorKey: docKey,
       preconsultationHours: hours,
       preconsultationMins: minutes,
-    };
+    }
 
-    saveDoctorConfig(params);
-    setEditConsult(false);
-    reFetch();
-  };
+    saveDoctorConfig(params)
+    setEditConsult(false)
+    reFetch()
+  }
 
   const handleOnConsultCancel = () => {
-    setHours(configDetails.preconsultationHours);
-    setMinutes(configDetails.preconsultationMins);
-    setEditConsult(false);
-  };
-
+    setHours(configDetails.preconsultationHours)
+    setMinutes(configDetails.preconsultationMins)
+    setEditConsult(false)
+  }
 
   const handleOnChnage = () => {
     const params = {
@@ -60,21 +58,19 @@ function PreConsult({ configDetails, reFetch, docKey }) {
     };
 
     saveDoctorConfig(params)
-    setPreConsult(!preConsult);
-
+    setPreConsult(!preConsult)
   }
 
   const addToolTipText = () => {
     if (
-      (configDetails.preconsultationMins === minutes ||
-      minutes === "") && (configDetails.preconsultationHours === hours ||
-        hours === "")
+      (configDetails.preconsultationMins === minutes || minutes === '') &&
+      (configDetails.preconsultationHours === hours || hours === '')
     ) {
-      return "you have not made any changes";
+      return 'you have not made any changes'
     }
 
-    return "";
-  };
+    return ''
+  }
 
   const DateField = () => (
     <span className="date-field-wrap">
@@ -110,7 +106,7 @@ function PreConsult({ configDetails, reFetch, docKey }) {
         }
       />
     </span>
-  );
+  )
 
   return (
     <Fragment>
@@ -132,14 +128,14 @@ function PreConsult({ configDetails, reFetch, docKey }) {
             <br />
             <span className="font-color">*</span>
             <span className="font-size">
-              patient has to make him self avaliable to even before the slot
-              time based on time provider
+              patient has to make him self avaliable to even before the slot time
+              based on time provider
             </span>
           </div>
         )}
       </div>
     </Fragment>
-  );
+  )
 }
 
-export default PreConsult;
+export default PreConsult

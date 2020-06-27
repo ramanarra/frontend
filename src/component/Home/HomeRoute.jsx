@@ -1,7 +1,7 @@
-import React from "react";
-import { Switch, Route } from "react-router-dom";
-import Doctor from "../Doctor";
-import { paths } from "../../config";
+import React from 'react'
+import { Switch, Route } from 'react-router-dom'
+import Doctor from '../Doctor'
+import { paths } from '../../config'
 
 const HomeRoute = () => {
   return (
@@ -9,7 +9,7 @@ const HomeRoute = () => {
       <Route path={paths.hospital.default} component={Doctor} />
       <Route path="*" component={Doctor} />
     </Switch>
-  );
-};
+  )
+}
 
-export default HomeRoute;
+export default HomeRoute
