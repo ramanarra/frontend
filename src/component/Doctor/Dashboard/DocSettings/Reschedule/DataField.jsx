@@ -11,7 +11,7 @@ const DataField = (props) => {
         className="date-field days-field"
         value={props.days}
         disabled={!props.edit}
-        onChange={props.handleDateChange}
+        onChange={props.handleDayChange}
         addonAfter="Days"
       />
       <Input
@@ -21,7 +21,7 @@ const DataField = (props) => {
         className="date-field hrs-field"
         value={props.hours}
         disabled={!props.edit}
-        onChange={props.handleDateChange}
+        onChange={props.handleHrsChange}
         addonAfter="Hrs"
       />
       <Input
@@ -31,7 +31,7 @@ const DataField = (props) => {
         className="date-field mins-field"
         value={props.minutes}
         disabled={!props.edit}
-        onChange={props.handleDateChange}
+        onChange={props.handleMinsChange}
         addonAfter="Mins"
       />
       <EditSave
