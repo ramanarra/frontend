@@ -4,6 +4,7 @@ import useCustomFetch from '../../../../../hooks/useCustomFetch'
 import PatientCancellation from './patientCancellation'
 import PatientReschedule from './PatientReschedule'
 import './reschedule.scss'
+import useSaveDoctorConfig from '../../../hooks/useSaveDoctorConfig'
 
 const key = { doctorKey: 'Doc_5' }
 const Reschedule = () => {
@@ -12,6 +13,7 @@ const Reschedule = () => {
     'calendar/doctorSettingsPersonalView',
     key
   )
+  const [saveDoctorConfig] = useSaveDoctorConfig()
 
   if (!responseData) {
     return null
@@ -28,6 +30,7 @@ const Reschedule = () => {
             patientCancelationData={configDetails}
             doctorKey={key}
             reFetch={reFetch}
+            saveDoctorConfig={saveDoctorConfig}
           />
         )}
         {configDetails && (
@@ -35,6 +38,7 @@ const Reschedule = () => {
             patientRescheduleData={configDetails}
             doctorKey={key}
             reFetch={reFetch}
+            saveDoctorConfig={saveDoctorConfig}
           />
         )}
       </div>
