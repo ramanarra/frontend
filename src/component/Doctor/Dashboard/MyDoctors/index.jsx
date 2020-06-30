@@ -14,12 +14,10 @@ const MyDoctor = ({ docList, history }) => {
 
   const { doctorList } = docList
 
-  const mapDoctorList = Array.isArray(doctorList) ? doctorList : [doctorList]
-
   return (
     <div className="tab-pane active my-doctors-sec" id="tab_default_1">
       <div className="user-cards-wrap">
-        {mapDoctorList.map((value) => (
+        {doctorList.map((value) => (
           <div key={value.id} className="user-card">
             <SettingOutlined className="setting-Outlined" />
 
