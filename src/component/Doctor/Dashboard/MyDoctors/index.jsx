@@ -5,20 +5,16 @@ import { Button } from 'antd'
 import { SettingOutlined } from '@ant-design/icons'
 
 import { paths } from '../../../../config'
-import userImage from '../../../../assets/img/user-img.jpg'
-import useCustomFetch from '../../../../hooks/useCustomFetch'
 import './myDoctor.scss'
 
-const MyDoctor = (props) => {
-  const [responseData] = useCustomFetch('GET', 'calendar/doctor_List')
-
-  if (!responseData) {
+const MyDoctor = ({ docList, history }) => {
+  if (!docList) {
     return null
   }
 
-  const { doctorList } = responseData
+  const { doctorList } = docList
 
-  const mapDoctorList = [doctorList]
+  const mapDoctorList = Array.isArray(doctorList) ? doctorList : [doctorList]
 
   return (
     <div className="tab-pane active my-doctors-sec" id="tab_default_1">
@@ -28,7 +24,7 @@ const MyDoctor = (props) => {
             <SettingOutlined className="setting-Outlined" />
 
             <div className="user-row">
-              <img src={userImage} className="usr-img" alt="userImage" />
+              <img src={value.photo} className="usr-img" alt="userImage" />
               <div className="user-detail">
                 <h1 className="user-name">{value.doctorName}</h1>
                 <p className="name-desg">{value.speciality}</p>
@@ -70,7 +66,7 @@ const MyDoctor = (props) => {
               <Button
                 className="settings-btn"
                 onClick={() =>
-                  props.history.push({
+                  history.push({
                     pathname: paths.hospital.doctor.default,
                     state: { key: value.doctorKey },
                   })
