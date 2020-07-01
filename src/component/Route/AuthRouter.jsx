@@ -8,7 +8,7 @@ const AuthRouter = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={(props) => {
-        if (isTokenGenerated) { 
+        if (isTokenGenerated) {
           return <Component {...props} />
         } else {
           return (

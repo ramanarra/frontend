@@ -2,7 +2,7 @@ import React from 'react'
 import Navigation from '../Navigation'
 import HomeRoute from './HomeRoute'
 
-const Home = (props) => {
+const Home = () => {
   return (
     <section className="app-main">
       <Navigation />

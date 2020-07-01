@@ -1,19 +1,18 @@
 .doctor-preference {
   padding: 20px 50px;
-
   .pref-head {
-    font-size: 18px;
+    font-size: 17px;
     font-family: var(--fontRegular);
+    padding-top: 10px;
   }
-
   .options {
-    padding: 20px 0;
-
+    padding: 12px 0;
     .option-sec {
       .qus-wrap {
         display: flex;
         align-items: center;
         padding: 20px 0;
+        color: #414141;
         .date-field-wrap {
           padding-left: 20px;
           .date-field {
@@ -42,24 +41,21 @@
           margin-left: 20px;
         }
       }
-
       .note-box {
         background: #f7fdff;
         padding: 10px 30px;
         display: flex;
         width: 500px;
-
         .info-icon {
-          font-size: 18px;
+          font-size: 15px;
           color: #1b6883;
           padding-right: 5px;
           align-self: flex-start;
         }
-
         .context {
           padding-top: 5px;
           font-family: var(--fontRegular);
-          font-size: 12px;
+          font-size: 11px;
           color: #1b6883;
           .note {
             font-weight: bold;
@@ -67,11 +63,26 @@
         }
       }
     }
-
     .sec-1 {
       margin-bottom: 20px;
-      padding-bottom: 20px;
+      padding-bottom: 23px;
       border-bottom: 1px solid #f0f0f0;
     }
   }
+}
+
+.qus {
+  color: #414141;
+}
+
+.reduce-bottom {
+  padding-bottom: 9px;
+}
+
+.reduce-space {
+  padding-bottom: 17px;
+}
+
+.reduce-top {
+  padding-top: 9px;
 }
