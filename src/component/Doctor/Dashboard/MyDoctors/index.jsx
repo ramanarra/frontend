@@ -8,12 +8,12 @@ import { paths } from '../../../../config'
 import './myDoctor.scss'
 
 const MyDoctor = (props) => {
-  const [responseData] = useCustomFetch(
+  const [docList] = useCustomFetch(
     'GET',
     `calendar/doctorList?key=${props.location.state.key}`
   )
 
-  if (!responseData) {
+  if (!docList) {
     return null
   }
 

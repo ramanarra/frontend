@@ -38,10 +38,10 @@ const SignIn = (props) => {
       .then((res) => {
         const { data } = res
         localStorage.setItem('accessToken', data.accessToken)
-        props.history.push({
-          pathname: paths.hospital.dashboard,
-          state: { key: data.doctorKey },
-        })
+        localStorage.setItem('role', data.role)
+        localStorage.setItem('docKey', data.doctorKey)
+        localStorage.setItem('accountKey', data.accountKey)
+        props.history.push(paths.hospital.dashboard)
       })
       .catch(() => {
         setError({
