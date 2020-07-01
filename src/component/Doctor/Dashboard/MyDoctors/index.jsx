@@ -7,12 +7,7 @@ import { SettingOutlined } from '@ant-design/icons'
 import { paths } from '../../../../config'
 import './myDoctor.scss'
 
-const MyDoctor = (props) => {
-  const [docList] = useCustomFetch(
-    'GET',
-    `calendar/doctorList?key=${props.location.state.key}`
-  )
-
+const MyDoctor = ({ docList, history }) => {
   if (!docList) {
     return null
   }
