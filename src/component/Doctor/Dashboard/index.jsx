@@ -1,42 +1,41 @@
-import React, { Component } from 'react'
+import React, { useState, useMemo } from 'react'
+
 import Tab from './Tab'
 import MyDoctor from './MyDoctors'
 import Schedule from './Schedule'
+import useCustomFetch from '../../../hooks/useCustomFetch'
+import ROLE from '../../../constants'
 import './dashboard.scss'
 
-class Dashboard extends Component {
-  state = {
-    tab: 0,
-  }
+function Dashboard() {
+  const [tab, setTab] = useState(0)
 
-  handleChange = (name, value) => {
-    this.setState({
-      [name]: value,
-    })
-  }
+  const key = useMemo(() => {
+    return localStorage.getItem('role') === ROLE.doctor
+      ? localStorage.getItem('docKey')
+      : localStorage.getItem('accountKey')
+  })
 
-  render() {
-    const { tab } = this.state
-    return (
-      <section className="content-wrapper doc-dashboard">
-        <div className="dashboard-wrapper">
-          {/* #F9F9F9 */}
-          <div className="tabbable-panel">
-            <div className="tabbable-line">
-              <Tab
-                tab={tab}
-                switchTab={(value) => this.handleChange('tab', value)}
-              />
-              <div className="tab-content">
-                {tab === 0 && <MyDoctor />}
-                {tab === 1 && <Schedule />}
-              </div>
+  const [docList] = useCustomFetch(
+    'GET',
+    `calendar/doctorList?key=${key}`
+  )
+
+  return (
+    <section className="content-wrapper doc-dashboard">
+      <div className="dashboard-wrapper">
+        <div className="tabbable-panel">
+          <div className="tabbable-line">
+            <Tab tab={tab} switchTab={(value) => setTab(value)} />
+            <div className="tab-content">
+              {tab === 0 && <MyDoctor docList={docList} />}
+              {tab === 1 && <Schedule docList={docList}/>}
             </div>
           </div>
         </div>
-      </section>
-    )
-  }
+      </div>
+    </section>
+  )
 }
 
 export default Dashboard
