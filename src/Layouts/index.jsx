@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles'
 
 import AppHeader from './AppHeader'
 import NavBar from './NavBar'
+import Doctors from '../pages/Doctors'
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -30,7 +31,7 @@ function Layout() {
 
           <Box className={classes.navBar}>
             <NavBar />
-            <div>Udhaya</div>
+            <Doctors />
           </Box>
           {/* <AppBody /> */}
         </Fragment>
