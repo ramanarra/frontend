@@ -1,5 +1,5 @@
 @font-face {
-  font-family: 'Product Sans';
+  font-family: 'product-sans-bold-italic';
   src: url('ProductSans-BoldItalic.eot');
   src: local('Product Sans Bold Italic'), local('ProductSans-BoldItalic'),
     url('ProductSans-BoldItalic.eot?#iefix') format('embedded-opentype'),
@@ -11,7 +11,7 @@
 }
 
 @font-face {
-  font-family: 'Product Sans';
+  font-family: 'product-sans-regular';
   src: url('ProductSans-Regular.eot');
   src: local('Product Sans'), local('ProductSans-Regular'),
     url('ProductSans-Regular.eot?#iefix') format('embedded-opentype'),
@@ -23,25 +23,25 @@
 }
 
 @font-face {
-  font-family: 'Product Sans';
-  src: url('ProductSans-Bold.eot');
+  font-family: 'product-sans-bold';
+  src: url('/ProductSans-Bold.eot');
   src: local('Product Sans Bold'), local('ProductSans-Bold'),
-    url('ProductSans-Bold.eot?#iefix') format('embedded-opentype'),
-    url('ProductSans-Bold.woff') format('woff'),
-    url('ProductSans-Bold.ttf') format('truetype'),
-    url('ProductSans-Bold.svg#ProductSans-Bold') format('svg');
+    url('/ProductSans-Bold.eot?#iefix') format('embedded-opentype'),
+    url('/ProductSans-Bold.woff') format('woff'),
+    url('/ProductSans-Bold.ttf') format('truetype'),
+    url('/ProductSans-Bold.svg#ProductSans-Bold') format('svg');
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Product Sans';
-  src: url('ProductSans-Italic.eot');
+  font-family: 'product-sans-italic';
+  src: url('/ProductSans-Italic.eot');
   src: local('Product Sans Italic'), local('ProductSans-Italic'),
-    url('ProductSans-Italic.eot?#iefix') format('embedded-opentype'),
-    url('ProductSans-Italic.woff') format('woff'),
-    url('ProductSans-Italic.ttf') format('truetype'),
-    url('ProductSans-Italic.svg#ProductSans-Italic') format('svg');
+    url('/ProductSans-Italic.eot?#iefix') format('embedded-opentype'),
+    url('/ProductSans-Italic.woff') format('woff'),
+    url('/ProductSans-Italic.ttf') format('truetype'),
+    url('/ProductSans-Italic.svg#ProductSans-Italic') format('svg');
   font-weight: normal;
   font-style: italic;
 }
