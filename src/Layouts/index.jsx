@@ -4,6 +4,7 @@ import { Redirect } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 
 import AppHeader from './AppHeader'
+import AppBody from './AppBody'
 import NavBar from './NavBar'
 
 const useStyles = makeStyles(() => ({
@@ -30,9 +31,8 @@ function Layout() {
 
           <Box className={classes.navBar}>
             <NavBar />
-            <div>Udhaya</div>
+            <AppBody />
           </Box>
-          {/* <AppBody /> */}
         </Fragment>
       ) : (
         <Redirect to={'/login'} />

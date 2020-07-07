@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { Box } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -10,10 +11,13 @@ const useStyles = makeStyles(() => ({
 
   item: {
     color: '#f7f7f7',
-    fontSize: 24,
+    fontSize: 22,
     paddingTop: 8,
-    paddingBottom: 16
-  }
+    paddingBottom: 16,
+    display: 'flex',
+    justifyContent: 'center',
+    textDecoration: 'none'
+  },
 }))
 
 function NavBar() {
@@ -21,19 +25,20 @@ function NavBar() {
 
   return (
     <Box className={classes.container}>
-     <Box paddingTop={2}>   
-      <Box className={classes.item} display="flex" justifyContent="center">
-        <i className="icon-doctor "></i>
-      </Box>
-      <Box className={classes.item} display="flex" justifyContent="center">
-        <i className="icon-patient "></i>
-      </Box>
-      <Box className={classes.item} display="flex" justifyContent="center">
-        <i className="icon-progress "></i>
-      </Box>
-      <Box className={classes.item} display="flex" justifyContent="center">
-        <i className="icon-settings "></i>
-      </Box>
+      <Box paddingTop={2}>
+        <Link className={classes.item} to="/doctors">
+          <i className="icon-doctor "></i>
+        </Link>
+        <Link className={classes.item} to="/patients">
+          <i className="icon-patient "></i>
+        </Link>
+        <Link className={classes.item} to="/reports">
+          {' '}
+          <i className="icon-progress "></i>
+        </Link>
+        <Link className={classes.item} to="/settings">
+          <i className="icon-settings "></i>
+        </Link>
       </Box>
     </Box>
   )
