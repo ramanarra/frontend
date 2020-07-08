@@ -9,8 +9,8 @@ import Logo from '../../assets/img/logo.png'
 const useStyles = makeStyles(() => ({
   appBar: {
     height: 62,
-    paddingLeft: 30,
-    paddingRight: 75,
+    paddingLeft: 20,
+    paddingRight: 60,
     display: 'flex',
     alignItems: 'center',
     borderBottom: '1px solid #dddddd',

@@ -10,7 +10,7 @@ const AppBody = () => {
           const Component = route.component
 
           return (
-            <Route path={route.path} exact key={index}>
+            <Route path={route.path} key={index}>
               <Component />
             </Route>
           )

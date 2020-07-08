@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Switch, BrowserRouter as Router, Route } from 'react-router-dom'
+import { Switch, HashRouter, Route } from 'react-router-dom'
 import { ThemeProvider } from '@material-ui/styles'
 
 import './assets/fonts/product-sans/stylesheet.css'
@@ -15,13 +15,13 @@ import * as serviceWorker from './serviceWorker'
 ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <Router>
+      <HashRouter>
         <Switch>
           <Route exact path={'/select-role'} component={SelectRole} />
           <Route exact path={'/login'} component={Login} />
           <Route path={'/'} component={Layouts} />
         </Switch>
-      </Router>
+      </HashRouter>
     </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')

@@ -1,10 +1,11 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 
 function Doctors() {
 
     return(
-        <div>doctors</div>
+        <Link to={'/doctors/doc_5'}>doctors</Link>
     )
 }
 

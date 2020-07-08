@@ -12,17 +12,17 @@ const routes = [
   },
   {
     path: ['/patients'],
-    name: 'Doctors',
+    name: 'Patients',
     component: Patients,
   },
   {
     path: '/reports',
-    name: 'Doctors',
+    name: 'Reports',
     component: Reports,
   },
   {
     path: '/settings',
-    name: 'Doctors',
+    name: 'Settings',
     component: Settings,
   },
 ]
