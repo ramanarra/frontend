@@ -1,16 +1,16 @@
 import React from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
 import routes from '../routes'
-
+ 
 const AppBody = () => {
   return (
-    <div>
+    <div style={{ width: 'calc(100% - 79px)'}}>
       <Switch>
         {routes.map((route, index) => {
           const Component = route.component
 
           return (
-            <Route path={route.path} key={index}>
+            <Route path={route.path} exact={route.exact} name={route.name} key={index}>
               <Component />
             </Route>
           )

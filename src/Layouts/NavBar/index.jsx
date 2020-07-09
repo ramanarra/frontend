@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(() => ({
   container: {
-    width: '5.2%',
+    width: '79px',
     background: '#0bb5ff',
   },
 

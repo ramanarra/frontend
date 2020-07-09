@@ -4,3 +4,10 @@ body {
   font-size: 20px;
   font-weight: 700;
 }
+
+*,
+*::before,
+*::after {
+  background-repeat: no-repeat;
+  box-sizing: border-box;
+}

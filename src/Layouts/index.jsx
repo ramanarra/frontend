@@ -14,7 +14,7 @@ const useStyles = makeStyles(() => ({
   },
 
   navBar: {
-    height: 'calc(100% - 63px)',
+    height: 'calc(100% - 62px)',
     width: 'inherit',
     display: 'flex',
   },
@@ -35,7 +35,7 @@ function Layout() {
           </Box>
         </Fragment>
       ) : (
-        <Redirect to={'/login'} />
+        <Redirect to={'/select-role'} />
       )}
     </div>
   )
