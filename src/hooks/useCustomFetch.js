@@ -14,6 +14,7 @@ function useCustomFecth(apiMethod, url, params) {
     if (reload) {
       if (apiMethod === 'GET') {
         API.get(url, {
+          params: { ...params },
           headers: {
             Authorization: authStr,
           },

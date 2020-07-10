@@ -1,16 +1,20 @@
-import { createMuiTheme } from "@material-ui/core/styles";
+import { createMuiTheme } from '@material-ui/core/styles'
 
 const theme = createMuiTheme({
   typography: {
-    fontFamily: "product-sans-regular, sans-serif",
+    fontFamily: 'product-sans-regular, sans-serif',
     h1: {
       fontSize: 22,
       fontWeight: 700,
     },
     subtitle1: {
-      fontFamily: "product-sans-bold, sans-serif",
+      fontFamily: 'product-sans-bold, sans-serif',
       fontSize: 20,
       fontWeight: 600,
+    },
+
+    h3: {
+      fontSize: 18,
     },
 
     h4: {
@@ -19,8 +23,8 @@ const theme = createMuiTheme({
 
     h6: {
       fontSize: 11,
-      color: '#d8d8d8'
-    }
+      color: '#d8d8d8',
+    },
   },
 
   overrides: {
@@ -28,16 +32,16 @@ const theme = createMuiTheme({
       root: {
         fontSize: 13,
         borderRadius: 0,
-        "&$focused $notchedOutline": {
-          borderColor: "#54cbff",
+        '&$focused $notchedOutline': {
+          borderColor: '#54cbff',
           borderWidth: 2,
           fontSize: '20 !important',
         },
       },
-      input: { padding: "12px 14px" },
+      input: { padding: '12px 14px' },
       notchedOutline: {
-        borderColor: "#d8d8d8",
-        "&$focused": { borderColor: "red" },
+        borderColor: '#d8d8d8',
+        '&$focused': { borderColor: 'red' },
       },
     },
 
@@ -49,18 +53,18 @@ const theme = createMuiTheme({
       containedPrimary: {
         color: '#ffffff',
         fontSize: 12,
-      }
-    }
+      },
+    },
   },
 
   palette: {
     primary: {
-      main: "#0bb5ff",
+      main: '#0bb5ff',
     },
     secondary: {
-      main: "#54cbff",
+      main: '#54cbff',
     },
   },
-});
+})
 
-export default theme;
+export default theme
