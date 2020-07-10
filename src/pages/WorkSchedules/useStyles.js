@@ -11,39 +11,61 @@ const useStyles = makeStyles(() => ({
     },
     title: {
         fontSize: '17px',
-        color: '#484848'
+        color: '#484848',
+        width: 'fit-content'
         
     },
     spaceBetweenTitle: {
-        marginBottom: '31px'
+        marginBottom: '27px'
     },
     subtitle:{
         fontSize: '13px',
     fontWeight: '300',
-    color: '#414141'
+    color: '#414141',
+    width: 'fit-content'
     
     },
     spaceBetweenSubTitle: {
         marginBottom: '18px'
     },
+    fitsizeofwidth:{
+        width: 'fit-content'
+    },
     button: {
         marginRight: '16px',
         width: '88px',
-        height: '33px',
+        height: '31px',
         border: '1px solid #E7E7E7',
         fontSize: '10px',
         color: '#8C8C8C',
-        marginBottom: '33px',
         textTransform: 'lowercase'
+    },
+    margin: {
+        marginBottom: '33px'
     },
     input: {
         marginTop: '6px',
         fontSize: '11px',
         color: '#D9D9D9',
-        width: '71px'
+        width: '12px'
+    },
+    min:{
+        fontSize: '11px',
+        color: '#D9D9D9',
+        marginLeft: '2px'
     },
     notchedOutline: {
         borderBottom: '1px solid white'
+      },
+      underline: {
+        color: 'red' ,
+        '&::before': {
+            borderBottom: '1px solid #E7E7E7',
+            width: '80px'
+        },
+        '&::after': {
+            width: '80px'
+        }
       },
       bookingallowed: {
         fontSize: '10px',
@@ -53,7 +75,7 @@ const useStyles = makeStyles(() => ({
       button2: {
         marginRight: '16px',
         width: '88px',
-        height: '33px',
+        height: '31px',
         border: '1px solid #E7E7E7',
         fontSize: '10px',
         color: '#8C8C8C',
@@ -64,11 +86,12 @@ const useStyles = makeStyles(() => ({
     },
     iconbutton: {
         color: 'rgb(36, 189, 255)',
-        fontSize: '15px'
+        fontSize: '15px',
+        marginRight: '11px'
     },
     input2: {
         padding: '0px',
-    width: '25px',
+    width: '30px',
     height: '17px',
     textAlign: 'center'
     },

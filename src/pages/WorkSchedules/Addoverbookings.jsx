@@ -2,19 +2,22 @@ import React, { useState, useEffect } from 'react'
 import { Typography, Button, TextField, Grid } from '@material-ui/core';
 import classNames from 'classnames'
 import EditIcon from '@material-ui/icons/Edit';
-import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
-import SendOutlinedIcon from '@material-ui/icons/SendOutlined';
+import CheckIcon from '@material-ui/icons/Check';
+import ClearIcon from '@material-ui/icons/Clear';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import Switch from "react-switch";
 
 import useStyles from './useStyles'
-import updateWorkScheduleForsessionAndoverbooking from '../hooks/updateWorkScheduleForsessionAndoverbooking'
+import useUpdateWorkSchedule from './useUpdateWorkSchedule'
 const Addoverbookings = (props) => {
     const [consultationSessionTimings, setConsultationSessionTimings] = useState('');
     const [editOverBookings, setEditOverBookings] = useState()
     const [overBookingType, setOverBookingType] = useState()
     const [enableswitch, setEnableSwitch] = useState()
     const [mins, setMins] = useState(20);
-    const [updateWorkSchedule] = updateWorkScheduleForsessionAndoverbooking()
+    const [updateWorkSchedule] = useUpdateWorkSchedule()
+    const classes = useStyles();
+    const [selectedEditIcon, setSelectedEditIcon] = useState(false);
 
     useEffect(() => {
         if (props.responseData) {
@@ -25,11 +28,8 @@ const Addoverbookings = (props) => {
         }
     }, [props.responseData])
 
-    const classes = useStyles();
-    const [selectedEditIcon, setSelectedEditIcon] = useState(false);
     const clickEditIcon = () => {
         setSelectedEditIcon(true)
-
     }
     const clickCancelIcon = () => {
         setSelectedEditIcon(false)
@@ -76,7 +76,9 @@ const Addoverbookings = (props) => {
         callBackOfSwitch();
     }
     const handlemins = (event) => {
+        if(event.target.value.length <= 3){
         setMins(event.target.value);
+        }
     }
     const updateConsultationSessionTimings = (timings) => {
         if (consultationSessionTimings !== timings) {
@@ -90,7 +92,7 @@ const Addoverbookings = (props) => {
                     consultationSessionTimings: consultationSessionTimings,
                 }
             });
-            props.refetch();
+            // props.refetch();
 
         }
     }
@@ -127,9 +129,9 @@ const Addoverbookings = (props) => {
             <Button variant="outlined" onClick={() => updateConsultationSessionTimings("30 minutes")} className={classNames(classes.button, consultationSessionTimings === "30 minutes" ? classes.active : '')}>30 minutes</Button>
             <Button variant="outlined" onClick={() => updateConsultationSessionTimings("45 minutes")} className={classNames(classes.button, consultationSessionTimings === "45 minutes" ? classes.active : '')}>45 minutes</Button>
             <Button variant="outlined" onClick={() => updateConsultationSessionTimings("60 minutes")} className={classNames(classes.button, consultationSessionTimings === "60 minutes" ? classes.active : '')} >60 minutes</Button>
-            <TextField value={mins + 'min'} InputProps={{ classes: { input: classes.input, notchedOutline: classes.notchedOutline } }} onChange={handlemins}>min</TextField>
-
-            <Grid component="label" container alignItems="center" spacing={1}>
+            <TextField value={mins} InputProps={{ classes: { input: classes.input, notchedOutline: classes.notchedOutline, underline: classes.underline }, endAdornment:<InputAdornment position="end" className = {classes.min} labelWidth={70}><div style={{fontSize: '13px'}}>min</div></InputAdornment> }} onChange={handlemins}>min</TextField>
+            <div className = {classes.margin}></div>
+            <Grid component="label" container alignItems="center" spacing={1} className={classes.fitsizeofwidth}>
                 <Grid item><Typography variant="subtitle1" gutterBottom className={classNames(classes.subtitle, classes.spaceBetweenSubTitle)}>
                     Add overbookings
       </Typography></Grid>
@@ -138,15 +140,15 @@ const Addoverbookings = (props) => {
                 </Grid>
             </Grid>
             {enableswitch &&
-                <Grid component="label" container alignItems="center" spacing={1}>
+                <Grid component="label" container alignItems="center" spacing={1} className={classes.fitsizeofwidth}>
                     <Grid item>
                         <Typography variant="subtitle1" gutterBottom className={classes.bookingallowed}>
-                            Total overbookings are allowed {!selectedEditIcon ? <span className={classes.overbookingCount}>{editOverBookings}</span> : <span className={classes.textfieldCount}><TextField id="outlined-basic" value={editOverBookings} onChange={changeOverbookingsValue} InputProps={{ classes: { input: classes.input2 } }} variant="outlined" /></span>}<span className={classes.editicon}> {!selectedEditIcon ? <EditIcon className={classes.iconbutton} onClick={clickEditIcon} /> : <div><CancelOutlinedIcon className={classes.cancelation} onClick={clickCancelIcon} /><SendOutlinedIcon className={classes.iconbutton} onClick={clickSaveIcon} /></div>} </span>
+                            Total overbookings are allowed {!selectedEditIcon ? <span className={classes.overbookingCount}>{editOverBookings}</span> : <span className={classes.textfieldCount}><TextField id="outlined-basic" value={editOverBookings} onChange={changeOverbookingsValue} InputProps={{ classes: { input: classes.input2 } }} variant="outlined" /></span>}<span className={classes.editicon}> {!selectedEditIcon ? <EditIcon className={classes.iconbutton} onClick={clickEditIcon} /> : <div><ClearIcon className={classes.cancelation} onClick={clickCancelIcon} /><CheckIcon className={classes.iconbutton} onClick={clickSaveIcon} /></div>} </span>
                         </Typography>
                     </Grid>
                     <Grid item style={{ marginBottom: '6px' }}>
-                        <Button variant="outlined" onClick={() => updateOverBookingType('Per Hour')} className={classNames(classes.button2, overBookingType === "Per Hour" ? classes.active : '')}>per hour</Button>
-                        <Button variant="outlined" onClick={() => updateOverBookingType('Per Day')} className={classNames(classes.button2, overBookingType === "Per Day" ? classes.active : '')}>per day</Button>
+                        <Button variant="outlined" onClick={() => updateOverBookingType('Per Hour')} className={classNames(classes.button2, overBookingType === "Per Hour" ? classes.active : '')}>per Hour</Button>
+                        <Button variant="outlined" onClick={() => updateOverBookingType('Per Day')} className={classNames(classes.button2, overBookingType === "Per Day" ? classes.active : '')}>per Day</Button>
                     </Grid>
                 </Grid>
             }
