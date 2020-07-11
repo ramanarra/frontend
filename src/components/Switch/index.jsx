@@ -1,19 +1,19 @@
-import React from 'react'
 import { Switch as MatSwitch, withStyles } from '@material-ui/core'
 
 const Switch = withStyles((theme) => ({
   root: {
-    width: 50,
-    height: 25,
+    width: 40,
+    height: 20,
     padding: 0,
     display: 'flex',
   },
   switchBase: {
     top: 1.5,
-    padding: 2,
-    color: theme.palette.grey[500],
+    left: 1,
+    padding: 1.5,
+    color: theme.palette.common.white,
     '&$checked': {
-      transform: 'translateX(27px)',
+      transform: 'translateX(20px)',
       color: theme.palette.common.white,
       '& + $track': {
         opacity: 1,
@@ -23,15 +23,15 @@ const Switch = withStyles((theme) => ({
     },
   },
   thumb: {
-    width: 18,
-    height: 18,
+    width: 14,
+    height: 14,
     boxShadow: 'none',
   },
   track: {
     border: `1px solid ${theme.palette.grey[500]}`,
-    borderRadius: 25 / 2,
+    borderRadius: 20 / 2,
     opacity: 1,
-    backgroundColor: theme.palette.common.white,
+    backgroundColor: theme.palette.grey[500],
   },
   checked: {},
 }))(MatSwitch)

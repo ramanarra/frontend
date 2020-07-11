@@ -1,8 +1,27 @@
-import React from 'react'
-import { Grid, Typography, TextField } from '@material-ui/core'
+import React, { useEffect, useState } from 'react'
+import { Typography, TextField } from '@material-ui/core'
 import OptionBox from './OptionBox'
 
-const SessionTime = () => {
+const SessionTime = ({ data }) => {
+  const [sessionTime, setSessionTime] = useState(null)
+
+  useEffect(() => {
+    setSessionTime(parseInt(data?.split(' ')[0]))
+  }, [data])
+
+  const isCustomTime = () => {
+    const listSet = [15, 30, 45, 60]
+    return listSet.includes(sessionTime)
+  }
+
+  const activeBox = (value) => {
+    if (value !== -1) {
+      return sessionTime === value ? ' active' : ''
+    } else {
+      return isCustomTime ? '' : ' active'
+    }
+  }
+
   return (
     <div className="session-time-det-wrap">
       <Typography variant="subtitle2" className="sub-head">
@@ -10,27 +29,31 @@ const SessionTime = () => {
       </Typography>
       <div className="session-options-wrap">
         <OptionBox
-          className="session-option"
+          className={'session-option' + activeBox(15)}
           value="15 minutes"
-          onClick={() => console.log(15)}
+          onClick={() => setSessionTime(15)}
         />
         <OptionBox
-          className="session-option"
+          className={'session-option' + activeBox(30)}
           value="30 minutes"
-          onClick={() => console.log(30)}
+          onClick={() => setSessionTime(30)}
         />
         <OptionBox
-          className="session-option"
+          className={'session-option' + activeBox(45)}
           value="45 minutes"
-          onClick={() => console.log(45)}
+          onClick={() => setSessionTime(45)}
         />
         <OptionBox
-          className="session-option"
+          className={'session-option' + activeBox(60)}
           value="60 minutes"
-          onClick={() => console.log(60)}
+          onClick={() => setSessionTime(60)}
         />
-        <div className="session-option">
-          <TextField className="session-custom-option" />
+        <div className={'session-option' + activeBox(-1)}>
+          <TextField
+            className="session-custom-option"
+            value={sessionTime}
+            onChange={(e) => setSessionTime(e.target.value)}
+          />
         </div>
       </div>
     </div>

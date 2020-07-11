@@ -1,5 +1,5 @@
 import React from 'react'
-import { Typography, Grid } from '@material-ui/core'
+import { Typography } from '@material-ui/core'
 import SessionTime from './SessionTime'
 import useCustomFetch from '../../hooks/useCustomFetch'
 import { URL } from '../../api'
