@@ -1,0 +1,152 @@
+.doc-work-schedule-wrap {
+  padding: 0 50px;
+
+  .main-head {
+    font-size: 20px;
+    padding: 10px 0;
+  }
+
+  .sub-head {
+    font-size: 18px;
+    padding: 10px 0;
+  }
+
+  .session-time-det-wrap {
+    padding: 10px 0;
+    .session-options-wrap {
+      display: flex;
+      padding: 10px 0;
+
+      .session-custom-option {
+        max-width: 110px;
+      }
+    }
+  }
+
+  .overbooking-det-wrap {
+    .overbooking-status {
+      display: flex;
+      align-items: center;
+      padding: 20px 0;
+
+      .sub-head {
+        margin-right: 20px;
+      }
+    }
+    .overbooking-option {
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      font-weight: 400;
+      color: #aaa;
+
+      .overbooking-value {
+        margin-left: 5px;
+        margin-right: 20px;
+
+        .overbooking-field {
+          outline: none;
+          border: none;
+          max-width: 30px;
+        }
+      }
+    }
+  }
+
+  .schedule-calender-wrap {
+    padding-top: 10px;
+
+    .main-title {
+      padding: 30px 0;
+    }
+
+    .table {
+      border-collapse: collapse;
+
+      .table-head,
+      .table-cell {
+        border: 1px solid #aaa;
+      }
+
+      thead {
+        font-weight: bold;
+        font-size: 12px;
+
+        .table-head {
+          padding: 20px 30px;
+          width: 200px;
+          text-align: center;
+          text-transform: capitalize;
+        }
+      }
+      tbody {
+        .table-cell {
+          padding: 20px;
+          height: 100px;
+
+          .appointments {
+            display: flex;
+            flex-direction: column;
+            .slot-wrap {
+              padding-bottom: 15px;
+              .slot {
+                border: 1px solid #aaa;
+                cursor: default;
+                padding: 3px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.option-box {
+  display: inline-block;
+  border: 1px solid #aaa;
+  color: #aaa;
+  padding: 10px 20px;
+  margin-right: 20px;
+  border-radius: 3px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: 0.3s;
+
+  &:hover {
+    border-color: #0bb5ff;
+    color: #0bb5ff;
+    transition: 0.3s;
+  }
+}
+
+.edit-field-wrap {
+  display: inline-block;
+  .edit-field {
+    outline: none;
+    border: none;
+    max-width: 30px;
+    // text-align: right;
+
+    &:disabled {
+      background: transparent;
+      color: #000;
+    }
+  }
+
+  .edit-toggle-btn,
+  .cncl-edit-btn {
+    color: #0bb5ff;
+    min-height: 0;
+    height: 24px;
+    width: 24px;
+    &:hover {
+      background: transparent;
+    }
+
+    .MuiSvgIcon-fontSizeSmall {
+      font-size: 18px;
+    }
+  }
+}
