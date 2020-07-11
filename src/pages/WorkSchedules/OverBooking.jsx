@@ -9,13 +9,13 @@ const OverBooking = (props) => {
     <div className="overbooking-det-wrap">
       <div className="overbooking-status">
         <Typography variant="subtitle2" className="sub-head">
-          Add overbooking
+          Add overbookings
         </Typography>
         <Switch />
       </div>
       <div className="overbooking-option">
         <div className="sec1">
-          Total overbookings allowed{' '}
+          Total overbookings are allowed{' '}
           <span className="overbooking-value">
             <EditField />
           </span>

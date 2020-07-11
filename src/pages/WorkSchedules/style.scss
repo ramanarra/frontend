@@ -1,14 +1,16 @@
 .doc-work-schedule-wrap {
-  padding: 0 50px;
+  padding: 0 70px;
 
   .main-head {
     font-size: 20px;
     padding: 10px 0;
+    font-weight: 500;
   }
 
   .sub-head {
-    font-size: 18px;
+    font-size: 16px;
     padding: 10px 0;
+    font-weight: 500;
   }
 
   .session-time-det-wrap {
@@ -58,6 +60,7 @@
 
     .main-title {
       padding: 30px 0;
+      font-size: 20px;
     }
 
     .table {
@@ -65,19 +68,18 @@
 
       .table-head,
       .table-cell {
-        border: 1px solid #aaa;
+        border: 1px solid #aaaaaa55;;
       }
 
       thead {
-        font-weight: 400;
-        font-size: 12px;
-        color: #aaa;
-
         .table-head {
           padding: 20px 30px;
           width: 200px;
           text-align: center;
           text-transform: capitalize;
+          color: #aaa;
+          font-weight: 400;
+          font-size: 14px;
         }
       }
       tbody {
