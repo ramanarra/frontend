@@ -22,8 +22,8 @@ const theme = createMuiTheme({
     },
 
     h6: {
-      fontSize: 11,
-      color: '#d8d8d8',
+      fontSize: 11.6,
+      color: '#d6d6d6',
     },
   },
 
@@ -32,6 +32,7 @@ const theme = createMuiTheme({
       root: {
         fontSize: 13,
         borderRadius: 0,
+        color: '#9c9292',
         '&$focused $notchedOutline': {
           borderColor: '#54cbff',
           borderWidth: 2,
@@ -40,7 +41,8 @@ const theme = createMuiTheme({
       },
       input: { padding: '12px 14px' },
       notchedOutline: {
-        borderColor: '#d8d8d8',
+        border: '1.2px solid',
+        borderColor: '#f0f0f0',
         '&$focused': { borderColor: 'red' },
       },
     },

@@ -12,7 +12,7 @@ const useStyles = makeStyles(() => ({
 
   item: {
     color: "#9ddcf8",
-    fontSize: 19,
+    fontSize: 22,
     paddingTop: 14,
     paddingBottom: 16,
     display: 'flex',

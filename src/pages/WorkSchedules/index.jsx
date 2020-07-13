@@ -10,10 +10,10 @@ import Schedules from './Schedules'
 
 const WorkSchedule = () => {
   const { id } = useParams()
-  const [data] = useCustomFetch('GET', URL.workScheduleView, { doctorKey: 'Doc_5' })
+  const [data] = useCustomFetch('GET', `calendar/doctor/workScheduleView?doctorKey=Doc_3`)
 
   return (
-    <div className="doc-work-schedule-wrap">
+    <div style={{ width: 'calc(100% - 257px)'}} className="doc-work-schedule-wrap">
       <Typography variant="h1" className="main-head">
         Work Schedules
       </Typography>

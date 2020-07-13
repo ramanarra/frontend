@@ -1,8 +1,8 @@
 import { useState } from 'react'
 
-import API from '../../api'
+import API, { URL } from '../api'
 
-function updateWorkScheduleForsessionAndoverbooking() {
+function useDoctorConfigUpdate(refetch) {
   const [loading, setLoading] = useState(false)
 
   function handleOnFetch(params) {
@@ -10,13 +10,14 @@ function updateWorkScheduleForsessionAndoverbooking() {
     const token = localStorage.getItem('virujhToken')
     const authStr = 'Bearer '.concat(token)
 
-    API.post('calendar/workScheduleEdit', params, {
+    API.post(URL.doctorConfigUpdate, params, {
       headers: {
         Authorization: authStr,
       },
     })
       .then(() => {
         setLoading(false)
+        refetch()
       })
       .catch(() => {
         setLoading(false)
@@ -26,4 +27,4 @@ function updateWorkScheduleForsessionAndoverbooking() {
   return [handleOnFetch, loading]
 }
 
-export default updateWorkScheduleForsessionAndoverbooking
+export default useDoctorConfigUpdate

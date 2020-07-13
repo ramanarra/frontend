@@ -8,7 +8,7 @@ import Logo from '../../assets/img/logo.png'
 
 const useStyles = makeStyles(() => ({
   appBar: {
-    height: 62,
+    height: 65,
     paddingLeft: 20,
     paddingRight: 60,
     display: 'flex',
@@ -33,12 +33,17 @@ const useStyles = makeStyles(() => ({
 
   notificationImg: {
     fontSize: 17,
-    color: '#928787',
+    color: '#a8a8a8',
   },
 
   logoImg: {
-    height: 75,
+    height: 78,
   },
+
+  text: {
+    fontSize: 13.5,
+    color: '#686868',
+  }
 }))
 
 export default function ButtonAppBar() {
@@ -58,7 +63,7 @@ export default function ButtonAppBar() {
         <i className={classNames("icon-notify", classes.notificationImg)}></i>
       </Box>
       <Box className={classes.gap}>
-        <Typography>Amrit Medicare Pvt. Ltd.</Typography>
+        <Typography className={classes.text}>Amrit Medicare Pvt. Ltd.</Typography>
       </Box>
       {/* <Box>
         <img src={Med} alt="hospital logo" />
