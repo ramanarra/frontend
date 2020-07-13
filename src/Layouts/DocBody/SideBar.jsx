@@ -18,8 +18,8 @@ const useStyles = makeStyles({
 
   typography: {
     fontSize: 13.1,
-    paddingBottom: 34,
-    color: '#5B5B5B',
+    paddingBottom: 30,
+    color: '#6a6a6a',
     fontWeight: 'normal',
   },
 
