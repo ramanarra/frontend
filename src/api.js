@@ -12,5 +12,7 @@ export const METHOD = {
 export const URL = {
   doctorLogin: 'auth/doctorLogin',
   doctorList: `/calendar/doctor/list?key=$`,
+  doctorSettingsPersonalView: 'calendar/doctor/SettingsPersonalView',
+  doctorConfigUpdate: 'calendar/doctor/configUpdate',
   workScheduleView: '/calendar/workScheduleView'
 }
