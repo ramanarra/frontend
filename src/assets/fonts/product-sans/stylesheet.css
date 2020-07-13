@@ -23,6 +23,15 @@
 }
 
 @font-face {
+  font-family: 'product-sans-medium';
+  src: url('ProductSans-Medium.ttf');
+  src: local('Product Sans'), local('ProductSans-Medium'),
+    url('ProductSans-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
   font-family: 'product-sans-bold';
   src: url('/ProductSans-Bold.eot');
   src: local('Product Sans Bold'), local('ProductSans-Bold'),

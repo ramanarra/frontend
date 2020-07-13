@@ -8,12 +8,13 @@ function useCustomFecth(apiMethod, url, params) {
   const [error, setError] = useState(null)
 
   useEffect(() => {
-    const token = localStorage.getItem('accessToken')
+    const token = localStorage.getItem('virujhToken')
     const authStr = 'Bearer '.concat(token)
 
     if (reload) {
       if (apiMethod === 'GET') {
         API.get(url, {
+          params: { ...params },
           headers: {
             Authorization: authStr,
           },
