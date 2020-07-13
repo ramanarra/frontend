@@ -6,5 +6,5 @@ export default axios.create({
 
 export const URL = {
   doctorList: `/calendar/doctorList`,
-  workScheduleView: '/calendar/workScheduleView'
+  workScheduleView: '/calendar/doctor/workScheduleView'
 }

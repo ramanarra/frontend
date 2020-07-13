@@ -111,6 +111,115 @@
   }
 }
 
+.slot-dialog {
+  .MuiDialog-paper {
+    padding: 30px;
+    width: 40vw;
+
+    .title-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+
+      .popup-title {
+        font-size: 20px;
+      }
+
+      .close-btn-wrap {
+        position: absolute;
+        right: 0;
+
+        .close-btn {
+          min-height: 0;
+          height: 30px;
+          width: 30px;
+
+          &:hover {
+            background: transparent;
+          }
+        }
+      }
+    }
+
+    .slots-wrap {
+      padding: 10px 20px 0;
+
+      .slot {
+        display: flex;
+        align-items: center;
+        padding: 10px 0;
+
+        .txt-field {
+          max-width: 100px;
+          margin-right: 10px;
+
+          .MuiInputBase-input {
+            height: 10px;
+          }
+        }
+        .txt-field.end-time {
+          margin-left: 10px;
+        }
+
+        .del-btn {
+          min-height: 0;
+          height: 30px;
+          width: 30px;
+          color: #ff597d;
+
+          &:hover {
+            background: transparent;
+          }
+        }
+      }
+    }
+
+    .list-btns {
+      padding: 0 20px;
+      font-size: 12px;
+      color: #0bb5ff;
+      font-weight: 500;
+
+      .btn-wrap {
+        margin-bottom: 20px;
+
+        span {
+          cursor: pointer;
+          display: inline-block;
+        }
+        .make-unavailable {
+          margin-top: 10px;
+          border: 1px solid #0bb5ff;
+          padding: 2px 5px;
+        }
+      }
+    }
+
+    .ctrl-btns {
+      padding: 0 10px;
+      display: flex;
+
+      .apply-btn,
+      .cancel-btn {
+        flex: 1;
+        margin: 0 10px;
+        border-radius: 20px;
+      }
+
+      .apply-btn {
+        background: #0bb5ff;
+        color: #fff;
+        font-weight: 500;
+      }
+
+      .cancel-btn {
+        background: #d8d8d8;
+      }
+    }
+  }
+}
+
 .option-box {
   display: inline-block;
   border: 1px solid #aaa;
