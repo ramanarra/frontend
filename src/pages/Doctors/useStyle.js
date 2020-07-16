@@ -89,12 +89,12 @@ export const useInfocardStyles = makeStyles((theme) => ({
     },
   
     desgination: {
-      fontSize: 12,
+      fontSize: 12.3,
       color: '#c1b6b6',
     },
-  
+
     text: {
-      fontSize: 11.5,
+      fontSize: 11.6,
       color: '#c8c8c8',
     },
   

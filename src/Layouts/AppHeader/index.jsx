@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles'
 
 import Stretch from '../../components/Stretch'
 import Logo from '../../assets/img/logo.png'
+import HospitalLogo from '../../assets/img/hospitalLogo.png'
 
 const useStyles = makeStyles(() => ({
   appBar: {
@@ -43,6 +44,15 @@ const useStyles = makeStyles(() => ({
   text: {
     fontSize: 13.5,
     color: '#686868',
+  },
+
+  hospitalLogoContainer: {
+    marginLeft: -17,
+  },
+
+  hospitalLogo: {
+    width: 30,
+    paddingTop: 5,
   }
 }))
 
@@ -65,9 +75,9 @@ export default function ButtonAppBar() {
       <Box className={classes.gap}>
         <Typography className={classes.text}>Amrit Medicare Pvt. Ltd.</Typography>
       </Box>
-      {/* <Box>
-        <img src={Med} alt="hospital logo" />
-      </Box> */}
+      <Box className={classes.hospitalLogoContainer}>
+        <img src={HospitalLogo} alt="hospital logo" className={classes.hospitalLogo} />
+      </Box>
     </Box>
   )
 }
