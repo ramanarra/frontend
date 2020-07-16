@@ -4,7 +4,7 @@ import Switch from '../../components/Switch'
 import OptionBox from './OptionBox'
 import EditField from './EditField'
 
-const OverBooking = ({ data }) => {
+const OverBooking = ({ data, handleUpdate }) => {
   const [bookingData, setBookingData] = useState({
     overBookingEnabled: false,
     overBookingCount: 0,
@@ -12,8 +12,19 @@ const OverBooking = ({ data }) => {
   })
 
   useEffect(() => {
+    delete data?.consultationSessionTimings
     setBookingData(data)
   }, [data])
+
+  useEffect(() => {
+    delete data?.consultationSessionTimings
+    JSON.stringify(data) !== JSON.stringify(bookingData) &&
+      handleUpdate({
+        workScheduleConfig: {
+          ...bookingData,
+        },
+      })
+  }, [bookingData])
 
   const isActive = (value) => {
     if (value.toLowerCase() === bookingData?.overBookingType?.toLowerCase()) {
@@ -51,32 +62,34 @@ const OverBooking = ({ data }) => {
           }
         />
       </div>
-      <div className="overbooking-option">
-        <div className="sec1">
-          Total overbookings are allowed{' '}
-          <span className="overbooking-value">
-            <EditField
-              value={bookingData?.overBookingCount}
-              name="overBookingCount"
-              onSave={handleChange}
+      {bookingData?.overBookingEnabled && (
+        <div className="overbooking-option">
+          <div className="sec1">
+            Total overbookings are allowed{' '}
+            <span className="overbooking-value">
+              <EditField
+                value={bookingData?.overBookingCount}
+                name="overBookingCount"
+                onSave={handleChange}
+              />
+            </span>
+          </div>
+          <div className="charge-type">
+            <OptionBox
+              className={isActive('Per hour') ? ' active' : ''}
+              name="overBookingType"
+              value="Per hour"
+              onClick={handleChange}
             />
-          </span>
+            <OptionBox
+              className={isActive('Per day') ? ' active' : ''}
+              name="overBookingType"
+              value="Per day"
+              onClick={handleChange}
+            />
+          </div>
         </div>
-        <div className="charge-type">
-          <OptionBox
-            className={isActive('Per hour') ? ' active' : ''}
-            name="overBookingType"
-            value="Per hour"
-            onClick={handleChange}
-          />
-          <OptionBox
-            className={isActive('Per day') ? ' active' : ''}
-            name="overBookingType"
-            value="Per day"
-            onClick={handleChange}
-          />
-        </div>
-      </div>
+      )}
     </div>
   )
 }

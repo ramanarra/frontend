@@ -61,6 +61,7 @@ const Schedules = (props) => {
         open={dialog.status}
         data={dialog.data}
         onClose={handleDialog.bind(this, false, null)}
+        handleUpdate={props.handleUpdate}
       />
     </div>
   )

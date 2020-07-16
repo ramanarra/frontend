@@ -14,5 +14,8 @@ export const URL = {
   doctorList: `/calendar/doctor/list?key=$`,
   doctorSettingsPersonalView: 'calendar/doctor/SettingsPersonalView',
   doctorConfigUpdate: 'calendar/doctor/configUpdate',
-  workScheduleView: '/calendar/doctor/workScheduleView'
+  workschedule: {
+    data: '/calendar/doctor/workScheduleView',
+    update: 'calendar/doctor/workScheduleEdit',
+  },
 }

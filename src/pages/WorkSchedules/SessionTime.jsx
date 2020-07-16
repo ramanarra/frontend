@@ -2,12 +2,22 @@ import React, { useEffect, useState } from 'react'
 import { Typography, TextField } from '@material-ui/core'
 import OptionBox from './OptionBox'
 
-const SessionTime = ({ data }) => {
+const SessionTime = ({ data, handleUpdate }) => {
   const [sessionTime, setSessionTime] = useState(null)
 
   useEffect(() => {
     setSessionTime(parseInt(data?.split(' ')[0]))
   }, [data])
+
+  useEffect(() => {
+    !!sessionTime &&
+      data?.split(' ')[0] !== sessionTime &&
+      handleUpdate({
+        workScheduleConfig: {
+          consultationSessionTimings: `${sessionTime} minutes`,
+        },
+      })
+  }, [sessionTime])
 
   const isCustomTime = () => {
     const listSet = [15, 30, 45, 60]
