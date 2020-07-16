@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import { Box, Typography, TextField } from '@material-ui/core'
+import { Box, Typography } from '@material-ui/core'
 import { Edit, Check, Clear } from '@material-ui/icons'
 
 import Switch from '../../components/Switch'
+import NumberTextField from '../../components/NumberTextField'
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -12,22 +13,6 @@ const useStyles = makeStyles(() => ({
   text: {
     color: '#4e4e4e',
     fontSize: 13.3,
-  },
-  time: {
-    '& input': {
-      backgroundColor: '#f7f7f7',
-      padding: '7px 4px',
-      width: 20,
-      textAlign: 'center',
-    },
-    '& fieldset': {
-      border: 'none',
-    },
-    paddingLeft: 13,
-    paddingRight: 7,
-    '& div': {
-      height: 15,
-    },
   },
   iconButton: {
     color: 'rgb(36, 189, 255)',
@@ -78,13 +63,13 @@ function Preconsultancy({ docKey, onSave, configDetails }) {
   }
 
   function handleOnPreconsultationHrsChange(event) {
-    if (!isNaN(event.target.value)) {
+    if (!isNaN(event.target.value) && event.target.value < 24 ) {
       setPreconsultationHrs(event.target.value)
     }
   }
 
   function handleOnPreconsultationMinsChange(event) {
-    if (!isNaN(event.target.value)) {
+    if (!isNaN(event.target.value) && event.target.value < 60) {
       setPreconsultationMins(event.target.value)
     }
   }
@@ -122,49 +107,39 @@ function Preconsultancy({ docKey, onSave, configDetails }) {
 
       {preconsultationAllowed && (
         <Box>
-        <Box display="flex" paddingTop={3}>
-          <Typography className={classes.text}>
-            Patient Pre-Consultancy Time:
-          </Typography>
-          <TextField
-            className={classes.time}
-            variant="outlined"
-            value={preconsultationHrs}
-            size="small"
-            inputProps={{ maxLength: 2 }}
-            onChange={handleOnPreconsultationHrsChange}
-            disabled={!disable}
-          />
-          <Typography className={classes.text}>Hrs</Typography>
-          <TextField
-            className={classes.time}
-            variant="outlined"
-            value={preconsultationMins}
-            size="small"
-            inputProps={{ maxLength: 2 }}
-            onChange={handleOnPreconsultationMinsChange}
-            disabled={!disable}
-          />
-          <Typography className={classes.text}>Mins.</Typography>
-          <Box paddingLeft={1}>
-            {!disable ? (
-              <Edit
-                className={classes.iconButton}
-                onClick={() => setDisable(true)}
-              />
-            ) : (
-              <div>
-                <Clear className={classes.cancelation} onClick={handleOnCancel} />
-                <Check className={classes.iconButton} onClick={handleOnSave} />
-              </div>
-            )}
-          </Box>
+          <Box display="flex" paddingTop={3} alignItems="center">
+            <Typography className={classes.text}>
+              Patient Pre-Consultancy Time:
+            </Typography>
+            <NumberTextField
+              value={preconsultationHrs}
+              onChange={handleOnPreconsultationHrsChange}
+              disabled={!disable}
+              label="Hrs"
+            />
+            <NumberTextField
+              value={preconsultationMins}
+              onChange={handleOnPreconsultationMinsChange}
+              disabled={!disable}
+              label="Mins."
+            />
+            <Box paddingLeft={1} display="flex" alignItems="center" >
+              {!disable ? (
+                <Edit
+                  className={classes.iconButton}
+                  onClick={() => setDisable(true)}
+                />
+              ) : (
+                <div>
+                  <Clear className={classes.cancelation} onClick={handleOnCancel} />
+                  <Check className={classes.iconButton} onClick={handleOnSave} />
+                </div>
+              )}
+            </Box>
           </Box>
           <Box style={{ paddingTop: 20 }} className={classes.message} display="flex">
             <Typography className={classes.star}>*</Typography>
-            <Typography
-              className={classes.txt}
-            >
+            <Typography className={classes.txt}>
               Patient has to make himself to available even before the slot time
               based on time provided
             </Typography>
