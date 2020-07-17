@@ -51,7 +51,7 @@ function DoctorPersonalSetting() {
       doctorKey: id,
     }
   }, [id])
-  const [data, refetch] = useCustomFecth(METHOD.POST, URL.doctorSettingsPersonalView, key)
+  const [data, refetch] = useCustomFecth(METHOD.GET, URL.doctorSettingsPersonalView, key)
 
   const [onSave] = useDoctorConfigUpdate(refetch)
   return (

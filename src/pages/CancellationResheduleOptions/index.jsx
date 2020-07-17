@@ -33,7 +33,7 @@ function CancellationResheduleOptions() {
     }
   }, [id])
   const [data, refetch] = useCustomFetch(
-    METHOD.POST,
+    METHOD.GET,
     URL.doctorSettingsPersonalView,
     key,
   )
