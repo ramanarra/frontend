@@ -1,11 +1,17 @@
 import React, { useState, Fragment } from 'react'
-import { Paper, Box, Typography, TextField, Button, Snackbar } from '@material-ui/core'
+import {
+  Paper,
+  Box,
+  Typography,
+  TextField,
+  Button,
+  Snackbar,
+} from '@material-ui/core'
 
 import Centralize from '../../components/Centralize'
 import Logo from '../../assets/img/logo.png'
 import Api, { URL } from '../../api'
 import useStyles from './useStyles'
-
 
 const SnackbarPosition = { vertical: 'bottom', horizontal: 'center' }
 
@@ -76,7 +82,7 @@ const Login = ({ history }) => {
                 Email ID
               </Typography>
               <TextField
-                autoComplete="no"
+                autoComplete="email"
                 className={classes.textField}
                 type="email"
                 error={isEmailEmpty}
@@ -97,9 +103,7 @@ const Login = ({ history }) => {
                 Password
               </Typography>
               <TextField
-                inputProps={{
-                  autocomplete: 'new-password',
-                }}
+                autoComplete="current-password"
                 placeholder="********"
                 className={classes.textField}
                 type="password"
