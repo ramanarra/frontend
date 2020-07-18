@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "af445f6edd625066ef66e71f649654ef",
+    "revision": "3add74adfcaac0e5f39504c445a2a575",
     "url": "/index.html"
   },
   {
-    "revision": "89ffa976ed4c93250e88",
-    "url": "/static/css/main.54482e43.chunk.css"
+    "revision": "33c07b6abaa675900279",
+    "url": "/static/css/main.d45c91f0.chunk.css"
   },
   {
-    "revision": "15c85fea23d529ca73be",
-    "url": "/static/js/2.57d093fd.chunk.js"
+    "revision": "7e3ceccfa800735f445c",
+    "url": "/static/js/2.ab87f1f9.chunk.js"
   },
   {
     "revision": "5e9b6f5c16b720e8a86875f97734673e",
-    "url": "/static/js/2.57d093fd.chunk.js.LICENSE.txt"
+    "url": "/static/js/2.ab87f1f9.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "89ffa976ed4c93250e88",
-    "url": "/static/js/main.c3a1f395.chunk.js"
+    "revision": "33c07b6abaa675900279",
+    "url": "/static/js/main.998acac6.chunk.js"
   },
   {
-    "revision": "43571a132f64b002be1c",
-    "url": "/static/js/runtime-main.de680913.js"
+    "revision": "37834f175874a248dc3e",
+    "url": "/static/js/runtime-main.ff96d2cb.js"
   },
   {
     "revision": "1358b04db31232c95cea0ac9ea830264",
@@ -60,6 +60,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/static/media/ProductSans-Regular.d3e70bb9.woff"
   },
   {
+    "revision": "8fdcea4f4274dfadd3f8e0e1ef515568",
+    "url": "/static/media/add.8fdcea4f.svg"
+  },
+  {
     "revision": "0c42c6221a57d700aa59e7528f464ea6",
     "url": "/static/media/bg.0c42c622.png"
   },
@@ -70,6 +74,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "cf1caa570f09c213d1953ffeb20a072a",
     "url": "/static/media/filter.cf1caa57.svg"
+  },
+  {
+    "revision": "78be083b3b829dcc8ca2a441fb502223",
+    "url": "/static/media/hospitalLogo.78be083b.png"
   },
   {
     "revision": "4ff13c57e059d7b6f72bf179a7d9bbfc",

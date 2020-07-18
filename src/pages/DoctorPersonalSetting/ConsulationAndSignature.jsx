@@ -130,7 +130,6 @@ function ConsulationAndSignature({ docKey, configDetails, onSave, doctorDetails 
               </InputAdornment>
             ),
           }}
-          variant="outlined"
         />
         <div className={classes.icon}>
           {!disable ? (

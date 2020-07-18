@@ -1,21 +1,23 @@
 {
   "files": {
-    "main.css": "/static/css/main.54482e43.chunk.css",
-    "main.js": "/static/js/main.c3a1f395.chunk.js",
-    "main.js.map": "/static/js/main.c3a1f395.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.de680913.js",
-    "runtime-main.js.map": "/static/js/runtime-main.de680913.js.map",
-    "static/js/2.57d093fd.chunk.js": "/static/js/2.57d093fd.chunk.js",
-    "static/js/2.57d093fd.chunk.js.map": "/static/js/2.57d093fd.chunk.js.map",
+    "main.css": "/static/css/main.d45c91f0.chunk.css",
+    "main.js": "/static/js/main.998acac6.chunk.js",
+    "main.js.map": "/static/js/main.998acac6.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.ff96d2cb.js",
+    "runtime-main.js.map": "/static/js/runtime-main.ff96d2cb.js.map",
+    "static/js/2.ab87f1f9.chunk.js": "/static/js/2.ab87f1f9.chunk.js",
+    "static/js/2.ab87f1f9.chunk.js.map": "/static/js/2.ab87f1f9.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.c4046b637fccd5089f6c06a99cc5554d.js": "/precache-manifest.c4046b637fccd5089f6c06a99cc5554d.js",
+    "precache-manifest.e2e814ccc40aa50cb0a05914f2dabca0.js": "/precache-manifest.e2e814ccc40aa50cb0a05914f2dabca0.js",
     "service-worker.js": "/service-worker.js",
-    "static/css/main.54482e43.chunk.css.map": "/static/css/main.54482e43.chunk.css.map",
-    "static/js/2.57d093fd.chunk.js.LICENSE.txt": "/static/js/2.57d093fd.chunk.js.LICENSE.txt",
+    "static/css/main.d45c91f0.chunk.css.map": "/static/css/main.d45c91f0.chunk.css.map",
+    "static/js/2.ab87f1f9.chunk.js.LICENSE.txt": "/static/js/2.ab87f1f9.chunk.js.LICENSE.txt",
     "static/media/stylesheet.css": "/static/media/ProductSans-Regular.d3e70bb9.woff",
+    "static/media/add.svg": "/static/media/add.8fdcea4f.svg",
     "static/media/bg.png": "/static/media/bg.0c42c622.png",
     "static/media/dot-menu.svg": "/static/media/dot-menu.aa934640.svg",
     "static/media/filter.svg": "/static/media/filter.cf1caa57.svg",
+    "static/media/hospitalLogo.png": "/static/media/hospitalLogo.78be083b.png",
     "static/media/icomoon.css": "/static/media/icomoon.dda5bdac.ttf",
     "static/media/logo-white.svg": "/static/media/logo-white.00a68b73.svg",
     "static/media/logo.png": "/static/media/logo.0a9eb673.png",
@@ -23,9 +25,9 @@
     "static/media/view.svg": "/static/media/view.b802980d.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.de680913.js",
-    "static/js/2.57d093fd.chunk.js",
-    "static/css/main.54482e43.chunk.css",
-    "static/js/main.c3a1f395.chunk.js"
+    "static/js/runtime-main.ff96d2cb.js",
+    "static/js/2.ab87f1f9.chunk.js",
+    "static/css/main.d45c91f0.chunk.css",
+    "static/js/main.998acac6.chunk.js"
   ]
 }

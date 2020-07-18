@@ -3,13 +3,12 @@ import { useParams } from 'react-router-dom'
 import { Box, Typography, Avatar } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 
-import { URL } from '../../api'
+import { URL, METHOD } from '../../api'
 import Static from './StaticField'
 import ConsulationAndSignature from './ConsulationAndSignature'
 import Preconsultancy from './PreConsult'
 import useCustomFecth from '../../hooks/useCustomFetch'
 import useDoctorConfigUpdate from '../../hooks/useDoctorConfigUpdate'
-import { useCallback } from 'react'
 
 const useStyle = makeStyles((theme) => ({
   container: {
@@ -51,11 +50,10 @@ function DoctorPersonalSetting() {
     return {
       doctorKey: id,
     }
-  })
-  const [data, refetch] = useCustomFecth('POST', URL.doctorSettingsPersonalView, key)
+  }, [id])
+  const [data, refetch] = useCustomFecth(METHOD.GET, URL.doctorSettingsPersonalView, key)
 
-  const hanleOnRefetch = useCallback(() => refetch)
-  const [onSave] = useDoctorConfigUpdate(hanleOnRefetch)
+  const [onSave] = useDoctorConfigUpdate(refetch)
   return (
     <Box className={classes.container}>
       <Box display="flex">
