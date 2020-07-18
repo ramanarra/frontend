@@ -16,15 +16,13 @@ const OverBooking = ({ data, handleUpdate }) => {
     setBookingData(data)
   }, [data])
 
-  useEffect(() => {
-    delete data?.consultationSessionTimings
-    JSON.stringify(data) !== JSON.stringify(bookingData) &&
-      handleUpdate({
-        workScheduleConfig: {
-          ...bookingData,
-        },
-      })
-  }, [bookingData])
+  const handleSave = (data) => {
+    handleUpdate({
+      workScheduleConfig: {
+        ...data,
+      },
+    })
+  }
 
   const isActive = (value) => {
     if (value.toLowerCase() === bookingData?.overBookingType?.toLowerCase()) {
@@ -36,10 +34,27 @@ const OverBooking = ({ data, handleUpdate }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target
+    if (value?.toLowerCase() !== bookingData[name]?.toLowerCase()) {
+      setBookingData((prev) => {
+        return {
+          ...prev,
+          [name]: value,
+        }
+      })
+      handleSave({
+        [name]: value,
+      })
+    }
+  }
+
+  const handleToggle = () => {
+    handleSave({
+      overBookingEnabled: !bookingData?.overBookingEnabled,
+    })
     setBookingData((prev) => {
       return {
         ...prev,
-        [name]: value,
+        overBookingEnabled: !prev?.overBookingEnabled,
       }
     })
   }
@@ -50,17 +65,7 @@ const OverBooking = ({ data, handleUpdate }) => {
         <Typography variant="subtitle2" className="sub-head">
           Add overbookings
         </Typography>
-        <Switch
-          checked={bookingData?.overBookingEnabled}
-          onClick={() =>
-            setBookingData((prev) => {
-              return {
-                ...prev,
-                overBookingEnabled: !prev?.overBookingEnabled,
-              }
-            })
-          }
-        />
+        <Switch checked={bookingData?.overBookingEnabled} onClick={handleToggle} />
       </div>
       {bookingData?.overBookingEnabled && (
         <div className="overbooking-option">

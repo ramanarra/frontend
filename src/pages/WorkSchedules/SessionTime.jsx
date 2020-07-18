@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Typography, TextField } from '@material-ui/core'
 import OptionBox from './OptionBox'
-import { customSuffix } from '../../components/commonFormat.js'
+import { minsSuffix } from '../../components/commonFormat.js'
 
 const SessionTime = ({ data, handleUpdate }) => {
   const [sessionTime, setSessionTime] = useState(null)
@@ -16,8 +16,8 @@ const SessionTime = ({ data, handleUpdate }) => {
   //   !!sessionTime && data?.split(' ')[0] !== sessionTime && handleUpdate()
   // }, [sessionTime])
 
-  const handleSave = () => {
-    const time = sessionTime || customTime || 0
+  const handleSave = (saveValue) => {
+    const time = saveValue || sessionTime || customTime || 0
     isChanged && setChanged(false)
     handleUpdate({
       workScheduleConfig: {
@@ -32,9 +32,11 @@ const SessionTime = ({ data, handleUpdate }) => {
       setCustomTime(value)
       setChanged(true)
     } else {
-      setCustomTime('')
-      setSessionTime(value)
-      handleSave()
+      if (value !== sessionTime) {
+        setCustomTime('')
+        setSessionTime(value)
+        handleSave(value)
+      }
     }
   }
 
@@ -71,10 +73,13 @@ const SessionTime = ({ data, handleUpdate }) => {
         <div className={'session-option' + activeBox(-1)}>
           <TextField
             className={'session-custom-option' + (!!customTime ? ' active' : '')}
-            value={customSuffix(customTime, 'min.')}
+            value={customTime}
             onChange={(e) => handleChange(e.target.value, 1)}
             inputProps={{
               onBlur: () => isChanged && handleSave(),
+            }}
+            InputProps={{
+              inputComponent: minsSuffix,
             }}
           />
         </div>
