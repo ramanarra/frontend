@@ -26,6 +26,11 @@
       .session-custom-option {
         max-width: 110px;
 
+        .MuiInputBase-input{
+          font-size: 11.5px;
+          color: #aaa;
+        }
+
         .MuiInput-underline:before {
           border-bottom-color: #aaaaaa;
         }
@@ -103,7 +108,7 @@
           width: 200px;
           text-align: center;
           text-transform: capitalize;
-          color: #aaa;
+          color: #666;
           font-weight: 500;
           font-size: 13px;
         }
@@ -113,7 +118,7 @@
           padding: 20px;
           height: 100px;
           font-weight: 400;
-          font-size: 11.5px;
+          font-size: 11px;
           white-space: nowrap;
 
           .appointments {
@@ -128,6 +133,9 @@
                 padding: 3px;
               }
             }
+            .slot-wrap.last-slot{
+              display: none;
+            }
           }
         }
       }
@@ -139,8 +147,8 @@
 
 .slot-dialog {
   .MuiDialog-paper {
-    padding: 30px;
-    width: 40vw;
+    padding: 37px;
+    width: 37vw;
 
     .title-wrap {
       display: flex;
@@ -150,6 +158,7 @@
 
       .popup-title {
         font-size: 20px;
+        color: #555;
       }
 
       .close-btn-wrap {
@@ -169,7 +178,7 @@
     }
 
     .slots-wrap {
-      padding: 10px 20px 0;
+      padding: 17px 20px 0;
 
       .slot {
         display: flex;
@@ -202,7 +211,7 @@
     }
 
     .list-btns {
-      padding: 0 20px;
+      padding: 5px 20px;
       font-size: 12px;
       color: #0bb5ff;
       font-weight: 500;
@@ -216,7 +225,7 @@
           font-size: 11.5px;
         }
         .make-unavailable {
-          margin-top: 10px;
+          margin-bottom: 20px;
           border: 1px solid #0bb5ff;
           padding: 2px 5px;
         }
@@ -232,7 +241,6 @@
         flex: 1;
         margin: 0 10px;
         border-radius: 20px;
-        font-size: 12px;
       }
 
       .apply-btn {

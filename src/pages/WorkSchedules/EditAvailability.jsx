@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Dialog, IconButton, Typography, TextField, Button } from '@material-ui/core'
+import { Dialog, IconButton, Typography, Button } from '@material-ui/core'
 import { Close, DeleteOutline } from '@material-ui/icons'
 import { TimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import moment from 'moment'
@@ -63,16 +63,7 @@ const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
   }
 
   const slot = (data) => (
-    <div className="slot">
-      {/* <TextField
-        className="txt-field start-time"
-        name="startTime"
-        variant="outlined"
-        size="small"
-        value={data?.startTime}
-        type="time"
-        onChange={(e) => handleChange(data, e)}
-      /> */}
+    <div key={data?.scheduletimeid || data?.tempId} className="slot">
       <MuiPickersUtilsProvider utils={MomentUtils}>
         <TimePicker
           autoOk
