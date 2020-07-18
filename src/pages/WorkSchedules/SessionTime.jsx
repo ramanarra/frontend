@@ -7,7 +7,7 @@ const SessionTime = ({ data, handleUpdate }) => {
   const [sessionTime, setSessionTime] = useState(null)
 
   useEffect(() => {
-    setSessionTime(parseInt(data?.split(' ')[0]))
+    data && setSessionTime(parseInt(data?.split(' ')[0]))
   }, [data])
 
   useEffect(() => {

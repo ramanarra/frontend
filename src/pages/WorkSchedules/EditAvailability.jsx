@@ -20,11 +20,11 @@ const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
       {
         tempId,
         scheduledayid,
-        startTime: '',
-        endTime: '',
+        startTime: new Date(),
+        endTime: new Date(),
       },
     ])
-    setTempId((prev) => prev++)
+    setTempId((prev) => prev+1)
   }
 
   const handleChange = (data, e) => {
