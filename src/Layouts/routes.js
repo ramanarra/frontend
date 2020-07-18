@@ -4,7 +4,25 @@ import Reports from '../pages/Reports'
 import Settings from '../pages/Settings'
 import DocBody from './DocBody'
 
-const routes = [
+import PatientAppoinments from '../pages/PatientAppoinments'
+import PatientSettings from '../pages/PatientSettings'
+
+export const PatientRoutes = [
+  {
+      path: '/patient/appoinments',
+      name: 'patientAppoinments',
+      exact: true,
+      component: PatientAppoinments,
+    },
+    {
+      path: '/patient/setting',
+      name: 'PatientSetting',
+      exact: true,
+      component: PatientSettings,
+    },
+]
+
+const DoctorRoutes = [
   {
     path: '/doctors',
     name: 'Doctors',
@@ -37,4 +55,4 @@ const routes = [
   },
 ]
 
-export default routes
+export default DoctorRoutes
