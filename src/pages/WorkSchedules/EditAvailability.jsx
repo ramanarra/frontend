@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { Dialog, IconButton, Typography, TextField, Button } from '@material-ui/core'
 import { Close, DeleteOutline } from '@material-ui/icons'
+import { TimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
+import moment from 'moment'
+import MomentUtils from '@date-io/moment'
 
 const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
   const [slotList, setSlotList] = useState([])
@@ -61,23 +64,54 @@ const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
 
   const slot = (data) => (
     <div className="slot">
-      <TextField
+      {/* <TextField
         className="txt-field start-time"
         name="startTime"
         variant="outlined"
         size="small"
         value={data?.startTime}
+        type="time"
         onChange={(e) => handleChange(data, e)}
-      />
-      -
-      <TextField
-        className="txt-field end-time"
-        variant="outlined"
-        name="endTime"
-        size="small"
-        value={data?.endTime}
-        onChange={(e) => handleChange(data, e)}
-      />
+      /> */}
+      <MuiPickersUtilsProvider utils={MomentUtils}>
+        <TimePicker
+          autoOk
+          disableToolbar
+          variant="inline"
+          inputVariant="outlined"
+          size="small"
+          className="txt-field start-time"
+          value={moment(data?.startTime, 'hh:mm')}
+          onChange={(e) =>
+            handleChange(data, {
+              target: {
+                name: 'startTime',
+                value: e,
+              },
+            })
+          }
+          format="hh:mm"
+        />
+        -
+        <TimePicker
+          autoOk
+          disableToolbar
+          variant="inline"
+          inputVariant="outlined"
+          size="small"
+          className="txt-field end-time"
+          value={moment(data?.endTime, 'hh:mm')}
+          onChange={(e) =>
+            handleChange(data, {
+              target: {
+                name: 'endTime',
+                value: e,
+              },
+            })
+          }
+          format="hh:mm"
+        />
+      </MuiPickersUtilsProvider>
       <IconButton className="del-btn" onClick={handleDelete.bind(this, data)}>
         <DeleteOutline fontSize="small" />
       </IconButton>

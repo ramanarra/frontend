@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Typography, TextField } from '@material-ui/core'
 import OptionBox from './OptionBox'
+import { customSuffix } from '../../components/commonFormat.js'
 
 const SessionTime = ({ data, handleUpdate }) => {
   const [sessionTime, setSessionTime] = useState(null)
@@ -61,7 +62,7 @@ const SessionTime = ({ data, handleUpdate }) => {
         <div className={'session-option' + activeBox(-1)}>
           <TextField
             className="session-custom-option"
-            value={sessionTime}
+            value={customSuffix(sessionTime, 'min.')}
             onChange={(e) => setSessionTime(e.target.value)}
           />
         </div>
