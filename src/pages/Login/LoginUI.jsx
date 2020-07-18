@@ -100,7 +100,7 @@ const Login = ({
               />
               {isPasswordEmpty && (
                 <Typography className={classes.emptytext} variant="h6">
-                  Please enter your password
+                  Please enter your Password
                 </Typography>
               )}
               <Typography className={classes.forgotPassword} variant="h6">
