@@ -5,32 +5,41 @@ import { customSuffix } from '../../components/commonFormat.js'
 
 const SessionTime = ({ data, handleUpdate }) => {
   const [sessionTime, setSessionTime] = useState(null)
+  const [customTime, setCustomTime] = useState('')
+  const [isChanged, setChanged] = useState(false)
 
   useEffect(() => {
     data && setSessionTime(parseInt(data?.split(' ')[0]))
   }, [data])
 
-  useEffect(() => {
-    !!sessionTime &&
-      data?.split(' ')[0] !== sessionTime &&
-      handleUpdate({
-        workScheduleConfig: {
-          consultationSessionTimings: `${sessionTime} minutes`,
-        },
-      })
-  }, [sessionTime])
+  // useEffect(() => {
+  //   !!sessionTime && data?.split(' ')[0] !== sessionTime && handleUpdate()
+  // }, [sessionTime])
 
-  const isCustomTime = () => {
-    const listSet = [15, 30, 45, 60]
-    return listSet.includes(sessionTime)
+  const handleSave = () => {
+    const time = sessionTime || customTime || 0
+    isChanged && setChanged(false)
+    handleUpdate({
+      workScheduleConfig: {
+        consultationSessionTimings: `${time} minutes`,
+      },
+    })
+  }
+
+  const handleChange = (value, type) => {
+    if (!!type) {
+      setSessionTime(null)
+      setCustomTime(value)
+      setChanged(true)
+    } else {
+      setCustomTime('')
+      setSessionTime(value)
+      handleSave()
+    }
   }
 
   const activeBox = (value) => {
-    if (value !== -1) {
-      return sessionTime === value ? ' active' : ''
-    } else {
-      return isCustomTime ? '' : ' active'
-    }
+    return !!sessionTime && sessionTime === value ? ' active' : ''
   }
 
   return (
@@ -42,28 +51,31 @@ const SessionTime = ({ data, handleUpdate }) => {
         <OptionBox
           className={'session-option' + activeBox(15)}
           value="15 minutes"
-          onClick={() => setSessionTime(15)}
+          onClick={() => handleChange(15)}
         />
         <OptionBox
           className={'session-option' + activeBox(30)}
           value="30 minutes"
-          onClick={() => setSessionTime(30)}
+          onClick={() => handleChange(30)}
         />
         <OptionBox
           className={'session-option' + activeBox(45)}
           value="45 minutes"
-          onClick={() => setSessionTime(45)}
+          onClick={() => handleChange(45)}
         />
         <OptionBox
           className={'session-option' + activeBox(60)}
           value="60 minutes"
-          onClick={() => setSessionTime(60)}
+          onClick={() => handleChange(60)}
         />
         <div className={'session-option' + activeBox(-1)}>
           <TextField
-            className="session-custom-option"
-            value={customSuffix(sessionTime, 'min.')}
-            onChange={(e) => setSessionTime(e.target.value)}
+            className={'session-custom-option' + (!!customTime ? ' active' : '')}
+            value={customSuffix(customTime, 'min.')}
+            onChange={(e) => handleChange(e.target.value, 1)}
+            inputProps={{
+              onBlur: () => isChanged && handleSave(),
+            }}
           />
         </div>
       </div>

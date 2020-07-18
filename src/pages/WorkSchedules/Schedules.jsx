@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Typography } from '@material-ui/core'
 import EditAvailability from './EditAvailability'
+import { timeFmt } from '../../components/commonFormat'
 
 const Schedules = (props) => {
   const [dialog, setDialog] = useState({
@@ -48,7 +49,11 @@ const Schedules = (props) => {
                   {props.data &&
                     props.data[i]?.map((s) => (
                       <div className="slot-wrap">
-                        <span className="slot">{`${s?.startTime} - ${s?.endTime}`}</span>
+                        {s?.startTime && (
+                          <span className="slot">{`${timeFmt(
+                            s.startTime
+                          )} - ${timeFmt(s?.endTime)}`}</span>
+                        )}
                       </div>
                     ))}
                 </div>
@@ -57,12 +62,13 @@ const Schedules = (props) => {
           </tr>
         </tbody>
       </table>
-      <EditAvailability
-        open={dialog.status}
-        data={dialog.data}
-        onClose={handleDialog.bind(this, false, null)}
-        handleUpdate={props.handleUpdate}
-      />
+      {dialog?.status && (
+        <EditAvailability
+          data={dialog.data}
+          onClose={handleDialog.bind(this, false, null)}
+          handleUpdate={props.handleUpdate}
+        />
+      )}
     </div>
   )
 }

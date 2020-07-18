@@ -24,7 +24,7 @@ const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
         endTime: new Date(),
       },
     ])
-    setTempId((prev) => prev+1)
+    setTempId((prev) => prev + 1)
   }
 
   const handleChange = (data, e) => {
@@ -120,7 +120,7 @@ const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
 
   return (
     <div className="slot-dialog-wrap">
-      <Dialog open={open} onClose={onClose} className="slot-dialog">
+      <Dialog open={true} onClose={onClose} className="slot-dialog">
         <div className="title-wrap">
           <Typography variant="h1" className="popup-title">
             Edit Availability
@@ -132,7 +132,7 @@ const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
           </div>
         </div>
         <div className="slots-wrap">
-          {slotList?.filter((f) => !f.isDelete).map((i) => slot(i))}
+          {slotList?.filter((f) => !f.isDelete).map((i) => i?.startTime && slot(i))}
         </div>
         <div className="list-btns">
           <div className="btn-wrap">
