@@ -28,7 +28,7 @@ const AppBody = () => {
     )
   }
 
-  if (localStorage.getItem('loginUser') === 'patient') {
+  // if (localStorage.getItem('loginUser') === 'patient') {
     return (
       <div style={{ width: 'calc(100% - 79px)' }}>
         <Switch>
@@ -51,7 +51,7 @@ const AppBody = () => {
         </Switch>
       </div>
     )
-  }
+  // }
 }
 
 export default AppBody
