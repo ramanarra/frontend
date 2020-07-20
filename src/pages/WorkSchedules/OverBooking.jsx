@@ -83,7 +83,7 @@ const OverBooking = ({ data, handleUpdate }) => {
             <OptionBox
               className={isActive('Per hour') ? ' active' : ''}
               name="overBookingType"
-              value="Per hour"
+              value="Per Hour"
               onClick={handleChange}
             />
             <OptionBox
