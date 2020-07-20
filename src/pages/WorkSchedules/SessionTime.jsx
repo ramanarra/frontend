@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Typography, TextField } from '@material-ui/core'
+
 import OptionBox from './OptionBox'
 import { minsSuffix } from '../../components/commonFormat.js'
 
@@ -43,6 +44,12 @@ const SessionTime = ({ data, handleUpdate }) => {
     return !!sessionTime && sessionTime === value ? ' active' : ''
   }
 
+  const handleKey = (e) => {
+    if (e.keyCode === 13) {
+      isChanged && handleSave()
+    }
+  }
+
   return (
     <div className="session-time-det-wrap">
       <Typography variant="subtitle2" className="sub-head">
@@ -74,6 +81,8 @@ const SessionTime = ({ data, handleUpdate }) => {
             className={'session-custom-option' + (!!customTime ? ' active' : '')}
             value={customTime}
             onChange={(e) => handleChange(e.target.value, 1)}
+            onKeyDown={handleKey}
+            placeholder="20mins."
             inputProps={{
               onBlur: () => isChanged && handleSave(),
             }}

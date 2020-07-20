@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Typography } from '@material-ui/core'
+
 import Switch from '../../components/Switch'
 import OptionBox from './OptionBox'
 import EditField from './EditField'

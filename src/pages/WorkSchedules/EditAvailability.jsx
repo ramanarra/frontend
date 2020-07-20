@@ -4,6 +4,7 @@ import { Close, DeleteOutline } from '@material-ui/icons'
 import { TimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import moment from 'moment'
 import MomentUtils from '@date-io/moment'
+import { timeFmt } from '../../components/commonFormat'
 
 const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
   const [slotList, setSlotList] = useState([])
@@ -20,8 +21,8 @@ const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
       {
         tempId,
         scheduledayid,
-        startTime: moment(new Date(), 'hh:mm').format('hh:mm'),
-        endTime: moment(new Date(), 'hh:mm').format('hh:mm'),
+        startTime: timeFmt(new Date()),
+        endTime: timeFmt(new Date()),
       },
     ])
     setTempId((prev) => prev + 1)
@@ -33,7 +34,7 @@ const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
     setSlotList((prev) => {
       return prev?.map((i) => {
         if ((!!id && i.scheduletimeid === id) || (!!tempId && i.tempId === tempId)) {
-          return { ...i, [name]: moment(value, 'hh:mm').format('hh:mm') }
+          return { ...i, [name]: timeFmt(value) }
         }
         return i
       })
@@ -72,7 +73,7 @@ const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
           inputVariant="outlined"
           size="small"
           className="txt-field start-time"
-          value={moment(data?.startTime, 'hh:mm')}
+          value={moment(data?.startTime, 'HH:mm')}
           onChange={(e) =>
             handleChange(data, {
               target: {
@@ -81,7 +82,7 @@ const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
               },
             })
           }
-          format="hh:mm"
+          format="hh:mmA"
         />
         -
         <TimePicker
@@ -91,7 +92,7 @@ const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
           inputVariant="outlined"
           size="small"
           className="txt-field end-time"
-          value={moment(data?.endTime, 'hh:mm')}
+          value={moment(data?.endTime, 'HH:mm')}
           onChange={(e) =>
             handleChange(data, {
               target: {
@@ -100,7 +101,7 @@ const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
               },
             })
           }
-          format="hh:mm"
+          format="hh:mmA"
         />
       </MuiPickersUtilsProvider>
       <IconButton className="del-btn" onClick={handleDelete.bind(this, data)}>

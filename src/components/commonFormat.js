@@ -10,8 +10,8 @@ export const customSuffix = (value, format) => {
   return value
 }
 
-export const timeFmt = (time, format) => {
-  return moment(time, 'hh:mm').format('hh:mm')
+export const timeFmt = (time) => {
+  return moment(time, 'hh:mmA').format('hh:mmA')
 }
 
 export const minsSuffix = (details) => {
