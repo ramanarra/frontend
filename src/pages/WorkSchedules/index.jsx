@@ -11,15 +11,22 @@ import useManualFetch from '../../hooks/useManualFetch'
 
 const WorkSchedule = () => {
   const { id } = useParams()
-  const [data] = useCustomFetch('GET', `${URL.workschedule.data}?doctorKey=${id}`)
-  const [updateData, updateError] = useManualFetch()
+  const [data, reloadData] = useCustomFetch(
+    'GET',
+    `${URL.workschedule.data}?doctorKey=${id}`
+  )
+  const [updateData, updateError, isUpdating] = useManualFetch()
 
   useEffect(() => {
     !!updateError && console.error(updateError)
   }, [updateError])
 
+  useEffect(() => {
+    !isUpdating && reloadData()
+  }, [isUpdating])
+
   const handleUpdate = (params) => {
-    const paramsData = { docktorKey: id, ...params }
+    const paramsData = { doctorKey: id, ...params }
     updateData('POST', URL.workschedule.update, paramsData)
   }
 

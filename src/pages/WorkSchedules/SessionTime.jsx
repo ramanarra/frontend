@@ -9,31 +9,30 @@ const SessionTime = ({ data, handleUpdate }) => {
   const [isChanged, setChanged] = useState(false)
 
   useEffect(() => {
-    data && setSessionTime(parseInt(data?.split(' ')[0]))
+    if (!!data) {
+      const defaultTimes = [15, 30, 45, 60]
+      defaultTimes.includes(data) ? setSessionTime(data) : setCustomTime(data)
+    }
   }, [data])
-
-  // useEffect(() => {
-  //   !!sessionTime && data?.split(' ')[0] !== sessionTime && handleUpdate()
-  // }, [sessionTime])
 
   const handleSave = (saveValue) => {
     const time = saveValue || sessionTime || customTime || 0
     isChanged && setChanged(false)
     handleUpdate({
       workScheduleConfig: {
-        consultationSessionTimings: `${time} minutes`,
+        consultationSessionTimings: time,
       },
     })
   }
 
   const handleChange = (value, type) => {
     if (!!type) {
-      setSessionTime(null)
+      !!sessionTime && value !== '' && setSessionTime(null)
       setCustomTime(value)
-      setChanged(true)
+      !isChanged && setChanged(true)
     } else {
-      if (value !== sessionTime) {
-        setCustomTime('')
+      if (!!value && value !== sessionTime) {
+        !!customTime && setCustomTime('')
         setSessionTime(value)
         handleSave(value)
       }
@@ -70,7 +69,7 @@ const SessionTime = ({ data, handleUpdate }) => {
           value="60 minutes"
           onClick={() => handleChange(60)}
         />
-        <div className={'session-option' + activeBox(-1)}>
+        <div className="session-option">
           <TextField
             className={'session-custom-option' + (!!customTime ? ' active' : '')}
             value={customTime}

@@ -30,7 +30,7 @@ const useManualFetch = () => {
       })
   }
 
-  return [handleFetch, error, data, isLoading]
+  return [handleFetch, error, isLoading, data]
 }
 
 export default useManualFetch

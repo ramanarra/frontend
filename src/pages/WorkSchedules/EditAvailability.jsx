@@ -20,8 +20,8 @@ const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
       {
         tempId,
         scheduledayid,
-        startTime: new Date(),
-        endTime: new Date(),
+        startTime: moment(new Date(), 'hh:mm').format('hh:mm'),
+        endTime: moment(new Date(), 'hh:mm').format('hh:mm'),
       },
     ])
     setTempId((prev) => prev + 1)
@@ -33,7 +33,7 @@ const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
     setSlotList((prev) => {
       return prev?.map((i) => {
         if ((!!id && i.scheduletimeid === id) || (!!tempId && i.tempId === tempId)) {
-          return { ...i, [name]: value }
+          return { ...i, [name]: moment(value, 'hh:mm').format('hh:mm') }
         }
         return i
       })

@@ -29,28 +29,32 @@ const AppBody = () => {
   }
 
   // if (localStorage.getItem('loginUser') === 'patient') {
-    return (
-      <div style={{ width: 'calc(100% - 79px)' }}>
-        <Switch>
-          {PatientRoutes.map((route, index) => {
-            const Component = route.component
+  return (
+    <div style={{ width: 'calc(100% - 79px)' }}>
+      <Switch>
+        {PatientRoutes.map((route, index) => {
+          const Component = route.component
 
-            return (
-              <Route
-                path={route.path}
-                exact={route.exact}
-                name={route.name}
-                key={index}
-              >
-                <Component />
-              </Route>
-            )
-          })}
+          return (
+            <Route
+              path={route.path}
+              exact={route.exact}
+              name={route.name}
+              key={index}
+            >
+              <Component />
+            </Route>
+          )
+        })}
 
-          <Route extact path={'/'} render={() => <Redirect to={'/patient/appoinments'} />} />
-        </Switch>
-      </div>
-    )
+        <Route
+          extact
+          path={'/'}
+          render={() => <Redirect to={'/patient/appoinments'} />}
+        />
+      </Switch>
+    </div>
+  )
   // }
 }
 
