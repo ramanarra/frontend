@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { IconButton } from '@material-ui/core'
 import { Edit, Done, Close } from '@material-ui/icons'
+import './style.scss'
 
 const EditField = ({ value, name, onChange, onSave }) => {
   const [isEdit, setEdit] = useState(false)
@@ -27,12 +28,6 @@ const EditField = ({ value, name, onChange, onSave }) => {
     setEdit((prev) => !prev)
   }
 
-  const handleKey = (e) => {
-    if (e.keyCode === 13) {
-      handleSave()
-    }
-  }
-
   const handleChange = (e) => setNewValue(e.target.value)
 
   return (
@@ -44,7 +39,6 @@ const EditField = ({ value, name, onChange, onSave }) => {
         value={newValue}
         onChange={onChange || handleChange}
         disabled={!isEdit}
-        onKeyDown={handleKey}
       />
       <IconButton className="edit-toggle-btn" onClick={handleCancel}>
         {isEdit ? <Close fontSize="small" /> : <Edit fontSize="small" />}
