@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
-import { Box } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+import { Box, makeStyles } from '@material-ui/core'
 
 import { METHOD, URL } from '../../api'
 import useCustomFetch from '../../hooks/useCustomFetch'
