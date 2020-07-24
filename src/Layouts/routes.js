@@ -1,4 +1,4 @@
-import Doctors from '../pages/Doctors'
+import MyDoctors from '../pages/MyDoctors'
 import Patients from '../pages/Patients'
 import Reports from '../pages/Reports'
 import Settings from '../pages/Settings'
@@ -24,10 +24,10 @@ export const PatientRoutes = [
 
 const DoctorRoutes = [
   {
-    path: '/doctors',
+    path: ['/doctors', '/appointments', '/appointments/:id'],
     name: 'Doctors',
     exact: true,
-    component: Doctors,
+    component: MyDoctors,
   },
   {
     path: '/patients',
