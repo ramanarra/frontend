@@ -5,9 +5,14 @@ import { Search, Visibility, InsertInvitation, Sort } from '@material-ui/icons'
 
 import useCustomFetch from '../../hooks/useCustomFetch'
 import { URL } from '../../api'
+import SearchBar from '../../components/SearchBar'
 
 const Patients = () => {
-  const [patientList] = useCustomFetch('GET', URL.patientList)
+  const doctorKey = localStorage.getItem('docKey')
+  const [patientList] = useCustomFetch(
+    'GET',
+    `${URL.patientList}?doctorKey=${doctorKey}`
+  )
   const ctrlBtn = (data) => (
     <div className="ctrl-btns">
       <IconButton className="tbl-btn view-btn">
@@ -30,11 +35,7 @@ const Patients = () => {
             <Sort fontSize="small" />
           </IconButton>
           <div className="search-bar">
-            <TextField
-              InputProps={{ endAdornment: <Search /> }}
-              placeholder="Search Patients"
-              className="search-field"
-            />
+            <SearchBar label="Search Patients" />
           </div>
         </div>
       </div>
@@ -51,16 +52,20 @@ const Patients = () => {
             </tr>
           </thead>
           <tbody>
-            {patientList?.map((i) => (
-              <tr>
-                <td className="tbl-cell fname">{i.firstName}</td>
-                <td className="tbl-cell lname">{i.lastName}</td>
-                <td className="tbl-cell email">{i.email}</td>
-                <td className="tbl-cell phone">{i.phone}</td>
-                <td className="tbl-cell dob">{i.dateOfBirth}</td>
-                <td className="tbl-cell ctrl-btns-cell">{ctrlBtn(i)}</td>
-              </tr>
-            ))}
+            {patientList
+              ?.filter((f) => !!f)
+              .map((i) => (
+                <tr>
+                  <td className="tbl-cell fname">{i?.firstName}</td>
+                  <td className="tbl-cell lname">
+                    {!!i?.lastName ? i.lastName : '-'}
+                  </td>
+                  <td className="tbl-cell email">{i?.email}</td>
+                  <td className="tbl-cell phone">{i?.phone}</td>
+                  <td className="tbl-cell dob">{i?.dateOfBirth}</td>
+                  <td className="tbl-cell ctrl-btns-cell">{ctrlBtn(i)}</td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>

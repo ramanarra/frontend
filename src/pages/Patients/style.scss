@@ -1,20 +1,31 @@
 @import '../../mixins/common';
 
 .doctor-patients-list {
-  padding: 10px 40px;
+  padding: 0px 40px;
   font-size: 14px;
   .header-bar {
     @include lrPartition;
     border-bottom: 1px solid #aaaaaa55;
-    padding: 20px 0 27px;
+    padding: 20px 0 10px;
 
     .title {
-      font-size: 19px;
+      font-size: 18px;
       font-weight: 500;
+      color: #6a6a6a;
     }
 
-    .right-partition{
+    .right-partition {
       @include rowCenter;
+
+      .sort-icon {
+        height: 30px;
+        width: 30px;
+        margin-right: 10px;
+
+        &:hover {
+          background: transparent;
+        }
+      }
     }
   }
 
@@ -29,9 +40,10 @@
       .tbl-head {
         text-align: left;
         position: sticky;
+        font-size: 1em;
         top: 0;
         font-weight: 500;
-        color: #aaa;
+        color: #b5b4b4;
         background: #fff;
         z-index: 1;
       }
@@ -45,6 +57,10 @@
         padding: 10px 10px 10px 0;
       }
 
+      .tbl-cell {
+        color: #818181;
+      }
+
       .ctrl-btns {
         .tbl-btn {
           height: 20px;
@@ -53,11 +69,11 @@
         }
 
         .view-btn {
-          color: #0bb5ff;
+          color: #71b7e6;
         }
 
         .add-btn {
-          color: #f5b145;
+          color: #f5ae3d;
         }
       }
     }
