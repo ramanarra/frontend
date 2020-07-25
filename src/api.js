@@ -20,5 +20,9 @@ export const URL = {
     data: '/calendar/doctor/workScheduleView',
     update: '/calendar/doctor/workScheduleEdit',
   },
-  patientList: '/calendar/doctor/patientList',
+  patient: {
+    list: '/calendar/doctor/patientList',
+    detials: '/calendar/doctor/patientDetails',
+    update: '/calendar/patient/detailsEdit',
+  },
 }

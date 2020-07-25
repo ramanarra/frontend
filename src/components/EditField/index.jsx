@@ -3,7 +3,7 @@ import { IconButton } from '@material-ui/core'
 import { Edit, Done, Close } from '@material-ui/icons'
 import './style.scss'
 
-const EditField = ({ value, name, onChange, onSave }) => {
+const EditField = ({ value, name, type, onChange, onSave }) => {
   const [isEdit, setEdit] = useState(false)
   const [newValue, setNewValue] = useState(value)
 
@@ -30,17 +30,24 @@ const EditField = ({ value, name, onChange, onSave }) => {
 
   const handleChange = (e) => setNewValue(e.target.value)
 
+  const inputProps = {
+    name: name,
+    value: newValue,
+    onChange: onChange || handleChange,
+    disabled: !isEdit,
+  }
+
   return (
     <div className="edit-field-wrap">
-      <input
-        type="text"
-        className="edit-field"
-        name={name}
-        value={newValue}
-        onChange={onChange || handleChange}
-        disabled={!isEdit}
-      />
-      <IconButton className="edit-toggle-btn" onClick={handleCancel}>
+      {type === 'textarea' ? (
+        <textarea className="edit-field-area" {...inputProps} />
+      ) : (
+        <input className="edit-field" type={type || 'text'} {...inputProps} />
+      )}
+      <IconButton
+        className={'edit-toggle-btn' + (type === 'textarea' ? ' is-textarea' : '')}
+        onClick={handleCancel}
+      >
         {isEdit ? <Close fontSize="small" /> : <Edit fontSize="small" />}
       </IconButton>
       {isEdit && (

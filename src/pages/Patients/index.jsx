@@ -6,17 +6,22 @@ import { Search, Visibility, InsertInvitation, Sort } from '@material-ui/icons'
 import useCustomFetch from '../../hooks/useCustomFetch'
 import { URL } from '../../api'
 import SearchBar from '../../components/SearchBar'
+import { useHistory } from 'react-router-dom'
 
-const Patients = () => {
+const Patients = (props) => {
+  const history = useHistory()
   const doctorKey = localStorage.getItem('docKey')
   const [patientList] = useCustomFetch(
     'GET',
-    `${URL.patientList}?doctorKey=${doctorKey}`
+    `${URL.patient.list}?doctorKey=${doctorKey}`
   )
+
+  const openDetials = (data) => history.push(`/patients/${data?.patient_id}`)
+
   const ctrlBtn = (data) => (
     <div className="ctrl-btns">
       <IconButton className="tbl-btn view-btn">
-        <Visibility fontSize="small" />
+        <Visibility fontSize="small" onClick={openDetials.bind(this, data)} />
       </IconButton>
       <IconButton className="tbl-btn add-btn">
         <InsertInvitation fontSize="small" />

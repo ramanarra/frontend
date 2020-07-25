@@ -80,6 +80,13 @@
         margin-left: 5px;
         margin-right: 15px;
 
+        .edit-field-wrap {
+          .edit-field {
+            max-width: 26px;
+            // text-align: right;
+          }
+        }
+
         .overbooking-field {
           outline: none;
           border: none;
@@ -281,37 +288,4 @@
   border-color: #0bb5ff;
   color: #0bb5ff;
   transition: 0.3s;
-}
-
-// ----------------------------------- edit field -------------------------------------
-
-.edit-field-wrap {
-  display: inline-block;
-  .edit-field {
-    outline: none;
-    border: none;
-    max-width: 26px;
-    font-size: 11.5px;
-    // text-align: right;
-
-    &:disabled {
-      background: transparent;
-      color: #000;
-    }
-  }
-
-  .edit-toggle-btn,
-  .save-btn {
-    color: #0bb5ff;
-    min-height: 0;
-    height: 24px;
-    width: 24px;
-    &:hover {
-      background: transparent;
-    }
-
-    .MuiSvgIcon-fontSizeSmall {
-      font-size: 16px;
-    }
-  }
 }
