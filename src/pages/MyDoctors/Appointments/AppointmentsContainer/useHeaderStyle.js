@@ -1,6 +1,6 @@
 import {makeStyles} from '@material-ui/core/styles'
 
-const useStyleForHeader = makeStyles(() => ({
+const useHeaderStyle = makeStyles(() => ({
     container: {
         width: '100%',
         background: '#f9f9f9',
@@ -32,6 +32,11 @@ const useStyleForHeader = makeStyles(() => ({
       },
       imgSize: {
         width: 15,
+      },
+      menu: {
+        width: 22,
+        color: '#c8c8c8',
+        paddingBottom: 1,
       },
       left: {
           paddingLeft: 10,
@@ -82,32 +87,24 @@ const useStyleForHeader = makeStyles(() => ({
         paddingTop: 7,
       },
       freeSlot: {
-          height: 0,
-          width: 0,
-          fontSize: 9,
-          border: "2.5px solid #4edb88",
-          borderRadius: "2.5px",
-          marginTop: 11,
+          width: 8,
+          color: '#4edb88',
+          marginTop: 2,
           marginRight: 8,
       },
       booked: {
-        height: 0,
-        width: 0,
-        fontSize: 9,
-        border: "2.5px solid grey",
-        borderRadius: "2.5px",
-        marginTop: 11,
+        width: 8,
+        color: '#aab5c2',
+        marginTop: 2,
         marginRight: 8,
         },
     
     blocked: {
-        height: 0,
-        width: 0,
-        border: "2.5px solid skyblue",
-        borderRadius: "2.5px",
-        marginTop: 11,
+        width: 8,
+        color: '#0bb5ff',
+        marginTop: 2,
         marginRight: 8,
         },
 }))
 
-export default useStyleForHeader
+export default useHeaderStyle

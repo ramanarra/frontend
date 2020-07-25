@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import { Box, Typography } from '@material-ui/core'
 import ScheduleIcon from '@material-ui/icons/Schedule'
 
-import useStyle from './useStyleForSlots'
+import useStyle from './useSlotsStyle'
 
-function Slots({ slot, date, onSave, name, bgColor, txtColor, ModalComponent }) {
+function Slots({ slot, date, onSave, name, bgColor, txtColor, ModalComponent, bookedBy, note }) {
   const classes = useStyle()
 
   const [open, setOpen] = useState(false)
@@ -25,7 +25,7 @@ function Slots({ slot, date, onSave, name, bgColor, txtColor, ModalComponent }) 
     endTime[0] = endTime[0] - 12
   }
 
-  const date_with_time = date + ' ' + startTime[0] + ':' + startTime[1] + noon
+  const dateWithTime = date + ' ' + startTime[0] + ':' + startTime[1] + noon
 
   function handleOnClick() {
     setOpen(true)
@@ -66,15 +66,27 @@ function Slots({ slot, date, onSave, name, bgColor, txtColor, ModalComponent }) 
           </Typography>
         </Box>
       </Box>
-      {DialogComponent &&
+      {slot.id && DialogComponent &&
       <DialogComponent
       appointmentId={slot.id}
       patientId = {slot.patient_id}
       open={open}
       onClose={handeOnClose}
-      slotTime={date_with_time}
+      slotTime={dateWithTime}
       onSave={onSave}
+      bookedBy={bookedBy}
+      note={note}
       />
+      }
+      {
+        DialogComponent && 
+        <DialogComponent
+        slot={slot} 
+        open={open}
+        onClose={handeOnClose}
+        onSave={onSave}
+        slotTime={dateWithTime}
+        />
       }
     </Box>
   )

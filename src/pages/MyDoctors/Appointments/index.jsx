@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom'
 import ScheduledDoctors from './ScheduledDoctors'
 import { METHOD, URL } from '../../../api'
 import useCustomFetch from '../../../hooks/useCustomFetch'
-import useAppointmentReschedule from '../../../hooks/useAppointmentReschedule'
+import useAppointmentUpdate from '../../../hooks/useAppointmentUpdate'
 import AppointmentContainer from './AppointmentsContainer'
 
 const useStyles = makeStyles(() => ({
@@ -42,14 +42,14 @@ function Appointment({ doctorList }) {
     }
   }, [id, paginationNumber])
 
-  const [appointmentSlot, refetch] = useCustomFetch(
+  const [appointmentSlots, refetch] = useCustomFetch(
     METHOD.GET,
     URL.appointmentSlotsView,
     key,
     true
   )
 
-  const [onSave] = useAppointmentReschedule(refetch)
+  const [onSave] = useAppointmentUpdate(refetch)
 
   function forwardPagination() {
     setPaginationNumber(paginationNumber + 1)
@@ -65,7 +65,7 @@ function Appointment({ doctorList }) {
         <ScheduledDoctors doctorDetails={doctorList} />
         <Box className={classes.schedule}>
           <AppointmentContainer
-            appointmentSlot={appointmentSlot}
+            appointmentSlots={appointmentSlots}
             forwardPagination={forwardPagination}
             backwardPagination={backwardPagination}
             onSave={onSave}

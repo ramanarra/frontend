@@ -4,7 +4,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import StarIcon from '@material-ui/icons/Star'
 
 import { URL } from '../../../../../api'
-import useStyle from './useStyleForCancleAppontment'
+import useStyle from './useCancleAppointmentStyle'
 
 
 

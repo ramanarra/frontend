@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import API from '../api'
 
-function useAppointmentReschedule(refetch) {
+function useAppointmentUpdate(refetch) {
   const [loading, setLoading] = useState(false)
 
   function handleOnFetch(url,{...params}) {
@@ -27,4 +27,4 @@ function useAppointmentReschedule(refetch) {
   return [handleOnFetch, loading]
 }
 
-export default useAppointmentReschedule
+export default useAppointmentUpdate

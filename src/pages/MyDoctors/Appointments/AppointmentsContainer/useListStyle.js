@@ -1,6 +1,6 @@
 import {makeStyles} from '@material-ui/core/styles'
 
-const useStyleForList = makeStyles(() => ({
+const useListStyle = makeStyles(() => ({
     container: {
         marginLeft: 19,
         marginBottom: 10,
@@ -20,6 +20,7 @@ const useStyleForList = makeStyles(() => ({
         color: '#a8a8a8',
         paddingTop: 4,
         paddingBottom: 10,
+        letterSpacing: 1,
       },
       date: {
         textAlign: 'center',
@@ -69,4 +70,4 @@ const useStyleForList = makeStyles(() => ({
       },
 }))
 
-export default useStyleForList
+export default useListStyle

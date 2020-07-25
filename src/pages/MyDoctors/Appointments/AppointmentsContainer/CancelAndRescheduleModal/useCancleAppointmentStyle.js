@@ -1,6 +1,6 @@
 import {makeStyles} from '@material-ui/core/styles'
 
-const useStyleForCancelAppointment = makeStyles(() => ({
+const useCancleAppointmentStyle = makeStyles(() => ({
     cancellation: {
         height: 950,
       },
@@ -63,4 +63,4 @@ const useStyleForCancelAppointment = makeStyles(() => ({
       },
 }))
 
-export default useStyleForCancelAppointment
+export default useCancleAppointmentStyle

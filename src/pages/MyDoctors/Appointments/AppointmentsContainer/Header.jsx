@@ -6,29 +6,28 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import EventIcon from '@material-ui/icons/Event';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
+import Moment from 'moment'
 
 import Stretch from '../../../../components/Stretch'
 import View from '../../../../assets/img/icons/view.svg'
 import Filter from '../../../../assets/img/icons/filter.svg'
-import DotMenu from '../../../../assets/img/icons/dot-menu.svg'
-import Moment from 'moment'
-import useStyle from './useStyleForHeader'
+import useStyle from './useHeaderStyle'
 
 
 function Header({forwardPagination, backwardPagination, slots}) {
   const classes = useStyle()
 
-  const current_day = Moment()
+  const currentDay = Moment()
 
-  const [date, setDate] = useState(Moment())
+  const [date, setDate] = useState(currentDay)
 
-  const current_date = Moment.utc(date)
+  const currentDate = Moment.utc(date)
 
-  const startDay = current_date.format('DD MMM, YYYY')
+  const startDay = currentDate.format('DD MMM, YYYY')
 
   const endDay = Moment.utc(slots[6].day).format('DD MMM, YYYY')
 
-  const month = current_date.format('MMMM, YYYY')
+  const month = currentDate.format('MMMM, YYYY')
 
   function handleOnNext() {
     const newDate = Moment(date.add('7', 'days'))
@@ -37,7 +36,7 @@ function Header({forwardPagination, backwardPagination, slots}) {
   }
 
   function handleOnBack() {
-    if(date.diff(current_day, 'days') > 0) {
+    if(date.diff(currentDay, 'days') > 0) {
       const newDate = Moment(date.subtract('7', 'days'))
       setDate(newDate)
       backwardPagination()
@@ -57,11 +56,11 @@ function Header({forwardPagination, backwardPagination, slots}) {
         </Box>
           <Stretch />
           <Box display="flex">
-              <FiberManualRecordIcon />
+              <FiberManualRecordIcon className={classes.freeSlot} />
               <Typography className={classes.txt}>Free Slot</Typography>
-              <Box className={classes.booked}></Box>
+              <FiberManualRecordIcon className={classes.booked} />
               <Typography className={classes.txt}>Booked</Typography>
-              <Box className={classes.blocked}></Box>
+              <FiberManualRecordIcon className={classes.blocked} />
               <Typography className={classes.txt}>Blocked(Yet to Pay)</Typography>
             <Box paddingRight={2} paddingLeft={3} marginTop={-0.1}>
               <FormControl variant="outlined">
@@ -73,15 +72,14 @@ function Header({forwardPagination, backwardPagination, slots}) {
             <Box marginBottom={2.5} paddingRight={2.5}>
               <SearchIcon className={classes.search} />
             </Box>
-            <Box paddingRight={3} marginBottom={1}>
-              <img className={classes.imgSize} src={View} alt="View" />
+            <Box paddingRight={3} marginBottom={1.5}>
+              <img className={classes.imgSize} src={View} alt="View" style={{paddingBottom: 1}} />
             </Box>
-            <Box paddingRight={3}>
+            <Box paddingRight={2}>
               <img className={classes.imgSize} src={Filter} alt="Filter" />
             </Box>
             <Box paddingRight={2}>
-              {/* <img style={{ width: 3 }} src={DotMenu} alt="Menu" /> */}
-              <MoreVertIcon />
+              <MoreVertIcon className={classes.menu} />
             </Box>
           </Box>
         </Box>

@@ -13,7 +13,7 @@ import StarIcon from '@material-ui/icons/Star'
 import DateFnsUtils from '@date-io/date-fns'
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
 
-import useStyle from './useStyleForReschedule'
+import useStyle from './useRescheduleStyle'
 import moment from 'moment'
 import { URL } from '../../../../../api'
 
@@ -27,6 +27,8 @@ function RescheduleAppointment({
   onSave,
   availableSlots,
   dateChange,
+  bookedBy,
+  note
 }) {
   const classes = useStyle()
 
@@ -113,10 +115,12 @@ function RescheduleAppointment({
             </Box>
           </Box>
           <Box display="flex">
-            <StarIcon className={classes.starIcon} color="primary" />
-            <Typography className={classes.note}>
-              Doctor Booked appointment (payment through online) - yet to pay
-            </Typography>
+            {bookedBy === 'Doctor' && <StarIcon className={classes.starIcon} color="primary" />}
+            <Typography className={classNames(classes.note, {
+                      [classes.patientNote]: bookedBy === 'Patient',
+                    })}>
+                {note}
+              </Typography>
           </Box>
           <Box className={classes.date}>
             <Typography className={classes.dateText}>Select Your Date</Typography>

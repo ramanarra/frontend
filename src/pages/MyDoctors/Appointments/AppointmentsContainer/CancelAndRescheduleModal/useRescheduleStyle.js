@@ -1,6 +1,6 @@
 import {makeStyles} from '@material-ui/core/styles'
 
-const useStyleForReschedule = makeStyles(() => ({
+const useRescheduleStyle = makeStyles(() => ({
     rescheduled: {
         height: 900,
       },
@@ -78,6 +78,10 @@ const useStyleForReschedule = makeStyles(() => ({
         paddingLeft: 5,
         color: '#0BB5FF',
       },
+      patientNote: {
+        marginLeft: 55,
+        color: '#a8a8a8',
+      },
       date: {
         paddingLeft: 60,
         paddingTop: 10,
@@ -151,4 +155,4 @@ const useStyleForReschedule = makeStyles(() => ({
       }
 }))
 
-export default useStyleForReschedule
+export default useRescheduleStyle

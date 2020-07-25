@@ -14,7 +14,7 @@ const useStyle = makeStyles(() => ({
 }))
 
 function AppointmentContainer({
-  appointmentSlot,
+  appointmentSlots,
   forwardPagination,
   backwardPagination,
   onSave,
@@ -23,16 +23,16 @@ function AppointmentContainer({
 
   return (
     <Box className={classes.constainer}>
-      {appointmentSlot ? (
+      {appointmentSlots ? (
         <Header
           forwardPagination={forwardPagination}
           backwardPagination={backwardPagination}
-          slots={appointmentSlot}
+          slots={appointmentSlots}
         />
       ) : null}
       <Box display="flex" flexWrap="wrap" className={classes.scheduleList}>
-        {appointmentSlot
-          ? appointmentSlot.map((data, index) => {
+        {appointmentSlots
+          ? appointmentSlots.map((data, index) => {
               return <List data={data} key={index} onSave={onSave} />
             })
           : null}

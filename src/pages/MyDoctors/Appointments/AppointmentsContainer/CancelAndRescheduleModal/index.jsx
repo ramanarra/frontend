@@ -6,6 +6,7 @@ import {
   DialogContent,
   DialogTitle,
 } from '@material-ui/core'
+import classNames from 'classnames'
 import CloseIcon from '@material-ui/icons/Close'
 import StarIcon from '@material-ui/icons/Star'
 import { useParams } from 'react-router-dom'
@@ -24,6 +25,8 @@ function CancleAndRescheduleModal({
   onClose,
   slotTime,
   onSave,
+  bookedBy,
+  note
 }) {
   const classes = useStyle()
 
@@ -128,9 +131,11 @@ function CancleAndRescheduleModal({
               </Box>
             </Box>
             <Box display="flex" paddingTop={1.5}>
-              <StarIcon className={classes.starIcon} color="primary" />
-              <Typography className={classes.note}>
-                Doctor Booked appointment (payment through online) - yet to pay
+              {bookedBy === 'Doctor' && <StarIcon className={classes.starIcon} color="primary" />}
+              <Typography className={classNames(classes.note, {
+                      [classes.patientNote]: bookedBy === 'Patient',
+                    })}>
+                {note}
               </Typography>
             </Box>
           </DialogContent>
@@ -169,6 +174,8 @@ function CancleAndRescheduleModal({
           onSave={onSave}
           availableSlots={availableSlots}
           dateChange={handleOnDateChange}
+          bookedBy={bookedBy}
+          note={note}
         />
       )}
     </Box>

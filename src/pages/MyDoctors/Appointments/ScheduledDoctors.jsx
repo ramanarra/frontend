@@ -51,7 +51,7 @@ const ScheduledDoctors = ({ doctorDetails }) => {
 
   const history = useHistory()
 
-  function handleOnClick(name, doctorKey) {
+  function handleOnClick(doctorKey) {
     history.push(`/appointments/${doctorKey}`)
   }
 
@@ -68,7 +68,7 @@ const ScheduledDoctors = ({ doctorDetails }) => {
                   [classes.selecedTab]: id === doctor.doctorKey,
                 })}
                 display="flex"
-                onClick={() => handleOnClick(doctor.doctorName, doctor.doctorKey)}
+                onClick={() => handleOnClick(doctor.doctorKey)}
               >
                 <Avatar className={classes.photo} src={doctor.photo} />
                 <Typography className={classes.name}>{doctor.doctorName}</Typography>

@@ -1,6 +1,6 @@
 import {makeStyles} from '@material-ui/core/styles'
 
-const useStyleForSlots = makeStyles(() => ({
+const useSlotsStyle = makeStyles(() => ({
     container: {
         marginLeft: 18,
         marginBottom: 10,
@@ -64,4 +64,4 @@ const useStyleForSlots = makeStyles(() => ({
       },
 }))
 
-export default useStyleForSlots
+export default useSlotsStyle
