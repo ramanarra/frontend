@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export default axios.create({
-  baseURL: 'http://13.232.206.31:8081/api',
+  baseURL: 'http://13.126.255.114:8081/api',
 })
 
 export const METHOD = {
