@@ -5,18 +5,24 @@ import Header from './Header'
 import List from './List'
 
 const useStyle = makeStyles(() => ({
-    scheduleList: {
-        marginTop: 20,
-        marginLeft: -10,
-      },
+  constainer: {
+    height: '100%',
+  },
+  scheduleList: {
+    height: 'calc(100% - 70px)',
+  },
 }))
 
-function AppointmentContainer({appointmentSlot, forwardPagination, backwardPagination, onSave}) {
-
-    const classes = useStyle()
+function AppointmentContainer({
+  appointmentSlot,
+  forwardPagination,
+  backwardPagination,
+  onSave,
+}) {
+  const classes = useStyle()
 
   return (
-    <Box>
+    <Box className={classes.constainer}>
       {appointmentSlot ? (
         <Header
           forwardPagination={forwardPagination}

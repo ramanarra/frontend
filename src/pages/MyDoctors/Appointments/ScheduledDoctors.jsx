@@ -3,7 +3,6 @@ import classNames from 'classnames'
 import { useParams, useHistory } from 'react-router-dom'
 import { Box, Typography, makeStyles, Avatar } from '@material-ui/core'
 
-
 const useStyles = makeStyles((theme) => ({
   container: {
     width: '250px',
@@ -14,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   },
   heading: {
     fontSize: 18,
-    paddingTop: '40px',
+    paddingTop: '20px',
     paddingLeft: '25px',
     color: '#645f5f',
   },
@@ -36,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
   name: {
     paddingLeft: '7px',
-    fontSize: '15px',
+    fontSize: '14px',
     color: '#645f5f',
   },
   selecedTab: {
@@ -52,11 +51,9 @@ const ScheduledDoctors = ({ doctorDetails }) => {
 
   const history = useHistory()
 
-
   function handleOnClick(name, doctorKey) {
     history.push(`/appointments/${doctorKey}`)
   }
-
 
   return (
     <Box className={classes.container}>
@@ -72,7 +69,6 @@ const ScheduledDoctors = ({ doctorDetails }) => {
                 })}
                 display="flex"
                 onClick={() => handleOnClick(doctor.doctorName, doctor.doctorKey)}
-                
               >
                 <Avatar className={classes.photo} src={doctor.photo} />
                 <Typography className={classes.name}>{doctor.doctorName}</Typography>

@@ -4,6 +4,8 @@ import SearchIcon from '@material-ui/icons/Search'
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import EventIcon from '@material-ui/icons/Event';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 
 import Stretch from '../../../../components/Stretch'
 import View from '../../../../assets/img/icons/view.svg'
@@ -54,8 +56,8 @@ function Header({forwardPagination, backwardPagination, slots}) {
             <ArrowForwardIosIcon className={classes.arrowForward} onClick={() => handleOnNext()} />
         </Box>
           <Stretch />
-          <Box display="flex" className={classes.right}>
-              <Box className={classes.freeSlot}></Box>
+          <Box display="flex">
+              <FiberManualRecordIcon />
               <Typography className={classes.txt}>Free Slot</Typography>
               <Box className={classes.booked}></Box>
               <Typography className={classes.txt}>Booked</Typography>
@@ -78,7 +80,8 @@ function Header({forwardPagination, backwardPagination, slots}) {
               <img className={classes.imgSize} src={Filter} alt="Filter" />
             </Box>
             <Box paddingRight={2}>
-              <img style={{ width: 3 }} src={DotMenu} alt="Menu" />
+              {/* <img style={{ width: 3 }} src={DotMenu} alt="Menu" /> */}
+              <MoreVertIcon />
             </Box>
           </Box>
         </Box>

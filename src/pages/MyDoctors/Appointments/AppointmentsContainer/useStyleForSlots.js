@@ -2,7 +2,7 @@ import {makeStyles} from '@material-ui/core/styles'
 
 const useStyleForSlots = makeStyles(() => ({
     container: {
-        marginLeft: 19,
+        marginLeft: 18,
         marginBottom: 10,
         height: 45,
         background: '#f9f9f9',

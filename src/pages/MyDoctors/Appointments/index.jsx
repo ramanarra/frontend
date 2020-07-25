@@ -15,7 +15,6 @@ const useStyles = makeStyles(() => ({
   },
   body: {
     width: '98%',
-    paddingBottom: 20,
     background: '#f9f9f9',
     display: 'flex',
     backgroundColor: 'white',
