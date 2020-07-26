@@ -3,12 +3,11 @@ import { Paper, Button, Snackbar } from '@material-ui/core'
 import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers'
 import { GoCalendar } from 'react-icons/go'
 import { useForm, Controller } from 'react-hook-form'
-import moment from 'moment'
 import MomentUtils from '@date-io/moment'
 
 import Textfield from '../../components/Textfield'
-import './style.scss'
 import useManualFetch from '../../hooks/useManualFetch'
+import './style.scss'
 import { URL } from '../../api'
 
 const SnackbarPosition = { vertical: 'bottom', horizontal: 'center' }
@@ -17,7 +16,7 @@ const PatientSignup = (props) => {
   const { register, errors, control, handleSubmit } = useForm()
   const [handleSignUp, error, isLoading, res] = useManualFetch()
 
-  const redirectToLogin = () => props.history.push('/login')
+  const redirectToLogin = () => props.history.push('/patient/appoinments')
   const onSubmit = (data) => handleSignUp('POST', URL.patientSignup, data)
 
   useEffect(() => {
