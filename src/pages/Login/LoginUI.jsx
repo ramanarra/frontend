@@ -11,6 +11,7 @@ import {
 import Centralize from '../../components/Centralize'
 import Logo from '../../assets/img/logo.png'
 import useStyles from './useStyles'
+import { useHistory } from 'react-router-dom'
 
 const SnackbarPosition = { vertical: 'bottom', horizontal: 'center' }
 
@@ -27,6 +28,7 @@ const Login = ({
   const [isPasswordEmpty, setIsPasswordEmpty] = useState(false)
   const [isEmailEmpty, setIsEmailEmpty] = useState(false)
   const [error, setError] = useState(false)
+  const history = useHistory()
   const classes = useStyles()
 
   function handleOnPasswordChange(event) {
@@ -39,15 +41,19 @@ const Login = ({
     setUserName(event.target.value)
   }
 
-  function handleOnLogin(){
+  function handleOnLogin() {
     if (!password || !userName) {
-        setIsPasswordEmpty(!password)
-        setIsEmailEmpty(!userName)
+      setIsPasswordEmpty(!password)
+      setIsEmailEmpty(!userName)
 
-        return
-      }
+      return
+    }
 
-      onLogin(userName, password, setError)
+    onLogin(userName, password, setError)
+  }
+
+  function handleSignup() {
+    history.push('/patient/registration')
   }
 
   return (
@@ -120,7 +126,7 @@ const Login = ({
             <Typography className={classes.singupLabel} variant="h6">
               I am new?
             </Typography>
-            <Typography color="primary" variant="h4">
+            <Typography color="primary" variant="h4" onClick={handleSignup}>
               Signup
             </Typography>
           </Centralize>
