@@ -16,3 +16,9 @@
   justify-content: center;
   align-items: center;
 }
+
+@mixin equalSplitPartiton {
+  display: grid;
+  grid-template-columns: 48.5% 48.5%;
+  column-gap: 3%;
+}
