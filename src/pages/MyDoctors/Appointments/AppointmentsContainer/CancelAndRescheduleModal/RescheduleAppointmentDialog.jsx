@@ -1,5 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import classNames from 'classnames'
+import { useParams } from 'react-router-dom'
+import moment from 'moment'
 import {
   Typography,
   Box,
@@ -13,9 +15,9 @@ import StarIcon from '@material-ui/icons/Star'
 import DateFnsUtils from '@date-io/date-fns'
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
 
+import useCustomFecth from '../../../../../hooks/useCustomFetch'
 import useStyle from './useRescheduleStyle'
-import moment from 'moment'
-import { URL } from '../../../../../api'
+import { URL, METHOD } from '../../../../../api'
 
 function RescheduleAppointment({
   appointmentId,
@@ -25,29 +27,39 @@ function RescheduleAppointment({
   onClose,
   details,
   onSave,
-  availableSlots,
   dateChange,
   bookedBy,
-  note
+  note,
 }) {
   const classes = useStyle()
 
-  const today = moment().format('MM/DD/yyyy')
+  const { id } = useParams()
 
-  const [time, setTime] = useState({start: '00:00:00', end: '00:00:00'})
+  const [date, setDate] = useState(moment())
+
+  const currentDate = moment(date).format('DD-MM-YYYY')
+
+  const [time, setTime] = useState({ start: '00:00:00', end: '00:00:00' })
+
+  const key = useMemo(() => {
+    return {
+      doctorKey: id,
+      appointmentDate: currentDate,
+    }
+  }, [id, currentDate])
+
+  const [availableSlots] = useCustomFecth(METHOD.GET, URL.availableSlot, key, true)
 
   const start = time.start.split(':')
 
   const end = time.end.split(':')
-
-  const [date, setDate] = useState(today)
 
   const parameter = {
     appointmentId: appointmentId,
     patientId: Number(patientId),
     startTime: start[0] + ':' + start[1],
     endTime: end[0] + ':' + end[1],
-    appointmentDate: moment(date).format('YYYY-MM-DD')
+    appointmentDate: moment(date).format('YYYY-MM-DD'),
   }
 
   function handleClose(event) {
@@ -60,10 +72,8 @@ function RescheduleAppointment({
   }
 
   const handleDateChange = (event) => {
-    dateChange(event)
     setDate(event)
   }
-
 
   const handleOnClick = (slotTiming) => {
     setTime(slotTiming)
@@ -115,12 +125,16 @@ function RescheduleAppointment({
             </Box>
           </Box>
           <Box display="flex">
-            {bookedBy === 'Doctor' && <StarIcon className={classes.starIcon} color="primary" />}
-            <Typography className={classNames(classes.note, {
-                      [classes.patientNote]: bookedBy === 'Patient',
-                    })}>
-                {note}
-              </Typography>
+            {bookedBy === 'Doctor' && (
+              <StarIcon className={classes.starIcon} color="primary" />
+            )}
+            <Typography
+              className={classNames(classes.note, {
+                [classes.patientNote]: bookedBy === 'Patient',
+              })}
+            >
+              {note}
+            </Typography>
           </Box>
           <Box className={classes.date}>
             <Typography className={classes.dateText}>Select Your Date</Typography>
@@ -158,20 +172,26 @@ function RescheduleAppointment({
                       })}
                       onClick={() => handleOnClick(data)}
                     >
-                      <Typography className={classNames(classes.timeText, {
-                      [classes.selectedText]: time.start === data.start,
-                    })}>
+                      <Typography
+                        className={classNames(classes.timeText, {
+                          [classes.selectedText]: time.start === data.start,
+                        })}
+                      >
                         {times[0] + ':' + times[1]} AM
                       </Typography>
                     </Button>
                   ) : (
-                    <Button className={classNames(classes.time, {
-                      [classes.selectedTab]: time.start === data.start,
-                    })}
-                     onClick={() => handleOnClick(data)}>
-                      <Typography className={classNames(classes.timeText, {
-                      [classes.selectedText]: time.start === data.start,
-                    })}>
+                    <Button
+                      className={classNames(classes.time, {
+                        [classes.selectedTab]: time.start === data.start,
+                      })}
+                      onClick={() => handleOnClick(data)}
+                    >
+                      <Typography
+                        className={classNames(classes.timeText, {
+                          [classes.selectedText]: time.start === data.start,
+                        })}
+                      >
                         {times[0] + ':' + times[1]} PM
                       </Typography>
                     </Button>

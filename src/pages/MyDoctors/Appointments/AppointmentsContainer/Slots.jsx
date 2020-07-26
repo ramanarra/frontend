@@ -1,10 +1,25 @@
 import React, { useState } from 'react'
 import { Box, Typography } from '@material-ui/core'
 import ScheduleIcon from '@material-ui/icons/Schedule'
+import StarIcon from '@material-ui/icons/Star'
+import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord'
 
 import useStyle from './useSlotsStyle'
+import Stretch from '../../../../components/Stretch'
 
-function Slots({ slot, date, onSave, name, bgColor, txtColor, ModalComponent, bookedBy, note }) {
+function Slots({
+  singleStar,
+  doubleStar,
+  slot,
+  date,
+  onSave,
+  name,
+  bgColor,
+  txtColor,
+  ModalComponent,
+  bookedBy,
+  note,
+}) {
   const classes = useStyle()
 
   const [open, setOpen] = useState(false)
@@ -48,9 +63,19 @@ function Slots({ slot, date, onSave, name, bgColor, txtColor, ModalComponent, bo
       >
         <Box className={classes.top} display="flex">
           <Box display="flex" width="100%">
+            {singleStar || doubleStar ? (
+              <StarIcon className={classes.star} style={{ color: txtColor }} />
+            ) : null}
+            {doubleStar && (
+              <StarIcon className={classes.star} style={{ color: txtColor }} />
+            )}
             <Typography className={classes.name} style={{ color: txtColor }}>
               {name}
             </Typography>
+            <Stretch />
+            <div className={classes.round}>
+              <FiberManualRecordIcon style={{ color: txtColor }} />
+            </div>
           </Box>
         </Box>
         <Box className={classes.bottom} display="flex">
@@ -61,33 +86,24 @@ function Slots({ slot, date, onSave, name, bgColor, txtColor, ModalComponent, bo
           <Typography className={classes.toTime} style={{ color: txtColor }}>
             {endTime[0] + ':' + endTime[1] + time}
           </Typography>
+          <Stretch />
           <Typography className={classes.total} style={{ color: txtColor }}>
             {slot.slotTiming + 'm'}
           </Typography>
         </Box>
       </Box>
-      {slot.id && DialogComponent &&
-      <DialogComponent
-      appointmentId={slot.id}
-      patientId = {slot.patient_id}
-      open={open}
-      onClose={handeOnClose}
-      slotTime={dateWithTime}
-      onSave={onSave}
-      bookedBy={bookedBy}
-      note={note}
-      />
-      }
-      {
-        DialogComponent && 
+      {DialogComponent && (
         <DialogComponent
-        slot={slot} 
-        open={open}
-        onClose={handeOnClose}
-        onSave={onSave}
-        slotTime={dateWithTime}
+          appointmentId={slot.id}
+          patientId={slot.patient_id}
+          open={open}
+          onClose={handeOnClose}
+          slotTime={dateWithTime}
+          onSave={onSave}
+          bookedBy={bookedBy}
+          note={note}
         />
-      }
+      )}
     </Box>
   )
 }

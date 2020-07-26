@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Typography,
   Box,
@@ -9,14 +9,12 @@ import {
 import classNames from 'classnames'
 import CloseIcon from '@material-ui/icons/Close'
 import StarIcon from '@material-ui/icons/Star'
-import { useParams } from 'react-router-dom'
 
 import { METHOD, URL } from '../../../../../api'
-import useCustomFecth from '../../../../../hooks/useCustomFetch'
+import useManualFetch from '../../../../../hooks/useManualFetch'
 import CancleAppointment from './CancleAppointmentDialog'
 import RescheduleAppointment from './RescheduleAppointmentDialog'
 import useStyle from './useStyle'
-import moment from 'moment'
 
 function CancleAndRescheduleModal({
   appointmentId,
@@ -30,37 +28,21 @@ function CancleAndRescheduleModal({
 }) {
   const classes = useStyle()
 
-  const { id } = useParams()
-
-  const [date, setDate] = useState(moment())
-
-  const current_date = moment(date).format('DD-MM-YYYY')
-
-  const key = useMemo(() => {
-    return {
-      doctorKey: id,
-      appointmentDate: current_date,
-    }
-  }, [id, current_date])
-
-  const [availableSlots] = useCustomFecth(METHOD.GET, URL.availableSlot, key, true)
+  const [fetch, error, isLoading, patientView] = useManualFetch()
 
   const [openCanclationDialog, setCanclationDialog] = useState(false)
 
   const [openReschedule, setOpenReschedule] = useState(false)
 
-  const appointment = useMemo(() => {
-    return {
-      appointmentId: appointmentId,
+  useEffect(() => {
+    if(open) {
+      const params = {
+        appointmentId: appointmentId,
+      }
+      fetch(METHOD.POST, URL.appointmentView, params)
     }
-  }, [appointmentId])
 
-  const [patientView] = useCustomFecth(
-    METHOD.POST,
-    URL.appointmentView,
-    appointment,
-    true
-  )
+  }, [open, appointmentId])
 
   function handleCancle(event) {
     onClose(event)
@@ -76,10 +58,6 @@ function CancleAndRescheduleModal({
   function handleReschedule(event) {
     onClose(event)
     setOpenReschedule(true)
-  }
-
-  function handleOnDateChange(event) {
-    setDate(event)
   }
 
   return (
@@ -172,8 +150,6 @@ function CancleAndRescheduleModal({
           onClose={handleClose}
           details={patientView}
           onSave={onSave}
-          availableSlots={availableSlots}
-          dateChange={handleOnDateChange}
           bookedBy={bookedBy}
           note={note}
         />

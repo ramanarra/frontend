@@ -33,7 +33,7 @@ function MyDoctors() {
       : localStorage.getItem('accountKey')
   })
 
-  const [data] = useCustomFetch(METHOD.GET, URL.doctorList, key)
+  const [data] = useCustomFetch(METHOD.GET, `${URL.doctorList}${key}`)
 
   return (
     <Box className={classes.container}>
