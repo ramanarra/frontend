@@ -49,7 +49,7 @@ function RescheduleAppointment({
     }
   }, [id, currentDate])
 
-  const [availableSlots] = useCustomFecth(METHOD.GET, URL.availableSlot, key, true)
+  const [availableSlots] = useCustomFecth(METHOD.GET, URL.availableSlot, key)
 
   const start = time.start.split(':')
 
