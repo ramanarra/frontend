@@ -79,7 +79,7 @@ const useSlotsStyle = makeStyles(() => ({
   },
 
   star: {
-    width: 13,
+    width: 11,
     marginTop: -1,
   },
 }))

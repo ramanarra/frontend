@@ -6,6 +6,7 @@ import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord'
 
 import useStyle from './useSlotsStyle'
 import Stretch from '../../../../components/Stretch'
+import getTimeFormatWithNoon, { getTimeFormat } from '../../../../lib/dateLib'
 
 function Slots({
   singleStar,
@@ -24,23 +25,11 @@ function Slots({
 
   const [open, setOpen] = useState(false)
 
-  const startTime = slot.startTime.split(':')
+  const startTime = getTimeFormat(slot.startTime)
 
-  const noon = startTime[0] >= 12 ? 'PM' : 'AM'
+  const endTime = getTimeFormatWithNoon(slot.endTime)
 
-  if (startTime[0] > 12) {
-    startTime[0] = startTime[0] - 12
-  }
-
-  const endTime = slot.endTime.split(':')
-
-  const time = endTime[0] >= 12 ? 'PM' : 'AM'
-
-  if (endTime[0] > 12) {
-    endTime[0] = endTime[0] - 12
-  }
-
-  const dateWithTime = date + ' ' + startTime[0] + ':' + startTime[1] + noon
+  const dateWithTime = `${date} ${getTimeFormatWithNoon(startTime)} `
 
   function handleOnClick() {
     setOpen(true)
@@ -64,10 +53,10 @@ function Slots({
         <Box className={classes.top} display="flex">
           <Box display="flex" width="100%">
             {singleStar || doubleStar ? (
-              <StarIcon className={classes.star} style={{ color: txtColor }} />
+              <StarIcon className={classes.star} color="primary" />
             ) : null}
             {doubleStar && (
-              <StarIcon className={classes.star} style={{ color: txtColor }} />
+              <StarIcon className={classes.star} color="primary" />
             )}
             <Typography className={classes.name} style={{ color: txtColor }}>
               {name}
@@ -81,10 +70,10 @@ function Slots({
         <Box className={classes.bottom} display="flex">
           <ScheduleIcon className={classes.schedule} style={{ color: txtColor }} />
           <Typography className={classes.fromTime} style={{ color: txtColor }}>
-            {startTime[0] + ':' + startTime[1] + ' - '}
+            {`${startTime} - `}
           </Typography>
           <Typography className={classes.toTime} style={{ color: txtColor }}>
-            {endTime[0] + ':' + endTime[1] + time}
+            {endTime}
           </Typography>
           <Stretch />
           <Typography className={classes.total} style={{ color: txtColor }}>
@@ -102,6 +91,8 @@ function Slots({
           onSave={onSave}
           bookedBy={bookedBy}
           note={note}
+          singleStar={singleStar}
+          doubleStar={doubleStar}
         />
       )}
     </Box>

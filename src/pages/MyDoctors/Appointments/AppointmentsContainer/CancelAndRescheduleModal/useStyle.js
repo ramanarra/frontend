@@ -58,13 +58,12 @@ const useStyle = makeStyles(() => ({
       paddingTop: 5,
     },
     starIcon: {
-      width: 10,
+      width: 11,
       marginTop: -5,
-      marginLeft: 58,
     },
     note: {
       fontSize: 10,
-      paddingLeft: 5,
+      paddingLeft: 4,
       color: '#0BB5FF',
     },
     cancle: {

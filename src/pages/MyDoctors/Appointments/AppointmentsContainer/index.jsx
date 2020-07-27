@@ -21,6 +21,10 @@ function AppointmentContainer({
 }) {
   const classes = useStyle()
 
+  if (appointmentSlots?.message === 'Content Not Available') {
+    return null
+  }
+
   return (
     <Box className={classes.constainer}>
       {appointmentSlots ? (

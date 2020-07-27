@@ -24,7 +24,9 @@ function CancleAndRescheduleModal({
   slotTime,
   onSave,
   bookedBy,
-  note
+  note,
+  doubleStar,
+  singleStar,
 }) {
   const classes = useStyle()
 
@@ -35,13 +37,12 @@ function CancleAndRescheduleModal({
   const [openReschedule, setOpenReschedule] = useState(false)
 
   useEffect(() => {
-    if(open) {
+    if (open) {
       const params = {
         appointmentId: appointmentId,
       }
       fetch(METHOD.POST, URL.appointmentView, params)
     }
-
   }, [open, appointmentId])
 
   function handleCancle(event) {
@@ -108,11 +109,18 @@ function CancleAndRescheduleModal({
                 </Box>
               </Box>
             </Box>
-            <Box display="flex" paddingTop={1.5}>
-              {bookedBy === 'Doctor' && <StarIcon className={classes.starIcon} color="primary" />}
-              <Typography className={classNames(classes.note, {
-                      [classes.patientNote]: bookedBy === 'Patient',
-                    })}>
+            <Box display="flex" paddingTop={1.5} paddingLeft={7}>
+              {singleStar || doubleStar ? (
+                <StarIcon className={classes.starIcon} color="primary" />
+              ) : null}
+              {doubleStar && (
+                <StarIcon className={classes.starIcon} color="primary" />
+              )}
+              <Typography
+                className={classNames(classes.note, {
+                  [classes.patientNote]: bookedBy === 'Patient',
+                })}
+              >
                 {note}
               </Typography>
             </Box>
@@ -132,15 +140,15 @@ function CancleAndRescheduleModal({
         </Dialog>
       ) : null}
 
-    {openCanclationDialog &&
-      <CancleAppointment
-        open={openCanclationDialog}
-        slotTime={slotTime}
-        onClose={handleClose}
-        id={appointmentId}
-        onSave={onSave}
-      />
-    }
+      {openCanclationDialog && (
+        <CancleAppointment
+          open={openCanclationDialog}
+          slotTime={slotTime}
+          onClose={handleClose}
+          id={appointmentId}
+          onSave={onSave}
+        />
+      )}
       {openReschedule && (
         <RescheduleAppointment
           appointmentId={appointmentId}

@@ -13,11 +13,10 @@ import View from '../../../../assets/img/icons/view.svg'
 import Filter from '../../../../assets/img/icons/filter.svg'
 import useStyle from './useHeaderStyle'
 
+const currentDay = Moment()
 
 function Header({forwardPagination, backwardPagination, slots}) {
   const classes = useStyle()
-
-  const currentDay = Moment()
 
   const [date, setDate] = useState(currentDay)
 
@@ -36,7 +35,7 @@ function Header({forwardPagination, backwardPagination, slots}) {
   }
 
   function handleOnBack() {
-    if(date.diff(currentDay, 'days') > 0) {
+    if(date.diff(currentDay, 'days') >= 0) {
       const newDate = Moment(date.subtract('7', 'days'))
       setDate(newDate)
       backwardPagination()

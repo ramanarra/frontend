@@ -19,6 +19,18 @@ function isDoubleStar(data) {
   return !data.ispaid && data.paymentoption.toLowerCase() === 'directpayment'
 }
 
+function addedNote(data) {
+  if (isSingleStar(data)) {
+    return 'Doctor Booked appointment (payment through online) - yet to pay'
+  }
+
+  if (isDoubleStar(data)) {
+    return 'Doctor Booked appointment (Direct Payment / Not Requried)'
+  }
+
+  return 'Doctor Booked Appointment (Payment through Virujh) - Paid'
+}
+
 function List({ data, onSave }) {
   const classes = useStyle()
 
@@ -50,9 +62,7 @@ function List({ data, onSave }) {
               bookedBy={'Doctor'}
               singleStar={isSingleStar(data)}
               doubleStar={isDoubleStar(data)}
-              note={
-                'Doctor Booked appointment (payment through online) - yet to pay'
-              }
+              note={addedNote(data)}
             />
           ) : (
             <Slots
