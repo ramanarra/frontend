@@ -34,22 +34,22 @@ function CancleAppointment({open, slotTime, onClose, id, onSave}) {
     return(
         <Box>
             <Dialog open={open} className={classes.cancellation}>
-                <DialogTitle>
+                <DialogTitle className={classes.dialogTitle}>
                 <Box display="flex">
-                    <Typography className={classes.confirmation}>Confirmation</Typography>
+                    <Typography variant="h5" className={classes.confirmation}>Confirmation</Typography>
                     <CloseIcon className={classes.closed} onClick={handleClose} />
                 </Box>
                 </DialogTitle>
                 <DialogContent>
                 <Box className={classes.askConfirmation}>
                     <Typography className={classes.askConfirmationText}>
-                    Are you sure want to cancle your appointment {slotDate[1] + ' ' + slotDate[0]}
+                    Are you sure want to cancle your appointment {slotDate[1] + slotDate[2] + ' ' + slotDate[0]}?
                     </Typography>
                 </Box>
                 <Box display="flex" className={classes.notes}>
                     <StarIcon className={classes.confirmationStar} />
-                    <Typography className={classes.confirmationNote}>
-                    The appointment has been cancelled as no money transaction here
+                    <Typography variant="h5" className={classes.confirmationNote}>
+                    The appointment has been cancelled as no money transaction here.
                     </Typography>
                 </Box>
                 </DialogContent>

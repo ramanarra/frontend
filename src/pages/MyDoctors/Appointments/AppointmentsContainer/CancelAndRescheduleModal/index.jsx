@@ -65,22 +65,22 @@ function CancleAndRescheduleModal({
     <Box>
       {patientView ? (
         <Dialog open={open} className={classes.dialogBox}>
-          <DialogTitle>
+          <DialogTitle className={classes.dialogTitle}>
             <Box display="flex">
-              <Typography className={classes.title}>Appointment</Typography>
+              <Typography variant="h5" className={classes.title}>Appointment</Typography>
               <CloseIcon className={classes.closeIcon} onClick={handleClose} />
             </Box>
           </DialogTitle>
           <DialogContent>
             <Box className={classes.slot}>
-              <Typography className={classes.text}>
-                Your slot time {slotTime}
+              <Typography variant="h5" className={classes.text}>
+                {`Your slot time ${slotTime}`}
               </Typography>
             </Box>
             <Box display="flex" className={classes.details}>
               <Box>
                 <Box display="flex">
-                  <Typography className={classes.phoneNumber}>
+                  <Typography variant="h5" className={classes.phoneNumber}>
                     Phone Number
                   </Typography>
                   <Typography className={classes.notchedOutline}>
@@ -88,7 +88,7 @@ function CancleAndRescheduleModal({
                   </Typography>
                 </Box>
                 <Box display="flex">
-                  <Typography className={classes.firstName}>First Name</Typography>
+                  <Typography variant="h5" className={classes.firstName}>First Name</Typography>
                   <Typography className={classes.notchedOutline}>
                     {patientView.patientDetails?.firstName}
                   </Typography>
@@ -96,13 +96,13 @@ function CancleAndRescheduleModal({
               </Box>
               <Box>
                 <Box display="flex">
-                  <Typography className={classes.lastName}>Last Name</Typography>
+                  <Typography variant="h5" className={classes.lastName}>Last Name</Typography>
                   <Typography className={classes.notchedOutline}>
                     {patientView.patientDetails?.lastName}
                   </Typography>
                 </Box>
                 <Box display="flex">
-                  <Typography className={classes.email}>Email ID</Typography>
+                  <Typography variant="h5" className={classes.email}>Email ID</Typography>
                   <Typography className={classes.notchedOutline}>
                     {patientView.patientDetails?.email}
                   </Typography>
@@ -127,12 +127,12 @@ function CancleAndRescheduleModal({
           </DialogContent>
           <Box display="flex">
             <Box className={classes.cancle} onClick={handleCancle}>
-              <Typography className={classes.cancleBtn}>
+              <Typography variant="h5" className={classes.cancleBtn}>
                 CANCLE APPOINTMENT
               </Typography>
             </Box>
             <Box className={classes.reschedule} onClick={handleReschedule}>
-              <Typography className={classes.rescheduleBtn}>
+              <Typography variant="h5" className={classes.rescheduleBtn}>
                 RESCHEDULE APPOINTMENT
               </Typography>
             </Box>

@@ -12,12 +12,13 @@ import {
 } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 import StarIcon from '@material-ui/icons/Star'
-import DateFnsUtils from '@date-io/date-fns'
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
+// import DateFnsUtils from '@date-io/date-fns'
+// import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
 
 import useCustomFecth from '../../../../../hooks/useCustomFetch'
-import useStyle from './useRescheduleStyle'
 import { URL, METHOD } from '../../../../../api'
+import DatePicker from '../../../../../components/DatePicker'
+import useStyle from './useRescheduleStyle'
 
 function RescheduleAppointment({
   appointmentId,
@@ -82,7 +83,7 @@ function RescheduleAppointment({
   return (
     <Box>
       <Dialog open={open} className={classes.rescheduled}>
-        <DialogTitle>
+        <DialogTitle className={classes.dialogTitle}>
           <Box display="flex">
             <Typography className={classes.title}>Reschedule</Typography>
             <CloseIcon className={classes.closeIcon} onClick={handleClose} />
@@ -90,20 +91,20 @@ function RescheduleAppointment({
         </DialogTitle>
         <DialogContent>
           <Box className={classes.slot}>
-            <Typography className={classes.text}>
+            <Typography variant="h5" className={classes.text}>
               Your slot time {slotTime}
             </Typography>
           </Box>
           <Box display="flex" className={classes.details}>
             <Box>
               <Box display="flex">
-                <Typography className={classes.phoneNumber}>Phone Number</Typography>
+                <Typography variant="h5" className={classes.phoneNumber}>Phone Number</Typography>
                 <Typography className={classes.notchedOutline}>
                   {details.patientDetails.phone}
                 </Typography>
               </Box>
               <Box display="flex">
-                <Typography className={classes.firstName}>First Name</Typography>
+                <Typography variant="h5" className={classes.firstName}>First Name</Typography>
                 <Typography className={classes.notchedOutline}>
                   {details.patientDetails.firstName}
                 </Typography>
@@ -111,13 +112,13 @@ function RescheduleAppointment({
             </Box>
             <Box>
               <Box display="flex">
-                <Typography className={classes.lastName}>Last Name</Typography>
+                <Typography variant="h5" className={classes.lastName}>Last Name</Typography>
                 <Typography className={classes.notchedOutline}>
                   {details.patientDetails.lastName}
                 </Typography>
               </Box>
               <Box display="flex">
-                <Typography className={classes.email}>Email ID</Typography>
+                <Typography variant="h5" className={classes.email}>Email ID</Typography>
                 <Typography className={classes.notchedOutline}>
                   {details.patientDetails.email}
                 </Typography>
@@ -137,25 +138,7 @@ function RescheduleAppointment({
             </Typography>
           </Box>
           <Box className={classes.date}>
-            <Typography className={classes.dateText}>Select Your Date</Typography>
-            <MuiPickersUtilsProvider
-              utils={DateFnsUtils}
-              className={classes.datePicker}
-            >
-              <KeyboardDatePicker
-                disableToolbar
-                className={classes.datePicker}
-                variant="outlined"
-                format="MM/dd/yyyy"
-                margin="normal"
-                id="date-picker-inline"
-                value={date}
-                onChange={handleDateChange}
-                KeyboardButtonProps={{
-                  'aria-label': 'change date',
-                }}
-              />
-            </MuiPickersUtilsProvider>
+           <DatePicker />
           </Box>
           <Box className={classes.available}>
             <Typography className={classes.availableText}>

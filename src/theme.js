@@ -21,6 +21,11 @@ const theme = createMuiTheme({
       fontSize: 12,
     },
 
+    h5: {
+      fontFamily : 'product-sans-medium, sans-serif',
+      fontSize: 13,
+    },
+
     h6: {
       fontSize: 11.6,
       color: '#d6d6d6',
@@ -45,6 +50,13 @@ const theme = createMuiTheme({
         borderColor: '#f0f0f0',
         '&$focused': { borderColor: 'red' },
       },
+      inputMarginDense : {
+        paddingTop: 8.5,
+        paddingBottom: 8.5,
+      },
+      inputAdornedEnd: {
+        paddingRight: 14
+      }
     },
 
     MuiButton: {
