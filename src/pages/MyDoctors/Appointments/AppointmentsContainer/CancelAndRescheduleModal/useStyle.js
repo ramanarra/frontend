@@ -76,7 +76,7 @@ const useStyle = makeStyles(() => ({
     paddingBottom: 38,
   },
   cancle: {
-    padding: '10px 33px',
+    padding: '11px 30px',
     backgroundColor: '#f4f2f2',
     borderRadius: 17,
     textAlign: 'center',

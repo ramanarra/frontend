@@ -1,6 +1,5 @@
 import React, { useState, useMemo } from 'react'
 import moment from 'moment'
-import Select from 'react-select'
 import {
   Typography,
   Box,

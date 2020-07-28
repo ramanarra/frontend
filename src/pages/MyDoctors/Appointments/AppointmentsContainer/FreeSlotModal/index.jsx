@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState } from 'react'
 import {
   Typography,
   Box,
@@ -24,32 +24,9 @@ function FreeSlotModal({ slot, open, onClose, onSave, slotTime }) {
 
   const [openOption, setOpenOption] = useState(false)
 
-  // const phone = useMemo(() => {
-  //   return {
-  //     phoneNumber: String(phoneNumber),
-  //   }
-  // }, [phoneNumber])
-
-  // const phone = {
-  //   phoneNumber: String(phoneNumber)
-  // }
-
   const [updateData, updateError, isUpdating, data] = useManualFetch()
 
   const [detail, setDetail] = useState(null)
-
-
-  // const CustomOption = (props) => {
-  //   const { data, innerRef, innerProps } = props
-  //   return (
-  //     <div ref={innerRef} {...innerProps}>
-  //       {data.phone}
-  //       {data.firstName}
-  //       {data.lastName}
-  //     </div>
-  //   )
-  // }
-
 
   function handleOnClick(event) {
     onClose(event)
@@ -68,13 +45,13 @@ function FreeSlotModal({ slot, open, onClose, onSave, slotTime }) {
   function handleOnchange(event) {
     if (!isNaN(event.target.value)) {
       setPhoneNumber(event.target.value)
-      if(event.target.value !== '') {
+      if (event.target.value !== '') {
         updateData(METHOD.POST, URL.patientSearch, {
           phone: String(event.target.value),
         })
       }
     }
-    if(!openOption) {
+    if (!openOption) {
       setOpenOption(true)
     }
   }
@@ -105,82 +82,41 @@ function FreeSlotModal({ slot, open, onClose, onSave, slotTime }) {
           </Box>
           <Box style={{ paddingTop: '13px' }}>
             <Typography className={classes.phoneText}>Phone Number</Typography>
-            {/* {data ? 
-            (<Autocomplete
-              id="free-solo-demo"
-              freeSolo
+            <TextField
               className={classes.phone}
-              components={{ Option: CustomOption }}
-              options= {data}
-              // onChange={() => handleOnOptionChange()}
-              onChange={(event, value) => handleOnOptionChange(value)}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  className={classes.phoneNumber}
-                  placeholder="8765482987"
-                  margin="normal"
-                  variant="outlined"
-                  value={phoneNumber}
-                  onChange={handleOnchange}
-                />
-              )}
-            />) :
-            (<Autocomplete
-              id="free-solo-demo"
-              freeSolo
-              className={classes.phone}
-              options= {[]}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  className={classes.phoneNumber}
-                  placeholder="8765482987"
-                  margin="normal"
-                  variant="outlined"
-                  value={phoneNumber}
-                  onChange={handleOnchange}
-                />
-              )}
-            />)
-              } */}
-
-            {/* {data ? (
-              <Select
-                components={{ Option: CustomOption }}
-                options={data}
-                className={classes.phone}
-                onChange={handleOnchange}
-              />
-            ) : (
-              <Select
-                components={{ Option: CustomOption }}
-                options={[]}
-                className={classes.phone}
-                onChange={handleOnchange}
-              />
-            )} */}
-            <TextField className={classes.phone} onChange={handleOnchange} value={phoneNumber} variant='outlined' />
-            {openOption && data &&
+              onChange={handleOnchange}
+              value={phoneNumber}
+              variant="outlined"
+            />
+            {openOption && data && (
               <Box className={classes.dropDown}>
-              {data.map((option, key) => {
-                return (
-                  <Box key={key} className={classes.option} onClick={() => handleOnOptionChange(option)}>
-                    <Typography className={classes.phoneNumber}>{option.phone}</Typography>
-                    <Typography className={classes.detail}>
-                      {option.firstName + ' ' +
-                        option.lastName +
-                        ',' + ' ' +
-                        option.email +
-                        ',' + ' ' +
-                        option.dateOfBirth + '...' 
-                        }
-                    </Typography>
-                  </Box>
-                )
-              })}
+                {data.map((option, key) => {
+                  return (
+                    <Box
+                      key={key}
+                      className={classes.option}
+                      onClick={() => handleOnOptionChange(option)}
+                    >
+                      <Typography className={classes.phoneNumber}>
+                        {option.phone}
+                      </Typography>
+                      <Typography className={classes.detail}>
+                        {option.firstName +
+                          ' ' +
+                          option.lastName +
+                          ',' +
+                          ' ' +
+                          option.email +
+                          ',' +
+                          ' ' +
+                          option.dateOfBirth +
+                          '...'}
+                      </Typography>
+                    </Box>
+                  )
+                })}
               </Box>
-              }
+            )}
           </Box>
           <Box>
             <Box display="flex" className={classes.noteOne}>
@@ -212,20 +148,17 @@ function FreeSlotModal({ slot, open, onClose, onSave, slotTime }) {
           timing={slotTime}
           onSave={onSave}
         />
-      )
-      } 
-      {!detail && openNew &&
-      (
+      )}
+      {!detail && openNew && (
         <CreateAppointment
-        open={openNew}
-        details={slot}
-        patientData={phoneNumber}
-        onClose={handleOnClose}
-        timing={slotTime}
-        onSave={onSave}
-         />
-      )
-      }
+          open={openNew}
+          details={slot}
+          patientData={phoneNumber}
+          onClose={handleOnClose}
+          timing={slotTime}
+          onSave={onSave}
+        />
+      )}
     </Box>
   )
 }

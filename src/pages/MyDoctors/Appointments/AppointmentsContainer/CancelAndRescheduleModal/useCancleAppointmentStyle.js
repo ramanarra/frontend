@@ -43,7 +43,7 @@ const useCancleAppointmentStyle = makeStyles(() => ({
   confirmationNote: {
     fontSize: 12.5,
     paddingLeft: 1,
-    color: '#5f5757',
+    color: '#776d6d',
   },
   notes: {
     paddingTop: 12,

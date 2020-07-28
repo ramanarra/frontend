@@ -9,16 +9,11 @@ import useStyle from './useCancleAppointmentStyle'
 
 
 function CancleAppointment({open, slotTime, onClose, id, onSave, doubleStar, cancellationNote}) {
-
     const classes = useStyle()
 
     const [checked, setChecked] = useState(false)
 
     const slotDate = slotTime.split(' ')
-
-    const appointmentId = {
-        appointmentId: id
-      }
 
     function handleClose(event) {
         onClose(event)
