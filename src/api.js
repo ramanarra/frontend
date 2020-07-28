@@ -25,4 +25,7 @@ export const URL = {
   appointmentCancel: '/calendar/doctor/appointmentCancel',
   availableSlot: '/calendar/doctor/availableSlots',
   appointmentReschedule: '/calendar/doctor/appointmentReschedule',
+  patientSearch: '/calendar/doctor/patientSearch',
+  createAppointment: '/calendar/doctor/createAppointment',
+  createAppointmentAlongWIthRegisteringPatient: '/calendar/doctor/creatingAppointmetAlongWithRegisteringPatient',
 }

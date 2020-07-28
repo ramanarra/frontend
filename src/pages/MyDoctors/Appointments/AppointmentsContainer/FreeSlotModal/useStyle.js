@@ -6,14 +6,14 @@ const useStyle = makeStyles(() => ({
         width: 1580,
       },
       title: {
-        fontSize: 23,
+        fontSize: 21,
         color: 'black',
         textAlign: 'center',
-        paddingLeft: 130,
+        paddingLeft: 133,
       },
       closeIcon: {
-        marginLeft: 110,
-        marginTop: 5,
+        marginLeft: 130,
+        marginTop: 4,
         cursor: 'pointer',
       },
       text: {
@@ -24,12 +24,12 @@ const useStyle = makeStyles(() => ({
         color: '#a8a8a8',
       },
       txt: {
-        width: 250,
+        width: 245,
         height: 25,
         backgroundColor: '#f7f7f7',
         marginLeft: 110,
         paddingTop: 5,
-        fontSize: 11,
+        fontSize: 10,
         marginTop: 10,
       },
       phoneText: {
@@ -37,9 +37,42 @@ const useStyle = makeStyles(() => ({
         fontSize: 11.5,
       },
       phone: {
-        width: 440,
+        width: 443,
         paddingLeft: 9,
+        paddingTop: 6,
+        '& div': {
+          marginTop: 0,
+          marginBottom: 0,
+          '& .MuiInputBase-root': {
+            height: 40,
+            '& input': {
+              marginTop: -5,
+            }
+          },
+        },
+        
+      },
+      dropDown: {
+        width: 450,
+        minHeight: 0,
+        maxHeight: 100,
+        overflow: 'auto',
+        paddingLeft: 7,
+      },
+      option: {
+        width: 437,
+        height: 45,
+        cursor: 'pointer'
+      },
+      phoneNumber: {
+        fontSize: 12,
+        paddingLeft: 16,
         paddingTop: 5,
+      },
+      detail: {
+        fontSize: 9,
+        paddingLeft: 16,
+        color: '#a8a8a8',
       },
       noteOne: {
         paddingTop: 5,

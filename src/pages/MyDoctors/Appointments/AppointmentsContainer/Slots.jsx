@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import moment from 'moment'
 import { Box, Typography } from '@material-ui/core'
 import ScheduleIcon from '@material-ui/icons/Schedule'
 import StarIcon from '@material-ui/icons/Star'
@@ -34,6 +35,7 @@ function Slots({
 
   function handleOnClick() {
     setOpen(true)
+    
   }
 
   function handeOnClose(event) {
