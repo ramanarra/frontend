@@ -8,9 +8,10 @@ import { makeStyles } from '@material-ui/core/styles'
 const useStyle = makeStyles(() => ({
   dateText: {
     fontSize: 12,
+    paddingBottom: 10,
   },
   datefield: {
-    width: '100',
+    width: 236,
     '& MuiOutlinedInput-adornedEnd': {
       svg: {
         color: '#dddddd',
@@ -19,7 +20,7 @@ const useStyle = makeStyles(() => ({
   },
 }))
 
-export default function DatePicker({name, dateChange}) {
+export default function DatePicker({name, dateChange, value}) {
   const classes = useStyle()
   return (
     <MuiPickersUtilsProvider utils={MomentUtils}>
@@ -31,7 +32,7 @@ export default function DatePicker({name, dateChange}) {
         size="small"
         format="DD/MM/YYYY"
         placeholder="07/03/1985"
-        value={}
+        value={value}
         onChange={dateChange}
         disablePast
         disableToolbar

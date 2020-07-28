@@ -21,6 +21,7 @@ const useCancleAppointmentStyle = makeStyles(() => ({
   },
   askConfirmationText: {
     color: '#a8a8a8',
+    fontSize: 14.5,
   },
   confirmationStar: {
     width: 7,
@@ -35,9 +36,9 @@ const useCancleAppointmentStyle = makeStyles(() => ({
     }
   },
   checkBoxText: {
-    paddingTop: 10,
+    paddingTop: 9,
     fontSize: 14.7,
-    color: '#b5b5b5',
+    color: '#7d7b7b',
   },
   confirmationNote: {
     fontSize: 12.5,
@@ -56,7 +57,7 @@ const useCancleAppointmentStyle = makeStyles(() => ({
     paddingBottom: 25,
   },
   cancleButton: {
-    padding: '10px 43px',
+    padding: '10px 40px',
     borderRadius: 17,
     backgroundColor: '#f4f2f2',
     textAlign: 'center',
@@ -68,7 +69,7 @@ const useCancleAppointmentStyle = makeStyles(() => ({
     fontSize: 12,
   },
   confirmButton: {
-    padding: '10px 43px',
+    padding: '10px 40px',
     borderRadius: 17,
     backgroundColor: '#0bb5ff',
     textAlign: 'center',

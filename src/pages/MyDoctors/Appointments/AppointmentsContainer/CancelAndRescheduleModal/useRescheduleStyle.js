@@ -13,6 +13,7 @@ const useRescheduleStyle = makeStyles(() => ({
     color: 'black',
     textAlign: 'center',
     paddingLeft: 220,
+    color: '#524646',
   },
   closeIcon: {
     marginLeft: 190,
@@ -102,19 +103,31 @@ const useRescheduleStyle = makeStyles(() => ({
   },
   availableText: {
     fontSize: 15.5,
+    color: '#656464',
+  },
+  availableSlots: {
+    maxHeight: 152,
+    overflowY: 'auto',
+    paddingTop: 5,
   },
   time: {
-    width: 100,
-    height: 40,
+    width: 105,
+    height: 38,
     backgroundColor: '#d5f7e3',
     textAlign: 'center',
     paddingTop: 8,
     marginTop: 10,
-    marginRight: 17,
+    marginRight: 19,
+    '&:hover': {
+      backgroundColor: '#54cbff',
+    }
   },
   timeText: {
     fontSize: 13,
     color: '#7ae5a6',
+    '&:hover': {
+      color: '#ffffff',
+    }
   },
   button: {
     justifyContent: 'center',
@@ -131,13 +144,13 @@ const useRescheduleStyle = makeStyles(() => ({
   },
   submitText: {
     fontSize: 14,
-    color: 'white',
+    color: '#f7f7f7',
   },
   selectedTab: {
     backgroundColor: '#0bb5ff',
   },
   selectedText: {
-    color: 'white',
+    color: '#f7f7f7',
   },
 }))
 

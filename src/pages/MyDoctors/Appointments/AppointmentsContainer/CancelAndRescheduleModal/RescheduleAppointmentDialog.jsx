@@ -12,14 +12,12 @@ import {
 } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 import StarIcon from '@material-ui/icons/Star'
-// import DateFnsUtils from '@date-io/date-fns'
-// import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
 
 import useCustomFecth from '../../../../../hooks/useCustomFetch'
 import { URL, METHOD } from '../../../../../api'
 import DatePicker from '../../../../../components/DatePicker'
 import useStyle from './useRescheduleStyle'
-import getTimeFormatWithNoon, { getTimeFormat } from '../../../../../lib/dateLib'
+import getTimeFormatWithNoon from '../../../../../lib/dateLib'
 
 function RescheduleAppointment({
   appointmentId,
@@ -27,15 +25,13 @@ function RescheduleAppointment({
   open,
   slotTime,
   onClose,
-  details,
   onSave,
-  dateChange,
   bookedBy,
   note,
   phone,
   firstName,
   lastName,
-  email
+  email,
 }) {
   const classes = useStyle()
 
@@ -54,16 +50,7 @@ function RescheduleAppointment({
     }
   }, [id, currentDate])
 
-  const [availableSlots] = useCustomFecth(METHOD.GET, URL.availableSlot, key)
-
-  const parameter = {
-    appointmentId: appointmentId,
-    patientId: Number(patientId),
-    startTime: moment(time.start, 'HH:mm:ss').format('HH:mm'),
-    endTime: moment(time.end, 'HH:mm:ss').format('HH:mm'),
-    appointmentDate: moment(date).format('YYYY-MM-DD'),
-  }
-
+  const [availableSlots] = useCustomFecth(METHOD.GET, URL.availableSlot, key, true)
 
   function handleClose(event) {
     onClose(event)
@@ -71,6 +58,13 @@ function RescheduleAppointment({
 
   function handleSubmit(event) {
     onClose(event)
+    const parameter = {
+      appointmentId: appointmentId,
+      patientId: Number(patientId),
+      startTime: moment(time.start, 'HH:mm:ss').format('HH:mm'),
+      endTime: moment(time.end, 'HH:mm:ss').format('HH:mm'),
+      appointmentDate: moment(date).format('YYYY-MM-DD'),
+    }
     onSave(URL.appointmentReschedule, parameter)
   }
 
@@ -87,7 +81,7 @@ function RescheduleAppointment({
       <Dialog open={open} className={classes.rescheduled}>
         <DialogTitle className={classes.dialogTitle}>
           <Box display="flex">
-            <Typography className={classes.title}>Reschedule</Typography>
+            <Typography className={classes.title} variant='h5'>Reschedule</Typography>
             <CloseIcon className={classes.closeIcon} onClick={handleClose} />
           </Box>
         </DialogTitle>
@@ -100,30 +94,34 @@ function RescheduleAppointment({
           <Box display="flex" className={classes.details}>
             <Box>
               <Box display="flex">
-                <Typography variant="h5" className={classes.phoneNumber}>Phone Number</Typography>
-                  <Typography className={classes.notchedOutline}>
-                  {phone}
-                  </Typography> 
+                <Typography variant="h5" className={classes.phoneNumber}>
+                  Phone Number
+                </Typography>
+                <Typography className={classes.notchedOutline}>{phone}</Typography>
               </Box>
               <Box display="flex">
-                <Typography variant="h5" className={classes.firstName}>First Name</Typography>
-                  <Typography className={classes.notchedOutline}>
+                <Typography variant="h5" className={classes.firstName}>
+                  First Name
+                </Typography>
+                <Typography className={classes.notchedOutline}>
                   {firstName}
-                  </Typography> 
+                </Typography>
               </Box>
             </Box>
             <Box>
               <Box display="flex">
-                <Typography variant="h5" className={classes.lastName}>Last Name</Typography>
-                  <Typography className={classes.notchedOutline}>
+                <Typography variant="h5" className={classes.lastName}>
+                  Last Name
+                </Typography>
+                <Typography className={classes.notchedOutline}>
                   {lastName}
-                  </Typography> 
+                </Typography>
               </Box>
               <Box display="flex">
-                <Typography variant="h5" className={classes.email}>Email ID</Typography>
-                  <Typography className={classes.notchedOutline}>
-                  {email}
-                  </Typography>
+                <Typography variant="h5" className={classes.email}>
+                  Email ID
+                </Typography>
+                <Typography className={classes.notchedOutline}>{email}</Typography>
               </Box>
             </Box>
           </Box>
@@ -140,16 +138,20 @@ function RescheduleAppointment({
             </Typography>
           </Box>
           <Box className={classes.date}>
-           <DatePicker name={'Select your Date'} dateChange={handleDateChange} />
+            <DatePicker
+              name={'Select Your Date'}
+              dateChange={handleDateChange}
+              value={date}
+            />
           </Box>
           <Box className={classes.available}>
             <Typography className={classes.availableText} variant="h5">
               Available Time Slots:
             </Typography>
-            <Box display="flex" flexWrap="wrap">
+            <Box display="flex" flexWrap="wrap" className={classes.availableSlots}>
               {availableSlots &&
                 availableSlots.map((data) => {
-                  return  (
+                  return (
                     <Button
                       className={classNames(classes.time, {
                         [classes.selectedTab]: time.start === data.start,
@@ -163,8 +165,8 @@ function RescheduleAppointment({
                       >
                         {getTimeFormatWithNoon(data.start)}
                       </Typography>
-                    </Button> 
-                    )
+                    </Button>
+                  )
                 })}
             </Box>
           </Box>

@@ -5,7 +5,6 @@ import StarIcon from '@material-ui/icons/Star'
 
 import { URL } from '../../../../../api'
 import useStyle from './useCancleAppointmentStyle'
-import Slots from '../Slots'
 
 
 
@@ -54,7 +53,7 @@ function CancleAppointment({open, slotTime, onClose, id, onSave, doubleStar, can
                 <DialogContent>
                 <Box className={classes.askConfirmation}>
                     <Typography className={classes.askConfirmationText}>
-                    {`Are you sure want to cancel your appointment ${slotDate[1]} ${slotDate[2]} ${slotDate[0]} ?`}
+                    {`Are you sure do you want to cancel your appointment ${slotDate[1]} ${slotDate[2]} ${slotDate[0]} ?`}
                     </Typography>
                 </Box>
                 <Box>
