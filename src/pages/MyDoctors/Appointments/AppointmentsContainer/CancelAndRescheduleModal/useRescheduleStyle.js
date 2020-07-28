@@ -36,6 +36,7 @@ const useRescheduleStyle = makeStyles(() => ({
     fontSize: 13,
     paddingTop: 4,
     paddingLeft: 60,
+    paddingBottom: 14,
   },
   firstName: {
     fontSize: 13,
@@ -47,6 +48,7 @@ const useRescheduleStyle = makeStyles(() => ({
     fontSize: 13,
     paddingTop: 4,
     paddingRight: 20,
+    paddingBottom: 14,
   },
   email: {
     fontSize: 13,
@@ -72,6 +74,9 @@ const useRescheduleStyle = makeStyles(() => ({
     paddingBottom: 14,
     paddingLeft: 20,
   },
+  noteText: {
+    paddingTop: 10,
+  },
   starIcon: {
     width: 10,
     marginTop: -5,
@@ -93,7 +98,7 @@ const useRescheduleStyle = makeStyles(() => ({
   available: {
     width: 500,
     paddingLeft: 60,
-    paddingTop: 10,
+    paddingTop: 12,
   },
   availableText: {
     fontSize: 15.5,
@@ -111,16 +116,17 @@ const useRescheduleStyle = makeStyles(() => ({
     fontSize: 13,
     color: '#7ae5a6',
   },
+  button: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 10,
+    paddingBottom: 40,
+  },
   submitbtn: {
-    width: 130,
-    height: 35,
+    padding: '8px 42px',
     backgroundColor: '#0bb5ff',
     borderRadius: 17,
     textAlign: 'center',
-    marginBottom: 40,
-    marginTop: 12,
-    marginLeft: 250,
-    paddingTop: 8,
     cursor: 'pointer',
   },
   submitText: {

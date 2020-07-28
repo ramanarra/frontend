@@ -27,6 +27,7 @@ function CancleAndRescheduleModal({
   note,
   doubleStar,
   singleStar,
+  cancellationNote,
 }) {
   const classes = useStyle()
 
@@ -44,6 +45,22 @@ function CancleAndRescheduleModal({
       fetch(METHOD.POST, URL.appointmentView, params)
     }
   }, [open, appointmentId])
+
+  const phone = patientView?.patientDetails?.phone
+    ? patientView.patientDetails.phone
+    : '-'
+
+  const firstName = patientView?.patientDetails?.firstName
+    ? patientView.patientDetails.firstName
+    : '-'
+
+  const lastName = patientView?.patientDetails?.lastName
+    ? patientView.patientDetails.lastName
+    : '-'
+
+  const email = patientView?.patientDetails?.email
+    ? patientView.patientDetails.email
+    : '-'
 
   function handleCancle(event) {
     onClose(event)
@@ -67,7 +84,9 @@ function CancleAndRescheduleModal({
         <Dialog open={open} className={classes.dialogBox}>
           <DialogTitle className={classes.dialogTitle}>
             <Box display="flex">
-              <Typography variant="h5" className={classes.title}>Appointment</Typography>
+              <Typography variant="h5" className={classes.title}>
+                Appointment
+              </Typography>
               <CloseIcon className={classes.closeIcon} onClick={handleClose} />
             </Box>
           </DialogTitle>
@@ -83,29 +102,31 @@ function CancleAndRescheduleModal({
                   <Typography variant="h5" className={classes.phoneNumber}>
                     Phone Number
                   </Typography>
-                  <Typography className={classes.notchedOutline}>
-                    {patientView.patientDetails?.phone}
-                  </Typography>
+                  <Typography className={classes.notchedOutline}>{phone}</Typography>
                 </Box>
                 <Box display="flex">
-                  <Typography variant="h5" className={classes.firstName}>First Name</Typography>
+                  <Typography variant="h5" className={classes.firstName}>
+                    First Name
+                  </Typography>
                   <Typography className={classes.notchedOutline}>
-                    {patientView.patientDetails?.firstName}
+                    {firstName}
                   </Typography>
                 </Box>
               </Box>
               <Box>
                 <Box display="flex">
-                  <Typography variant="h5" className={classes.lastName}>Last Name</Typography>
+                  <Typography variant="h5" className={classes.lastName}>
+                    Last Name
+                  </Typography>
                   <Typography className={classes.notchedOutline}>
-                    {patientView.patientDetails?.lastName}
+                    {lastName}
                   </Typography>
                 </Box>
                 <Box display="flex">
-                  <Typography variant="h5" className={classes.email}>Email ID</Typography>
-                  <Typography className={classes.notchedOutline}>
-                    {patientView.patientDetails?.email}
+                  <Typography variant="h5" className={classes.email}>
+                    Email ID
                   </Typography>
+                  <Typography className={classes.notchedOutline}>{email}</Typography>
                 </Box>
               </Box>
             </Box>
@@ -125,7 +146,7 @@ function CancleAndRescheduleModal({
               </Typography>
             </Box>
           </DialogContent>
-          <Box display="flex">
+          <Box display="flex" className={classes.buttons}>
             <Box className={classes.cancle} onClick={handleCancle}>
               <Typography variant="h5" className={classes.cancleBtn}>
                 CANCLE APPOINTMENT
@@ -147,6 +168,8 @@ function CancleAndRescheduleModal({
           onClose={handleClose}
           id={appointmentId}
           onSave={onSave}
+          doubleStar={doubleStar}
+          cancellationNote={cancellationNote}
         />
       )}
       {openReschedule && (
@@ -160,6 +183,10 @@ function CancleAndRescheduleModal({
           onSave={onSave}
           bookedBy={bookedBy}
           note={note}
+          phone={phone}
+          firstName={firstName}
+          lastName={lastName}
+          email={email}
         />
       )}
     </Box>

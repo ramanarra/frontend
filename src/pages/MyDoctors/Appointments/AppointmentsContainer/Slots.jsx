@@ -16,10 +16,11 @@ function Slots({
   onSave,
   name,
   bgColor,
-  txtColor,
+  textColor,
   ModalComponent,
   bookedBy,
   note,
+  cancellationNote,
 }) {
   const classes = useStyle()
 
@@ -29,7 +30,7 @@ function Slots({
 
   const endTime = getTimeFormatWithNoon(slot.endTime)
 
-  const dateWithTime = `${date} ${getTimeFormatWithNoon(startTime)} `
+  const slotTime = `${date} ${getTimeFormatWithNoon(startTime)} `
 
   function handleOnClick() {
     setOpen(true)
@@ -58,26 +59,26 @@ function Slots({
             {doubleStar && (
               <StarIcon className={classes.star} color="primary" />
             )}
-            <Typography className={classes.name} style={{ color: txtColor }}>
+            <Typography className={classes.name} style={{ color: textColor }}>
               {name}
             </Typography>
             <Stretch />
             <div className={classes.round}>
-              <FiberManualRecordIcon style={{ color: txtColor }} />
+              <FiberManualRecordIcon style={{ color: textColor }} />
             </div>
           </Box>
         </Box>
         <Box className={classes.bottom} display="flex">
-          <ScheduleIcon className={classes.schedule} style={{ color: txtColor }} />
-          <Typography className={classes.fromTime} style={{ color: txtColor }}>
+          <ScheduleIcon className={classes.schedule} style={{ color: textColor }} />
+          <Typography className={classes.fromTime} style={{ color: textColor }}>
             {`${startTime} - `}
           </Typography>
-          <Typography className={classes.toTime} style={{ color: txtColor }}>
+          <Typography className={classes.toTime} style={{ color: textColor }}>
             {endTime}
           </Typography>
           <Stretch />
-          <Typography className={classes.total} style={{ color: txtColor }}>
-            {slot.slotTiming + 'm'}
+          <Typography className={classes.total} style={{ color: textColor }}>
+            {`${slot.slotTiming}m`}
           </Typography>
         </Box>
       </Box>
@@ -87,12 +88,13 @@ function Slots({
           patientId={slot.patient_id}
           open={open}
           onClose={handeOnClose}
-          slotTime={dateWithTime}
+          slotTime={slotTime}
           onSave={onSave}
           bookedBy={bookedBy}
           note={note}
           singleStar={singleStar}
           doubleStar={doubleStar}
+          cancellationNote={cancellationNote}
         />
       )}
     </Box>

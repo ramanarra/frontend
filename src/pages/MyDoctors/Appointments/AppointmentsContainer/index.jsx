@@ -36,8 +36,8 @@ function AppointmentContainer({
       ) : null}
       <Box display="flex" flexWrap="wrap" className={classes.scheduleList}>
         {appointmentSlots
-          ? appointmentSlots.map((data, index) => {
-              return <List data={data} key={index} onSave={onSave} />
+          ? appointmentSlots.map((slot, index) => {
+              return <List appointments={slot} key={index} onSave={onSave} />
             })
           : null}
       </Box>

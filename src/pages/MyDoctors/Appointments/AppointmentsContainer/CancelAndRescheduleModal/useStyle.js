@@ -34,8 +34,9 @@ const useStyle = makeStyles(() => ({
     marginTop: 20,
   },
   phoneNumber: {
-    paddingTop: 4,
+    paddingTop: 5,
     paddingLeft: 60,
+    paddingBottom: 14,
   },
   firstName: {
     paddingTop: 4,
@@ -45,6 +46,7 @@ const useStyle = makeStyles(() => ({
   lastName: {
     paddingTop: 4,
     paddingRight: 20,
+    paddingBottom: 14,
   },
   email: {
     paddingTop: 4,
@@ -67,29 +69,26 @@ const useStyle = makeStyles(() => ({
     paddingLeft: 4,
     color: '#0BB5FF',
   },
+  buttons: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 15,
+    paddingBottom: 38,
+  },
   cancle: {
-    width: 215,
-    height: 35,
+    padding: '10px 33px',
     backgroundColor: '#f4f2f2',
     borderRadius: 17,
     textAlign: 'center',
-    marginBottom: 40,
-    marginTop: 12,
-    marginLeft: 90,
-    paddingTop: 8,
     cursor: 'pointer',
   },
   reschedule: {
-    width: 215,
-    height: 35,
+    padding: '10px 18px',
     backgroundColor: '#0bb5ff',
     borderRadius: 17,
     textAlign: 'center',
-    marginBottom: 40,
-    marginTop: 12,
-    marginLeft: 20,
-    paddingTop: 8,
     cursor: 'pointer',
+    marginLeft:22,
   },
   cancleBtn: {
     fontSize: 13,

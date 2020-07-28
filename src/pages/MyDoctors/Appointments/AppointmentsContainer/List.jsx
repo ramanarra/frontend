@@ -7,34 +7,46 @@ import useStyle from './useListStyle'
 import CancelAndRescheduleModal from './CancelAndRescheduleModal'
 import FreeSlotModal from './FreeSlotModal'
 
-function isSingleStar(data) {
+function isSingleStar(slot) {
   return (
-    !data.ispaid &&
-    (data.paymentoption.toLowerCase() === 'onlinecollection' ||
-      data.paymentoption.toLowerCase() === 'notRequired')
+    !slot.ispaid &&
+    (slot.paymentoption.toLowerCase() === 'onlinecollection' ||
+      slot.paymentoption.toLowerCase() === 'notRequired')
   )
 }
 
-function isDoubleStar(data) {
-  return !data.ispaid && data.paymentoption.toLowerCase() === 'directpayment'
+function isDoubleStar(slot) {
+  return !slot.ispaid && slot.paymentoption.toLowerCase() === 'directpayment'
 }
 
-function addedNote(data) {
-  if (isSingleStar(data)) {
+function addNote(slot) {
+  if (isSingleStar(slot)) {
     return 'Doctor Booked appointment (payment through online) - yet to pay'
   }
 
-  if (isDoubleStar(data)) {
+  if (isDoubleStar(slot)) {
     return 'Doctor Booked appointment (Direct Payment / Not Requried)'
   }
 
   return 'Doctor Booked Appointment (Payment through Virujh) - Paid'
 }
 
-function List({ data, onSave }) {
+function addNoteForCancle(slot) {
+  if(isSingleStar(slot)) {
+    return 'The appointment has been cancelled as no money transactions here.'
+  }
+
+  if(isDoubleStar(slot)) {
+    return 'Any payment queries patient will reach doctor/hospital.'
+  }
+
+  return 'The payment will be refunded to the patient.'
+}
+
+function List({ appointments, onSave }) {
   const classes = useStyle()
 
-  const date = moment.utc(data.day)
+  const date = moment.utc(appointments.day)
 
   const currentDate = date.format('DD')
 
@@ -48,30 +60,31 @@ function List({ data, onSave }) {
         <Typography className={classes.date}>{currentDate}</Typography>
         <Typography className={classes.day}>{currentDay}</Typography>
       </Box>
-      {data.slots.map((data) => {
-        return data.id ? (
-          data.created_by === 'DOCTOR' ? (
+      {appointments.slots.map((slot) => {
+        return slot.id ? (
+          slot.created_by === 'DOCTOR' ? (
             <Slots
-              slot={data}
+              slot={slot}
               date={todayDate}
               onSave={onSave}
-              name={data.patientFirstName}
+              name={slot.patientFirstName}
               bgColor={'#e4f5fd'}
-              txtColor={'#0bb5ff'}
+              textColor={'#0bb5ff'}
               ModalComponent={CancelAndRescheduleModal}
               bookedBy={'Doctor'}
-              singleStar={isSingleStar(data)}
-              doubleStar={isDoubleStar(data)}
-              note={addedNote(data)}
+              singleStar={isSingleStar(slot)}
+              doubleStar={isDoubleStar(slot)}
+              note={addNote(slot)}
+              cancellationNote = {addNoteForCancle(slot)}
             />
           ) : (
             <Slots
-              slot={data}
+              slot={slot}
               date={todayDate}
               onSave={onSave}
-              name={data.patientname}
+              name={slot.patientname}
               bgColor={'#f1f3f5'}
-              txtColor={'#aab5c2'}
+              textColor={'#aab5c2'}
               ModalComponent={CancelAndRescheduleModal}
               bookedBy={'Patient'}
               note={'Patient Booked - Payment made through Virujh'}
@@ -79,12 +92,12 @@ function List({ data, onSave }) {
           )
         ) : (
           <Slots
-            slot={data}
+            slot={slot}
             date={todayDate}
             onSave={onSave}
             name={'FREE SLOT'}
             bgColor={'#e0f9ea'}
-            txtColor={'#4edb88'}
+            textColor={'#4edb88'}
             ModalComponent={FreeSlotModal}
           />
         )

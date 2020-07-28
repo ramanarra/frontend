@@ -19,11 +19,11 @@ const useStyle = makeStyles(() => ({
   },
 }))
 
-export default function DatePicker() {
+export default function DatePicker({name, dateChange}) {
   const classes = useStyle()
   return (
     <MuiPickersUtilsProvider utils={MomentUtils}>
-      <Typography variant="h5" className={classes.dateText}>Date of Birth</Typography>
+      <Typography variant="h5" className={classes.dateText}>{name}</Typography>
 
       <Picker
         className={classes.datefield}
@@ -31,6 +31,8 @@ export default function DatePicker() {
         size="small"
         format="DD/MM/YYYY"
         placeholder="07/03/1985"
+        value={}
+        onChange={dateChange}
         disablePast
         disableToolbar
         InputProps={{

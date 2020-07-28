@@ -19,6 +19,7 @@ import useCustomFecth from '../../../../../hooks/useCustomFetch'
 import { URL, METHOD } from '../../../../../api'
 import DatePicker from '../../../../../components/DatePicker'
 import useStyle from './useRescheduleStyle'
+import getTimeFormatWithNoon, { getTimeFormat } from '../../../../../lib/dateLib'
 
 function RescheduleAppointment({
   appointmentId,
@@ -31,6 +32,10 @@ function RescheduleAppointment({
   dateChange,
   bookedBy,
   note,
+  phone,
+  firstName,
+  lastName,
+  email
 }) {
   const classes = useStyle()
 
@@ -51,17 +56,14 @@ function RescheduleAppointment({
 
   const [availableSlots] = useCustomFecth(METHOD.GET, URL.availableSlot, key)
 
-  const start = time.start.split(':')
-
-  const end = time.end.split(':')
-
   const parameter = {
     appointmentId: appointmentId,
     patientId: Number(patientId),
-    startTime: start[0] + ':' + start[1],
-    endTime: end[0] + ':' + end[1],
+    startTime: moment(time.start, 'HH:mm:ss').format('HH:mm'),
+    endTime: moment(time.end, 'HH:mm:ss').format('HH:mm'),
     appointmentDate: moment(date).format('YYYY-MM-DD'),
   }
+
 
   function handleClose(event) {
     onClose(event)
@@ -92,40 +94,40 @@ function RescheduleAppointment({
         <DialogContent>
           <Box className={classes.slot}>
             <Typography variant="h5" className={classes.text}>
-              Your slot time {slotTime}
+              {`Your slot time ${slotTime}`}
             </Typography>
           </Box>
           <Box display="flex" className={classes.details}>
             <Box>
               <Box display="flex">
                 <Typography variant="h5" className={classes.phoneNumber}>Phone Number</Typography>
-                <Typography className={classes.notchedOutline}>
-                  {details.patientDetails.phone}
-                </Typography>
+                  <Typography className={classes.notchedOutline}>
+                  {phone}
+                  </Typography> 
               </Box>
               <Box display="flex">
                 <Typography variant="h5" className={classes.firstName}>First Name</Typography>
-                <Typography className={classes.notchedOutline}>
-                  {details.patientDetails.firstName}
-                </Typography>
+                  <Typography className={classes.notchedOutline}>
+                  {firstName}
+                  </Typography> 
               </Box>
             </Box>
             <Box>
               <Box display="flex">
                 <Typography variant="h5" className={classes.lastName}>Last Name</Typography>
-                <Typography className={classes.notchedOutline}>
-                  {details.patientDetails.lastName}
-                </Typography>
+                  <Typography className={classes.notchedOutline}>
+                  {lastName}
+                  </Typography> 
               </Box>
               <Box display="flex">
                 <Typography variant="h5" className={classes.email}>Email ID</Typography>
-                <Typography className={classes.notchedOutline}>
-                  {details.patientDetails.email}
-                </Typography>
+                  <Typography className={classes.notchedOutline}>
+                  {email}
+                  </Typography>
               </Box>
             </Box>
           </Box>
-          <Box display="flex">
+          <Box display="flex" className={classes.noteText}>
             {bookedBy === 'Doctor' && (
               <StarIcon className={classes.starIcon} color="primary" />
             )}
@@ -138,17 +140,16 @@ function RescheduleAppointment({
             </Typography>
           </Box>
           <Box className={classes.date}>
-           <DatePicker />
+           <DatePicker name={'Select your Date'} dateChange={handleDateChange} />
           </Box>
           <Box className={classes.available}>
-            <Typography className={classes.availableText}>
+            <Typography className={classes.availableText} variant="h5">
               Available Time Slots:
             </Typography>
             <Box display="flex" flexWrap="wrap">
               {availableSlots &&
                 availableSlots.map((data) => {
-                  const times = data.start.split(':')
-                  return times[0] < 12 ? (
+                  return  (
                     <Button
                       className={classNames(classes.time, {
                         [classes.selectedTab]: time.start === data.start,
@@ -160,30 +161,15 @@ function RescheduleAppointment({
                           [classes.selectedText]: time.start === data.start,
                         })}
                       >
-                        {times[0] + ':' + times[1]} AM
+                        {getTimeFormatWithNoon(data.start)}
                       </Typography>
-                    </Button>
-                  ) : (
-                    <Button
-                      className={classNames(classes.time, {
-                        [classes.selectedTab]: time.start === data.start,
-                      })}
-                      onClick={() => handleOnClick(data)}
-                    >
-                      <Typography
-                        className={classNames(classes.timeText, {
-                          [classes.selectedText]: time.start === data.start,
-                        })}
-                      >
-                        {times[0] + ':' + times[1]} PM
-                      </Typography>
-                    </Button>
-                  )
+                    </Button> 
+                    )
                 })}
             </Box>
           </Box>
         </DialogContent>
-        <Box display="flex">
+        <Box display="flex" className={classes.button}>
           <Box className={classes.submitbtn} onClick={handleSubmit}>
             <Typography className={classes.submitText}>SUBMIT</Typography>
           </Box>
