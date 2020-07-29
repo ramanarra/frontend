@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import moment from 'moment'
+import { GoCalendar } from 'react-icons/go'
 import {
   Typography,
   Box,
@@ -7,11 +8,8 @@ import {
   DialogTitle,
   Dialog,
   DialogContent,
-  FormControl,
 } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
-import NativeSelect from '@material-ui/core/NativeSelect'
-import CalendarTodayIcon from '@material-ui/icons/CalendarToday'
 
 import useStyle from './useCreateAppointmentStyle'
 import Select from '../../../../../components/Select'
@@ -23,14 +21,20 @@ const paymentOption = [
   { value: 'onlineCollection', label: 'Online Collection' },
 ]
 
+const consultationModeOption = [
+  { value: 'online', label: 'Online' },
+  { value: 'inHospital', label: 'In Hospital' },
+]
+
 function CreateAppointmentForExistingPatient({
   open,
   slot,
   patientData,
   onClose,
-  timing,
+  slotTime,
   onSave,
   handleDetail,
+  handleClear,
 }) {
   const classes = useStyle()
 
@@ -38,32 +42,22 @@ function CreateAppointmentForExistingPatient({
 
   const endTime = moment(slot.endTime, 'HH:mm:ss').format('HH:mm')
 
-  const date = timing.split(' ')[0]
-
-  const [firstName, setFirstName] = useState('')
-
-  const [lastName, setLastName] = useState('')
-
-  const [email, setEmail] = useState('')
+  const date = slotTime.split(' ')[0]
 
   const appointmentDate = moment(date, 'DD/MM/YYYY').format('YYYY-MM-DD')
 
-  const [phoneNumber, setPhoneNumber] = useState(patientData)
-
-  const [payment, setPayment] = useState(paymentOption[0].value)
+  const [payment, setPayment] = useState('directPayment')
 
   const [consultationMode, setConsultationMode] = useState('online')
-
-  const [dateOfBirth, setDateOfBirth] = useState(null)
 
   function handleClose() {
     onClose(false)
     handleDetail()
+    handleClear()
   }
 
   function handleOnSubmit() {
     onClose(false)
-    handleDetail()
     const params = {
       patientId: patientData.id,
       startTime: startTime,
@@ -73,42 +67,16 @@ function CreateAppointmentForExistingPatient({
       consultationMode: consultationMode,
     }
     onSave(URL.createAppointment, params)
-  }
-
-  const handleOnChange = (event) => {
-    if (!isNaN(event.target.value)) {
-      setPhoneNumber(event.target.value)
-    }
+    handleDetail()
+    handleClear()
   }
 
   const handlePaymentOption = (event) => {
     setPayment(event.target.value)
   }
 
-  console.log(payment)
-
   const handleConsultationMode = (event) => {
     setConsultationMode(event.target.value)
-  }
-
-  const handlePreConsultation = (event) => {
-    setPreConsultation(event.target.value)
-  }
-
-  const handleFirstNameChange = (event) => {
-    setFirstName(event.target.value)
-  }
-
-  const handleLastNameChange = (event) => {
-    setLastName(event.target.value)
-  }
-
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value)
-  }
-
-  const handleDateChange = (event) => {
-    setDateOfBirth(event)
   }
 
   return (
@@ -116,28 +84,39 @@ function CreateAppointmentForExistingPatient({
       <Dialog open={open}>
         <DialogTitle className={classes.header}>
           <Box display="flex">
-            <Typography className={classes.title}>Create Appointment</Typography>
+            <Typography className={classes.title} variant="h5">
+              Create Appointment
+            </Typography>
             <CloseIcon className={classes.closeIcon} onClick={handleClose} />
           </Box>
         </DialogTitle>
         <DialogContent>
           <Box className={classes.text}>
-            <Typography className={classes.msg}>Existing Patient</Typography>
-            <Typography className={classes.txt}>Your slot time {timing}</Typography>
+            <Typography className={classes.msg} variant="h5">
+              Existing Patient
+            </Typography>
+            <Typography
+              className={classes.txt}
+              variant="h5"
+            >{`Your slot time ${slotTime}`}</Typography>
           </Box>
           <Box className={classes.fieldBox}>
-            <Typography className={classes.phoneText}>Phone Number</Typography>
+            <Typography className={classes.phoneText} variant="h5">
+              Phone Number
+            </Typography>
             <TextField
               variant="outlined"
               className={classes.phone}
               placeholder="876548920"
               value={patientData.phone}
-              onChange={handleOnChange}
+              disabled
             />
           </Box>
           <Box display="flex" className={classes.fieldBox}>
             <Box>
-              <Typography className={classes.detailstext}>First Name</Typography>
+              <Typography className={classes.detailstext} variant="h5">
+                First Name
+              </Typography>
               <TextField
                 variant="outlined"
                 className={classes.firstName}
@@ -146,7 +125,9 @@ function CreateAppointmentForExistingPatient({
               />
             </Box>
             <Box className={classes.lastNameBox}>
-              <Typography className={classes.detailstext}>Last Name</Typography>
+              <Typography className={classes.detailstext} variant="h5">
+                Last Name
+              </Typography>
               <TextField
                 variant="outlined"
                 className={classes.lastName}
@@ -156,7 +137,9 @@ function CreateAppointmentForExistingPatient({
             </Box>
           </Box>
           <Box className={classes.fieldBox}>
-            <Typography className={classes.detailstext}>Email ID</Typography>
+            <Typography className={classes.detailstext} variant="h5">
+              Email ID
+            </Typography>
             <TextField
               variant="outlined"
               className={classes.email}
@@ -166,7 +149,9 @@ function CreateAppointmentForExistingPatient({
             />
           </Box>
           <Box className={classes.fieldBox}>
-            <Typography className={classes.detailstext}>Date of Birth</Typography>
+            <Typography className={classes.detailstext} variant="h5">
+              Date of Birth
+            </Typography>
             <TextField
               variant="outlined"
               value={patientData.dateOfBirth}
@@ -174,50 +159,44 @@ function CreateAppointmentForExistingPatient({
               className={classes.date}
               disabled
             />
-            <CalendarTodayIcon className={classes.calendarIcon} />
+            <GoCalendar className={classes.calendarIcon} />
           </Box>
           <Box display="flex" className={classes.fieldBox}>
-            <Box>
+            <Box className={classes.payment}>
               <Typography className={classes.detailstext}>Payment Option</Typography>
-              <Select value={payment} options={paymentOption} onChange={handlePaymentOption}  />
+              <Box className={classes.paymentOptionBox}>
+              <Select
+                value={payment}
+                options={paymentOption}
+                onChange={handlePaymentOption}
+              />
+              </Box>
             </Box>
             <Box className={classes.consultationModeBox}>
-              <Typography className={classes.detailstext}>
+              <Typography className={classes.detailstext} variant="h5">
                 Consultation Mode
               </Typography>
-              <FormControl variant="outlined">
-                <NativeSelect
-                  className={classes.consultationMode}
-                  defaultValue={'select here...'}
-                  onChange={handleConsultationMode}
-                >
-                  <option selected value="online">
-                    Online
-                  </option>
-                  <option value="inHospital">InHospital</option>
-                </NativeSelect>
-              </FormControl>
+              <Box className={classes.consultationMode}>
+              <Select
+                value={consultationMode}
+                options={consultationModeOption}
+                onChange={handleConsultationMode}
+              />
+              </Box>
             </Box>
           </Box>
           <Box className={classes.fieldBox}>
-            <Typography className={classes.detailstext}>Pre-Consultation</Typography>
-            {slot.preconsultationHours ? (
-              <TextField
-                className={classes.preConsultation}
-                value="Yes"
-                variant="outlined"
-                disabled
-              />
-            ) : (
-              <TextField
-                className={classes.preConsultation}
-                value="No"
-                variant="outlined"
-                disabled
-              />
-            )}
+            <Typography className={classes.detailstext} variant="h5">
+              Pre-Consultation
+            </Typography>
+            <TextField
+              className={classes.preConsultation}
+              value={slot.preconsultationHours ? 'Yes' : 'No'}
+              variant="outlined"
+              disabled
+            />
           </Box>
-          <Box>
+          <Box className={classes.button}>
             <Box className={classes.submitbtn} onClick={handleOnSubmit}>
               <Typography className={classes.submitText}>
                 BOOK APPOINTMENT

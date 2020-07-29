@@ -44,6 +44,7 @@ const useStyle = makeStyles(() => ({
     paddingTop: 5,
     fontSize: 10,
     marginTop: 10,
+    color: '#7e7e7e',
   },
   phoneText: {
     fontSize: 11.5,

@@ -2,7 +2,6 @@ import {makeStyles} from '@material-ui/core/styles'
 
 const userCreateAppointmentStyle = makeStyles(() => ({
     dialogBox: {
-        // height: 900,
         width: 1620,
       },
       header: {
@@ -12,7 +11,7 @@ const userCreateAppointmentStyle = makeStyles(() => ({
       },
       title: {
         fontSize: 21,
-        color: 'black',
+        color: '#524646',
         textAlign: 'center',
         paddingLeft: 130,
       },
@@ -23,6 +22,7 @@ const userCreateAppointmentStyle = makeStyles(() => ({
       },
       text: {
         textAlign: 'center',
+        marginTop: -5,
       },
       msg: {
         fontSize: 11,
@@ -36,9 +36,13 @@ const userCreateAppointmentStyle = makeStyles(() => ({
         paddingTop: 5,
         fontSize: 10.5,
         marginTop: 10,
+        color: '#7e7e7e',
       },
       fieldBox: {
         paddingTop: 15,
+      },
+      newFieldBox: {
+        paddingTop: 12,
       },
       phoneText: {
         paddingLeft: 7,
@@ -58,12 +62,19 @@ const userCreateAppointmentStyle = makeStyles(() => ({
           border: 'none'
         }
       },
+      phoneNumberText: {
+        paddingLeft: 7,
+        fontSize: 13.7,
+      },
       newPatientPhone: {
         width : 445,
         paddingLeft: 9,
         paddingTop: 8,
-        '& label': {
-          fontSize: 11,
+        '& div': {
+          height: 33,
+        },
+        '& fieldset': {
+          border: '1px solid #ebebeb',
         },
       },
       detailstext: {
@@ -160,62 +171,74 @@ const userCreateAppointmentStyle = makeStyles(() => ({
       calendarIcon: {
         width: 16,
         position: "absolute",
-        right: 36,
-        top: 375,
-        color: '#a8a8a8',
+        right: 46,
+        top: 363,
+        color: '#747373',
       },
       newPatientDate: {
-        width: 435,
-        marginLeft: 9,
-        marginTop: 8,
-        borderLeft: '1px solid #d4d4d4',
-        borderRight: '1px solid #d4d4d4',
-        borderTop: '1px solid #d4d4d4',
-        '& div': {
-          height: 32,
-        },
-        '& input': {
-          paddingLeft: 10,
-          fontSize: 12,
-        },
-        '& button': {
-          padding: 0,
-          marginRight: 10,
-          ' & svg': {
-            fontSize: 20,
-          },
-        },
+        paddingTop: 12,
+        paddingLeft: 9,
       },
       payment: {
-          width: 200,
-          marginLeft: 9,
-          marginTop: 5,
-          borderLeft: "1px solid gray",
-          borderRight: '1px solid gray',
-          borderTop: '1px solid gray',
-          '& select': {
-            paddingLeft: 10,
-        },
-        '& svg': {
-            marginRight: -5,
-        },
+        width: 220,
+      },
+      optionHeader: {
+        fontSize: 13.7,
+      },
+      paymentOptionBox: {
+        marginLeft: 9,
+        marginTop: 5,
+        fontSize: 12,
+        '& div': {
+          width: 210,
+        }
+      },
+      newPatientpayment: {
+        paddingLeft: 9,
+      },
+      newPatientconsultationModeBox: {
+        paddingLeft: 11,
       },
       consultationModeBox: {
         paddingLeft: 10,
       },
-      consultationMode: {
+      newPatientPaymentOptionBox: {
+        marginTop: 5,
+        marginLeft: 1,
+        '& div': {
           width: 210,
-          marginLeft: 9,
-          marginTop: 5,
-          borderLeft: "1px solid gray",
-          borderRight: '1px solid gray',
-          borderTop: '1px solid gray',
-          '& select': {
-            paddingLeft: 10,
+          '& div': {
+            paddingBottom: 9,
+            paddingTop: 9,
+            '& span': {
+              fontSize: 13,
+            },
+          },
         },
-        '& svg': {
-            marginRight: -5,
+      },
+      newPatientConsultationMode: {
+        marginTop: 7,
+        marginLeft: 2,
+        '& div': {
+          width:210,
+          '& div': {
+            paddingBottom: 9,
+            paddingTop: 9,
+            '& span': {
+              fontSize: 13,
+            },
+          },
         },
+      },
+      consultationMode: {
+        marginLeft: 10,
+        marginTop: 5,
+        '& div': {
+          width: 210,
+          '& div': {
+            fontSize: 12,
+          }
+        }
       },
       preConsultation: {
         width: 215,
@@ -232,22 +255,48 @@ const userCreateAppointmentStyle = makeStyles(() => ({
           border: 'none'
         }
       },
+      newPatientPreConsultation: {
+        paddingLeft: 9,
+        paddingTop: 12,
+      },
+      newPatientPreConsultationBox: {
+        width: 215,
+        paddingTop: 8,
+        paddingLeft: 2,
+        '& input': {
+          color: '#777777',
+          height: 6,
+          paddingLeft: 13,
+        },
+        '& fieldset': {
+          border: '1px solid #ebebeb',
+        },
+      },
+      button: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '10px 106px',
+        paddingTop: 36,
+        paddingBottom: 16,
+      },
       submitbtn: {
-        width: 250,
-        height: 35,
+        padding: 9,
         backgroundColor: '#0bb5ff',
         borderRadius: 17,
         textAlign: 'center',
-        marginBottom: 20,
-        marginTop: 20,
-        marginLeft: 100,
-        paddingTop: 10,
         cursor: 'pointer',
       },
       submitText: {
           fontSize: 10,
-          color: "white"
+          color: "#f7f7f7",
       },
+      createButton: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '10px 106px',
+        paddingTop: 25,
+        paddingBottom: 16,
+      }
 }))
 
 export default userCreateAppointmentStyle

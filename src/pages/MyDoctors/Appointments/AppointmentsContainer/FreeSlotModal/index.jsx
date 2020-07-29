@@ -32,6 +32,9 @@ function FreeSlotModal({ slot, open, onClose, onSave, slotTime }) {
   function handleOnClick(event) {
     onClose(event)
     setOpenNew(true)
+  }
+
+  function handleClear() {
     setPhoneNumber('')
   }
 
@@ -144,25 +147,27 @@ function FreeSlotModal({ slot, open, onClose, onSave, slotTime }) {
           </Box>
         </DialogContent>
       </Dialog>
-      {detail && openNew ? (
+      {detail && openNew && (
         <CreateAppointmentForExistingPatient
           open={openNew}
           slot={slot}
           patientData={detail}
           onClose={handleOnClose}
-          timing={slotTime}
+          slotTime={slotTime}
           onSave={onSave}
           handleDetail={handleDetail}
+          handleClear={handleClear}
         />
-      ) :
-      (
+      ) }
+      {!detail && openNew && (
         <CreateAppointmentForNewPatient
           open={openNew}
           slot={slot}
           patientData={phoneNumber}
           onClose={handleOnClose}
-          timing={slotTime}
+          slotTime={slotTime}
           onSave={onSave}
+          handleClear={handleClear}
         />
       )}
     </Box>

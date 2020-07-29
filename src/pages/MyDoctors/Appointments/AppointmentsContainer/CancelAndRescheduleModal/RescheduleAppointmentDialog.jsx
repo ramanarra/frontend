@@ -144,6 +144,8 @@ function RescheduleAppointment({
               name={'Select Your Date'}
               dateChange={handleDateChange}
               value={date}
+              width={236}
+              fontSize={12}
             />
           </Box>
           <Box className={classes.available}>
