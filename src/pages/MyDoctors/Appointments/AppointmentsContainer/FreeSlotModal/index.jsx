@@ -10,7 +10,8 @@ import {
 import CloseIcon from '@material-ui/icons/Close'
 import StarIcon from '@material-ui/icons/Star'
 
-import CreateAppointment from './CreateAppointmentDialog'
+import CreateAppointmentForExistingPatient from './CreateAppointmentForExistingPatient'
+import CreateAppointmentForNewPatient from './CreateAppointmentForNewPatient'
 import useStyle from './useStyle'
 import { METHOD, URL } from '../../../../../api'
 import useManualFetch from '../../../../../hooks/useManualFetch'
@@ -32,6 +33,10 @@ function FreeSlotModal({ slot, open, onClose, onSave, slotTime }) {
     onClose(event)
     setOpenNew(true)
     setPhoneNumber('')
+  }
+
+  function handleDetail() {
+    setDetail(null)
   }
 
   function handleOnClose() {
@@ -139,20 +144,21 @@ function FreeSlotModal({ slot, open, onClose, onSave, slotTime }) {
           </Box>
         </DialogContent>
       </Dialog>
-      {detail && openNew && (
-        <CreateAppointment
+      {detail && openNew ? (
+        <CreateAppointmentForExistingPatient
           open={openNew}
-          details={slot}
+          slot={slot}
           patientData={detail}
           onClose={handleOnClose}
           timing={slotTime}
           onSave={onSave}
+          handleDetail={handleDetail}
         />
-      )}
-      {!detail && openNew && (
-        <CreateAppointment
+      ) :
+      (
+        <CreateAppointmentForNewPatient
           open={openNew}
-          details={slot}
+          slot={slot}
           patientData={phoneNumber}
           onClose={handleOnClose}
           timing={slotTime}

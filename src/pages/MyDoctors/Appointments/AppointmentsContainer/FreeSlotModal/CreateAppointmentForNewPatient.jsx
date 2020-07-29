@@ -19,12 +19,12 @@ import useStyle from './useCreateAppointmentStyle'
 import { URL } from '../../../../../api'
 import Textfield from '../../../../../components/Textfield'
 
-function CreateAppointment({ open, details, patientData, onClose, timing, onSave }) {
+function CreateAppointmentForNewPatient({ open, slot, patientData, onClose, timing, onSave }) {
   const classes = useStyle()
 
-  const startTime = moment(details.startTime, 'HH:mm:ss').format('HH:mm')
+  const startTime = moment(slot.startTime, 'HH:mm:ss').format('HH:mm')
 
-  const endTime = moment(details.endTime, 'HH:mm:ss').format('HH:mm')
+  const endTime = moment(slot.endTime, 'HH:mm:ss').format('HH:mm')
 
   const date = timing.split(' ')[0]
 
@@ -36,11 +36,9 @@ function CreateAppointment({ open, details, patientData, onClose, timing, onSave
 
   const appointmentDate = moment(date, 'DD/MM/YYYY').format('YYYY-MM-DD')
 
-  const [phoneNumber, setPhoneNumber] = useState(patientData)
+  const [phoneNumber, setPhoneNumber] = useState(String(patientData))
 
   const [payment, setPayment] = useState('directPayment')
-
-  const [preConsultation, setPreConsultation] = useState('Yes')
 
   const [consultationMode, setConsultationMode] = useState('online')
 
@@ -50,19 +48,14 @@ function CreateAppointment({ open, details, patientData, onClose, timing, onSave
                           { value: "notRequired", label: "Not Required" },
                           { value: "onlineCollection", label: "Online Collection" }]
 
-  const params = useMemo(() => {
-    if(patientData.id) {
-      return {
-        patientId: patientData.id,
-        startTime: startTime,
-        endTime: endTime,
-        appointmentDate: appointmentDate,
-        paymentOption: payment,
-        consultationMode: consultationMode,
-      }
-    }
-    else {
-      return {
+
+  function handleClose() {
+    onClose(false)
+  }
+
+  function handleOnSubmit() {
+    onClose(false)
+    const params = {
         phone: phoneNumber,
         firstName: firstName,
         lastName: lastName,
@@ -73,22 +66,8 @@ function CreateAppointment({ open, details, patientData, onClose, timing, onSave
         endTime: endTime,
         paymentOption: payment,
         consultationMode: consultationMode,
-      }
     }
-  }, [phoneNumber, firstName, lastName, email, dateOfBirth, appointmentDate, payment, consultationMode])
-
-  function handleClose() {
-    onClose(false)
-  }
-
-  function handleOnSubmit() {
-    onClose(false)
-    if(patientData !== 'null') {
-      onSave(URL.createAppointment, params)
-    }
-    else {
-      onSave(URL.createAppointmentAlongWIthRegisteringPatient, params)
-    }
+    onSave(URL.createAppointmentAlongWIthRegisteringPatient, params)
   }
 
   const handleOnChange = (event) => {
@@ -105,10 +84,6 @@ function CreateAppointment({ open, details, patientData, onClose, timing, onSave
 
   const handleConsultationMode = (event) => {
     setConsultationMode(event.target.value)
-  }
-
-  const handlePreConsultation = (event) => {
-    setPreConsultation(event.target.value)
   }
 
   const handleFirstNameChange = (event) => {
@@ -129,15 +104,8 @@ function CreateAppointment({ open, details, patientData, onClose, timing, onSave
 
   return (
     <Box>
-      {!patientData.id ? (
         <Dialog open={open}>
-        <DialogTitle
-          style={{
-            paddingTop: '35px',
-            paddingRight: '10px',
-            paddingBottom: '3px',
-          }}
-        >
+        <DialogTitle className={classes.header}>
           <Box display="flex">
             <Typography className={classes.title}>Create Appointment</Typography>
             <CloseIcon className={classes.closeIcon} onClick={handleClose} />
@@ -150,7 +118,7 @@ function CreateAppointment({ open, details, patientData, onClose, timing, onSave
               Your slot time {timing}
             </Typography>
           </Box>
-          <Box style={{ paddingTop: '13px' }}>
+          <Box className={classes.fieldBox}>
             <Textfield
             name="Phone"
             label="Phone Number"
@@ -162,7 +130,7 @@ function CreateAppointment({ open, details, patientData, onClose, timing, onSave
             disabled
             />
           </Box>
-          <Box display="flex" style={{ paddingTop: '15px' }}>
+          <Box display="flex" className={classes.fieldBox}>
             <Box>
             <Textfield
             name="First Name"
@@ -184,7 +152,7 @@ function CreateAppointment({ open, details, patientData, onClose, timing, onSave
             />
             </Box>
           </Box>
-          <Box style={{ paddingTop: '15px' }}>
+          <Box className={classes.fieldBox}>
           <Textfield
             name="email"
             label="Email ID"
@@ -194,7 +162,7 @@ function CreateAppointment({ open, details, patientData, onClose, timing, onSave
             onChange={handleEmailChange}
             />
           </Box>
-          <Box style={{ paddingTop: '15px' }}>
+          <Box className={classes.fieldBox}>
             <Typography className={classes.detailstext}>Date of Birth</Typography>
             <MuiPickersUtilsProvider
               utils={DateFnsUtils}
@@ -216,7 +184,7 @@ function CreateAppointment({ open, details, patientData, onClose, timing, onSave
               />
             </MuiPickersUtilsProvider>
           </Box>
-          <Box display="flex" style={{ paddingTop: '15px' }}>
+          <Box display="flex" className={classes.fieldBox}>
             <Box>
               <Typography className={classes.detailstext}>
                 Payment Option
@@ -248,12 +216,12 @@ function CreateAppointment({ open, details, patientData, onClose, timing, onSave
               </FormControl>
             </Box>
           </Box>
-          <Box style={{ paddingTop: '15px' }}>
+          <Box className={classes.fieldBox}>
             <Typography className={classes.detailstext}>
               Pre-Consultation
             </Typography>
             {
-              details.preconsultationHours ? 
+              slot.preconsultationHours ? 
               <TextField className={classes.preConsultation} value='Yes' variant='outlined' disabled /> :
               <TextField className={classes.preConsultation} value='No' variant='outlined' disabled />
             }
@@ -267,139 +235,8 @@ function CreateAppointment({ open, details, patientData, onClose, timing, onSave
           </Box>
         </DialogContent>
       </Dialog>
-        
-      ) : (
-        
-        <Dialog open={open}>
-        <DialogTitle
-          style={{
-            paddingTop: '35px',
-            paddingRight: '10px',
-            paddingBottom: '3px',
-          }}
-        >
-          <Box display="flex">
-            <Typography className={classes.title}>Create Appointment</Typography>
-            <CloseIcon className={classes.closeIcon} onClick={handleClose} />
-          </Box>
-        </DialogTitle>
-        <DialogContent>
-          <Box className={classes.text}>
-            <Typography className={classes.msg}>Existing Patient</Typography>
-            <Typography className={classes.txt}>
-              Your slot time {timing}
-            </Typography>
-          </Box>
-          <Box style={{ paddingTop: '13px' }}>
-            <Typography className={classes.phoneText}>Phone Number</Typography>
-            <TextField
-              variant="outlined"
-              className={classes.phone}
-              placeholder="876548920"
-              value={patientData.phone}
-              onChange={handleOnChange}
-            />
-          </Box>
-          <Box display="flex" style={{ paddingTop: '15px' }}>
-            <Box>
-              <Typography className={classes.detailstext}>First Name</Typography>
-              <TextField
-                variant="outlined"
-                className={classes.firstName}
-                value={patientData.firstName}
-                disabled
-              />
-            </Box>
-            <Box className={classes.lastNameBox}>
-              <Typography className={classes.detailstext}>Last Name</Typography>
-              <TextField
-                variant="outlined"
-                className={classes.lastName}
-                value={patientData.lastName}
-                disabled
-              />
-            </Box>
-          </Box>
-          <Box style={{ paddingTop: '15px' }}>
-            <Typography className={classes.detailstext}>Email ID</Typography>
-            <TextField
-              variant="outlined"
-              className={classes.email}
-              placeholder="Johndoe@gmail.com"
-              value={patientData.email}
-              disabled
-            />
-          </Box>
-          <Box style={{ paddingTop: '15px' }}>
-            <Typography className={classes.detailstext}>Date of Birth</Typography>
-            <TextField
-              variant="outlined"
-              value={patientData.dateOfBirth}
-              placeholder={patientData.dateOfBirth}
-              className={classes.date}
-              disabled
-            />
-            <CalendarTodayIcon className={classes.calendarIcon} />
-          </Box>
-          <Box display="flex" style={{ paddingTop: '15px' }}>
-            <Box>
-              <Typography className={classes.detailstext}>
-                Payment Option
-              </Typography>
-              <FormControl variant="outlined">
-                <NativeSelect
-                  className={classes.payment}
-                  defaultValue={payment}
-                  onChange={handlePaymentOption}
-                >
-                  <option selected value="directPayment">
-                    Direct Payment
-                  </option>
-                  <option value="notRequired">Not Required</option>
-                  <option value="onlineCollection">Online Collection</option>
-                </NativeSelect>
-              </FormControl>
-              {/* <Select options={paymentOption} className={classes.payment} onChange={handlePaymentOption} /> */}
-            </Box>
-            <Box className={classes.consultationModeBox}>
-              <Typography className={classes.detailstext}>
-                Consultation Mode
-              </Typography>
-              <FormControl variant="outlined">
-                <NativeSelect
-                  className={classes.consultationMode}
-                  defaultValue={'select here...'}
-                  onChange={handleConsultationMode}
-                >
-                  <option selected value="online">Online</option>
-                  <option value='inHospital'>InHospital</option>
-                </NativeSelect>
-              </FormControl>
-              
-            </Box>
-          </Box>
-          <Box style={{ paddingTop: '15px' }}>
-            <Typography className={classes.detailstext}>
-              Pre-Consultation
-            </Typography>
-            {
-              details.preconsultationHours ? 
-              <TextField className={classes.preConsultation} value='Yes' variant='outlined' disabled /> :
-              <TextField className={classes.preConsultation} value='No' variant='outlined' disabled />
-            }
-          </Box>
-          <Box>
-            <Box className={classes.submitbtn} onClick={handleOnSubmit}>
-              <Typography className={classes.submitText}>
-                BOOK APPOINTMENT
-              </Typography>
-            </Box>
-          </Box>
-        </DialogContent>
-      </Dialog>
-      )}
     </Box>
   )
 }
 
-export default CreateAppointment
+export default CreateAppointmentForNewPatient

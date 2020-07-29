@@ -5,6 +5,11 @@ const userCreateAppointmentStyle = makeStyles(() => ({
         // height: 900,
         width: 1620,
       },
+      header: {
+        paddingTop: '35px',
+        paddingRight: '10px',
+        paddingBottom: '3px',
+      },
       title: {
         fontSize: 21,
         color: 'black',
@@ -31,6 +36,9 @@ const userCreateAppointmentStyle = makeStyles(() => ({
         paddingTop: 5,
         fontSize: 10.5,
         marginTop: 10,
+      },
+      fieldBox: {
+        paddingTop: 15,
       },
       phoneText: {
         paddingLeft: 7,

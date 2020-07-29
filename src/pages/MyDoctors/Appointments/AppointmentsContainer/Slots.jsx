@@ -97,6 +97,7 @@ function Slots({
           singleStar={singleStar}
           doubleStar={doubleStar}
           cancellationNote={cancellationNote}
+          slot={slot}
         />
       )}
     </Box>
