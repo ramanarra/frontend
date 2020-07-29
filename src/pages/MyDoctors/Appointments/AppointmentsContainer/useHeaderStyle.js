@@ -44,7 +44,6 @@ const useHeaderStyle = makeStyles(() => ({
   date: {
     marginLeft: 10,
     marginTop: 2,
-    width: 150,
     height: 23,
     border: '1px solid #f4f4f4',
     borderRadius: 3,

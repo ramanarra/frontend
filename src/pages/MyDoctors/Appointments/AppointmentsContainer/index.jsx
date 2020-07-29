@@ -18,6 +18,7 @@ function AppointmentContainer({
   forwardPagination,
   backwardPagination,
   onSave,
+  paginationNumber,
 }) {
   const classes = useStyle()
 
@@ -32,6 +33,7 @@ function AppointmentContainer({
           forwardPagination={forwardPagination}
           backwardPagination={backwardPagination}
           slots={appointmentSlots}
+          paginationNumber={paginationNumber}
         />
       ) : null}
       <Box display="flex" flexWrap="wrap" className={classes.scheduleList}>

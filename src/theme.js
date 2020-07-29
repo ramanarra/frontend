@@ -47,7 +47,7 @@ const theme = createMuiTheme({
       input: { padding: '12px 14px' },
       notchedOutline: {
         border: '1.2px solid',
-        borderColor: '#f0f0f0',
+        borderColor: '#f0f0f0 !important',
         '&$focused': { borderColor: 'red' },
       },
       inputMarginDense : {
