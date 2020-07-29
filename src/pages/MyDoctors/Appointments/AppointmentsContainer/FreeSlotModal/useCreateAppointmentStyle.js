@@ -36,7 +36,7 @@ const userCreateAppointmentStyle = makeStyles(() => ({
         paddingTop: 5,
         fontSize: 10.5,
         marginTop: 10,
-        color: '#7e7e7e',
+        color: '#6a6a6a',
       },
       fieldBox: {
         paddingTop: 15,
@@ -72,9 +72,6 @@ const userCreateAppointmentStyle = makeStyles(() => ({
         paddingTop: 8,
         '& div': {
           height: 33,
-        },
-        '& fieldset': {
-          border: '1px solid #ebebeb',
         },
       },
       detailstext: {
@@ -267,9 +264,6 @@ const userCreateAppointmentStyle = makeStyles(() => ({
           color: '#777777',
           height: 6,
           paddingLeft: 13,
-        },
-        '& fieldset': {
-          border: '1px solid #ebebeb',
         },
       },
       button: {

@@ -146,6 +146,7 @@ function RescheduleAppointment({
               value={date}
               width={236}
               fontSize={12}
+              disablePast={true}
             />
           </Box>
           <Box className={classes.available}>

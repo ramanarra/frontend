@@ -104,6 +104,14 @@ const useHeaderStyle = makeStyles(() => ({
     marginTop: 2,
     marginRight: 8,
   },
+  selectBox: {
+    paddingRight: 2,
+    paddingLeft: 3,
+    marginBottom: -0.1,
+    '& div': {
+      width: 70,
+    }
+  },
 }))
 
 export default useHeaderStyle

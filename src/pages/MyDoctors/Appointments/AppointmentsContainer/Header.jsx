@@ -12,8 +12,14 @@ import Stretch from '../../../../components/Stretch'
 import View from '../../../../assets/img/icons/view.svg'
 import Filter from '../../../../assets/img/icons/filter.svg'
 import useStyle from './useHeaderStyle'
+import Select from '../../../../components/Select'
 
 const currentDay = Moment()
+
+const options = [
+  {value: 'week', label: 'Week'},
+  {value: 'month', label: 'Month'},
+]
 
 function Header({ forwardPagination, backwardPagination, slots, paginationNumber }) {
   const classes = useStyle()
@@ -70,12 +76,8 @@ function Header({ forwardPagination, backwardPagination, slots, paginationNumber
         <Typography className={classes.txt}>Booked</Typography>
         <FiberManualRecordIcon className={classes.blocked} />
         <Typography className={classes.txt}>Blocked(Yet to Pay)</Typography>
-        <Box paddingRight={2} paddingLeft={3} marginTop={-0.1}>
-          <FormControl variant="outlined">
-            <NativeSelect className={classes.select}>
-              <option selected>Week</option>
-            </NativeSelect>
-          </FormControl>
+        <Box className={classes.selectBox}>
+          <Select value={options[0].value} options={options} />
         </Box>
         <Box marginBottom={2.5} paddingRight={2.5}>
           <SearchIcon className={classes.search} />

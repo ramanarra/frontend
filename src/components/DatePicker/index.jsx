@@ -18,7 +18,7 @@ const useStyle = makeStyles(() => ({
   },
 }))
 
-export default function DatePicker({name, dateChange, value, width, fontSize}) {
+export default function DatePicker({name, dateChange, value, width, fontSize, disablePast}) {
   const classes = useStyle()
   return (
     <MuiPickersUtilsProvider utils={MomentUtils}>
@@ -33,7 +33,7 @@ export default function DatePicker({name, dateChange, value, width, fontSize}) {
         placeholder="07/03/1985"
         value={value}
         onChange={dateChange}
-        disablePast
+        disablePast = {disablePast}
         disableToolbar
         InputProps={{
           endAdornment: <GoCalendar />,

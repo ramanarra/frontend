@@ -172,6 +172,7 @@ function CreateAppointmentForNewPatient({
               value={dateOfBirth}
               width={435} 
               fontSize={13.7}
+              disablePast={false}
             />
           </Box>
           <Box display="flex" className={classes.newFieldBox}>
