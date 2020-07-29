@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState } from 'react'
 import moment from 'moment'
 import {
   Typography,
@@ -11,13 +11,17 @@ import {
 } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 import NativeSelect from '@material-ui/core/NativeSelect'
-import DateFnsUtils from '@date-io/date-fns'
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday'
 
 import useStyle from './useCreateAppointmentStyle'
+import Select from '../../../../../components/Select'
 import { URL } from '../../../../../api'
-import Textfield from '../../../../../components/Textfield'
+
+const paymentOption = [
+  { value: 'directPayment', label: 'Direct Payment' },
+  { value: 'notRequired', label: 'Not Required' },
+  { value: 'onlineCollection', label: 'Online Collection' },
+]
 
 function CreateAppointmentForExistingPatient({
   open,
@@ -46,17 +50,11 @@ function CreateAppointmentForExistingPatient({
 
   const [phoneNumber, setPhoneNumber] = useState(patientData)
 
-  const [payment, setPayment] = useState('directPayment')
+  const [payment, setPayment] = useState(paymentOption[0].value)
 
   const [consultationMode, setConsultationMode] = useState('online')
 
   const [dateOfBirth, setDateOfBirth] = useState(null)
-
-  const paymentOption = [
-    { value: 'directPayment', label: 'Direct Payment' },
-    { value: 'notRequired', label: 'Not Required' },
-    { value: 'onlineCollection', label: 'Online Collection' },
-  ]
 
   function handleClose() {
     onClose(false)
@@ -181,20 +179,7 @@ function CreateAppointmentForExistingPatient({
           <Box display="flex" className={classes.fieldBox}>
             <Box>
               <Typography className={classes.detailstext}>Payment Option</Typography>
-              <FormControl variant="outlined">
-                <NativeSelect
-                  className={classes.payment}
-                  defaultValue={payment}
-                  onChange={handlePaymentOption}
-                >
-                  <option selected value="directPayment">
-                    Direct Payment
-                  </option>
-                  <option value="notRequired">Not Required</option>
-                  <option value="onlineCollection">Online Collection</option>
-                </NativeSelect>
-              </FormControl>
-              {/* <Select options={paymentOption} className={classes.payment} onChange={handlePaymentOption} /> */}
+              <Select value={payment} options={paymentOption} onChange={handlePaymentOption}  />
             </Box>
             <Box className={classes.consultationModeBox}>
               <Typography className={classes.detailstext}>
