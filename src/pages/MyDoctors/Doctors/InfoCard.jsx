@@ -30,7 +30,7 @@ const InfoCard = ({ doctorDetails }) => {
           <Typography className={classes.value}>{`₹${doctorDetails.fees}`}</Typography>
         </Box>
 
-        <Box paddingLeft={3.5}>
+        <Box paddingLeft={3.7}>
           <Typography className={classes.text}>Today's Appoinment</Typography>
           <Box className={classes.appointmentsContent}>
             {doctorDetails.todaysAppointment.map((appointments, index) => (
@@ -41,7 +41,7 @@ const InfoCard = ({ doctorDetails }) => {
           </Box>
         </Box>
 
-        <Box paddingLeft={3.5}>
+        <Box paddingLeft={3.7}>
           <Typography className={classes.text}>Total Available slots</Typography>
             <Typography className={classes.value}>{doctorDetails.todaysAvailabilitySeats}</Typography>
         </Box>

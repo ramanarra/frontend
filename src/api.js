@@ -11,14 +11,21 @@ export const METHOD = {
 
 export const URL = {
   doctorLogin: 'auth/doctorLogin',
+  doctorList: `/calendar/doctor/list?key=`,
   patientLogin: 'auth/patientLogin',
   patientSignup: '/auth/patientRegistration',
-  doctorList: `calendar/doctor/list?key=$`,
-  doctorSettingsPersonalView: 'calendar/doctor/personalSettingsView',
-  doctorConfigUpdate: 'calendar/doctor/configUpdate',
+  doctorSettingsPersonalView: '/calendar/doctor/personalSettingsView',
+  doctorConfigUpdate: '/calendar/doctor/configUpdate',
   workschedule: {
     data: '/calendar/doctor/workScheduleView',
     update: '/calendar/doctor/workScheduleEdit',
   },
-  patientList: '/calendar/doctor/patientList',
+  appointmentSlotsView: '/calendar/doctor/appointmentSlotsView',
+  appointmentView: '/calendar/appointmentView',
+  appointmentCancel: '/calendar/doctor/appointmentCancel',
+  availableSlot: '/calendar/doctor/availableSlots',
+  appointmentReschedule: '/calendar/doctor/appointmentReschedule',
+  patientSearch: '/calendar/doctor/patientSearch',
+  createAppointment: '/calendar/doctor/createAppointment',
+  createAppointmentAlongWIthRegisteringPatient: '/calendar/doctor/creatingAppointmetAlongWithRegisteringPatient',
 }

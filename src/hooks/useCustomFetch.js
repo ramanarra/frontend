@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import API from '../api'
 
-function useCustomFecth(apiMethod, url, params) {
+function useCustomFecth(apiMethod, url, params, isNotRequriedReload) {
   const [data, setData] = useState(null)
   const [loading, setloading] = useState(true)
   const [reload, setRelaod] = useState(true)
@@ -11,7 +11,7 @@ function useCustomFecth(apiMethod, url, params) {
     const token = localStorage.getItem('virujhToken')
     const authStr = 'Bearer '.concat(token)
 
-    if (reload) {
+    if (reload || isNotRequriedReload) {
       if (apiMethod === 'GET') {
         API.get(url, {
           params: { ...params },
@@ -47,7 +47,7 @@ function useCustomFecth(apiMethod, url, params) {
           })
       }
     }
-  }, [apiMethod, url, params, reload])
+  }, [apiMethod, url, params, reload, isNotRequriedReload])
 
   const reFetch = () => {
     setRelaod(true)
