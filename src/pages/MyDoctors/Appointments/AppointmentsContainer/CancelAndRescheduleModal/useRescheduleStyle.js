@@ -120,14 +120,14 @@ const useRescheduleStyle = makeStyles(() => ({
     marginRight: 19,
     '&:hover': {
       backgroundColor: '#54cbff',
-    }
+    },
   },
   timeText: {
     fontSize: 13,
     color: '#7ae5a6',
     '&:hover': {
       color: '#ffffff',
-    }
+    },
   },
   button: {
     justifyContent: 'center',

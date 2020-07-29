@@ -71,22 +71,22 @@ function FreeSlotModal({ slot, open, onClose, onSave, slotTime }) {
     <Box>
       <Dialog open={open} className={classes.dialogBox}>
         <DialogTitle
-          style={{ paddingTop: '35px', paddingRight: '10px', paddingBottom: '3px' }}
+          className={classes.dialogTitle}
         >
           <Box display="flex">
-            <Typography className={classes.title}>Create Appointment</Typography>
+            <Typography variant="h5" className={classes.title}>Create Appointment</Typography>
             <CloseIcon className={classes.closeIcon} onClick={handleClose} />
           </Box>
         </DialogTitle>
-        <DialogContent style={{ paddingTop: '0px' }}>
+        <DialogContent className={classes.dialogContent}>
           <Box className={classes.text}>
-            <Typography className={classes.msg}>Choose Patient</Typography>
-            <Typography className={classes.txt}>
+            <Typography variant="h5" className={classes.msg}>Choose Patient</Typography>
+            <Typography variant="h5" className={classes.txt}>
               Your slot time {slotTime}
             </Typography>
           </Box>
-          <Box style={{ paddingTop: '13px' }}>
-            <Typography className={classes.phoneText}>Phone Number</Typography>
+          <Box className={classes.content}>
+            <Typography variant="h5" className={classes.phoneText}>Phone Number</Typography>
             <TextField
               className={classes.phone}
               onChange={handleOnchange}
@@ -102,7 +102,7 @@ function FreeSlotModal({ slot, open, onClose, onSave, slotTime }) {
                       className={classes.option}
                       onClick={() => handleOnOptionChange(option)}
                     >
-                      <Typography className={classes.phoneNumber}>
+                      <Typography variant="h5" className={classes.phoneNumber}>
                         {option.phone}
                       </Typography>
                       <Typography className={classes.detail}>

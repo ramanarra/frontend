@@ -39,7 +39,7 @@ function RescheduleAppointment({
 
   const [date, setDate] = useState(moment())
 
-  const currentDate = moment(date).format('DD-MM-YYYY')
+  const currentDate = moment(date).format('YYYY-MM-DD')
 
   const [time, setTime] = useState({ start: '00:00:00', end: '00:00:00' })
 
@@ -81,7 +81,9 @@ function RescheduleAppointment({
       <Dialog open={open} className={classes.rescheduled}>
         <DialogTitle className={classes.dialogTitle}>
           <Box display="flex">
-            <Typography className={classes.title} variant='h5'>Reschedule</Typography>
+            <Typography className={classes.title} variant="h5">
+              Reschedule
+            </Typography>
             <CloseIcon className={classes.closeIcon} onClick={handleClose} />
           </Box>
         </DialogTitle>

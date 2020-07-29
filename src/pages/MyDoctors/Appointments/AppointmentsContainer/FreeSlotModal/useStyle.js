@@ -5,9 +5,22 @@ const useStyle = makeStyles(() => ({
     height: 915,
     width: 1580,
   },
+  dialogTitle: {
+    paddingTop: 35, 
+    paddingRight: 10, 
+    paddingBottom: 3,
+  },
+
+  dialogContent: {
+    paddingTop: 0,
+  },
+
+  content: {
+    paddingTop: 13,
+  },
   title: {
     fontSize: 21,
-    color: 'black',
+    color: '#524646',
     textAlign: 'center',
     paddingLeft: 133,
   },
@@ -21,7 +34,7 @@ const useStyle = makeStyles(() => ({
   },
   msg: {
     fontSize: 11,
-    color: '#a8a8a8',
+    color: '#bcb8b8',
   },
   txt: {
     width: 245,
@@ -37,7 +50,7 @@ const useStyle = makeStyles(() => ({
   },
   phone: {
     width: 443,
-    paddingLeft: 9,
+    paddingLeft: 3,
     paddingTop: 6,
     '& div': {
       marginTop: 0,
@@ -58,7 +71,7 @@ const useStyle = makeStyles(() => ({
     paddingLeft: 7,
     position: 'absolute',
     zIndex: 1,
-    background: '#ffffff'
+    background: '#ffffff',
   },
   option: {
     width: 437,
@@ -66,21 +79,22 @@ const useStyle = makeStyles(() => ({
     cursor: 'pointer',
   },
   phoneNumber: {
-    fontSize: 12,
-    paddingLeft: 16,
+    fontSize: 13,
+    paddingLeft: 6,
     paddingTop: 5,
+    color: '#797272',
   },
   detail: {
     fontSize: 9,
-    paddingLeft: 16,
+    paddingLeft: 6,
     color: '#a8a8a8',
   },
   noteOne: {
     paddingTop: 5,
-    paddingLeft: 9,
+    paddingLeft: 3,
   },
   noteTwo: {
-    paddingLeft: 9,
+    paddingLeft: 3,
   },
   star: {
     width: 5,
@@ -90,6 +104,7 @@ const useStyle = makeStyles(() => ({
   noteText: {
     fontSize: 8,
     color: '#a8a8a8',
+    paddingLeft: 2,
   },
   nextBtn: {
     width: 130,

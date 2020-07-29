@@ -33,7 +33,7 @@ const useCancleAppointmentStyle = makeStyles(() => ({
       width: 18,
       marginLeft: -5,
       marginRight: -5,
-    }
+    },
   },
   checkBoxText: {
     paddingTop: 9,
