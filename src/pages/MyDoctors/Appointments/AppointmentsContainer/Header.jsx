@@ -35,7 +35,7 @@ function Header({ forwardPagination, backwardPagination, slots, paginationNumber
 
   const endDay = Moment.utc(slots[6].day).format('DD MMM, YYYY')
 
-  const month = currentDate.format('MMMM, YYYY')
+  const month = Moment(startDay).format('MMMM, YYYY')
 
   function handleOnNext() {
     const newDate = Moment(date.add('7', 'days'))

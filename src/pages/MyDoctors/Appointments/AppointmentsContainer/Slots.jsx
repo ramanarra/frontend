@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import moment from 'moment'
 import { Box, Typography } from '@material-ui/core'
 import ScheduleIcon from '@material-ui/icons/Schedule'
 import StarIcon from '@material-ui/icons/Star'
@@ -31,7 +30,7 @@ function Slots({
 
   const endTime = getTimeFormatWithNoon(slot.endTime)
 
-  const slotTime = `${date} ${getTimeFormatWithNoon(startTime)} `
+  const slotTime = `${date} ${getTimeFormatWithNoon(slot.startTime)} `
 
   function handleOnClick() {
     setOpen(true)
