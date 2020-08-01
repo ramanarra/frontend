@@ -8,6 +8,7 @@ import Cancellation from './Cancellation'
 import Reschedule from './Reschedule'
 import useCustomFetch from '../../hooks/useCustomFetch'
 import useDoctorConfigUpdate from '../../hooks/useDoctorConfigUpdate'
+import useDocSettingWrite from '../../hooks/useDocSettingWrite'
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -17,15 +18,17 @@ const useStyles = makeStyles(() => ({
     overflow: 'auto',
   },
 
-   text: {
+  text: {
     color: '#2b2929',
     fontSize: 16.5,
     marginBottom: 41,
-   }
+  },
 }))
 function CancellationResheduleOptions() {
   const classes = useStyles()
   const { id } = useParams()
+
+  const isAbleToWrite = useDocSettingWrite()
 
   const key = useMemo(() => {
     return {
@@ -35,15 +38,27 @@ function CancellationResheduleOptions() {
   const [data, refetch] = useCustomFetch(
     METHOD.GET,
     URL.doctorSettingsPersonalView,
-    key,
+    key
   )
 
   const [onSave] = useDoctorConfigUpdate(refetch)
   return (
     <Box className={classes.container}>
-      <Typography className={classes.text}>Cancellation/Reschedule Options</Typography>
-      <Cancellation configDetails={data?.configDetails} doctorKey={id} onSave={onSave}/>
-      <Reschedule configDetails={data?.configDetails} doctorKey={id} onSave={onSave} />
+      <Typography className={classes.text}>
+        Cancellation/Reschedule Options
+      </Typography>
+      <Cancellation
+        configDetails={data?.configDetails}
+        doctorKey={id}
+        onSave={onSave}
+        isAbleToWrite={isAbleToWrite}
+      />
+      <Reschedule
+        configDetails={data?.configDetails}
+        doctorKey={id}
+        onSave={onSave}
+        isAbleToWrite={isAbleToWrite}
+      />
     </Box>
   )
 }

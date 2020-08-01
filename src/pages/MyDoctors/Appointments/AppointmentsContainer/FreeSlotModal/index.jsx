@@ -16,7 +16,7 @@ import useStyle from './useStyle'
 import { METHOD, URL } from '../../../../../api'
 import useManualFetch from '../../../../../hooks/useManualFetch'
 
-function FreeSlotModal({ slot, open, onClose, onSave, slotTime }) {
+function FreeSlotModal({ slot, open, onClose, onSave, slotTime, doctorKey }) {
   const classes = useStyle()
 
   const [phoneNumber, setPhoneNumber] = useState('')
@@ -149,6 +149,7 @@ function FreeSlotModal({ slot, open, onClose, onSave, slotTime }) {
       </Dialog>
       {detail && openNew && (
         <CreateAppointmentForExistingPatient
+          doctorKey={doctorKey}
           open={openNew}
           slot={slot}
           patientData={detail}
@@ -161,6 +162,7 @@ function FreeSlotModal({ slot, open, onClose, onSave, slotTime }) {
       ) }
       {!detail && openNew && (
         <CreateAppointmentForNewPatient
+          doctorKey={doctorKey}
           open={openNew}
           slot={slot}
           patientData={phoneNumber}

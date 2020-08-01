@@ -34,7 +34,8 @@ function CreateAppointmentForNewPatient({
   onClose,
   slotTime,
   onSave,
-  handleClear
+  handleClear,
+  doctorKey,
 }) {
   const classes = useStyle()
 
@@ -76,6 +77,7 @@ function CreateAppointmentForNewPatient({
       endTime: endTime,
       paymentOption: payment,
       consultationMode: consultationMode,
+      doctorKey: doctorKey,
     }
     onSave(URL.createAppointmentAlongWIthRegisteringPatient, params)
     handleClear()
@@ -122,9 +124,7 @@ function CreateAppointmentForNewPatient({
             </Typography>
           </Box>
           <Box className={classes.newFieldBox}>
-            <Typography className={classes.phoneNumberText}>
-              Phone Number
-            </Typography>
+            <Typography className={classes.phoneNumberText}>Phone Number</Typography>
             <TextField
               variant="outlined"
               className={classes.newPatientPhone}
@@ -170,14 +170,16 @@ function CreateAppointmentForNewPatient({
               name={'Date of Birth'}
               dateChange={handleDateChange}
               value={dateOfBirth}
-              width={435} 
+              width={435}
               fontSize={13.7}
               disablePast={false}
             />
           </Box>
           <Box display="flex" className={classes.newFieldBox}>
             <Box className={classes.newPatientpayment}>
-              <Typography className={classes.optionHeader}>Payment Option</Typography>
+              <Typography className={classes.optionHeader}>
+                Payment Option
+              </Typography>
               <Box className={classes.newPatientPaymentOptionBox}>
                 <Select
                   value={payment}
@@ -200,7 +202,9 @@ function CreateAppointmentForNewPatient({
             </Box>
           </Box>
           <Box className={classes.newPatientPreConsultation}>
-            <Typography className={classes.optionHeader}>Pre-Consultation</Typography>
+            <Typography className={classes.optionHeader}>
+              Pre-Consultation
+            </Typography>
             <TextField
               className={classes.newPatientPreConsultationBox}
               value={slot.preconsultationHours ? 'Yes' : 'No'}

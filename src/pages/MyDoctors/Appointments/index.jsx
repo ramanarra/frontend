@@ -46,7 +46,6 @@ function Appointment({ doctorList }) {
     METHOD.GET,
     URL.appointmentSlotsView,
     key,
-    true,
   )
 
   const [onSave] = useAppointmentUpdate(refetch)
@@ -66,6 +65,7 @@ function Appointment({ doctorList }) {
         <Box className={classes.schedule}>
           <AppointmentContainer
             appointmentSlots={appointmentSlots}
+            doctorKey={id}
             forwardPagination={forwardPagination}
             backwardPagination={backwardPagination}
             paginationNumber={paginationNumber}

@@ -14,7 +14,6 @@ import * as serviceWorker from './serviceWorker'
 import PatientSignup from './pages/PatientSignup'
 
 ReactDOM.render(
-  <React.StrictMode>
     <ThemeProvider theme={theme}>
       <BrowserRouter>
         <Switch>
@@ -24,8 +23,7 @@ ReactDOM.render(
           <Route path={'/'} component={Layouts} />
         </Switch>
       </BrowserRouter>
-    </ThemeProvider>
-  </React.StrictMode>,
+    </ThemeProvider>,
   document.getElementById('root')
 )
 

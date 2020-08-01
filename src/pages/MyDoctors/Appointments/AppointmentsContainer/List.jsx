@@ -32,18 +32,18 @@ function addNote(slot) {
 }
 
 function addNoteForCancle(slot) {
-  if(isSingleStar(slot)) {
+  if (isSingleStar(slot)) {
     return 'The appointment has been cancelled as no money transactions here.'
   }
 
-  if(isDoubleStar(slot)) {
+  if (isDoubleStar(slot)) {
     return 'Any payment queries patient will reach doctor/hospital.'
   }
 
   return 'The payment will be refunded to the patient.'
 }
 
-function List({ appointments, onSave }) {
+function List({ appointments, onSave, doctorKey }) {
   const classes = useStyle()
 
   const date = moment.utc(appointments.day)
@@ -62,8 +62,22 @@ function List({ appointments, onSave }) {
       </Box>
       {appointments.slots.map((slot) => {
         return slot.id ? (
-          slot.created_by === 'DOCTOR' ? (
+          slot.created_by === 'PATIENT' ? (
             <Slots
+              doctorKey={doctorKey}
+              slot={slot}
+              date={todayDate}
+              onSave={onSave}
+              name={slot.patientFirstName}
+              bgColor={'#f1f3f5'}
+              textColor={'#aab5c2'}
+              ModalComponent={CancelAndRescheduleModal}
+              bookedBy={'Patient'}
+              note={'Patient Booked - Payment made through Virujh'}
+            />
+          ) : (
+            <Slots
+              doctorKey={doctorKey}
               slot={slot}
               date={todayDate}
               onSave={onSave}
@@ -75,23 +89,12 @@ function List({ appointments, onSave }) {
               singleStar={isSingleStar(slot)}
               doubleStar={isDoubleStar(slot)}
               note={addNote(slot)}
-              cancellationNote = {addNoteForCancle(slot)}
-            />
-          ) : (
-            <Slots
-              slot={slot}
-              date={todayDate}
-              onSave={onSave}
-              name={slot.patientname}
-              bgColor={'#f1f3f5'}
-              textColor={'#aab5c2'}
-              ModalComponent={CancelAndRescheduleModal}
-              bookedBy={'Patient'}
-              note={'Patient Booked - Payment made through Virujh'}
+              cancellationNote={addNoteForCancle(slot)}
             />
           )
         ) : (
           <Slots
+            doctorKey={doctorKey}
             slot={slot}
             date={todayDate}
             onSave={onSave}

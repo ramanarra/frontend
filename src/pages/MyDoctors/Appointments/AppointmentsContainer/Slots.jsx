@@ -9,6 +9,7 @@ import Stretch from '../../../../components/Stretch'
 import getTimeFormatWithNoon, { getTimeFormat } from '../../../../lib/dateLib'
 
 function Slots({
+  doctorKey,
   singleStar,
   doubleStar,
   slot,
@@ -85,6 +86,7 @@ function Slots({
       </Box>
       {DialogComponent && (
         <DialogComponent
+          doctorKey={doctorKey}
           appointmentId={slot.id}
           patientId={slot.patient_id}
           open={open}

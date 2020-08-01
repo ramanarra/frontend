@@ -1,4 +1,5 @@
 import React, { useState, Fragment } from 'react'
+import { useHistory } from 'react-router-dom'
 import {
   Paper,
   Box,
@@ -11,7 +12,6 @@ import {
 import Centralize from '../../components/Centralize'
 import Logo from '../../assets/img/logo.png'
 import useStyles from './useStyles'
-import { useHistory } from 'react-router-dom'
 
 const SnackbarPosition = { vertical: 'bottom', horizontal: 'center' }
 

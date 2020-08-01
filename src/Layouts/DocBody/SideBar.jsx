@@ -65,16 +65,6 @@ function SideBar() {
             Cancellation/Reschedule Options
           </Typography>
         </Link>
-        <Link className={classes.link} to={`/doctors/${id}/questionnaire`}>
-          {' '}
-          <Typography
-            className={classnames(classes.typography, {
-              [classes.selectedColor]: routesPath?.name === 'questionnaire',
-            })}
-          >
-            Questionnaire For Patients
-          </Typography>
-        </Link>
         <Link className={classes.link} to={`/doctors/${id}/work-schedules`}>
           <Typography
             className={classnames(classes.typography, {

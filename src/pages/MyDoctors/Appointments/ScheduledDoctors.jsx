@@ -71,7 +71,7 @@ const ScheduledDoctors = ({ doctorDetails }) => {
                 onClick={() => handleOnClick(doctor.doctorKey)}
               >
                 <Avatar className={classes.photo} src={doctor.photo} />
-                <Typography className={classes.name}>{doctor.doctorName}</Typography>
+                <Typography className={classes.name}>{`${doctor.firstName} ${doctor.lastName}`}</Typography>
               </Box>
             )
           })}
