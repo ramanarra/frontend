@@ -61,6 +61,11 @@ function useCustomFecth(apiMethod, url, params) {
     }
   }, [apiMethod, url, params, reload])
 
+  useEffect(() => {
+    previousUrl.current = url
+    previousParams.current = params
+  }, [url, params, previousUrl, previousParams])
+
   const reFetch = () => {
     setRelaod(true)
   }

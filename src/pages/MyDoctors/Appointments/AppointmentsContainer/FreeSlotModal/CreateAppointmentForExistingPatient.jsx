@@ -35,6 +35,7 @@ function CreateAppointmentForExistingPatient({
   onSave,
   handleDetail,
   handleClear,
+  doctorKey
 }) {
   const classes = useStyle()
 
@@ -65,6 +66,7 @@ function CreateAppointmentForExistingPatient({
       appointmentDate: appointmentDate,
       paymentOption: payment,
       consultationMode: consultationMode,
+      doctorKey: doctorKey,
     }
     onSave(URL.createAppointment, params)
     handleDetail()

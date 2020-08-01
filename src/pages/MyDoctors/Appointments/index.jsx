@@ -65,6 +65,7 @@ function Appointment({ doctorList }) {
         <Box className={classes.schedule}>
           <AppointmentContainer
             appointmentSlots={appointmentSlots}
+            doctorKey={id}
             forwardPagination={forwardPagination}
             backwardPagination={backwardPagination}
             paginationNumber={paginationNumber}
