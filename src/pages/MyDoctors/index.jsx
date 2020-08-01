@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import { useLocation } from 'react-router-dom'
 import { Box, makeStyles } from '@material-ui/core'
 
@@ -23,24 +23,15 @@ function MyDoctors() {
 
   const location = useLocation()
 
+  const [data] = useCustomFetch(METHOD.GET, URL.doctorList)
+
   const path = location.pathname.split('/')
 
   const pathName = path.length === 2 ? path[1] : ''
 
-  const key = useMemo(() => {
-    return localStorage.getItem('role') === 'DOCTOR'
-      ? localStorage.getItem('docKey')
-      : localStorage.getItem('accountKey')
-  })
-
-  const [data] = useCustomFetch(METHOD.GET, `${URL.doctorList}${key}`)
-
   return (
     <Box className={classes.container}>
-      {data?.doctorList ? (
-        <Navigation doctorList={data.doctorList[0]} />) :
-        <Navigation />
-      }
+      <Navigation doctorList={data?.doctorList[0]} />
       {data?.doctorList ? (
         pathName === 'doctors' ? (
           <Doctors doctorList={data.doctorList} />

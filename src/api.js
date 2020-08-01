@@ -11,7 +11,7 @@ export const METHOD = {
 
 export const URL = {
   doctorLogin: 'auth/doctorLogin',
-  doctorList: `/calendar/doctor/list?key=`,
+  doctorList: `/calendar/doctor/list`,
   patientLogin: 'auth/patientLogin',
   patientSignup: '/auth/patientRegistration',
   doctorSettingsPersonalView: '/calendar/doctor/personalSettingsView',

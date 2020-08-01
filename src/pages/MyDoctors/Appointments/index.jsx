@@ -46,7 +46,6 @@ function Appointment({ doctorList }) {
     METHOD.GET,
     URL.appointmentSlotsView,
     key,
-    true,
   )
 
   const [onSave] = useAppointmentUpdate(refetch)

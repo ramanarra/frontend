@@ -25,7 +25,7 @@ const useStyles = makeStyles(() => ({
   },
 }))
 
-const Cancellation = ({ configDetails, doctorKey, onSave }) => {
+const Cancellation = ({ configDetails, doctorKey, onSave, isAbleToWrite }) => {
   const classes = useStyles()
   const [autoCancelHours, setAutoCancelHours] = useState(0)
   const [autoCancelDays, setAutoCancelDays] = useState(0)
@@ -51,9 +51,9 @@ const Cancellation = ({ configDetails, doctorKey, onSave }) => {
     if (autoCancelDays && autoCancelHours && autoCancelMins) {
       const params = {
         doctorKey: doctorKey,
-        autoCancelDays: autoCancelDays,
-        autoCancelHours: autoCancelHours,
-        autoCancelMins: autoCancelMins,
+        autoCancelDays: Number(autoCancelDays),
+        autoCancelHours: Number(autoCancelHours),
+        autoCancelMins: Number(autoCancelMins),
       }
       onSave(params)
       setDisable(false)
@@ -103,19 +103,21 @@ const Cancellation = ({ configDetails, doctorKey, onSave }) => {
             disabled={!disable}
             onChange={handleOnAutoCancelMins}
           />
-          <Box paddingLeft={1} marginTop={1}>
-            {!disable ? (
-              <Edit
-                className={classes.iconButton}
-                onClick={() => setDisable(true)}
-              />
-            ) : (
-              <div>
-                <Clear className={classes.cancelation} onClick={handleOnCancel} />
-                <Check className={classes.iconButton} onClick={handleOnSave} />
-              </div>
-            )}
-          </Box>
+          {isAbleToWrite && (
+            <Box paddingLeft={1} marginTop={1}>
+              {!disable ? (
+                <Edit
+                  className={classes.iconButton}
+                  onClick={() => setDisable(true)}
+                />
+              ) : (
+                <div>
+                  <Clear className={classes.cancelation} onClick={handleOnCancel} />
+                  <Check className={classes.iconButton} onClick={handleOnSave} />
+                </div>
+              )}
+            </Box>
+          )}
         </Box>
       </Box>
     </Box>

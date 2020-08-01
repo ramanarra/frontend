@@ -16,10 +16,7 @@ import Select from '../../../../components/Select'
 
 const currentDay = Moment()
 
-const options = [
-  {value: 'week', label: 'Week'},
-  {value: 'month', label: 'Month'},
-]
+const options = [{ value: 'week', label: 'Week' }]
 
 function Header({ forwardPagination, backwardPagination, slots, paginationNumber }) {
   const classes = useStyle()
@@ -78,23 +75,6 @@ function Header({ forwardPagination, backwardPagination, slots, paginationNumber
         <Typography className={classes.txt}>Blocked(Yet to Pay)</Typography>
         <Box className={classes.selectBox}>
           <Select value={options[0].value} options={options} />
-        </Box>
-        <Box marginBottom={2.5} paddingRight={2.5}>
-          <SearchIcon className={classes.search} />
-        </Box>
-        <Box paddingRight={3} marginBottom={1.5}>
-          <img
-            className={classes.imgSize}
-            src={View}
-            alt="View"
-            style={{ paddingBottom: 1 }}
-          />
-        </Box>
-        <Box paddingRight={2}>
-          <img className={classes.imgSize} src={Filter} alt="Filter" />
-        </Box>
-        <Box paddingRight={2}>
-          <MoreVertIcon className={classes.menu} />
         </Box>
       </Box>
     </Box>

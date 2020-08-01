@@ -64,13 +64,13 @@ const useHeaderStyle = makeStyles(() => ({
     width: 12,
     marginTop: 2,
     marginLeft: 10,
-    color: '#dadada',
+    color: '#b3a3a3',
     cursor: 'pointer',
   },
   arrowForward: {
     width: 12,
     marginTop: 2,
-    color: '#dadada',
+    color: '#b3a3a3',
     cursor: 'pointer',
   },
   text: {
@@ -107,7 +107,8 @@ const useHeaderStyle = makeStyles(() => ({
   selectBox: {
     paddingRight: 2,
     paddingLeft: 3,
-    marginBottom: -0.1,
+    marginTop: -2,
+    marginRight: 20,
     '& div': {
       width: 70,
     }

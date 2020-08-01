@@ -27,7 +27,7 @@ const useStyles = makeStyles(() => ({
   },
 }))
 
-const Cancellation = ({ configDetails, doctorKey, onSave }) => {
+const Cancellation = ({ configDetails, doctorKey, onSave, isAbleToWrite }) => {
   const classes = useStyles()
   const [isPatientRescheduleAllowed, setIsPatientRescheduleAllowed] = useState(false)
   const [rescheduleDays, setRescheduleDays] = useState(0)
@@ -64,9 +64,9 @@ const Cancellation = ({ configDetails, doctorKey, onSave }) => {
     if (rescheduleDays && rescheduleHours && rescheduleMins) {
       const params = {
         doctorKey: doctorKey,
-        rescheduleDays: rescheduleDays,
-        rescheduleHours: rescheduleHours,
-        rescheduleMins: rescheduleMins,
+        rescheduleDays: Number(rescheduleDays),
+        rescheduleHours: Number(rescheduleHours),
+        rescheduleMins: Number(rescheduleMins),
       }
       onSave(params)
       setDisable(false)
@@ -95,10 +95,12 @@ const Cancellation = ({ configDetails, doctorKey, onSave }) => {
     <Box>
       <Box display="flex" marginBottom={4} alignItems="center">
         <Typography className={classes.text}>Patient Reschedule</Typography>
-        <Switch
-          checked={isPatientRescheduleAllowed}
-          onChange={handleOnRescheduleChange}
-        />
+        {isAbleToWrite && (
+          <Switch
+            checked={isPatientRescheduleAllowed}
+            onChange={handleOnRescheduleChange}
+          />
+        )}
       </Box>
       {isPatientRescheduleAllowed && (
         <Box>
@@ -124,19 +126,24 @@ const Cancellation = ({ configDetails, doctorKey, onSave }) => {
               disabled={!disable}
               onChange={handleOnReschedulenMins}
             />
-            <Box paddingLeft={1} marginTop={1}>
-              {!disable ? (
-                <Edit
-                  className={classes.iconButton}
-                  onClick={() => setDisable(true)}
-                />
-              ) : (
-                <div>
-                  <Clear className={classes.cancelation} onClick={handleOnCancel} />
-                  <Check className={classes.iconButton} onClick={handleOnSave} />
-                </div>
-              )}
-            </Box>
+            {isAbleToWrite && (
+              <Box paddingLeft={1} marginTop={1}>
+                {!disable ? (
+                  <Edit
+                    className={classes.iconButton}
+                    onClick={() => setDisable(true)}
+                  />
+                ) : (
+                  <div>
+                    <Clear
+                      className={classes.cancelation}
+                      onClick={handleOnCancel}
+                    />
+                    <Check className={classes.iconButton} onClick={handleOnSave} />
+                  </div>
+                )}
+              </Box>
+            )}
           </Box>
           <Box marginTop={4}>
             <UnpaidBooking
