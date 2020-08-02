@@ -69,6 +69,11 @@ const useStyle = makeStyles(() => ({
     paddingLeft: 4,
     color: '#0BB5FF',
   },
+  patientNote: {
+    fontSize: 10,
+    paddingLeft: 4,
+    color: '#a8a8a8',
+  },
   buttons: {
     alignItems: 'center',
     justifyContent: 'center',

@@ -26,7 +26,7 @@ const useCancleAppointmentStyle = makeStyles(() => ({
   confirmationStar: {
     width: 7,
     color: 'red',
-    marginTop: -5,
+    marginTop: -7,
   },
   checkBox: {
     '& svg': {

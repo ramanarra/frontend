@@ -74,6 +74,7 @@ function List({ appointments, onSave, doctorKey }) {
               ModalComponent={CancelAndRescheduleModal}
               bookedBy={'Patient'}
               note={'Patient Booked - Payment made through Virujh'}
+              cancellationNote={'The payment will be refunded to the patient.'}
             />
           ) : (
             <Slots
