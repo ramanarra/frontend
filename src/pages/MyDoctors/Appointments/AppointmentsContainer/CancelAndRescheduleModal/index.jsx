@@ -149,7 +149,7 @@ function CancleAndRescheduleModal({
           <Box display="flex" className={classes.buttons}>
             <Box className={classes.cancle} onClick={handleCancle}>
               <Typography variant="h5" className={classes.cancleBtn}>
-                CANCLE APPOINTMENT
+                CANCEL APPOINTMENT
               </Typography>
             </Box>
             <Box className={classes.reschedule} onClick={handleReschedule}>

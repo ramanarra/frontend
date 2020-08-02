@@ -28,4 +28,12 @@ export const URL = {
   patientSearch: '/calendar/doctor/patientSearch',
   createAppointment: '/calendar/doctor/createAppointment',
   createAppointmentAlongWIthRegisteringPatient: '/calendar/doctor/creatingAppointmetAlongWithRegisteringPatient',
+  patientUpcomingAppointments: '/calendar/patient/upcomingAppointmentsList',
+  patientPastAppointments: '/calendar/patient/pastAppointmentsList',
+  patientDoctorList: '/calendar/patient/doctorList',
+  findDoctorByCodeOrName: '/calendar/patient/findDoctorByCodeOrName',
+  listOfDoctorsInHospital: '/calendar/patient/listOfDoctorsInHospital',
+  appointmentDoctorDetails: '/calendar/patient/appointmentDoctorDetails',
+  viewDoctorDetails: '/calendar/patient/viewDoctorDetails',
+  patientAppointmentSlotsView: '/calendar/patient/appointmentSlotsView'
 }
