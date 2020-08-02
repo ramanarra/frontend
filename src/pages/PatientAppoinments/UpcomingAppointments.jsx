@@ -16,22 +16,25 @@ const useStyle = makeStyles(() => ({
   },
 }))
 
-function UpcomingAppointments({ appointmentLists }) {
+function UpcomingAppointments() {
   const classes = useStyle()
 
   const key = useMemo(() => {
-    return localStorage.getItem('patientId')
+    return {
+      limit: String(10),
+      paginationNumber: 0,
+    }
   })
 
-  const params = {
-    limit: String(6),
-    paginationNumber: 0,
-  }
+  // const params = {
+  //   limit: String(6),
+  //   paginationNumber: 0,
+  // }
 
   const [appointmentsList] = useCustomFecth(
     METHOD.GET,
     URL.patientUpcomingAppointments,
-    params
+    key,
   )
 
   return (

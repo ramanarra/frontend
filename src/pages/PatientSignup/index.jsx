@@ -16,7 +16,7 @@ const PatientSignup = (props) => {
   const { register, errors, control, handleSubmit } = useForm()
   const [handleSignUp, error, isLoading, res] = useManualFetch()
 
-  const redirectToLogin = () => props.history.push('/patient/appoinments')
+  const redirectToLogin = () => props.history.push('/login')
   const onSubmit = (data) => handleSignUp('POST', URL.patientSignup, data)
 
   useEffect(() => {
@@ -137,7 +137,6 @@ const PatientSignup = (props) => {
                       format="DD/MM/YYYY"
                       placeholder="07/03/1985"
                       disableFuture
-                      disableToolbar
                       autoOk
                       InputProps={{
                         endAdornment: <GoCalendar />,

@@ -64,6 +64,7 @@ const DoctorInfoCard = ({ doctorDetail, doctorListInHospital }) => {
   const doctorLastName = doctorDetail.lastName ? doctorDetail.lastName : ''
 
   function handleOnClick() {
+    localStorage.setItem('doctorId', doctorDetail.doctorId)
     hisrory.push(`/patient/${doctorKey}/book-appointment`)
   }
 

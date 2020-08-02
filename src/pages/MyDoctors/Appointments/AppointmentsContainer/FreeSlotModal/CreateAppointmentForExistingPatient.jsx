@@ -60,7 +60,7 @@ function CreateAppointmentForExistingPatient({
   function handleOnSubmit() {
     onClose(false)
     const params = {
-      patientId: patientData.id,
+      patientId: Number(patientData.patient_id),
       startTime: startTime,
       endTime: endTime,
       appointmentDate: appointmentDate,
@@ -156,7 +156,7 @@ function CreateAppointmentForExistingPatient({
             </Typography>
             <TextField
               variant="outlined"
-              value={patientData.dateOfBirth}
+              value={moment(patientData.dateOfBirth).format('DD-MM-YYYY')}
               placeholder={patientData.dateOfBirth}
               className={classes.date}
               disabled

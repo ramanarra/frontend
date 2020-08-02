@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react'
+import { useHistory } from 'react-router-dom'
 import moment from 'moment'
 import { Box, makeStyles, Typography } from '@material-ui/core'
 import MomentUtils from '@date-io/moment'
@@ -7,6 +8,8 @@ import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers'
 import AvailableSlots from './AvailableSlots'
 import useManualFetch from '../../hooks/useManualFetch'
 import { METHOD, URL } from '../../api'
+import { getTimeFormat } from '../../lib/dateLib'
+
 
 const useStyle = makeStyles(() => ({
   button: {
@@ -33,6 +36,8 @@ const useStyle = makeStyles(() => ({
 function AppointmentDatePicker({ doctorKey }) {
   const classes = useStyle()
 
+  const history = useHistory()
+
   const [date, setDate] = useState(new Date())
 
   const selectedDate = moment(date).format('YYYY-MM-DD')
@@ -49,20 +54,46 @@ function AppointmentDatePicker({ doctorKey }) {
   const [updateData, updateError, isUpdating, data] = useManualFetch()
 
   useEffect(() => {
-    updateData(METHOD.GET, URL.patientAppointmentSlotsView, params)
+    updateData(
+      METHOD.GET,
+      `${
+        URL.patientAppointmentSlotsView
+      }${'?doctorKey='}${doctorKey}${'&appointmentDate='}${selectedDate}`
+    )
   }, [])
 
   const handleDateChange = (event) => {
     setDate(event)
-    updateData(METHOD.GET, URL.patientAppointmentSlotsView, params)
+    const selectDate = moment(event).format('YYYY-MM-DD')
+    updateData(
+      METHOD.GET,
+      `${
+        URL.patientAppointmentSlotsView
+      }${'?doctorKey='}${doctorKey}${'&appointmentDate='}${selectDate}`
+    )
   }
 
-  function handlSlotTiming(time) {
+  function handleSubmit() {
+    const params = {
+      patientId: Number(localStorage.getItem('patientId')),
+      doctorKey: doctorKey,
+      startTime: moment(time.start, 'HH:mm:ss').format('HH:mm'),
+      endTime: moment(time.end, 'HH:mm:ss').format('HH:mm'),
+      appointmentDate: selectedDate,
+      paymentOption: 'directPayment',
+      consultationMode: 'online',
+    }
+    updateData(METHOD.POST, URL.patientBookAppointment, params)
+    history.push('/patient/appointments/upcoming')
+  }
+
+  const  handleSlotTiming = (time) => {
     setTime(time)
   }
 
+
   return (
-    <Box display="flex">
+    <Box>
       <Box>
         <MuiPickersUtilsProvider utils={MomentUtils}>
           <DatePicker
@@ -77,13 +108,13 @@ function AppointmentDatePicker({ doctorKey }) {
           />
         </MuiPickersUtilsProvider>
         <Box className={classes.button}>
-          <Box className={classes.confirmButton}>
+          <Box className={classes.confirmButton} onClick={handleSubmit}>
             <Typography className={classes.confirmText}>CONFIRM</Typography>
           </Box>
         </Box>
       </Box>
       {data && (
-        <AvailableSlots availableSlots={data} handlSlotTiming={handlSlotTiming} />
+        <AvailableSlots availableSlots={data} handleSlotTiming={handleSlotTiming} />
       )}
     </Box>
   )

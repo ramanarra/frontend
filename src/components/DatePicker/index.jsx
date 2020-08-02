@@ -23,7 +23,7 @@ export default function DatePicker({name, dateChange, value, width, fontSize, di
   return (
     <MuiPickersUtilsProvider utils={MomentUtils}>
       <Typography variant="h5" className={classes.dateText} style={{fontSize: fontSize}}>{name}</Typography>
-
+      
       <Picker
         className={classes.datefield}
         style={{width: width}}
@@ -34,11 +34,11 @@ export default function DatePicker({name, dateChange, value, width, fontSize, di
         value={value}
         onChange={dateChange}
         disablePast = {disablePast}
-        disableToolbar
         InputProps={{
           endAdornment: <GoCalendar />,
         }}
       />
     </MuiPickersUtilsProvider>
+
   )
 }

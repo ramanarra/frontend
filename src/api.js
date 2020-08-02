@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export default axios.create({
-  baseURL: 'http://13.127.101.235:8081/api',
+  baseURL: 'http://dev-api.virujh.com:8081/api',
 })
 
 export const METHOD = {
@@ -35,5 +35,6 @@ export const URL = {
   listOfDoctorsInHospital: '/calendar/patient/listOfDoctorsInHospital',
   appointmentDoctorDetails: '/calendar/patient/appointmentDoctorDetails',
   viewDoctorDetails: '/calendar/patient/viewDoctorDetails',
-  patientAppointmentSlotsView: '/calendar/patient/appointmentSlotsView'
+  patientAppointmentSlotsView: '/calendar/patient/appointmentSlotsView',
+  patientBookAppointment: '/calendar/patient/bookAppointment'
 }

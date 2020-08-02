@@ -4,7 +4,7 @@ import { Box, makeStyles } from '@material-ui/core'
 import PatientAppointmentSlot from './PatientAppointmentSlot'
 import useCustomFecth from '../../hooks/useCustomFetch'
 import { METHOD, URL } from '../../api'
-import borderColors from './'
+import borderColors from './constants'
 
 const useStyle = makeStyles(() => ({
   container: {
@@ -22,7 +22,10 @@ function PastAppointments() {
   const classes = useStyle()
 
   const key = useMemo(() => {
-    return localStorage.getItem('patientId')
+    return {
+      limit: String(6),
+      paginationNumber: 0,
+    }
   })
 
   const params = {
@@ -33,7 +36,7 @@ function PastAppointments() {
   const [appointmentsList] = useCustomFecth(
     METHOD.GET,
     URL.patientPastAppointments,
-    params
+    key
   )
 
   return (
