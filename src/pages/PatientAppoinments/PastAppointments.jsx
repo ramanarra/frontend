@@ -18,20 +18,13 @@ const useStyle = makeStyles(() => ({
   },
 }))
 
+const key = {
+  limit: '10',
+  paginationNumber: 0,
+}
+
 function PastAppointments() {
   const classes = useStyle()
-
-  const key = useMemo(() => {
-    return {
-      limit: String(6),
-      paginationNumber: 0,
-    }
-  })
-
-  const params = {
-    limit: String(6),
-    paginationNumber: 0,
-  }
 
   const [appointmentsList] = useCustomFecth(
     METHOD.GET,
@@ -42,6 +35,7 @@ function PastAppointments() {
   return (
     <Box className={classes.container}>
       {appointmentsList &&
+        appointmentsList?.appointments &&
         appointmentsList.appointments.map((appointmentDetail, index) => {
           return (
             <PatientAppointmentSlot

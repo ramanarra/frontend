@@ -16,30 +16,23 @@ const useStyle = makeStyles(() => ({
   },
 }))
 
+const key = {
+  limit: String(10),
+  paginationNumber: 0,
+}
+
 function UpcomingAppointments() {
   const classes = useStyle()
-
-  const key = useMemo(() => {
-    return {
-      limit: String(10),
-      paginationNumber: 0,
-    }
-  })
-
-  // const params = {
-  //   limit: String(6),
-  //   paginationNumber: 0,
-  // }
 
   const [appointmentsList] = useCustomFecth(
     METHOD.GET,
     URL.patientUpcomingAppointments,
-    key,
+    key
   )
 
   return (
     <Box className={classes.container} display="flex" flexWrap="wrap">
-      {appointmentsList &&
+      {appointmentsList && appointmentsList?.appointments &&
         appointmentsList.appointments.map((appointmentDetail, index) => {
           return (
             <PatientAppointmentSlot
