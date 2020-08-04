@@ -202,7 +202,7 @@ function UpcomingAndPastView({
                   <Typography
                     className={classes.value}
                     variant="h5"
-                  >{`${startingTime}${'-'}${endTime}`}</Typography>
+                  >{`${startingTime}${' - '}${endTime}`}</Typography>
                 </Box>
               </Box>
               <Box className={classes.rightSide}>

@@ -16,7 +16,7 @@ const useStyle = makeStyles(() => ({
     overflowY: 'auto',
   },
   header: {
-    width: '97.65%',
+    width: '98.40%',
     background: '#f9f9f9',
     backgroundColor: 'white',
     height: 90,
@@ -83,11 +83,11 @@ function PatientFindDoctor() {
           onChange={handleOnChange}
           InputProps={{ endAdornment: <SearchIcon /> }}
         />
-        {name === '' && Array.isArray(data) && <DoctorList doctorLists={data} />}
+      </Box>
+      {name === '' && Array.isArray(data) && <DoctorList doctorLists={data} />}
         {name !== '' && !Array.isArray(data) && (
           <DoctorListwithHospital doctorAndHospitalList={data} />
         )}
-      </Box>
     </Box>
   )
 }

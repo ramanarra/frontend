@@ -8,7 +8,7 @@ const useStyle = makeStyles((theme) => ({
     background: '#f9f9f9',
     backgroundColor: 'white',
     boxShadow: '5px 0px 15px 0px #f3eeee',
-    paddingLeft: 25,
+    paddingLeft: 30,
     paddingTop: 20,
   },
   title: {

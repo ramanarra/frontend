@@ -55,14 +55,16 @@ const useStyle = makeStyles(() => ({
     color: '#8c8a8a',
   },
   infoIcon: {
-    width: 18,
+    width: 17,
     color: '#37befa',
-    marginTop: 5,
+    marginTop: 6,
+    marginLeft: -3,
   },
   preConsultaion: {
-    paddingTop: 5,
+    paddingTop: 6,
     paddingLeft: 3,
     color: '#37befa',
+    letterSpacing: 0.5,
   },
 }))
 function PatientAppointmentSlot({ appointmentDetail, borderColor }) {
@@ -138,8 +140,8 @@ function PatientAppointmentSlot({ appointmentDetail, borderColor }) {
               <Box display="flex">
                 <InfoOutlinedIcon className={classes.infoIcon} />
                 <Typography className={classes.preConsultaion}>
-                  PreConsultaion starts at <b>{preConsultaionTime}</b>. Doctor
-                  consultation starts at <b>{startTime}</b>
+                  Preconsultaion starts at <b>{preConsultaionTime}</b>. Doctor
+                  consultation at <b>{startTime}</b>
                 </Typography>
               </Box>
             )}

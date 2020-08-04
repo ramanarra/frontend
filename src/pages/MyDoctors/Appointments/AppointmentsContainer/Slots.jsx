@@ -27,7 +27,7 @@ function Slots({
 
   const [open, setOpen] = useState(false)
 
-  const startTime = getTimeFormat(slot.startTime)
+  const startTime = getTimeFormatWithNoon(slot.startTime)
 
   const endTime = getTimeFormatWithNoon(slot.endTime)
 

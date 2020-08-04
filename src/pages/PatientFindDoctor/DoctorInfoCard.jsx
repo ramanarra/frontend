@@ -33,6 +33,18 @@ const useInfocardStyles = makeStyles((theme) => ({
     color: '#c1b6b6',
   },
 
+  fees: {
+    paddingLeft: 5,
+  },
+
+  contactNumber: {
+    paddingLeft: 30,
+  },
+
+  location: {
+    paddingLeft: 26,
+  },
+
   text: {
     fontSize: 11.5,
     color: '#c8c8c8',
@@ -109,21 +121,21 @@ const DoctorInfoCard = ({ doctorDetail, doctorListInHospital }) => {
 
       <Box marginTop={3} display="flex">
         {doctorDetail.doctorKey && (
-          <Box>
+          <Box className={classes.fees}>
             <Typography className={classes.text}>Fees</Typography>
             <Typography
               className={classes.value}
             >{`₹${doctorDetail.fee}`}</Typography>
           </Box>
         )}
-        <Box paddingLeft={3.7}>
-          <Typography className={classes.text}>Phone Number</Typography>
+        <Box paddingLeft={3.7} className={classes.contactNumber}>
+          <Typography className={classes.text}>Contact Number</Typography>
           <Typography
             className={classes.value}
           >{`+91 ${doctorDetail.number}`}</Typography>
         </Box>
 
-        <Box paddingLeft={3.7}>
+        <Box paddingLeft={3.7} className={classes.location}> 
           <Typography className={classes.text}>Location</Typography>
           <Typography className={classes.value}>{doctorDetail.location}</Typography>
         </Box>

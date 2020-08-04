@@ -8,26 +8,32 @@ import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers'
 import AvailableSlots from './AvailableSlots'
 import useManualFetch from '../../hooks/useManualFetch'
 import { METHOD, URL } from '../../api'
-import { getTimeFormat } from '../../lib/dateLib'
 
 
 const useStyle = makeStyles(() => ({
+
+  datePicker: {
+    paddingTop: 130,
+  },
+  dateContainer: {
+    '& .MuiPickersBasePicker-pickerView': {
+      minWidth: 500,
+    }
+  },
   button: {
     alignItems: 'center',
     justifyContent: 'center',
-    padding: '10px 235px',
-    paddingTop: 30,
-    paddingBottom: 10,
+    padding: '40px 80px 20px 300px'
   },
   confirmButton: {
-    padding: '12px 40px',
+    padding: '11px 73px',
     backgroundColor: '#0bb5ff',
-    borderRadius: 20,
+    borderRadius: 25,
     textAlign: 'center',
     cursor: 'pointer',
   },
   confirmText: {
-    fontSize: 15,
+    fontSize: 17,
     color: '#f7f7f7',
     paddingTop: 2,
   },
@@ -93,8 +99,8 @@ function AppointmentDatePicker({ doctorKey }) {
 
 
   return (
-    <Box>
-      <Box>
+    <Box display="flex">
+      <Box className={classes.datePicker}>
         <MuiPickersUtilsProvider utils={MomentUtils}>
           <DatePicker
             autoOk
@@ -105,6 +111,7 @@ function AppointmentDatePicker({ doctorKey }) {
             openTo="date"
             value={date}
             onChange={handleDateChange}
+            className={classes.dateContainer}
           />
         </MuiPickersUtilsProvider>
         <Box className={classes.button}>
