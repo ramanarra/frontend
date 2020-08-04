@@ -4,6 +4,8 @@ import { Box } from '@material-ui/core'
 import classNames from 'classnames'
 import { makeStyles } from '@material-ui/core/styles'
 
+import appointmentIcon from '../../assets/img/appointments.svg'
+
 const useStyles = makeStyles(() => ({
   container: {
     width: '79px',
@@ -18,6 +20,11 @@ const useStyles = makeStyles(() => ({
     display: 'flex',
     justifyContent: 'center',
     textDecoration: 'none'
+  },
+  appointmentIcon: {
+    width: 19,
+    paddingTop: 2,
+    color: '#9ddcf8',
   },
   setting: {
     fontSize: 19,
@@ -44,7 +51,9 @@ function PatientSideBar() {
         <Link className={classNames(classes.item, {
               [classes.selectedColor]: pathName === 'appointments',
             })} to="/patient/appointments/upcoming"> 
-          <i className="icon-doctor"></i>
+          <img src={appointmentIcon} alt="appointment Icon" className={classNames(classes.appointmentIcon,{
+            [classes.selectedColor]: pathName === 'appointments',
+          })} />
         </Link>
         <Link className={classNames(classes.item, classes.setting, {
               [classes.selectedColor]: pathName === 'setting',

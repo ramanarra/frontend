@@ -7,15 +7,17 @@ import getTimeFormatWithNoon from '../../lib/dateLib'
 
 const useStyle = makeStyles(() => ({
   container: {
-    width: 500,
+    
   },
   availableSlots: {
-    paddingTop: 150,
+    paddingTop: 145,
+    paddingLeft: 40,
+    height: '100%',
   },
   time: {
     width: 100,
     border: '1.5px solid #dadada',
-    marginLeft: 10,
+    marginLeft: 13,
     marginBottom: 15,
     borderRadius: 3,
     '&:hover': {
@@ -24,9 +26,9 @@ const useStyle = makeStyles(() => ({
     },
   },
   timeText: {
-    fontSize: 12.8,
+    fontSize: 12.3,
     paddingTop: 2,
-    color: '#a0a0a0',
+    color: '#6a6969',
     '&:hover': {
       color: '#ffffff',
     },

@@ -12,47 +12,49 @@ const useStyle = makeStyles(() => ({
     width: 675,
     background: '#f9f9f9',
     backgroundColor: 'white',
-    height: 150,
+    padding: '11px 8px 30px 30px',
     boxShadow: '5px 0px 15px 0px #f3eeee',
     marginBottom: 20,
     marginRight: 12,
     cursor: 'pointer',
   },
   timing: {
-    paddingLeft: 500,
-    paddingTop: 11,
+    justifyContent: 'flex-end',
+    paddingRight: 10,
     color: '#a8a8a8',
   },
   scheduleIcon: {
     width: 18,
     marginRight: 5,
+    marginTop: -1,
   },
   time: {
-    // paddingLeft: 5,
-  },
-  dateAndMonth: {
-    paddingLeft: 30,
+    fontSize: 15,
   },
   date: {
-    fontSize: 52,
+    fontSize: 53,
     letterSpacing: 2,
   },
   month: {
-    fontSize: 22,
+    fontSize: 20,
     paddingLeft: 8,
     letterSpacing: 0.5,
+    variant: 'h5',
   },
   doctorDetails: {
     paddingLeft: 42,
-    paddingTop: 12,
+    paddingTop: 9,
   },
   name: {
     variant: 'h5',
-    fontSize: 17.5,
+    fontSize: 16,
+    letterSpacing: 0.5,
   },
   hospitalName: {
-    paddingTop: 5,
+    paddingTop: 6,
+    fontSize: 15,
     color: '#8c8a8a',
+    letterSpacing: 0.5,
   },
   infoIcon: {
     width: 17,
@@ -61,8 +63,9 @@ const useStyle = makeStyles(() => ({
     marginLeft: -3,
   },
   preConsultaion: {
-    paddingTop: 6,
+    paddingTop: 7,
     paddingLeft: 3,
+    fontSize: 15,
     color: '#37befa',
     letterSpacing: 0.5,
   },
@@ -95,7 +98,7 @@ function PatientAppointmentSlot({ appointmentDetail, borderColor }) {
           moment(preConsultaion, 'hh:mm')
         )
       )
-      .format('hh:mm')
+      .format('hh:mm A')
   )
 
   function handleOnClick() {
@@ -125,7 +128,7 @@ function PatientAppointmentSlot({ appointmentDetail, borderColor }) {
             <Typography className={classes.date} variant="h3">
               {date}
             </Typography>
-            <Typography className={classes.month} variant="h3">
+            <Typography className={classes.month} variant="h2">
               {month}
             </Typography>
           </Box>

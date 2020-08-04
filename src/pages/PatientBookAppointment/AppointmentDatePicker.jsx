@@ -9,31 +9,70 @@ import AvailableSlots from './AvailableSlots'
 import useManualFetch from '../../hooks/useManualFetch'
 import { METHOD, URL } from '../../api'
 
-
 const useStyle = makeStyles(() => ({
-
-  datePicker: {
-    paddingTop: 130,
+  container: {
+    width: 'calc(100% - 320px)',
+    height: '100%',
   },
-  dateContainer: {
+  datePicker: {
+    paddingTop: 85,
+    '& .MuiPickersStaticWrapper-staticWrapperRoot': {
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
     '& .MuiPickersBasePicker-pickerView': {
-      minWidth: 500,
-    }
+      minWidth: 450,
+      minHeight: 400,
+    },
+    '& .MuiPickersCalendarHeader-switchHeader': {
+      marginBottom: 10,
+    },
+    '& .MuiSvgIcon-root': {
+      fontSize: 28,
+    },
+    '& .MuiPickersCalendarHeader-transitionContainer': {
+      height: 26,
+    },
+    '& .MuiPickersCalendarHeader-dayLabel': {
+      margin: '0px 20px',
+    },
+    '& .MuiPickersDay-day': {
+      margin: '2.2px 13.5px',
+    },
+    '& .MuiTypography-alignCenter': {
+      fontSize: 18,
+      color: '#656363',
+      variant: 'bold',
+    },
+    '& .MuiPickersCalendarHeader-dayLabel': {
+      fontSize: 16,
+      margin: '0px 13px',
+    },
+    '& .MuiTypography-body2': {
+      color: '#414141',
+      fontSize: 16,
+    },
+    '& .MuiPickersDay-dayDisabled': {
+      '& p': {
+        color: '#a8a8a8',
+        fontSize: 16,
+      },
+    },
   },
   button: {
     alignItems: 'center',
     justifyContent: 'center',
-    padding: '40px 80px 20px 300px'
+    padding: '42px 80px 20px 300px',
   },
   confirmButton: {
-    padding: '11px 73px',
+    padding: '8.5px 67px',
     backgroundColor: '#0bb5ff',
     borderRadius: 25,
     textAlign: 'center',
     cursor: 'pointer',
   },
   confirmText: {
-    fontSize: 17,
+    fontSize: 16,
     color: '#f7f7f7',
     paddingTop: 2,
   },
@@ -93,13 +132,12 @@ function AppointmentDatePicker({ doctorKey }) {
     history.push('/patient/appointments/upcoming')
   }
 
-  const  handleSlotTiming = (time) => {
+  const handleSlotTiming = (time) => {
     setTime(time)
   }
 
-
   return (
-    <Box display="flex">
+    <Box display="flex" className={classes.container}>
       <Box className={classes.datePicker}>
         <MuiPickersUtilsProvider utils={MomentUtils}>
           <DatePicker

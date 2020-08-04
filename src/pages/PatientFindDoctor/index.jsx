@@ -13,17 +13,20 @@ const useStyle = makeStyles(() => ({
     padding: 20,
     height: '100%',
     background: '#f9f9f9',
-    overflowY: 'auto',
   },
   header: {
-    width: '98.40%',
+    width: '97.7%',
     background: '#f9f9f9',
     backgroundColor: 'white',
     height: 90,
     padding: '0px 14px',
     boxShadow: '5px 0px 15px 0px #f3eeee',
   },
-
+  doctorList: {
+    width: '100%',
+    height: 'calc(100% - 90px)',
+    overflowY: 'auto',
+  },
   heading: {
     fontSize: 17.5,
     color: '#797777',
@@ -84,10 +87,12 @@ function PatientFindDoctor() {
           InputProps={{ endAdornment: <SearchIcon /> }}
         />
       </Box>
-      {name === '' && Array.isArray(data) && <DoctorList doctorLists={data} />}
+      <Box className={classes.doctorList}>
+        {name === '' && Array.isArray(data) && <DoctorList doctorLists={data} />}
         {name !== '' && !Array.isArray(data) && (
           <DoctorListwithHospital doctorAndHospitalList={data} />
         )}
+      </Box>
     </Box>
   )
 }
