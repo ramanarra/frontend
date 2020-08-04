@@ -1,24 +1,52 @@
 import React, { useEffect, useState } from 'react'
 import { Typography, TextField } from '@material-ui/core'
-import OptionBox from './OptionBox'
 
-const SessionTime = ({ data }) => {
+import OptionBox from './OptionBox'
+import { minsSuffix } from '../../components/commonFormat.js'
+
+const SessionTime = ({ data, handleUpdate }) => {
   const [sessionTime, setSessionTime] = useState(null)
+  const [customTime, setCustomTime] = useState('')
+  const [isChanged, setChanged] = useState(false)
 
   useEffect(() => {
-    setSessionTime(parseInt(data?.split(' ')[0]))
+    if (!!data) {
+      const defaultTimes = [15, 30, 45, 60]
+      defaultTimes.includes(data) ? setSessionTime(data) : setCustomTime(data)
+    }
   }, [data])
 
-  const isCustomTime = () => {
-    const listSet = [15, 30, 45, 60]
-    return listSet.includes(sessionTime)
+  const handleSave = (saveValue) => {
+    const time = saveValue || sessionTime || customTime || 0
+    isChanged && setChanged(false)
+    handleUpdate({
+      workScheduleConfig: {
+        consultationSessionTimings: time,
+      },
+    })
+  }
+
+  const handleChange = (value, type) => {
+    if (!!type) {
+      !!sessionTime && value !== '' && setSessionTime(null)
+      setCustomTime(value)
+      !isChanged && setChanged(true)
+    } else {
+      if (!!value && value !== sessionTime) {
+        !!customTime && setCustomTime('')
+        setSessionTime(value)
+        handleSave(value)
+      }
+    }
   }
 
   const activeBox = (value) => {
-    if (value !== -1) {
-      return sessionTime === value ? ' active' : ''
-    } else {
-      return isCustomTime ? '' : ' active'
+    return !!sessionTime && sessionTime === value ? ' active' : ''
+  }
+
+  const handleKey = (e) => {
+    if (e.keyCode === 13) {
+      isChanged && handleSave()
     }
   }
 
@@ -31,28 +59,36 @@ const SessionTime = ({ data }) => {
         <OptionBox
           className={'session-option' + activeBox(15)}
           value="15 minutes"
-          onClick={() => setSessionTime(15)}
+          onClick={() => handleChange(15)}
         />
         <OptionBox
           className={'session-option' + activeBox(30)}
           value="30 minutes"
-          onClick={() => setSessionTime(30)}
+          onClick={() => handleChange(30)}
         />
         <OptionBox
           className={'session-option' + activeBox(45)}
           value="45 minutes"
-          onClick={() => setSessionTime(45)}
+          onClick={() => handleChange(45)}
         />
         <OptionBox
           className={'session-option' + activeBox(60)}
           value="60 minutes"
-          onClick={() => setSessionTime(60)}
+          onClick={() => handleChange(60)}
         />
-        <div className={'session-option' + activeBox(-1)}>
+        <div className="session-option">
           <TextField
-            className="session-custom-option"
-            value={sessionTime}
-            onChange={(e) => setSessionTime(e.target.value)}
+            className={'session-custom-option' + (!!customTime ? ' active' : '')}
+            value={customTime}
+            onChange={(e) => handleChange(e.target.value, 1)}
+            onKeyDown={handleKey}
+            placeholder="20mins."
+            inputProps={{
+              onBlur: () => isChanged && handleSave(),
+            }}
+            InputProps={{
+              inputComponent: minsSuffix,
+            }}
           />
         </div>
       </div>

@@ -1,0 +1,57 @@
+.txt-field-wrap {
+  .txt-field {
+    .txt-field-inp {
+      font-family: var(--fontMain);
+      font-size: 12px;
+
+      // .MuiInputBase-input {
+      //   &::placeholder {
+      //     color: #aaa;
+      //     opacity: 1;
+      //   }
+      // }
+
+      .MuiInputAdornment-positionStart {
+        color: #aaa;
+      }
+
+      .MuiInputAdornment-positionEnd {
+        .clr-btn {
+          color: #bbb;
+          &:hover {
+            background: transparent;
+          }
+        }
+        // @include w600 {
+        //   .MuiIconButton-root {
+        //     .MuiSvgIcon-root {
+        //       font-size: 1rem;
+        //     }
+        //   }
+        // }
+      }
+    }
+  }
+
+  .txt-field-label {
+    font-size: 14px;
+    font-weight: normal;
+    margin-bottom: 8px;
+  }
+
+  .txt-field-error {
+    color: #dc3545;
+    display: block;
+    font-size: 14px;
+    font-weight: normal;
+  }
+}
+
+.txt-field-wrap.with-error {
+  position: relative;
+  padding-bottom: 20px;
+  .txt-field-error {
+    position: absolute;
+    bottom: 0;
+  }
+}

@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Switch, BrowserRouter , Route } from 'react-router-dom'
+import { Switch, BrowserRouter, Route } from 'react-router-dom'
 import { ThemeProvider } from '@material-ui/styles'
 
 import './assets/fonts/product-sans/stylesheet.css'
@@ -11,19 +11,19 @@ import SelectRole from './pages/SelectRole'
 import Login from './pages/Login'
 import Layouts from './Layouts'
 import * as serviceWorker from './serviceWorker'
+import PatientSignup from './pages/PatientSignup'
 
 ReactDOM.render(
-  <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <BrowserRouter >
+      <BrowserRouter>
         <Switch>
           <Route exact path={'/select-role'} component={SelectRole} />
           <Route exact path={'/login'} component={Login} />
+          <Route exact path={'/patient/registration'} component={PatientSignup} />
           <Route path={'/'} component={Layouts} />
         </Switch>
-      </BrowserRouter >
-    </ThemeProvider>
-  </React.StrictMode>,
+      </BrowserRouter>
+    </ThemeProvider>,
   document.getElementById('root')
 )
 

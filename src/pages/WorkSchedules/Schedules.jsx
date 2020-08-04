@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { Typography } from '@material-ui/core'
+
 import EditAvailability from './EditAvailability'
+import { timeFmt } from '../../components/commonFormat'
 
 const Schedules = (props) => {
   const [dialog, setDialog] = useState({
@@ -33,7 +35,7 @@ const Schedules = (props) => {
         <thead>
           <tr>
             {week_days.map((i) => (
-              <th className="table-head">{i}</th>
+              <th key={i} className="table-head">{i}</th>
             ))}
           </tr>
         </thead>
@@ -41,14 +43,25 @@ const Schedules = (props) => {
           <tr>
             {week_days.map((i) => (
               <td
+                key={i}
                 className="table-cell"
                 onClick={handleDialog.bind(this, true, props.data && props.data[i])}
               >
                 <div className="appointments">
                   {props.data &&
-                    props.data[i]?.map((s) => (
-                      <div className="slot-wrap">
-                        <span className="slot">{`${s?.startTime} - ${s?.endTime}`}</span>
+                    props.data[i]?.map((s, index) => (
+                      <div
+                        key={index}
+                        className={
+                          'slot-wrap' +
+                          (index === props.data?.length - 1 ? ' last-slot' : '')
+                        }
+                      >
+                        {s?.startTime && (
+                          <span className="slot">{`${timeFmt(
+                            s.startTime
+                          )} - ${timeFmt(s?.endTime)}`}</span>
+                        )}
                       </div>
                     ))}
                 </div>
@@ -57,11 +70,13 @@ const Schedules = (props) => {
           </tr>
         </tbody>
       </table>
-      <EditAvailability
-        open={dialog.status}
-        data={dialog.data}
-        onClose={handleDialog.bind(this, false, null)}
-      />
+      {dialog?.status && (
+        <EditAvailability
+          data={dialog.data}
+          onClose={handleDialog.bind(this, false, null)}
+          handleUpdate={props.handleUpdate}
+        />
+      )}
     </div>
   )
 }

@@ -12,6 +12,7 @@ function SelectRole({ history }) {
 
   function handleSelect(value) {
     if (option === value) {
+      localStorage.setItem('loginUser', option)
       history.push("/login");
     } else {
       setOption(value);

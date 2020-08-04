@@ -9,6 +9,7 @@ import ConsulationAndSignature from './ConsulationAndSignature'
 import Preconsultancy from './PreConsult'
 import useCustomFecth from '../../hooks/useCustomFetch'
 import useDoctorConfigUpdate from '../../hooks/useDoctorConfigUpdate'
+import useDocSettingWrite from '../../hooks/useDocSettingWrite'
 
 const useStyle = makeStyles((theme) => ({
   container: {
@@ -46,6 +47,8 @@ function DoctorPersonalSetting() {
   const classes = useStyle()
   const { id } = useParams()
 
+  const isAbleToWrite = useDocSettingWrite()
+
   const key = useMemo(() => {
     return {
       doctorKey: id,
@@ -70,12 +73,14 @@ function DoctorPersonalSetting() {
             configDetails={data?.configDetails}
             doctorDetails={data?.doctorDetails}
             onSave={onSave}
+            isAbleToWrite={isAbleToWrite}
           />
           <Preconsultancy
             refetch={refetch}
             docKey={id}
             configDetails={data?.configDetails}
             onSave={onSave}
+            isAbleToWrite={isAbleToWrite}
           />
         </Box>
       </Box>

@@ -62,10 +62,10 @@ const useStyles = makeStyles(() => ({
     marginTop: 35,
     marginBottom: 35,
     background: '#f5f5f5',
-  }
+  },
 }))
 
-const Cancellation = ({ configDetails, doctorKey, onSave }) => {
+const Cancellation = ({ configDetails, doctorKey, onSave, isAbleToWrite }) => {
   const classes = useStyles()
   const [isCancellationAllowed, setIsCancellationAllowed] = useState(false)
   const [cancellationHrs, setCancellationHrs] = useState(0)
@@ -99,12 +99,12 @@ const Cancellation = ({ configDetails, doctorKey, onSave }) => {
   }
 
   function handleOnSave() {
-    if(cancellationDays && cancellationHrs && cancellationMins) {
+    if (cancellationDays && cancellationHrs && cancellationMins) {
       const params = {
         doctorKey: doctorKey,
-        cancellationDays: cancellationDays,
-        cancellationHours: cancellationHrs,
-        cancellationMins: cancellationMins,
+        cancellationDays: Number(cancellationDays),
+        cancellationHours: Number(cancellationHrs),
+        cancellationMins: Number(cancellationMins),
       }
       onSave(params)
       setDisable(false)
@@ -135,10 +135,12 @@ const Cancellation = ({ configDetails, doctorKey, onSave }) => {
         <Typography className={classes.text}>
           Patient Cancellation Allowed
         </Typography>
-        <Switch
-          checked={isCancellationAllowed}
-          onChange={handleOnCancellationChange}
-        />
+        {isAbleToWrite && (
+          <Switch
+            checked={isCancellationAllowed}
+            onChange={handleOnCancellationChange}
+          />
+        )}
       </Box>
       {isCancellationAllowed && (
         <Box>
@@ -164,19 +166,24 @@ const Cancellation = ({ configDetails, doctorKey, onSave }) => {
               disabled={!disable}
               onChange={handleOnCancellationMins}
             />
-            <Box paddingLeft={1} marginTop={1}>
-              {!disable ? (
-                <Edit
-                  className={classes.iconButton}
-                  onClick={() => setDisable(true)}
-                />
-              ) : (
-                <div>
-                  <Clear className={classes.cancelation} onClick={handleOnCancel} />
-                  <Check className={classes.iconButton} onClick={handleOnSave} />
-                </div>
-              )}
-            </Box>
+            {isAbleToWrite && (
+              <Box paddingLeft={1} marginTop={1}>
+                {!disable ? (
+                  <Edit
+                    className={classes.iconButton}
+                    onClick={() => setDisable(true)}
+                  />
+                ) : (
+                  <div>
+                    <Clear
+                      className={classes.cancelation}
+                      onClick={handleOnCancel}
+                    />
+                    <Check className={classes.iconButton} onClick={handleOnSave} />
+                  </div>
+                )}
+              </Box>
+            )}
           </Box>
           <Box marginTop={2.5}>
             <Paper className={classes.paper}>
@@ -195,7 +202,7 @@ const Cancellation = ({ configDetails, doctorKey, onSave }) => {
         </Box>
       )}
 
-      <Divider className={classes.divider}/>
+      <Divider className={classes.divider} />
     </Box>
   )
 }

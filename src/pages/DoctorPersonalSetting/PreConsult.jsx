@@ -38,7 +38,7 @@ const useStyles = makeStyles(() => ({
   },
 }))
 
-function Preconsultancy({ docKey, onSave, configDetails }) {
+function Preconsultancy({ docKey, onSave, configDetails, isAbleToWrite }) {
   const [preconsultationAllowed, setPreconsultationAllowed] = useState(false)
   const [preconsultationHrs, setPreconsultationHrs] = useState(0)
   const [preconsultationMins, setPreconsultationMins] = useState(0)
@@ -63,7 +63,7 @@ function Preconsultancy({ docKey, onSave, configDetails }) {
   }
 
   function handleOnPreconsultationHrsChange(event) {
-    if (!isNaN(event.target.value) && event.target.value < 24 ) {
+    if (!isNaN(event.target.value) && event.target.value < 24) {
       setPreconsultationHrs(event.target.value)
     }
   }
@@ -84,8 +84,8 @@ function Preconsultancy({ docKey, onSave, configDetails }) {
     if (preconsultationHrs && preconsultationMins) {
       const params = {
         doctorKey: docKey,
-        preconsultationHours: preconsultationHrs,
-        preconsultationMins: preconsultationMins,
+        preconsultationHours: Number(preconsultationHrs),
+        preconsultationMins: Number(preconsultationMins),
       }
 
       onSave(params)
@@ -97,12 +97,14 @@ function Preconsultancy({ docKey, onSave, configDetails }) {
     <Box className={classes.container}>
       <Box display="flex">
         <Typography className={classes.text}>Pre-consultancy</Typography>
-        <Box paddingLeft={3}>
-          <Switch
-            checked={preconsultationAllowed}
-            onChange={handleOnPreconsultationChange}
-          />
-        </Box>
+        {isAbleToWrite && (
+          <Box paddingLeft={3}>
+            <Switch
+              checked={preconsultationAllowed}
+              onChange={handleOnPreconsultationChange}
+            />
+          </Box>
+        )}
       </Box>
 
       {preconsultationAllowed && (
@@ -123,19 +125,24 @@ function Preconsultancy({ docKey, onSave, configDetails }) {
               disabled={!disable}
               label="Mins."
             />
-            <Box paddingLeft={1} display="flex" alignItems="center" >
-              {!disable ? (
-                <Edit
-                  className={classes.iconButton}
-                  onClick={() => setDisable(true)}
-                />
-              ) : (
-                <div>
-                  <Clear className={classes.cancelation} onClick={handleOnCancel} />
-                  <Check className={classes.iconButton} onClick={handleOnSave} />
-                </div>
-              )}
-            </Box>
+            {isAbleToWrite && (
+              <Box paddingLeft={1} display="flex" alignItems="center">
+                {!disable ? (
+                  <Edit
+                    className={classes.iconButton}
+                    onClick={() => setDisable(true)}
+                  />
+                ) : (
+                  <div>
+                    <Clear
+                      className={classes.cancelation}
+                      onClick={handleOnCancel}
+                    />
+                    <Check className={classes.iconButton} onClick={handleOnSave} />
+                  </div>
+                )}
+              </Box>
+            )}
           </Box>
           <Box style={{ paddingTop: 20 }} className={classes.message} display="flex">
             <Typography className={classes.star}>*</Typography>

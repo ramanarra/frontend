@@ -77,7 +77,7 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-function ConsulationAndSignature({ docKey, configDetails, onSave, doctorDetails }) {
+function ConsulationAndSignature({ docKey, configDetails, onSave, isAbleToWrite }) {
   const [fees, setFees] = useState(0)
   const [disable, setDisable] = useState(false)
   const classes = useStyles()
@@ -131,7 +131,7 @@ function ConsulationAndSignature({ docKey, configDetails, onSave, doctorDetails 
             ),
           }}
         />
-        <div className={classes.icon}>
+      {isAbleToWrite && <div className={classes.icon}>
           {!disable ? (
             <Edit
               className={classes.iconbutton}
@@ -143,7 +143,7 @@ function ConsulationAndSignature({ docKey, configDetails, onSave, doctorDetails 
               <Check className={classes.iconbutton} onClick={hanleOnSave}/>
             </div>
           )}
-        </div>
+        </div> }
       </Box>
       <div className={classes.signature}>
          {/* <img src={doctorDetails?.signature} alt="signature"/> */}
