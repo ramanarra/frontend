@@ -8,9 +8,10 @@ import DoctorList from './DoctorList'
 
 const useStyle = makeStyles(() => ({
   container: {
-    width: '110%',
+    width: '100%',
     display: 'flex',
     flexWrap: 'wrap',
+    overflowY: 'auto',
   },
 }))
 

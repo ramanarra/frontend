@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 import { Box, makeStyles } from '@material-ui/core'
+
 import useCustomFecth from '../../hooks/useCustomFetch'
 import { METHOD, URL } from '../../api'
 import DoctorDetails from './DoctorDetails'
@@ -11,6 +12,7 @@ const useStyle = makeStyles(() => ({
     width: '100%',
     height: '100%',
     overflowY: 'auto',
+    padding: 20,
   },
 }))
 

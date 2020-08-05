@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import { Box, makeStyles } from '@material-ui/core'
 
 import PatientAppointmentSlot from './PatientAppointmentSlot'
@@ -32,7 +32,8 @@ function UpcomingAppointments() {
 
   return (
     <Box className={classes.container} display="flex" flexWrap="wrap">
-      {appointmentsList && appointmentsList?.appointments &&
+      {appointmentsList &&
+        appointmentsList?.appointments &&
         appointmentsList.appointments.map((appointmentDetail, index) => {
           return (
             <PatientAppointmentSlot

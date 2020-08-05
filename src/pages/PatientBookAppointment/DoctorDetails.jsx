@@ -3,13 +3,11 @@ import { Box, Typography, Avatar, makeStyles } from '@material-ui/core'
 
 const useStyle = makeStyles((theme) => ({
   doctorDetail: {
-    width: 330,
+    width: 320,
     height: '100%',
     background: '#f9f9f9',
     backgroundColor: 'white',
-    boxShadow: '5px 0px 15px 0px #f3eeee',
-    paddingLeft: 30,
-    paddingTop: 20,
+    paddingLeft: 10,
   },
   title: {
     fontSize: 17.5,
@@ -37,18 +35,22 @@ const useStyle = makeStyles((theme) => ({
   },
   subDetail: {
     paddingLeft: 40,
-    paddingTop: 23,
-    paddingBottom: 100,
+    paddingTop: 30,
+    paddingBottom: 40,
   },
   detail: {
-    paddingTop: 27,
+    paddingTop: 30,
   },
   name: {
     color: '#a8a8a8',
+    fontSize: 14,
   },
   value: {
     fontSize: 17,
     color: '#716e6e',
+  },
+  location: {
+    paddingTop: 35,
   },
 }))
 
@@ -96,7 +98,7 @@ function DoctorDetails({ doctorDetails }) {
               variant="h5"
             >{`+91 ${doctorDetails.mobileNo}`}</Typography>
           </Box>
-          <Box className={classes.detail}>
+          <Box className={classes.location}>
             <Typography className={classes.name}>Location</Typography>
             <Typography className={classes.value} variant="h5">
               {doctorDetails.location}

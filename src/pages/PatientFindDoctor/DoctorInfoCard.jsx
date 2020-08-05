@@ -6,7 +6,7 @@ const useInfocardStyles = makeStyles((theme) => ({
   container: {
     width: 325,
     marginTop: 20,
-    marginRight: 29,
+    marginRight: 27.5,
     backgroundColor: 'white',
     padding: '15px 14px 10px 20px',
     borderBottom: '2px solid #0bb5ff',
@@ -93,7 +93,7 @@ const DoctorInfoCard = ({ doctorDetail, doctorListInHospital }) => {
           className={classes.large}
         />
 
-        <Box style={{ marginLeft: 13, marginTop: 7 }}>
+        <Box style={{ marginLeft: 13 }}>
           <Box display="flex">
             {!doctorDetail.doctorKey && (
               <Typography className={classes.name}>
@@ -119,7 +119,7 @@ const DoctorInfoCard = ({ doctorDetail, doctorListInHospital }) => {
         </Box>
       </Box>
 
-      <Box marginTop={3} display="flex">
+      <Box style={{ marginTop: 30 }} display="flex">
         {doctorDetail.doctorKey && (
           <Box className={classes.fees}>
             <Typography className={classes.text}>Fees</Typography>
@@ -128,14 +128,14 @@ const DoctorInfoCard = ({ doctorDetail, doctorListInHospital }) => {
             >{`₹${doctorDetail.fee}`}</Typography>
           </Box>
         )}
-        <Box paddingLeft={3.7} className={classes.contactNumber}>
+        <Box paddingLeft={4} className={classes.contactNumber}>
           <Typography className={classes.text}>Contact Number</Typography>
           <Typography
             className={classes.value}
           >{`+91 ${doctorDetail.number}`}</Typography>
         </Box>
 
-        <Box paddingLeft={3.7} className={classes.location}> 
+        <Box paddingLeft={4} className={classes.location}>
           <Typography className={classes.text}>Location</Typography>
           <Typography className={classes.value}>{doctorDetail.location}</Typography>
         </Box>

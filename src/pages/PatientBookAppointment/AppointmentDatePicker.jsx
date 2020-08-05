@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useMemo } from 'react'
 import { useHistory } from 'react-router-dom'
 import moment from 'moment'
 import { Box, makeStyles, Typography } from '@material-ui/core'
@@ -8,32 +8,70 @@ import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers'
 import AvailableSlots from './AvailableSlots'
 import useManualFetch from '../../hooks/useManualFetch'
 import { METHOD, URL } from '../../api'
+import useCustomFecth from '../../hooks/useCustomFetch'
 
 
 const useStyle = makeStyles(() => ({
-
-  datePicker: {
-    paddingTop: 130,
+  container: {
+    width: 'calc(100% - 320px)',
+    height: '100%',
   },
-  dateContainer: {
+  datePicker: {
+    paddingTop: 85,
+    '& .MuiPickersStaticWrapper-staticWrapperRoot': {
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
     '& .MuiPickersBasePicker-pickerView': {
-      minWidth: 500,
-    }
+      minWidth: 450,
+      minHeight: 400,
+    },
+    '& .MuiPickersCalendarHeader-switchHeader': {
+      marginBottom: 10,
+    },
+    '& .MuiSvgIcon-root': {
+      fontSize: 28,
+    },
+    '& .MuiPickersCalendarHeader-transitionContainer': {
+      height: 26,
+    },
+    '& .MuiPickersCalendarHeader-dayLabel': {
+      margin: '0px 13px',
+      fontSize: 16,
+    },
+    '& .MuiPickersDay-day': {
+      margin: '2.2px 13.5px',
+    },
+    '& .MuiTypography-alignCenter': {
+      fontSize: 18,
+      color: '#656363',
+      variant: 'bold',
+    },
+    '& .MuiTypography-body2': {
+      color: '#414141',
+      fontSize: 16,
+    },
+    '& .MuiPickersDay-dayDisabled': {
+      '& p': {
+        color: '#a8a8a8',
+        fontSize: 16,
+      },
+    },
   },
   button: {
     alignItems: 'center',
     justifyContent: 'center',
-    padding: '40px 80px 20px 300px'
+    padding: '42px 80px 20px 300px',
   },
   confirmButton: {
-    padding: '11px 73px',
+    padding: '8.5px 67px',
     backgroundColor: '#0bb5ff',
     borderRadius: 25,
     textAlign: 'center',
     cursor: 'pointer',
   },
   confirmText: {
-    fontSize: 17,
+    fontSize: 16,
     color: '#f7f7f7',
     paddingTop: 2,
   },
@@ -48,35 +86,21 @@ function AppointmentDatePicker({ doctorKey }) {
 
   const selectedDate = moment(date).format('YYYY-MM-DD')
 
-  const [time, setTime] = useState({ start: '00:00:00', end: '00:00:00' })
-
-  const params = useMemo(() => {
+  const key = useMemo(() => {
     return {
       doctorKey: doctorKey,
-      appointmentDate: selectedDate,
+      appointmentDate: selectedDate
     }
-  }, [selectedDate, doctorKey])
+  },[doctorKey, selectedDate])
+
+  const [time, setTime] = useState({ start: '00:00:00', end: '00:00:00' })
 
   const [updateData, updateError, isUpdating, data] = useManualFetch()
 
-  useEffect(() => {
-    updateData(
-      METHOD.GET,
-      `${
-        URL.patientAppointmentSlotsView
-      }${'?doctorKey='}${doctorKey}${'&appointmentDate='}${selectedDate}`
-    )
-  }, [])
+  const [slots] = useCustomFecth(METHOD.GET, URL.patientAppointmentSlotsView, key)
 
   const handleDateChange = (event) => {
     setDate(event)
-    const selectDate = moment(event).format('YYYY-MM-DD')
-    updateData(
-      METHOD.GET,
-      `${
-        URL.patientAppointmentSlotsView
-      }${'?doctorKey='}${doctorKey}${'&appointmentDate='}${selectDate}`
-    )
   }
 
   function handleSubmit() {
@@ -93,13 +117,12 @@ function AppointmentDatePicker({ doctorKey }) {
     history.push('/patient/appointments/upcoming')
   }
 
-  const  handleSlotTiming = (time) => {
+  const handleSlotTiming = (time) => {
     setTime(time)
   }
 
-
   return (
-    <Box display="flex">
+    <Box display="flex" className={classes.container}>
       <Box className={classes.datePicker}>
         <MuiPickersUtilsProvider utils={MomentUtils}>
           <DatePicker
@@ -120,8 +143,8 @@ function AppointmentDatePicker({ doctorKey }) {
           </Box>
         </Box>
       </Box>
-      {data && (
-        <AvailableSlots availableSlots={data} handleSlotTiming={handleSlotTiming} />
+      {slots && (
+        <AvailableSlots availableSlots={slots} handleSlotTiming={handleSlotTiming} />
       )}
     </Box>
   )

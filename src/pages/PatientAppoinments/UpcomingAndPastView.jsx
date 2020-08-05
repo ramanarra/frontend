@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import moment from 'moment'
+import NumberToWords from 'number-to-words'
 import {
   Dialog,
   DialogTitle,
@@ -129,10 +130,12 @@ function UpcomingAndPastView({
 }) {
   const classes = useStyle()
 
-  const key = {
-    doctorKey: appointmentDetail.doctorKey,
-    appointmentId: appointmentDetail.appointmentId,
-  }
+  const key = useMemo(() => {
+    return {
+      doctorKey: appointmentDetail.doctorKey,
+      appointmentId: appointmentDetail.appointmentId,
+    }
+  }, [appointmentDetail])
 
   const [doctorDetails] = useCustomFecth(
     METHOD.GET,
@@ -157,6 +160,14 @@ function UpcomingAndPastView({
   )
 
   const differenceInDays = moment.duration(difference)
+
+  const days =
+    NumberToWords.toWords(differenceInDays.days()).charAt(0).toUpperCase() +
+    NumberToWords.toWords(differenceInDays.days()).slice(1)
+
+  const hours =
+    NumberToWords.toWords(differenceInDays.hours()).charAt(0).toUpperCase() +
+    NumberToWords.toWords(differenceInDays.hours()).slice(1)
 
   function handleOnClose(event) {
     onClose(event)
@@ -260,11 +271,11 @@ function UpcomingAndPastView({
                   {differenceInDays.days() !== 0 ? (
                     <Typography
                       className={classes.text}
-                    >{`${differenceInDays.days()} days and ${differenceInDays.hours()} more hours to join`}</Typography>
+                    >{`${days} days and ${hours} more hours to join`}</Typography>
                   ) : (
                     <Typography
                       className={classes.text}
-                    >{`${differenceInDays.hours()} more hours to join`}</Typography>
+                    >{`${hours} more hours to join`}</Typography>
                   )}
                 </Box>
               </Box>
