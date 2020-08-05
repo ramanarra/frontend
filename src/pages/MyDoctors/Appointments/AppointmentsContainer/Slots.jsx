@@ -6,7 +6,7 @@ import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord'
 
 import useStyle from './useSlotsStyle'
 import Stretch from '../../../../components/Stretch'
-import getTimeFormatWithNoon, { getTimeFormat } from '../../../../lib/dateLib'
+import getTimeFormatWithNoon from '../../../../lib/dateLib'
 
 function Slots({
   doctorKey,

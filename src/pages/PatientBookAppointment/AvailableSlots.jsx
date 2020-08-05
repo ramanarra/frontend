@@ -69,7 +69,7 @@ function AvailableSlots({ availableSlots, handleSlotTiming }) {
                 className={classNames(classes.time, {
                   [classes.selectedTab]: time.start === slot.start,
                 })}
-                onClick={() => handleOnClick(slot)}
+                onClick={() => handleOnClick(slot)} key={index}
               >
                 {time.start === slot.start ? (
                   <Box display="flex">
