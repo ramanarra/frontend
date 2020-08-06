@@ -4,6 +4,7 @@ import LoginUI from './LoginUI'
 import Api, { URL } from '../../api'
 
 function PatientLogin({ history }) {
+  localStorage.setItem('loginUser', 'patient')
   function onLogin(userName, password, setError) {
     const credentials = {
       phone: userName,
@@ -37,7 +38,7 @@ function PatientLogin({ history }) {
       useNamePlaceHolder="9999999999"
       UserNameErrorText="Please enter your Phone Number"
       onLogin={onLogin}
-      errorMessage="Incorrect UserName and Password"
+      errorMessage="Incorrect UserName or Password"
     />
   )
 }

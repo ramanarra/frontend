@@ -41,7 +41,7 @@ function DoctorLogin({ history }) {
       useNamePlaceHolder="johndoe@gmail.com"
       UserNameErrorText="Please enter your Email"
       onLogin={onLogin}
-      errorMessage="Incorrect UserName and Password"
+      errorMessage="Incorrect UserName or Password"
     />
   )
 }

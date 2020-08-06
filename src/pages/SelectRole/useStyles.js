@@ -6,10 +6,11 @@ const useStyles = makeStyles(() => ({
   container: {
     height: "100vh",
     width: "100vw",
+    cursor: 'pointer',
   },
 
   right: {
-    width: "50%",
+    width: "100%",
     backgroundImage: `url(${BG})`,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",

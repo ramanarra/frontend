@@ -5,15 +5,15 @@ import DoctorLogin from './DoctorLogin'
 import PatientLogin from './PatientLogin'
 
 function Login({ history }) {
-  if (localStorage.getItem('loginUser') === 'doctor') {
-    return <DoctorLogin history={history} />
-  }
+  // if (localStorage.getItem('loginUser') === 'doctor') {
+  //   return <DoctorLogin history={history} />
+  // }
 
-  if (localStorage.getItem('loginUser') === 'patient') {
-    return <PatientLogin history={history} />
-  }
+  // if (localStorage.getItem('loginUser') === 'patient') {
+  //   return <PatientLogin history={history} />
+  // }
 
-  return <Redirect to={'/select-role'} />
+  return <PatientLogin history={history} />
 }
 
 export default Login

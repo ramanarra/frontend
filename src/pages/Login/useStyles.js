@@ -19,19 +19,19 @@ const useStyles = makeStyles(() => ({
     },
   
     heading: {
-      letterSpacing: 1.2,
       textAlign: 'center',
       position: 'relative',
+      fontSize: 18,
     },
   
     line: {
       display: 'block',
       position: 'absolute',
       height: 3,
-      width: '12%',
+      width: '11%',
       right: 0,
       top: 35,
-      left: 190,
+      left: 185,
       bottom: 2,
       background: '#0bb5ff',
     },
@@ -39,9 +39,21 @@ const useStyles = makeStyles(() => ({
     textField: {
       width: 415,
     },
+
+    icon: {
+      width: 20,
+      cursor: 'default',
+    },
+
+    emptyField: {
+      border: '1px solid #ff0000',
+      '& fieldset': {
+        top: -3.8,
+      }
+    },
   
     content: {
-      paddingBottom: 86,
+      paddingBottom: 55,
       paddingTop: 40,
     },
   
@@ -52,6 +64,7 @@ const useStyles = makeStyles(() => ({
     forgotPassword: {
       textAlign: 'end',
       paddingTop: 2,
+      color: '#a0a0a0',
     },
   
     loginButton: {
@@ -60,13 +73,14 @@ const useStyles = makeStyles(() => ({
   
     text: {
       marginBottom: 10,
-      fontWeight: 500,
+      fontWeight: 600,
       color: '#151313',
     },
   
     emptytext: {
       color: '#f44336',
       paddingTop: 2,
+      fontSize: 14.5,
     },
   
     singupContent: {
@@ -76,6 +90,7 @@ const useStyles = makeStyles(() => ({
   
     singupLabel: {
       marginRight: 5,
+      color: '#a0a0a0',
     },
   }))
 

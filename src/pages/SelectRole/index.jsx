@@ -1,31 +1,36 @@
 import React, { useState } from "react";
-import { Box, Typography } from "@material-ui/core";
+import { Box } from "@material-ui/core";
 
 import Centralize from "../../components/Centralize";
 import LogoWhite from "../../assets/img/logo-white.svg";
-import Role from "./Role";
+// import Role from "./Role";
 import useStyles from "./useStyles";
 
 function SelectRole({ history }) {
   const [option, setOption] = useState("doctor");
   const classes = useStyles();
 
-  function handleSelect(value) {
-    if (option === value) {
-      localStorage.setItem('loginUser', option)
-      history.push("/login");
-    } else {
-      setOption(value);
-    }
+  // function handleSelect(value) {
+  //   if (option === value) {
+  //     localStorage.setItem('loginUser', option)
+  //     history.push("/login");
+  //   } else {
+  //     setOption(value);
+  //   }
+  // }
+
+  function handleOnClick() {
+    localStorage.setItem('loginUser', 'patient')
+    history.push("/login")
   }
 
   return (
-    <Box className={classes.container} display="flex">
+    <Box className={classes.container} display="flex" onClick={handleOnClick}>
       <Centralize className={classes.right}>
         <img src={LogoWhite} alt="VIRUJH" className={classes.logo} />
       </Centralize>
 
-      <Centralize className={classes.left} flexDirection="column">
+      {/* <Centralize className={classes.left} flexDirection="column">
         <Typography className={classes.text} variant="h1">
           SELECT YOUR ROLE
         </Typography>
@@ -46,7 +51,7 @@ function SelectRole({ history }) {
             handleSelect={handleSelect}
           />
         </Centralize>
-      </Centralize>
+      </Centralize> */}
     </Box>
   );
 }
