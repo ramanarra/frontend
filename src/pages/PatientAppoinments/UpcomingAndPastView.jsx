@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react'
 import moment from 'moment'
 import NumberToWords from 'number-to-words'
+import { useHistory } from 'react-router-dom'
 import {
   Dialog,
   DialogTitle,
@@ -130,6 +131,8 @@ function UpcomingAndPastView({
 }) {
   const classes = useStyle()
 
+  const history = useHistory()
+
   const key = useMemo(() => {
     return {
       doctorKey: appointmentDetail.doctorKey,
@@ -171,6 +174,10 @@ function UpcomingAndPastView({
 
   function handleOnClose(event) {
     onClose(event)
+  }
+
+  function handleOnStartConsulation() {
+    history.push('/video-consultation')
   }
 
   return (
@@ -245,6 +252,7 @@ function UpcomingAndPastView({
                       <VerticalAlignBottomOutlinedIcon
                         className={classes.downloadIcon}
                       />
+                     <button onClick={handleOnStartConsulation}>click</button>
                     </Box>
                   </Box>
                 )}
@@ -261,7 +269,10 @@ function UpcomingAndPastView({
                 </Box>
                 <Box className={classes.button}>
                   <Box className={classes.startConsultationButton}>
-                    <Typography className={classes.startConsultationText}>
+                    <Typography
+                      onClick={handleOnStartConsulation}
+                      className={classes.startConsultationText}
+                    >
                       START CONSULTATION
                     </Typography>
                   </Box>

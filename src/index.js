@@ -12,6 +12,7 @@ import Login from './pages/Login'
 import Layouts from './Layouts'
 import * as serviceWorker from './serviceWorker'
 import PatientSignup from './pages/PatientSignup'
+import VideoConsultation from './pages/VideoConsultation'
 
 ReactDOM.render(
     <ThemeProvider theme={theme}>
@@ -20,6 +21,7 @@ ReactDOM.render(
           <Route exact path={'/select-role'} component={SelectRole} />
           <Route exact path={'/login'} component={Login} />
           <Route exact path={'/patient/registration'} component={PatientSignup} />
+          <Route exact path={'/video-consultation'} component={VideoConsultation} />
           <Route path={'/'} component={Layouts} />
         </Switch>
       </BrowserRouter>

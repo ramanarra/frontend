@@ -1,5 +1,6 @@
 import React from 'react'
 import classNames from "classnames";
+import { useHistory } from 'react-router-dom'
 import { Box, Button, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -59,6 +60,13 @@ const useStyles = makeStyles(() => ({
 export default function DoctorHeader() {
   const classes = useStyles()
 
+  const history = useHistory()
+
+
+  function handleOnVideoClick() {
+    history.push('/video-consultation')
+  }
+
   return (
     <Box className={classes.appBar}>
       <img className={classes.logoImg} src={Logo} alt="logo" />
@@ -66,7 +74,7 @@ export default function DoctorHeader() {
       <Box className={classes.gap}>
         <Button className={classes.videoButton} variant="contained" color="primary">
           <i className="icon-video "></i>
-          <span className={classes.videoText}>VIDEO CONSULTATION</span>
+          <span onClick={handleOnVideoClick} className={classes.videoText}>VIDEO CONSULTATION</span>
         </Button>
       </Box>
       <Box className={classes.gap}>
