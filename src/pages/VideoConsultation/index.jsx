@@ -56,7 +56,7 @@ function VideoConsultotion() {
 
   useEffect(() => {
     if (token) {
-      console.log(token)
+      // console.log(token)
       // const openViduClinet = new OpenVidu()
 
       // const session = openViduClinet.initSession()
@@ -109,18 +109,18 @@ function VideoConsultotion() {
       <input id="input" />
       <button onClick={buttonClick}>onClick</button>
       {token && (
-        <div style={{ position: 'relative' }}>
-          <ToolBar
-            isVideoActive={isVideoActive}
-            isAudioActive={isAudioActive}
-            onVideoStateChange={onVideoStateChange}
-            onMuteStateChnage={onMuteStateChnage}
-            onLeaveSession={onLeaveSession}
-            onJoiningPatient={onJoiningPatient}
-          />
-          {/* <UserVideoComponent streamManager={stream} /> */}
+        // <div style={{ position: 'relative' }}>
+        //   <ToolBar
+        //     isVideoActive={isVideoActive}
+        //     isAudioActive={isAudioActive}
+        //     onVideoStateChange={onVideoStateChange}
+        //     onMuteStateChnage={onMuteStateChnage}
+        //     onLeaveSession={onLeaveSession}
+        //     onJoiningPatient={onJoiningPatient}
+        //   />
+        //   <UserVideoComponent streamManager={stream} />
 
-          <OpenViduSession
+           <OpenViduSession
             id="opv-session"
               // sessionName={mySessionId}
             //   user={myUserName}
@@ -128,8 +128,7 @@ function VideoConsultotion() {
             // joinSession={handlerJoinSessionEvent}
             // leaveSession={handlerLeaveSessionEvent}
             // error={handlerErrorEvent}
-          />
-        </div>
+          /> 
       )}
     </Fragment>
   )
