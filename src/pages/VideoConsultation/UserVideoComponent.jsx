@@ -15,7 +15,7 @@ const useStyles = makeStyles(() => ({
   },
 }))
 
-function OpenViduVideoComponent({ streamManager }) {
+function OpenViduVideoComponent({ streamManager, stream }) {
   const videoRef = useRef()
 
   const classes = useStyles()
@@ -26,7 +26,7 @@ function OpenViduVideoComponent({ streamManager }) {
     }
   }, [streamManager])
 
-  return <video className={classes.video} autoPlay={true} ref={videoRef} />
+  return <video  id={'video-' + stream} className={classes.video} autoPlay={true} ref={videoRef} />
 }
 
 export default OpenViduVideoComponent
