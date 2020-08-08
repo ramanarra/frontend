@@ -2,6 +2,7 @@ import MyDoctors from '../pages/MyDoctors'
 import Patients from '../pages/Patients'
 import Reports from '../pages/Reports'
 import Settings from '../pages/Settings'
+import VideoConsultation from '../pages/VideoConsultation'
 import DocBody from './DocBody'
 
 import PatientAppoinments from '../pages/PatientAppoinments'
@@ -66,6 +67,12 @@ const DoctorRoutes = [
     path: '/doctors/:id',
     name: 'doctorDetails',
     component: DocBody,
+  },
+
+  {
+    path: '/video-consultation',
+    name: 'videoConsultation',
+    component: VideoConsultation,
   },
 ]
 
