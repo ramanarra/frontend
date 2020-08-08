@@ -2,9 +2,14 @@ import React, { useState, useEffect } from 'react'
 import { Box, Typography, Paper, Divider } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { Edit, Check, Clear, ErrorOutline } from '@material-ui/icons'
+import IconButton from '@material-ui/core/IconButton'
+
+
 
 import Switch from '../../components/Switch'
 import NumberTextField from '../../components/NumberTextField'
+import SnackBar from '../../components/SnackBar'
+
 
 const useStyles = makeStyles(() => ({
   text: {
@@ -14,15 +19,21 @@ const useStyles = makeStyles(() => ({
   },
   iconButton: {
     color: 'rgb(36, 189, 255)',
-    fontSize: 15,
-    marginRight: 11,
+    marginRight: 8,
     marginBottom: 3,
   },
 
+  editIcon: {
+    fontSize: 19,
+  },
+
   cancelation: {
-    marginRight: 11,
     color: 'rgb(36, 189, 255)',
-    fontSize: 15,
+    fontSize: 19,
+  },
+
+  checkIcon: {
+    fontSize: 19,
   },
 
   paper: {
@@ -62,16 +73,17 @@ const useStyles = makeStyles(() => ({
     marginTop: 35,
     marginBottom: 35,
     background: '#f5f5f5',
-  }
+  },
 }))
 
-const Cancellation = ({ configDetails, doctorKey, onSave }) => {
+const Cancellation = ({ configDetails, doctorKey, onSave, isAbleToWrite, response }) => {
   const classes = useStyles()
   const [isCancellationAllowed, setIsCancellationAllowed] = useState(false)
   const [cancellationHrs, setCancellationHrs] = useState(0)
   const [cancellationDays, setCancellationDays] = useState(0)
   const [cancellationMins, setCancellationMins] = useState(0)
   const [disable, setDisable] = useState(false)
+  const [open, setOpen] = useState(false)
 
   useEffect(() => {
     if (configDetails) {
@@ -99,15 +111,16 @@ const Cancellation = ({ configDetails, doctorKey, onSave }) => {
   }
 
   function handleOnSave() {
-    if(cancellationDays && cancellationHrs && cancellationMins) {
+    if (cancellationDays && cancellationHrs && cancellationMins) {
       const params = {
         doctorKey: doctorKey,
-        cancellationDays: cancellationDays,
-        cancellationHours: cancellationHrs,
-        cancellationMins: cancellationMins,
+        cancellationDays: Number(cancellationDays),
+        cancellationHours: Number(cancellationHrs),
+        cancellationMins: Number(cancellationMins),
       }
       onSave(params)
       setDisable(false)
+      setOpen(true)
     }
   }
 
@@ -129,16 +142,26 @@ const Cancellation = ({ configDetails, doctorKey, onSave }) => {
     }
   }
 
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
   return (
     <Box>
       <Box display="flex" marginBottom={3} alignItems="center">
         <Typography className={classes.text}>
           Patient Cancellation Allowed
         </Typography>
-        <Switch
-          checked={isCancellationAllowed}
-          onChange={handleOnCancellationChange}
-        />
+        {isAbleToWrite && (
+          <Switch
+            checked={isCancellationAllowed}
+            onChange={handleOnCancellationChange}
+          />
+        )}
       </Box>
       {isCancellationAllowed && (
         <Box>
@@ -164,20 +187,33 @@ const Cancellation = ({ configDetails, doctorKey, onSave }) => {
               disabled={!disable}
               onChange={handleOnCancellationMins}
             />
-            <Box paddingLeft={1} marginTop={1}>
+            {isAbleToWrite && (
+              <Box paddingLeft={1} marginTop={0}>
               {!disable ? (
-                <Edit
-                  className={classes.iconButton}
-                  onClick={() => setDisable(true)}
-                />
+                <IconButton className={classes.iconButton} onClick={() => setDisable(true)}>
+                  <Edit
+                    className={classes.editIcon}
+                  />
+                </IconButton>
               ) : (
                 <div>
-                  <Clear className={classes.cancelation} onClick={handleOnCancel} />
-                  <Check className={classes.iconButton} onClick={handleOnSave} />
+                  <IconButton className={classes.iconButton} onClick={handleOnCancel}>
+                    <Clear
+                      className={classes.cancelation}
+                    />
+                  </IconButton>
+                  <IconButton className={classes.iconButton} onClick={handleOnSave}>
+                    <Check className={classes.checkIcon} />
+                  </IconButton>
                 </div>
               )}
             </Box>
+            )}
           </Box>
+          {
+            response  && response.statusCode !== 200 &&
+            <Typography>{response.message}</Typography>
+          }
           <Box marginTop={2.5}>
             <Paper className={classes.paper}>
               <Box className={classes.paperContainer}>
@@ -195,7 +231,10 @@ const Cancellation = ({ configDetails, doctorKey, onSave }) => {
         </Box>
       )}
 
-      <Divider className={classes.divider}/>
+      <Divider className={classes.divider} />
+      {response && response.statusCode === 200 && (
+        <SnackBar open={open} message={response.message} onclose={handleClose} />
+      )}
     </Box>
   )
 }

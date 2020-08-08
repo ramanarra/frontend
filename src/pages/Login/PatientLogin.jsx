@@ -22,7 +22,8 @@ function PatientLogin({ history }) {
           return
         }
         localStorage.setItem('virujhToken', data.accessToken)
-        history.push('/patient/appoinments')
+        localStorage.setItem('patientId', data.patientId)
+        history.push('/patient/appointments/upcoming')
       })
       .catch(() => {
         setError(true)

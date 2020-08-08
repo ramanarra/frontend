@@ -68,12 +68,11 @@ const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
       <MuiPickersUtilsProvider utils={MomentUtils}>
         <TimePicker
           autoOk
-          disableToolbar
-          variant="inline"
+          // variant="inline"
           inputVariant="outlined"
           size="small"
           className="txt-field start-time"
-          value={moment(data?.startTime, 'HH:mm')}
+          value={moment(data?.startTime, 'HH:mmA')}
           onChange={(e) =>
             handleChange(data, {
               target: {
@@ -87,12 +86,11 @@ const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
         -
         <TimePicker
           autoOk
-          disableToolbar
-          variant="inline"
+          // variant="inline"
           inputVariant="outlined"
           size="small"
           className="txt-field end-time"
-          value={moment(data?.endTime, 'HH:mm')}
+          value={moment(data?.endTime, 'HH:mmA')}
           onChange={(e) =>
             handleChange(data, {
               target: {

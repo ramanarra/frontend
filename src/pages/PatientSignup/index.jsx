@@ -1,29 +1,39 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Paper, Button, Snackbar } from '@material-ui/core'
 import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers'
 import { GoCalendar } from 'react-icons/go'
 import { useForm, Controller } from 'react-hook-form'
-import moment from 'moment'
 import MomentUtils from '@date-io/moment'
 
-import useManualFetch from '../../hooks/useManualFetch'
-import { URL } from '../../api'
 import Textfield from '../../components/Textfield'
-
 import './style.scss'
+import Api, { URL } from '../../api'
 
 const SnackbarPosition = { vertical: 'bottom', horizontal: 'center' }
 
 const PatientSignup = (props) => {
   const { register, errors, control, handleSubmit } = useForm()
-  const [handleSignUp, error, isLoading, res] = useManualFetch()
+
+  const [Error, setError] = useState(false)
 
   const redirectToLogin = () => props.history.push('/login')
-  const onSubmit = (data) => handleSignUp('POST', URL.patientSignup, data)
+  const onSubmit = (data) => {
+    Api.post(URL.patientSignup, data)
+      .then((res) => {
+        const { data } = res
+        if (!data.patient?.accessToken) {
+          setError(true)
 
-  useEffect(() => {
-    !isLoading && !error && !!res && setTimeout(() => redirectToLogin(), 2000)
-  }, [res])
+          return
+        }
+        localStorage.setItem('virujhToken', data.patient.accessToken)
+        localStorage.setItem('patientId', data.patient.patientId)
+        props.history.push('/patient/appointments/upcoming')
+      })
+      .catch(() => {
+        setError(true)
+      })
+  }
 
   const validationErr = {
     name: 'Invalid name',
@@ -139,7 +149,6 @@ const PatientSignup = (props) => {
                       format="DD/MM/YYYY"
                       placeholder="07/03/1985"
                       disableFuture
-                      disableToolbar
                       autoOk
                       InputProps={{
                         endAdornment: <GoCalendar />,
@@ -212,7 +221,7 @@ const PatientSignup = (props) => {
       </Paper>
       <Snackbar
         anchorOrigin={SnackbarPosition}
-        open={!!res}
+        open={Error}
         autoHideDuration={2000}
         message={'Signed up successfully'}
         key={SnackbarPosition.horizontal + SnackbarPosition.vertical}

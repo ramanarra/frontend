@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import API from '../api'
 
 function useCustomFecth(apiMethod, url, params) {
@@ -6,6 +6,18 @@ function useCustomFecth(apiMethod, url, params) {
   const [loading, setloading] = useState(true)
   const [reload, setRelaod] = useState(true)
   const [error, setError] = useState(null)
+
+  const previousUrl = useRef(url)
+  const previousParams = useRef(params)
+
+  useEffect(() => {
+    if (
+      previousUrl.current !== url ||
+      JSON.stringify(previousParams) !== JSON.stringify(params)
+    ) {
+      setRelaod(true)
+    }
+  }, [url, params, previousUrl, previousParams])
 
   useEffect(() => {
     const token = localStorage.getItem('virujhToken')
@@ -48,6 +60,11 @@ function useCustomFecth(apiMethod, url, params) {
       }
     }
   }, [apiMethod, url, params, reload])
+
+  useEffect(() => {
+    previousUrl.current = url
+    previousParams.current = params
+  }, [url, params, previousUrl, previousParams])
 
   const reFetch = () => {
     setRelaod(true)

@@ -13,12 +13,14 @@ const useStyles = makeStyles({
   },
 
   container: {
-    padding: '25px 30px',
+    padding: '25px 0px',
   },
 
   typography: {
     fontSize: 13.1,
-    paddingBottom: 30,
+    paddingBottom: 15,
+    paddingTop: 15,
+    paddingLeft: 30,
     color: '#6a6a6a',
     fontWeight: 'normal',
   },
@@ -29,6 +31,8 @@ const useStyles = makeStyles({
 
   selectedColor: {
     color: '#54cbff',
+    backgroundColor: '#e6f7ff',
+    borderLeft: '3.5px solid #0cb5ff',
   },
 })
 
@@ -63,16 +67,6 @@ function SideBar() {
             })}
           >
             Cancellation/Reschedule Options
-          </Typography>
-        </Link>
-        <Link className={classes.link} to={`/doctors/${id}/questionnaire`}>
-          {' '}
-          <Typography
-            className={classnames(classes.typography, {
-              [classes.selectedColor]: routesPath?.name === 'questionnaire',
-            })}
-          >
-            Questionnaire For Patients
           </Typography>
         </Link>
         <Link className={classes.link} to={`/doctors/${id}/work-schedules`}>

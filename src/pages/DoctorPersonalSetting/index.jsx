@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 import { Box, Typography, Avatar } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -9,6 +9,8 @@ import ConsulationAndSignature from './ConsulationAndSignature'
 import Preconsultancy from './PreConsult'
 import useCustomFecth from '../../hooks/useCustomFetch'
 import useDoctorConfigUpdate from '../../hooks/useDoctorConfigUpdate'
+import useDocSettingWrite from '../../hooks/useDocSettingWrite'
+import LeftArrow from '../../assets/img/left-arrow.svg'
 
 const useStyle = makeStyles((theme) => ({
   container: {
@@ -23,6 +25,12 @@ const useStyle = makeStyles((theme) => ({
     paddingLeft: 28,
   },
 
+  leftArrow: {
+    width: 20,
+    color: '#444444',
+    cursor: 'pointer'
+  },
+
   photo: {
     marginTop: 40,
     marginLeft: 10,
@@ -33,6 +41,7 @@ const useStyle = makeStyles((theme) => ({
 
   text: {
     color: '#444444',
+    paddingLeft: 20,
   },
 
   rightSide: {
@@ -45,20 +54,35 @@ const useStyle = makeStyles((theme) => ({
 function DoctorPersonalSetting() {
   const classes = useStyle()
   const { id } = useParams()
+  const history = useHistory()
+
+  const isAbleToWrite = useDocSettingWrite()
 
   const key = useMemo(() => {
     return {
       doctorKey: id,
     }
   }, [id])
-  const [data, refetch] = useCustomFecth(METHOD.GET, URL.doctorSettingsPersonalView, key)
+  const [data, refetch] = useCustomFecth(
+    METHOD.GET,
+    URL.doctorSettingsPersonalView,
+    key
+  )
 
-  const [onSave] = useDoctorConfigUpdate(refetch)
+  const [onSave, response] = useDoctorConfigUpdate(refetch)
+
+  function handleOnBack() {
+    history.push('/doctors')
+  }
+
   return (
     <Box className={classes.container}>
       <Box display="flex">
         <Box className={classes.leftSide}>
-          <Typography className={classes.text}>Doctors Details</Typography>
+          <Box display="flex">
+            <img src={LeftArrow} alt="leftArrow" className={classes.leftArrow} onClick={handleOnBack} />
+            <Typography className={classes.text}>Doctors Details</Typography>
+          </Box>
           {data?.doctorDetails && (
             <Avatar src={data.doctorDetails.photo} className={classes.photo} />
           )}
@@ -70,13 +94,16 @@ function DoctorPersonalSetting() {
             configDetails={data?.configDetails}
             doctorDetails={data?.doctorDetails}
             onSave={onSave}
+            isAbleToWrite={isAbleToWrite}
+            response={response}
           />
-          <Preconsultancy
+          {/* <Preconsultancy
             refetch={refetch}
             docKey={id}
             configDetails={data?.configDetails}
             onSave={onSave}
-          />
+            isAbleToWrite={isAbleToWrite}
+          /> */}
         </Box>
       </Box>
     </Box>

@@ -38,6 +38,9 @@ const useStyles = makeStyles(() => ({
   
     textField: {
       width: 415,
+      '& fieldset': {
+        borderColor: '#dedede !important'
+      }
     },
   
     content: {
@@ -71,6 +74,7 @@ const useStyles = makeStyles(() => ({
   
     singupContent: {
       marginTop: 10,
+      cursor: 'pointer',
     },
   
     singupLabel: {
