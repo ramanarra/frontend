@@ -63,8 +63,9 @@ const useStyles = makeStyles(() => ({
   
     forgotPassword: {
       textAlign: 'end',
-      paddingTop: 2,
+      paddingTop: 3,
       color: '#a0a0a0',
+      fontSize: 10.5,
     },
   
     loginButton: {

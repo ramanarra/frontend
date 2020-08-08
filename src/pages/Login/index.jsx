@@ -1,19 +1,46 @@
 import React from 'react'
-import { Redirect } from 'react-router-dom'
 
-import DoctorLogin from './DoctorLogin'
-import PatientLogin from './PatientLogin'
+import LoginUI from './LoginUI'
+import Api, { URL } from '../../api'
 
-function Login({ history }) {
-  // if (localStorage.getItem('loginUser') === 'doctor') {
-  //   return <DoctorLogin history={history} />
-  // }
+function PatientLogin({ history }) {
+  localStorage.setItem('loginUser', 'patient')
+  function onLogin(userName, password, setError) {
+    const credentials = {
+      phone: String(userName),
+      password: password,
+    }
 
-  // if (localStorage.getItem('loginUser') === 'patient') {
-  //   return <PatientLogin history={history} />
-  // }
+    Api.post(
+      URL.patientLogin,
+      credentials
+    )
+      .then((res) => { 
+        const { data } = res
+        if (!data?.accessToken) {
+          setError(true)
 
-  return <PatientLogin history={history} />
+          return
+        }
+        localStorage.setItem('virujhToken', data.accessToken)
+        localStorage.setItem('patientId', data.patientId)
+        history.push('/patient/appointments/upcoming')
+      })
+      .catch(() => {
+        setError(true)
+      })
+  }
+
+  return (
+    <LoginUI
+      UserNameText="Phone Number"
+      UserNameAutoComplete="email"
+      useNamePlaceHolder="9999999999"
+      UserNameErrorText="Please enter your Phone Number"
+      onLogin={onLogin}
+      errorMessage="Incorrect UserName or Password"
+    />
+  )
 }
 
-export default Login
+export default PatientLogin

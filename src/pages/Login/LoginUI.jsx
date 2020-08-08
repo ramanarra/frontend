@@ -37,6 +37,10 @@ const Login = ({
 
   const type = visible === 'visible' ? "text" : "password"
 
+  const [userNameIndicate, setUserNameIndicate] = useState('')
+
+  const [passwordIndicate, setPasswordIndicate] = useState('')
+
   function handleSignup() {
     if(localStorage.getItem('loginUser') === 'patient') {
       history.push('/patient/registration')
@@ -51,29 +55,20 @@ const Login = ({
     history.push("/doctor/login")
   }
 
-  const validate = (values) => {
+  const validate = () => {
     const errors = {}
 
-    if(UserNameText === 'Email') {
-      if (values.userName === '') {
-        errors.userName = 'Please enter your email'
-      } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.userName)) {
-        errors.userName = 'Invalid email address'
-      }
+
+    if(error) {
+      setError(false)
     }
 
-    else if(UserNameText === 'Phone Number') {
-      if(values.userName === '') {
-        errors.userName = 'Please enter your phone Number'
-      } else if (String(values.userName).length < 10) {
-        errors.userName = 'Phone Number must be 10 numbers'
-      }
+    if(userNameIndicate !== '') {
+      setUserNameIndicate('')
     }
-  
-    if (values.password === '') {
-      errors.password = 'Please enter your password'
-    } else if (values.password.length < 6) {
-      errors.password = 'Password must be 6 characters at minimum'
+
+    if(passwordIndicate !== '') {
+      setPasswordIndicate('')
     }
   
     return errors
@@ -86,7 +81,37 @@ const Login = ({
     },
     validate,
     onSubmit: (values) => {
-      onLogin(values.userName, values.password, setError)
+      if(UserNameText === 'Email') {
+        if (values.userName === '') {
+          setUserNameIndicate( 'Please enter your email')
+        } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.userName)) {
+          setUserNameIndicate('Invalid email address')
+        }
+
+        if(values.password == '') {
+          setPasswordIndicate("Please enter your password")
+        }
+
+        if((/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.userName)) && values.password !=='') {
+          onLogin(values.userName, values.password, setError)
+        }
+      }
+      else if(UserNameText === 'Phone Number') {
+        if(values.userName === '') {
+          setUserNameIndicate('Please enter your phone Number')
+        } 
+        else if(String(values.userName).length < 10) {
+          setUserNameIndicate('Phone Number atleast have 10 Numbers')
+        }
+        if (values.password == '') {
+          setPasswordIndicate('Please enter your password')
+        }
+
+        if((String(values.userName).length > 9) && (values.password !== '')) {
+          onLogin(values.userName, values.password, setError)
+        }
+      }
+      
     },
   })
 
@@ -122,7 +147,9 @@ const Login = ({
                       <TextField
                     id="userName"
                     autoComplete={UserNameAutoComplete}
-                    className={classes.textField}
+                    className={classNames(classes.textField, {
+                      [classes.emptyField]: userNameIndicate !== ''
+                    })}
                     type="email"
                     onChange={formik.handleChange}
                     placeholder={useNamePlaceHolder}
@@ -135,7 +162,7 @@ const Login = ({
                     id="userName"
                     autoComplete={UserNameAutoComplete}
                     className={classNames(classes.textField, {
-                      [classes.emptyField]: formik.errors.userName
+                      [classes.emptyField]: userNameIndicate !== ''
                     })}
                     type="number"
                     onChange={formik.handleChange}
@@ -145,11 +172,11 @@ const Login = ({
                   />
                     )
                   }
-                 {formik.errors.userName && (
-                    <Typography className={classes.emptytext} variant="h6">
-                      {formik.errors.userName}
-                    </Typography>
-                  )}
+                  {
+                    userNameIndicate !== '' && (
+                      <Typography className={classes.emptytext} variant="h6">{userNameIndicate}</Typography>
+                    )
+                  }
                 </Box>
                 <Box>
                   <Typography className={classes.text} variant="h4">
@@ -160,7 +187,7 @@ const Login = ({
                     autoComplete="current-password"
                     placeholder="********"
                     className={classNames(classes.textField, {
-                      [classes.emptyField]: formik.errors.password,
+                      [classes.emptyField]: passwordIndicate !== '',
                     })}
                     type={type}
                     onChange={formik.handleChange}
@@ -173,11 +200,11 @@ const Login = ({
                     }
                   />
 
-                  {formik.errors.password && (
-                    <Typography className={classes.emptytext} variant="h6">
-                      {formik.errors.password}
-                    </Typography>
-                  )}
+                  {
+                    passwordIndicate !== '' && (
+                      <Typography className={classes.emptytext} variant="h6">{passwordIndicate}</Typography>
+                    )
+                  }
                   {
                   error && 
                   <Typography className={classes.emptytext} variant="h6">

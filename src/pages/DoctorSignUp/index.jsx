@@ -16,7 +16,7 @@ const DoctorSignUp = (props) => {
 
   const [Error, setError] = useState(false)
 
-  const redirectToLogin = () => props.history.push('/login')
+  const redirectToLogin = () => props.history.push('/doctor/login')
   const onSubmit = (data) => {
 
   }
