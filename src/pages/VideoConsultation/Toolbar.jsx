@@ -36,7 +36,7 @@ function Toolbar({
   isVideoActive,
   isAudioActive,
   onVideoStateChange,
-  onMuteStateChnage,
+  onMuteStateChange,
   onLeaveSession,
   onJoiningPatient,
 }) {
@@ -50,7 +50,7 @@ function Toolbar({
           <VideocamOffIcon color="primary" className={classes.videoIcon} />
         )}
       </IconButton>
-      <IconButton className={classes.iconButton} onClick={onMuteStateChnage}>
+      <IconButton className={classes.iconButton} onClick={onMuteStateChange}>
         {isAudioActive ? (
           <MicNoneIcon color="primary" className={classes.videoIcon} />
         ) : (
