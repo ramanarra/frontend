@@ -26,13 +26,13 @@ const userCreateAppointmentStyle = makeStyles(() => ({
       },
       msg: {
         fontSize: 11,
-        color: '#a8a8a8',
+        color: '#646363',
       },
       txt: {
         width: 240,
         height: 25,
         backgroundColor: '#f7f7f7',
-        marginLeft: 105,
+        marginLeft: 107,
         paddingTop: 5,
         fontSize: 10.5,
         marginTop: 10,
@@ -73,6 +73,9 @@ const userCreateAppointmentStyle = makeStyles(() => ({
         '& div': {
           height: 33,
         },
+        '& fieldset': {
+          borderColor: '#dedede !important'
+        }
       },
       detailstext: {
           paddingLeft: 7,
@@ -99,7 +102,10 @@ const userCreateAppointmentStyle = makeStyles(() => ({
         paddingLeft: 9,
         '& div': {
           height: 32,
-        }
+        },
+        '& fieldset': {
+          borderColor: '#dedede !important'
+        },
       },
       lastNameBox: {
           paddingLeft: 10,
@@ -127,7 +133,10 @@ const userCreateAppointmentStyle = makeStyles(() => ({
         paddingTop: 8,
         '& div': {
           height: 32,
-        }
+        },
+        '& fieldset': {
+          borderColor: '#dedede !important'
+        },
       },
       email: { 
           width: 450,
@@ -149,7 +158,10 @@ const userCreateAppointmentStyle = makeStyles(() => ({
         paddingTop: 8,
         '& div': {
           height: 32,
-        }
+        },
+        '& fieldset': {
+          borderColor: '#dedede !important'
+        },
       },
       date: {
           width: 450,
@@ -175,6 +187,9 @@ const userCreateAppointmentStyle = makeStyles(() => ({
       newPatientDate: {
         paddingTop: 12,
         paddingLeft: 9,
+        '& fieldset': {
+          borderColor: '#dedede !important'
+        },
       },
       payment: {
         width: 220,
@@ -202,6 +217,7 @@ const userCreateAppointmentStyle = makeStyles(() => ({
       newPatientPaymentOptionBox: {
         marginTop: 5,
         marginLeft: 1,
+        border: '1.2px solid #dedede',
         '& div': {
           width: 210,
           '& div': {
@@ -216,6 +232,7 @@ const userCreateAppointmentStyle = makeStyles(() => ({
       newPatientConsultationMode: {
         marginTop: 7,
         marginLeft: 2,
+        border: '1.2px solid #dedede',
         '& div': {
           width:210,
           '& div': {
@@ -265,6 +282,9 @@ const userCreateAppointmentStyle = makeStyles(() => ({
           height: 6,
           paddingLeft: 13,
         },
+        '& fieldset': {
+          border: '1.2px solid #dedede !important',
+        }
       },
       button: {
         alignItems: 'center',

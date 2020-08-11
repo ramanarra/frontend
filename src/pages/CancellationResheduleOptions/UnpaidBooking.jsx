@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react'
 import { Box, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { Edit, Check, Clear } from '@material-ui/icons'
+import IconButton from '@material-ui/core/IconButton'
 
 import NumberTextField from '../../components/NumberTextField'
+import SnackBar from '../../components/SnackBar'
+
 
 const useStyles = makeStyles(() => ({
   text: {
@@ -13,24 +16,31 @@ const useStyles = makeStyles(() => ({
   },
   iconButton: {
     color: 'rgb(36, 189, 255)',
-    fontSize: 15,
-    marginRight: 11,
+    marginRight: 8,
     marginBottom: 3,
   },
 
+  editIcon: {
+    fontSize: 19,
+  },
+
   cancelation: {
-    marginRight: 11,
     color: 'rgb(36, 189, 255)',
-    fontSize: 15,
+    fontSize: 19,
+  },
+
+  checkIcon: {
+    fontSize: 19,
   },
 }))
 
-const Cancellation = ({ configDetails, doctorKey, onSave, isAbleToWrite }) => {
+const Cancellation = ({ configDetails, doctorKey, onSave, isAbleToWrite, response}) => {
   const classes = useStyles()
   const [autoCancelHours, setAutoCancelHours] = useState(0)
   const [autoCancelDays, setAutoCancelDays] = useState(0)
   const [autoCancelMins, setAutoCancelMins] = useState(0)
   const [disable, setDisable] = useState(false)
+  const [open, setOpen] = useState(false)
 
   useEffect(() => {
     if (configDetails) {
@@ -57,6 +67,7 @@ const Cancellation = ({ configDetails, doctorKey, onSave, isAbleToWrite }) => {
       }
       onSave(params)
       setDisable(false)
+      setOpen(true)
     }
   }
 
@@ -76,6 +87,14 @@ const Cancellation = ({ configDetails, doctorKey, onSave, isAbleToWrite }) => {
     if (!isNaN(event.target.value) && event.target.value < 60) {
       setAutoCancelMins(event.target.value)
     }
+  }
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return
+    }
+
+    setOpen(false)
   }
 
   return (
@@ -104,22 +123,36 @@ const Cancellation = ({ configDetails, doctorKey, onSave, isAbleToWrite }) => {
             onChange={handleOnAutoCancelMins}
           />
           {isAbleToWrite && (
-            <Box paddingLeft={1} marginTop={1}>
-              {!disable ? (
+            <Box paddingLeft={1} marginTop={0}>
+            {!disable ? (
+              <IconButton className={classes.iconButton} onClick={() => setDisable(true)}>
                 <Edit
-                  className={classes.iconButton}
-                  onClick={() => setDisable(true)}
+                  className={classes.editIcon}
                 />
-              ) : (
-                <div>
-                  <Clear className={classes.cancelation} onClick={handleOnCancel} />
-                  <Check className={classes.iconButton} onClick={handleOnSave} />
-                </div>
-              )}
-            </Box>
+              </IconButton>
+            ) : (
+              <div>
+                <IconButton className={classes.iconButton} onClick={handleOnCancel}>
+                  <Clear
+                    className={classes.cancelation}
+                  />
+                </IconButton>
+                <IconButton className={classes.iconButton} onClick={handleOnSave}>
+                  <Check className={classes.checkIcon} />
+                </IconButton>
+              </div>
+            )}
+          </Box>
           )}
         </Box>
+        {
+          response && response.statusCode !== 200 &&
+          <Typography>{response.message}</Typography>
+        }
       </Box>
+      {response && response.statusCode === 200 && (
+        <SnackBar open={open} message={response.message} onclose={handleClose} />
+      )}
     </Box>
   )
 }

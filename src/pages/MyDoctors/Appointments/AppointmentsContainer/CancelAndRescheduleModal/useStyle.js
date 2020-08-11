@@ -22,7 +22,7 @@ const useStyle = makeStyles(() => ({
     width: 240,
     height: 25,
     backgroundColor: '#f4f2f2',
-    marginLeft: 160,
+    marginLeft: 165,
   },
   text: {
     paddingTop: 7,

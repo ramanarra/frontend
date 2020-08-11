@@ -3,11 +3,14 @@ import { Typography, TextField } from '@material-ui/core'
 
 import OptionBox from './OptionBox'
 import { minsSuffix } from '../../components/commonFormat.js'
+import SnackBar from '../../components/SnackBar'
 
-const SessionTime = ({ data, handleUpdate }) => {
+
+const SessionTime = ({ data, handleUpdate, response }) => {
   const [sessionTime, setSessionTime] = useState(null)
   const [customTime, setCustomTime] = useState('')
   const [isChanged, setChanged] = useState(false)
+  const [open, setOpen] = useState(false)
 
   useEffect(() => {
     if (!!data) {
@@ -24,6 +27,7 @@ const SessionTime = ({ data, handleUpdate }) => {
         consultationSessionTimings: time,
       },
     })
+    setOpen(true)
   }
 
   const handleChange = (value, type) => {
@@ -48,6 +52,14 @@ const SessionTime = ({ data, handleUpdate }) => {
     if (e.keyCode === 13) {
       isChanged && handleSave()
     }
+  }
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return
+    }
+
+    setOpen(false)
   }
 
   return (
@@ -91,7 +103,14 @@ const SessionTime = ({ data, handleUpdate }) => {
             }}
           />
         </div>
+        {
+          response && response.statusCode !== 200 &&
+          <Typography>{response.message}</Typography>
+        }
       </div>
+      {response && response.statusCode === 200 && (
+        <SnackBar open={open} message={response.message} onclose={handleClose} />
+      )}
     </div>
   )
 }

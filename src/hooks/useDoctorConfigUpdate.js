@@ -4,6 +4,7 @@ import API, { URL } from '../api'
 
 function useDoctorConfigUpdate(refetch) {
   const [loading, setLoading] = useState(false)
+  const [data, setData] = useState(null)
 
   function handleOnFetch(params) {
     setLoading(true)
@@ -15,16 +16,18 @@ function useDoctorConfigUpdate(refetch) {
         Authorization: authStr,
       },
     })
-      .then(() => {
+      .then((res) => {
         setLoading(false)
+        setData(res.data)
         refetch()
       })
-      .catch(() => {
+      .catch((res) => {
         setLoading(false)
+        setData(res.response)
       })
   }
 
-  return [handleOnFetch, loading]
+  return [handleOnFetch, data, loading]
 }
 
 export default useDoctorConfigUpdate

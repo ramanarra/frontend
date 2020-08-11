@@ -31,6 +31,11 @@ function FreeSlotModal({ slot, open, onClose, onSave, slotTime, doctorKey }) {
 
   function handleOnClick(event) {
     onClose(event)
+    if(detail) {
+      if(detail.phone !== phoneNumber) {
+        setDetail(null)
+      }
+    }
     setOpenNew(true)
   }
 
@@ -69,6 +74,7 @@ function FreeSlotModal({ slot, open, onClose, onSave, slotTime, doctorKey }) {
     setDetail(option)
     setOpenOption(false)
   }
+
 
   return (
     <Box>

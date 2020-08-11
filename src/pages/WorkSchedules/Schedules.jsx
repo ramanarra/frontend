@@ -14,7 +14,7 @@ const Schedules = (props) => {
     'monday',
     'tuesday',
     'wednesday',
-    'thusday',
+    'thursday',
     'friday',
     'saturday',
   ]
@@ -28,9 +28,9 @@ const Schedules = (props) => {
 
   return (
     <div className="schedule-calender-wrap">
-      <Typography variant="h1" className="main-title">
+      {/* <Typography variant="h1" className="main-title">
         Work Schedules
-      </Typography>
+      </Typography> */}
       <table className="table">
         <thead>
           <tr>
@@ -40,7 +40,7 @@ const Schedules = (props) => {
           </tr>
         </thead>
         <tbody>
-          <tr>
+          <tr className="table-row">
             {week_days.map((i) => (
               <td
                 key={i}
