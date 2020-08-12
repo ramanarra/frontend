@@ -1,51 +1,42 @@
-import React, { useState } from "react";
-import { Box, Typography } from "@material-ui/core";
+import React from "react";
+import { Box, makeStyles } from "@material-ui/core";
 
 import Centralize from "../../components/Centralize";
 import LogoWhite from "../../assets/img/logo-white.svg";
-import Role from "./Role";
-import useStyles from "./useStyles";
+import BG from "../../assets/img/bg.png";
+
+const useStyles = makeStyles(() => ({
+  container: {
+    height: "100vh",
+    width: "100vw",
+    cursor: 'pointer',
+  },
+
+  right: {
+    width: "100%",
+    backgroundImage: `url(${BG})`,
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+  },
+
+  logo: {
+    width: 300,
+  },
+}))
 
 function SelectRole({ history }) {
-  const [option, setOption] = useState("doctor");
   const classes = useStyles();
 
-  function handleSelect(value) {
-    if (option === value) {
-      localStorage.setItem('loginUser', option)
-      history.push("/login");
-    } else {
-      setOption(value);
-    }
+
+  function handleOnClick() {
+    localStorage.setItem('loginUser', 'patient')
+    history.push("/login")
   }
 
   return (
-    <Box className={classes.container} display="flex">
+    <Box className={classes.container} display="flex" onClick={handleOnClick}>
       <Centralize className={classes.right}>
         <img src={LogoWhite} alt="VIRUJH" className={classes.logo} />
-      </Centralize>
-
-      <Centralize className={classes.left} flexDirection="column">
-        <Typography className={classes.text} variant="h1">
-          SELECT YOUR ROLE
-        </Typography>
-        <Centralize>
-          <Role
-            isSelected={option === "doctor"}
-            option="doctor"
-            icon="icon-doctor"
-            text="DOCTOR"
-            handleSelect={handleSelect}
-          />
-
-          <Role
-            isSelected={option === "patient"}
-            option="patient"
-            icon="icon-patient"
-            text="PATIENT"
-            handleSelect={handleSelect}
-          />
-        </Centralize>
       </Centralize>
     </Box>
   );
