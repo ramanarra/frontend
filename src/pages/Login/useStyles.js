@@ -38,6 +38,9 @@ const useStyles = makeStyles(() => ({
   
     textField: {
       width: 415,
+      '& fieldset': {
+        borderColor: '#dedede !important'
+      }
     },
 
     icon: {

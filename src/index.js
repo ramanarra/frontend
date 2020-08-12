@@ -14,6 +14,7 @@ import * as serviceWorker from './serviceWorker'
 import PatientSignup from './pages/PatientSignup'
 import DoctorSignUp from './pages/DoctorSignUp'
 import DoctorLogin from './pages/Login/DoctorLogin'
+import VideoConsultation from './pages/VideoConsultation'
 
 ReactDOM.render(
     <ThemeProvider theme={theme}>
@@ -24,6 +25,7 @@ ReactDOM.render(
           <Route exact path={'/doctor/login'} component={DoctorLogin} />
           <Route exact path={'/patient/registration'} component={PatientSignup} />
           <Route exact path={'/doctor/registration'} component={DoctorSignUp} />
+          <Route exact path={'/video-consultation'} component={VideoConsultation} />
           <Route path={'/'} component={Layouts} />
         </Switch>
       </BrowserRouter>

@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react'
+import classNames from 'classnames'
 import { Box, Typography, TextField, InputAdornment } from '@material-ui/core'
 import { Edit, Check, Clear } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/core/styles'
+import IconButton from '@material-ui/core/IconButton'
+
+import SnackBar from '../../components/SnackBar'
 
 const useStyles = makeStyles(() => ({
   notchedOutline: {
-     '& input': {
+    '& input': {
       backgroundColor: '#f7f7f7',
       color: '#777777',
       height: 10,
@@ -48,12 +52,6 @@ const useStyles = makeStyles(() => ({
     },
   },
 
-  icon: {
-    paddingLeft: 8,
-    paddingTop: 6,
-    fontSize: 25,
-  },
-
   iconStart: {
     color: '#777777',
     fontSize: 13,
@@ -61,25 +59,50 @@ const useStyles = makeStyles(() => ({
 
   iconbutton: {
     color: 'rgb(36, 189, 255)',
-    fontSize: 15,
-    marginRight: 11,
+    marginTop: -9,
+    padding: 5,
+  },
+
+  editIcon: {
+    fontSize: 20,
   },
 
   cancelation: {
-    marginRight: 11,
     color: 'rgb(36, 189, 255)',
-    fontSize: 15,
+    fontSize: 20,
+  },
+
+  checkIcon: {
+    fontSize: 20,
   },
 
   icon: {
-    paddingLeft: 8, 
-    paddingTop: 4
-  }
+    paddingLeft: 8,
+    paddingTop: 4,
+  },
+
+  editable: {
+    paddingBottom: 0,
+    marginBottom: 20,
+    border: '1px solid',
+  },
+
+  response: {
+    fontSize: 14,
+    color: 'red',
+  },
 }))
 
-function ConsulationAndSignature({ docKey, configDetails, onSave, isAbleToWrite }) {
+function ConsulationAndSignature({
+  docKey,
+  configDetails,
+  onSave,
+  isAbleToWrite,
+  response,
+}) {
   const [fees, setFees] = useState(0)
   const [disable, setDisable] = useState(false)
+  const [open, setOpen] = useState(false)
   const classes = useStyles()
 
   useEffect(() => {
@@ -101,24 +124,34 @@ function ConsulationAndSignature({ docKey, configDetails, onSave, isAbleToWrite 
   }
 
   function hanleOnSave() {
-    if(fees) {
+    if (fees) {
       const params = {
         doctorKey: docKey,
-        consultationCost: fees
+        consultationCost: fees,
       }
 
       onSave(params)
       setDisable(false)
+      setOpen(true)
+    }
+  }
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
     }
 
-  }
+    setOpen(false);
+  };
 
   return (
     <Box>
       <Typography className={classes.text}>Consultation Base Fees</Typography>
-      <Box display='flex'>
+      <Box display="flex">
         <TextField
-          className={classes.notchedOutline}
+          className={classNames(classes.notchedOutline, {
+            [classes.editable]: disable === true,
+          })}
           variant="outlined"
           value={fees}
           disabled={!disable}
@@ -131,23 +164,37 @@ function ConsulationAndSignature({ docKey, configDetails, onSave, isAbleToWrite 
             ),
           }}
         />
-      {isAbleToWrite && <div className={classes.icon}>
-          {!disable ? (
-            <Edit
-              className={classes.iconbutton}
-              onClick={() => handleOndisabled()}
-            />
-          ) : (
-            <div>
-              <Clear className={classes.cancelation} onClick={handleOnCancel} />
-              <Check className={classes.iconbutton} onClick={hanleOnSave}/>
-            </div>
-          )}
-        </div> }
+        {isAbleToWrite && (
+          <div className={classes.icon}>
+            {!disable ? (
+              <IconButton
+                className={classes.iconbutton}
+                onClick={() => handleOndisabled()}
+              >
+                <Edit className={classes.editIcon} />
+              </IconButton>
+            ) : (
+              <div>
+                <IconButton className={classes.iconbutton} onClick={handleOnCancel}>
+                  <Clear className={classes.cancelation} />
+                </IconButton>
+                <IconButton className={classes.iconbutton} onClick={hanleOnSave}>
+                  <Check className={classes.checkIcon} />
+                </IconButton>
+              </div>
+            )}
+          </div>
+        )}
       </Box>
+      {response && response?.statusCode !== 200 && (
+        <Typography className={classes.response}>{response.message}</Typography>
+      )}
       <div className={classes.signature}>
-         {/* <img src={doctorDetails?.signature} alt="signature"/> */}
+        {/* <img src={doctorDetails?.signature} alt="signature"/> */}
       </div>
+      {response && response.statusCode === 200 && (
+        <SnackBar open={open} message={response.message} onclose={handleClose} />
+      )}
     </Box>
   )
 }

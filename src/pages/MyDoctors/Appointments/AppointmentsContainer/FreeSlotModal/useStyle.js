@@ -40,7 +40,7 @@ const useStyle = makeStyles(() => ({
     width: 245,
     height: 25,
     backgroundColor: '#f7f7f7',
-    marginLeft: 110,
+    marginLeft: 109,
     paddingTop: 5,
     fontSize: 10,
     marginTop: 10,
@@ -63,6 +63,12 @@ const useStyle = makeStyles(() => ({
         },
       },
     },
+    '& fieldset': {
+      borderColor: '#dedede !important'
+    },
+    '& .focused': {
+      border:'1px solid blue',
+    }
   },
   dropDown: {
     width: 450,
@@ -103,7 +109,7 @@ const useStyle = makeStyles(() => ({
     marginTop: -7,
   },
   noteText: {
-    fontSize: 8,
+    fontSize: 9.5,
     color: '#a8a8a8',
     paddingLeft: 2,
   },

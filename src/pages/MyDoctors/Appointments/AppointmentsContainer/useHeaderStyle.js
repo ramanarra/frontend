@@ -64,13 +64,13 @@ const useHeaderStyle = makeStyles(() => ({
     width: 12,
     marginTop: 2,
     marginLeft: 10,
-    color: '#b3a3a3',
+    color: '#383535',
     cursor: 'pointer',
   },
   arrowForward: {
     width: 12,
     marginTop: 2,
-    color: '#b3a3a3',
+    color: '#383535',
     cursor: 'pointer',
   },
   text: {
@@ -82,27 +82,27 @@ const useHeaderStyle = makeStyles(() => ({
   txt: {
     paddingRight: 10,
     fontSize: 9,
-    color: '#a8a8a8',
+    color: '#535252',
     paddingTop: 7,
   },
   freeSlot: {
     width: 8,
     color: '#4edb88',
     marginTop: 2,
-    marginRight: 8,
+    marginRight: 6,
   },
   booked: {
     width: 8,
     color: '#aab5c2',
     marginTop: 2,
-    marginRight: 8,
+    marginRight: 6,
   },
 
   blocked: {
     width: 8,
     color: '#0bb5ff',
     marginTop: 2,
-    marginRight: 8,
+    marginRight: 6,
   },
   selectBox: {
     paddingRight: 2,

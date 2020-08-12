@@ -56,14 +56,15 @@ function List({ appointments, onSave, doctorKey }) {
 
   return (
     <Box className={classes.container}>
-      <Box>
+      <Box className={classes.dateContainer}>
         <Typography className={classes.date}>{currentDate}</Typography>
         <Typography className={classes.day}>{currentDay}</Typography>
       </Box>
-      {appointments.slots.map((slot) => {
+      {appointments.slots.map((slot, index) => {
         return slot.id ? (
           slot.created_by === 'PATIENT' ? (
             <Slots
+              key={index}
               doctorKey={doctorKey}
               slot={slot}
               date={todayDate}

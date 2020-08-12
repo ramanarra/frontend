@@ -75,7 +75,9 @@ export const useInfocardStyles = makeStyles((theme) => ({
       backgroundColor: 'white',
       padding: '15px 14px 10px 20px',
       borderBottom: '2px solid #0bb5ff',
-      boxShadow: '5px 0px 15px 0px #f3eeee'
+      boxShadow: '5px 0px 15px 0px #f3eeee',
+      height: 200,
+      // width: 335,
     },
   
     large: {
@@ -105,7 +107,7 @@ export const useInfocardStyles = makeStyles((theme) => ({
     },
   
     appointmentsContent: {
-      width: 100,
+      width: 113,
       display: 'flex',
       flexWrap: 'wrap',
     },
@@ -118,7 +120,7 @@ export const useInfocardStyles = makeStyles((theme) => ({
       color: '#c1b6b6',
       borderRadius: 50,
       marginTop: 3,
-      marginRight: 2,
+      marginRight: 1,
     },
   
     button: {
@@ -128,5 +130,15 @@ export const useInfocardStyles = makeStyles((theme) => ({
       border: '1.5px solid #94dfff',
       color: '#0bb5ff',
       borderRadius: 3,
+      marginRight: 10,
     },
+    appointmentButton: {
+      textTransform: 'capitalize',
+      fontSize: 13,
+      padding: '1px 9px',
+      border: '1.5px solid #94dfff',
+      color: '#ffffff',
+      backgroundColor: '#0bb5ff',
+      borderRadius: 3,
+    }
   }))
