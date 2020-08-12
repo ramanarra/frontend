@@ -24,16 +24,16 @@ const Login = ({
 
   const [isEyeVisible, setIsEyeVisible] = useState(false)
 
+  const [userNameIndicate, setUserNameIndicate] = useState('')
+
+  const [passwordIndicate, setPasswordIndicate] = useState('')
+
   const name =
     localStorage.getItem('loginUser') === 'patient'
       ? 'Patient login'
       : 'Doctor login'
 
   const type = isEyeVisible === true ? 'text' : 'password'
-
-  const [userNameIndicate, setUserNameIndicate] = useState('')
-
-  const [passwordIndicate, setPasswordIndicate] = useState('')
 
   function handleSignup() {
     if (localStorage.getItem('loginUser') === 'patient') {
