@@ -36,7 +36,7 @@ function DoctorLogin({ history }) {
 
   return (
     <LoginUI
-      UserNameText="Email"
+      UserNameText="Email ID"
       UserNameAutoComplete="email"
       useNamePlaceHolder="johndoe@gmail.com"
       UserNameErrorText="Please enter your Email"
