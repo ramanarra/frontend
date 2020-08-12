@@ -67,7 +67,7 @@ const Login = ({
   }
 
   function handleOnSubmit(values) {
-    if (UserNameText === 'Email') {
+    if (UserNameAutoComplete === 'email') {
       if (values.userName === '') {
         setUserNameIndicate('Please enter your email')
       } else if (
@@ -132,7 +132,7 @@ const Login = ({
                 <Typography className={classes.text} variant="h5">
                   {UserNameText}
                 </Typography>
-                {UserNameText === 'Email' ? (
+                {UserNameAutoComplete === 'email' ? (
                   <TextField
                     id="userName"
                     autoComplete={UserNameAutoComplete}
