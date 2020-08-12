@@ -43,6 +43,8 @@ function RescheduleAppointment({
 
   const [time, setTime] = useState({ start: '00:00:00', end: '00:00:00' })
 
+  const [show, setShow] = useState(false)
+
   const key = useMemo(() => {
     return {
       doctorKey: id,
@@ -57,15 +59,21 @@ function RescheduleAppointment({
   }
 
   function handleSubmit(event) {
-    onClose(event)
-    const parameter = {
-      appointmentId: appointmentId,
-      patientId: Number(patientId),
-      startTime: moment(time.start, 'HH:mm:ss').format('HH:mm'),
-      endTime: moment(time.end, 'HH:mm:ss').format('HH:mm'),
-      appointmentDate: moment(date).format('YYYY-MM-DD'),
+    if(time.start === '00:00:00' && time.end === '00:00:00') {
+      setShow(true)
     }
-    onSave(URL.appointmentReschedule, parameter)
+
+    else {
+      onClose(event)
+      const parameter = {
+        appointmentId: appointmentId,
+        patientId: Number(patientId),
+        startTime: moment(time.start, 'HH:mm:ss').format('HH:mm'),
+        endTime: moment(time.end, 'HH:mm:ss').format('HH:mm'),
+        appointmentDate: moment(date).format('YYYY-MM-DD'),
+      }
+      onSave(URL.appointmentReschedule, parameter)
+    }
   }
 
   const handleDateChange = (event) => {
@@ -73,6 +81,9 @@ function RescheduleAppointment({
   }
 
   const handleOnClick = (slotTiming) => {
+    if(show === true) {
+      setShow(false)
+    }
     setTime(slotTiming)
   }
 
@@ -155,13 +166,14 @@ function RescheduleAppointment({
             </Typography>
             <Box display="flex" flexWrap="wrap" className={classes.availableSlots}>
               {availableSlots &&
-                availableSlots.map((data) => {
+                availableSlots.map((data, index) => {
                   return (
                     <Button
                       className={classNames(classes.time, {
                         [classes.selectedTab]: time.start === data.start,
                       })}
                       onClick={() => handleOnClick(data)}
+                      key={index}
                     >
                       <Typography
                         className={classNames(classes.timeText, {
@@ -181,6 +193,10 @@ function RescheduleAppointment({
             <Typography className={classes.submitText}>SUBMIT</Typography>
           </Box>
         </Box>
+        {
+          show &&
+          <Typography className={classes.error}>Please select any free slot</Typography>
+        }
       </Dialog>
     </Box>
   )

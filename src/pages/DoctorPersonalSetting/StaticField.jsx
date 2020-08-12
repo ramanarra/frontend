@@ -33,6 +33,8 @@ const useStyles = makeStyles(() => ({
 function Static({ doctorDetails }) {
   const classes = useStyles()
 
+  localStorage.setItem('doctorName', doctorDetails?.doctorName)
+
   return (
     <Box display="flex">
       <Box>

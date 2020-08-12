@@ -68,7 +68,7 @@ const InfoCard = ({ doctorDetails, isRead }) => {
         </Box>
       </Box>
 
-      <Box marginTop={0.5} display="flex" justifyContent="flex-end">
+      <Box marginTop={1.5} display="flex" justifyContent="flex-end">
         {isRead && (
           <Box>
             <Button

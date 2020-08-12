@@ -71,12 +71,12 @@ export const useInfocardStyles = makeStyles((theme) => ({
 
     container: {
       marginTop: 20,
-      marginRight: 29,
+      marginRight: 25,
       backgroundColor: 'white',
-      padding: '15px 14px 10px 20px',
+      padding: '15px 13px 10px 20px',
       borderBottom: '2px solid #0bb5ff',
       boxShadow: '5px 0px 15px 0px #f3eeee',
-      height: 200,
+      height: 208,
       // width: 335,
     },
   
@@ -107,20 +107,20 @@ export const useInfocardStyles = makeStyles((theme) => ({
     },
   
     appointmentsContent: {
-      width: 113,
+      width: 118,
       display: 'flex',
       flexWrap: 'wrap',
     },
   
     appointments: {
-      paddingLeft: 5,
-      paddingRight: 5,
+      textAlign: 'center',
       background: '#efefef',
       fontSize: 11,
       color: '#c1b6b6',
       borderRadius: 50,
       marginTop: 3,
       marginRight: 1,
+      width: 58,
     },
   
     button: {

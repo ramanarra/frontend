@@ -9,6 +9,7 @@ import AvailableSlots from './AvailableSlots'
 import useManualFetch from '../../hooks/useManualFetch'
 import { METHOD, URL } from '../../api'
 import useCustomFecth from '../../hooks/useCustomFetch'
+import SnackBar from '../../components/SnackBar'
 
 
 const useStyle = makeStyles(() => ({
@@ -114,12 +115,19 @@ function AppointmentDatePicker({ doctorKey }) {
       consultationMode: 'online',
     }
     updateData(METHOD.POST, URL.patientBookAppointment, params)
-    history.push('/patient/appointments/upcoming')
+    // history.push('/patient/appointments/upcoming')
   }
 
   const handleSlotTiming = (time) => {
     setTime(time)
   }
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    history.push('/patient/appointments/upcoming')
+  };
 
   return (
     <Box display="flex" className={classes.container}>
@@ -146,6 +154,30 @@ function AppointmentDatePicker({ doctorKey }) {
       {slots && (
         <AvailableSlots availableSlots={slots} handleSlotTiming={handleSlotTiming} />
       )}
+      { 
+      data && data?.appointment &&
+      <SnackBar message={'Sucessfully Created'} onclose={handleClose} severity={'success'} />
+      }
+      {
+        data && data?.statusCode === 417 &&
+        <SnackBar message={data.message} onclose={handleClose} severity={'warning'} />
+      }
+      {
+        data && data?.statusCode === 200 &&
+        <SnackBar message={data.message} onclose={handleClose} severity={'success'} />
+      }
+      {
+        data && data?.statusCode === 404 &&
+        <SnackBar message={data.message} onclose={handleClose} severity={'information'} />
+      }
+      {
+        data && data?.statusCode === 500 &&
+        <SnackBar message={'Internal Server Error'} onclose={handleClose} severity={'error'} />
+      }
+      {
+        data && data.name === 'Error' &&
+        <SnackBar message={data.message} onclose={handleClose} severity={'error'} />
+      }
     </Box>
   )
 }

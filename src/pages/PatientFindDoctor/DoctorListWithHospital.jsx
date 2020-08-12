@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, makeStyles } from '@material-ui/core'
+import { Box, makeStyles, Typography } from '@material-ui/core'
 
 import { METHOD, URL } from '../../api'
 import useManualFetch from '../../hooks/useManualFetch'

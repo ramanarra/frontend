@@ -82,7 +82,7 @@ const Cancellation = ({ configDetails, doctorKey, onSave, isAbleToWrite, respons
         doctorKey: doctorKey,
         rescheduleDays: Number(rescheduleDays),
         rescheduleHours: Number(rescheduleHours),
-        rescheduleMins: String(rescheduleMins),
+        rescheduleMins: Number(rescheduleMins),
       }
       onSave(params)
       setDisable(false)

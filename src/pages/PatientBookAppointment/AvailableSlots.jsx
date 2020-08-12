@@ -39,7 +39,7 @@ const useStyle = makeStyles(() => ({
   },
   selectedText: {
     color: '#ffffff',
-    fontSize: 14,
+    fontSize: 13,
     paddingTop: 2,
   },
   icon: {

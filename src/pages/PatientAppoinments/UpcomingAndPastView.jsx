@@ -158,6 +158,10 @@ function UpcomingAndPastView({
 
   const date = moment(appointmentDetail.appointmentDate).format('DD MMMM YYYY')
 
+  const doctorName = appointmentDetail.doctorLastName
+    ? `${appointmentDetail.doctorFirstName}${' '}${appointmentDetail.doctorLastName}`
+    : appointmentDetail.doctorFirstName
+
   const difference = moment(appointmentDateWithTime, 'DD/MM/YYYY HH:mm:ss').diff(
     moment(currentTime, 'DD/MM/YYYY HH:mm:ss')
   )
@@ -177,7 +181,11 @@ function UpcomingAndPastView({
   }
 
   function handleOnStartConsulation() {
-    history.push('/video-consultation')
+    history.push({
+      pathname: '/video-consultation',
+      state: appointmentDetail.appointmentId,
+      name: doctorName,
+    })
   }
 
   return (
@@ -252,7 +260,7 @@ function UpcomingAndPastView({
                       <VerticalAlignBottomOutlinedIcon
                         className={classes.downloadIcon}
                       />
-                     <button onClick={handleOnStartConsulation}>click</button>
+                      <button onClick={handleOnStartConsulation}>click</button>
                     </Box>
                   </Box>
                 )}

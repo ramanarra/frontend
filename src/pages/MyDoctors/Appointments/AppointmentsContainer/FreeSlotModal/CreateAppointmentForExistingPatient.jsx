@@ -18,7 +18,6 @@ import { URL } from '../../../../../api'
 const paymentOption = [
   { value: 'directPayment', label: 'Direct Payment' },
   { value: 'notRequired', label: 'Not Required' },
-  { value: 'onlineCollection', label: 'Online Collection' },
 ]
 
 const consultationModeOption = [

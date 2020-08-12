@@ -25,11 +25,18 @@ const useStyles = makeStyles(() => ({
     marginBottom: 41,
   },
 
+  name: {
+    color: '#2b2929',
+    fontSize: 17.5,
+    marginBottom: 41,
+    paddingLeft: 20,
+    fontWeight: 'bold'
+  },
+
   text: {
     color: '#2b2929',
     fontSize: 16.5,
     marginBottom: 41,
-    paddingLeft: 20,
   },
 }))
 function CancellationResheduleOptions() {
@@ -59,13 +66,18 @@ function CancellationResheduleOptions() {
   console.log(response)
   return (
     <Box className={classes.container}>
-      <Box display="flex">
-        <img
-          src={LeftArrow}
-          slt="leftArrow"
-          className={classes.leftArrow}
-          onClick={handleBackButton}
-        />
+      <Box>
+        <Box display="flex">
+          <img
+            src={LeftArrow}
+            slt="leftArrow"
+            className={classes.leftArrow}
+            onClick={handleBackButton}
+          />
+          {data?.doctorDetails && (
+            <Typography className={classes.name}>{`${'Dr. '}${data.doctorDetails.doctorName}`}</Typography>
+          )}
+        </Box>
         <Typography className={classes.text}>
           Cancellation/Reschedule Options
         </Typography>

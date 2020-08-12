@@ -10,7 +10,7 @@ import DoctorListwithHospital from './DoctorListWithHospital'
 const useStyle = makeStyles(() => ({
   container: {
     width: '100%',
-    padding: 20,
+    padding: '17px 20px 20px 20px',
     height: '100%',
     background: '#f9f9f9',
   },
@@ -40,12 +40,16 @@ const useStyle = makeStyles(() => ({
       height: 31,
       paddingRight: 8,
       borderRadius: 5,
+      border: '1px  solid #c0bfbf'
     },
     '& svg': {
       width: 15,
       marginRight: 2,
       marginTop: 3,
     },
+    '& fieldset': {
+      marginLeft: -0.5,
+    }
   },
 }))
 

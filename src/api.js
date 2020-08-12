@@ -14,6 +14,7 @@ export const URL = {
   doctorList: `/calendar/doctor/list`,
   patientLogin: 'auth/patientLogin',
   patientSignup: '/auth/patientRegistration',
+  logout: '/auth/logout',
   doctorSettingsPersonalView: '/calendar/doctor/personalSettingsView',
   doctorConfigUpdate: '/calendar/doctor/configUpdate',
   workschedule: {
