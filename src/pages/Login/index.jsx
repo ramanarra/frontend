@@ -34,7 +34,7 @@ function PatientLogin({ history }) {
   return (
     <LoginUI
       UserNameText="Phone Number"
-      UserNameAutoComplete="email"
+      UserNameAutoComplete="number"
       useNamePlaceHolder="9999999999"
       UserNameErrorText="Please enter your Phone Number"
       onLogin={onLogin}

@@ -78,7 +78,7 @@ const useStyles = makeStyles(() => ({
     text: {
       marginBottom: 10,
       color: '#645a5a',
-      fontSize: 11,
+      fontSize: 13,
     },
   
     emptytext: {
