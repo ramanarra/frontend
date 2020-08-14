@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, makeStyles } from '@material-ui/core'
+import { Box, makeStyles, Typography } from '@material-ui/core'
 
 import { METHOD, URL } from '../../api'
 import useManualFetch from '../../hooks/useManualFetch'
@@ -12,6 +12,10 @@ const useStyle = makeStyles(() => ({
     display: 'flex',
     flexWrap: 'wrap',
     overflowY: 'auto',
+  },
+  error: {
+    padding: 15,
+    color: '#e11515',
   },
 }))
 
@@ -47,6 +51,10 @@ function DoctorListWithHospital({ doctorAndHospitalList }) {
             />
           )
         })}
+        {
+          hospitalList.length === 0 && doctorList.length === 0 &&
+          <Typography className={classes.error}>There is no Doctors and Hospitals related to your search</Typography>
+        }
     </Box>
   )
 }

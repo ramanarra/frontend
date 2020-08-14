@@ -4,6 +4,7 @@ import { Typography, TextField } from '@material-ui/core'
 import OptionBox from './OptionBox'
 import { minsSuffix } from '../../components/commonFormat.js'
 import SnackBar from '../../components/SnackBar'
+import ConfimationDialog from './ConfirmationDialog'
 
 
 const SessionTime = ({ data, handleUpdate, response }) => {
@@ -11,6 +12,10 @@ const SessionTime = ({ data, handleUpdate, response }) => {
   const [customTime, setCustomTime] = useState('')
   const [isChanged, setChanged] = useState(false)
   const [open, setOpen] = useState(false)
+
+  const [openDialog, setOpenDialog] = useState(false)
+
+  const [value, setValue] = useState(null)
 
   useEffect(() => {
     if (!!data) {
@@ -62,6 +67,17 @@ const SessionTime = ({ data, handleUpdate, response }) => {
     setOpen(false)
   }
 
+  const handleOnClick = (value) =>{
+    setValue(value)
+    setOpenDialog(true)
+  }
+
+  const handleOnClose = (event) => {
+    setOpenDialog(false)
+
+    event.preventDefault()
+  }
+
   return (
     <div className="session-time-det-wrap">
       <Typography variant="subtitle2" className="sub-head">
@@ -71,22 +87,22 @@ const SessionTime = ({ data, handleUpdate, response }) => {
         <OptionBox
           className={'session-option' + activeBox(15)}
           value="15 minutes"
-          onClick={() => handleChange(15)}
+          onClick={() => handleOnClick(15)}
         />
         <OptionBox
           className={'session-option' + activeBox(30)}
           value="30 minutes"
-          onClick={() => handleChange(30)}
+          onClick={() => handleOnClick(30)}
         />
         <OptionBox
           className={'session-option' + activeBox(45)}
           value="45 minutes"
-          onClick={() => handleChange(45)}
+          onClick={() => handleOnClick(45)}
         />
         <OptionBox
           className={'session-option' + activeBox(60)}
           value="60 minutes"
-          onClick={() => handleChange(60)}
+          onClick={() => handleOnClick(60)}
         />
         <div className="session-option">
           <TextField
@@ -109,8 +125,18 @@ const SessionTime = ({ data, handleUpdate, response }) => {
         }
       </div>
       {response && response.statusCode === 200 && (
-        <SnackBar open={open} message={response.message} onclose={handleClose} />
+        <SnackBar openDialog={open} message={response.message} onclose={handleClose} severity={'success'} />
       )}
+      {
+        openDialog && (
+          <ConfimationDialog
+          open={openDialog}
+          onClose={handleOnClose}
+          handleChange={handleChange}
+          value={value}
+           />
+        )
+      }
     </div>
   )
 }

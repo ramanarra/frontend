@@ -82,7 +82,7 @@ const Cancellation = ({ configDetails, doctorKey, onSave, isAbleToWrite, respons
         doctorKey: doctorKey,
         rescheduleDays: Number(rescheduleDays),
         rescheduleHours: Number(rescheduleHours),
-        rescheduleMins: String(rescheduleMins),
+        rescheduleMins: Number(rescheduleMins),
       }
       onSave(params)
       setDisable(false)
@@ -196,7 +196,7 @@ const Cancellation = ({ configDetails, doctorKey, onSave, isAbleToWrite, respons
       )}
 
       {response && response.statusCode === 200 && (
-        <SnackBar open={open} message={response.message} onclose={handleClose} />
+        <SnackBar openDialog={open} message={response.message} onclose={handleClose} severity={'success'} />
       )}
     </Box>
   )

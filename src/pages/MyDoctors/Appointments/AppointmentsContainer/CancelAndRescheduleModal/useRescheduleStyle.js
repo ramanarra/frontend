@@ -136,7 +136,7 @@ const useRescheduleStyle = makeStyles(() => ({
     paddingBottom: 40,
   },
   submitbtn: {
-    padding: '8px 42px',
+    padding: '8px 27px',
     backgroundColor: '#0bb5ff',
     borderRadius: 17,
     textAlign: 'center',
@@ -152,6 +152,11 @@ const useRescheduleStyle = makeStyles(() => ({
   selectedText: {
     color: '#f7f7f7',
   },
+  error: {
+    textAlign: 'center',
+    paddingBottom: 15,
+    color: '#d51717',
+  }
 }))
 
 export default useRescheduleStyle

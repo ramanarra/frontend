@@ -37,11 +37,11 @@ const useSlotsStyle = makeStyles(() => ({
     marginTop: 1,
   },
   fromTime: {
-    fontSize: 8,
+    fontSize: 9,
     paddingLeft: 2,
   },
   toTime: {
-    fontSize: 8,
+    fontSize: 9,
     paddingLeft: 5,
   },
   total: {

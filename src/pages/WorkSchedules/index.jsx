@@ -20,7 +20,6 @@ const WorkSchedule = () => {
   )
   const [updateData, updateError, isUpdating, response] = useManualFetch()
 
-
   useEffect(() => {
     !!updateError && console.error(updateError)
   }, [updateError])
@@ -40,13 +39,18 @@ const WorkSchedule = () => {
 
   return (
     <div style={{ width: 'calc(100% - 257px)' }} className="doc-work-schedule-wrap">
-      <Box display="flex">
-        <img
-          src={LeftArrow}
-          alt="leftArrow"
-          className="leftArrow"
-          onClick={handleBackButton}
-        />
+      <Box>
+        <Box display="flex">
+          <img
+            src={LeftArrow}
+            alt="leftArrow"
+            className="leftArrow"
+            onClick={handleBackButton}
+          />
+          <Typography className="doctor-name">{`${'Dr. '}${localStorage.getItem(
+            'doctorName'
+          )}`}</Typography>
+        </Box>
         <Typography variant="h1" className="main-head">
           Work Schedules
         </Typography>

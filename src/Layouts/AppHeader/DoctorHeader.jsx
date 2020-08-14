@@ -7,6 +7,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import Stretch from '../../components/Stretch'
 import Logo from '../../assets/img/logo.png'
 import HospitalLogo from '../../assets/img/hospitalLogo.png'
+import { useState } from 'react';
 
 const useStyles = makeStyles(() => ({
   appBar: {
@@ -62,10 +63,15 @@ export default function DoctorHeader() {
 
   const history = useHistory()
 
+  const [open, setOpen] = useState(false)
 
   function handleOnVideoClick() {
     history.push('/video-consultation')
   }
+
+  function handleOnClick() {
+    setOpen(!open)
+  } 
 
   return (
     <Box className={classes.appBar}>
@@ -84,7 +90,7 @@ export default function DoctorHeader() {
         <Typography className={classes.text}>Amrit Medicare Pvt. Ltd.</Typography>
       </Box>
       <Box className={classes.hospitalLogoContainer}>
-        <img src={HospitalLogo} alt="hospital logo" className={classes.hospitalLogo} />
+        <img src={HospitalLogo} alt="hospital logo" className={classes.hospitalLogo} onClick={handleOnClick} />
       </Box>
     </Box>
   )

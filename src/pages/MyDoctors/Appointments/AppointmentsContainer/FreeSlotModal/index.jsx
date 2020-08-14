@@ -30,13 +30,15 @@ function FreeSlotModal({ slot, open, onClose, onSave, slotTime, doctorKey }) {
   const [detail, setDetail] = useState(null)
 
   function handleOnClick(event) {
-    onClose(event)
+    if(phoneNumber !== '' && String(phoneNumber).length === 10) {
+      onClose(event)
+      setOpenNew(true)
+    }
     if(detail) {
       if(detail.phone !== phoneNumber) {
         setDetail(null)
       }
     }
-    setOpenNew(true)
   }
 
   function handleClear() {
@@ -166,7 +168,7 @@ function FreeSlotModal({ slot, open, onClose, onSave, slotTime, doctorKey }) {
           handleClear={handleClear}
         />
       ) }
-      {!detail && openNew && (
+      {!detail && openNew && phoneNumber !== '' && (
         <CreateAppointmentForNewPatient
           doctorKey={doctorKey}
           open={openNew}

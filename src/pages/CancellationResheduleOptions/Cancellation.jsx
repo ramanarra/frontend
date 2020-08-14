@@ -37,7 +37,7 @@ const useStyles = makeStyles(() => ({
   },
 
   paper: {
-    width: 430,
+    width: 450,
     background: '#f7fdff',
     borderRadius: 0,
     boxShadow: 'none',
@@ -55,7 +55,7 @@ const useStyles = makeStyles(() => ({
   },
 
   noteContent: {
-    fontSize: 11,
+    fontSize: 13,
     marginTop: 5,
     color: '#3A7D94',
   },
@@ -64,7 +64,7 @@ const useStyles = makeStyles(() => ({
   },
 
   cancellationText: {
-    fontSize: 11,
+    fontSize: 13,
     color: '#216C86',
   },
 
@@ -221,7 +221,7 @@ const Cancellation = ({ configDetails, doctorKey, onSave, isAbleToWrite, respons
                 <div className={classes.noteContainer}>
                   <p className={classes.noteContent}>
                     <b className={classes.cancellationText}>Note</b> : Cancellation
-                    with in the allowed timings, the payment willbe refund to the
+                    with in the allowed timings, the payment willbe refunded to the
                     original payment method. if paid through VIRUJH{' '}
                   </p>
                 </div>
@@ -233,7 +233,7 @@ const Cancellation = ({ configDetails, doctorKey, onSave, isAbleToWrite, respons
 
       <Divider className={classes.divider} />
       {response && response.statusCode === 200 && (
-        <SnackBar open={open} message={response.message} onclose={handleClose} />
+        <SnackBar openDialog={open} message={response.message} onclose={handleClose} severity={'success'} />
       )}
     </Box>
   )

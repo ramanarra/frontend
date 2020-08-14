@@ -33,6 +33,8 @@ const useStyles = makeStyles(() => ({
 function Static({ doctorDetails }) {
   const classes = useStyles()
 
+  localStorage.setItem('doctorName', doctorDetails?.doctorName)
+
   return (
     <Box display="flex">
       <Box>
@@ -84,7 +86,7 @@ function Static({ doctorDetails }) {
         <TextField
           className={classes.notchedOutline}
           variant="outlined"
-          value={doctorDetails?.experience}
+          value={`${doctorDetails?.experience} ${'years'}`}
           disabled
         />
         <Typography className={classes.text}>Email ID</Typography>

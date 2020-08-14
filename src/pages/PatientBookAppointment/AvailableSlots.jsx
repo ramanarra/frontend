@@ -11,7 +11,7 @@ const useStyle = makeStyles(() => ({
   },
   availableSlots: {
     paddingTop: 145,
-    paddingLeft: 40,
+    paddingLeft: 20,
     height: '100%',
   },
   time: {
@@ -39,7 +39,7 @@ const useStyle = makeStyles(() => ({
   },
   selectedText: {
     color: '#ffffff',
-    fontSize: 14,
+    fontSize: 13,
     paddingTop: 2,
   },
   icon: {

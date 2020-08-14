@@ -69,6 +69,7 @@ function DoctorPersonalSetting() {
     key
   )
 
+
   const [onSave, response] = useDoctorConfigUpdate(refetch)
 
   function handleOnBack() {
