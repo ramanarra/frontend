@@ -8,7 +8,7 @@ import useCustomFetch from '../../../hooks/useCustomFetch'
 import useAppointmentUpdate from '../../../hooks/useAppointmentUpdate'
 import AppointmentContainer from './AppointmentsContainer'
 import SnackBar from '../../../components/SnackBar'
-import { tr } from 'date-fns/locale'
+import OverBooking from './AppointmentsContainer/FreeSlotModal/OverBookingDialog'
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -39,7 +39,6 @@ function Appointment({ doctorList }) {
 
   const [open, setOpen] = useState(false)
 
-
   const key = useMemo(() => {
     return {
       doctorKey: id,
@@ -50,18 +49,16 @@ function Appointment({ doctorList }) {
   const [appointmentSlots, refetch] = useCustomFetch(
     METHOD.GET,
     URL.appointmentSlotsView,
-    key,
+    key
   )
 
   const [onSave, response] = useAppointmentUpdate(refetch)
 
-  // console.log(response)
-
   useEffect(() => {
-    if(response) {
+    if (response) {
       setOpen(true)
     }
-  },[response])
+  }, [response])
 
   function forwardPagination() {
     setPaginationNumber(paginationNumber + 1)
@@ -71,14 +68,12 @@ function Appointment({ doctorList }) {
     setPaginationNumber(paginationNumber - 1)
   }
 
-
-
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
-      return;
+      return
     }
     setOpen(false)
-  };
+  }
 
   return (
     <Box className={classes.container}>
@@ -95,30 +90,62 @@ function Appointment({ doctorList }) {
           />
         </Box>
       </Box>
-      {
-        response && response?.appointment &&
-        <SnackBar openDialog={open} message={'Created Sucessfully'} onclose={handleClose} severity={'success'} />
-      }
-      {
-        response && response?.statusCode === 417 &&
-        <SnackBar openDialog={open} message={response.message} onclose={handleClose} severity={'warning'} />
-      }
-      {
-        response && response?.statusCode === 200 &&
-        <SnackBar openDialog={open} message={response.message} onclose={handleClose} severity={'success'} />
-      }
-      {
-        response && (response?.statusCode === 404 || response?.statusCode === 400) &&
-        <SnackBar openDialog={open} message={response.message} onclose={handleClose} severity={'info'} />
-      }
-      {
-        response && response?.statusCode === 500 &&
-        <SnackBar openDialog={open} message={'Internal Server Error'} onclose={handleClose} severity={'error'} />
-      }
-      {
-        response && response.name === 'Error' &&
-        <SnackBar openDialog={open} message={response.message} onclose={handleClose} severity={'error'} />
-      }
+      {response && response.data?.appointment && (
+        <SnackBar
+          openDialog={open}
+          message={'Created Sucessfully'}
+          onclose={handleClose}
+          severity={'success'}
+        />
+      )}
+      {response && response.data?.statusCode === 417 && (
+        <OverBooking
+          open={open}
+          onCloseDialog={handleClose}
+          data={response.config.data}
+          onSave={onSave}
+        />
+      )}
+      {response && response.data?.statusCode === 200 && (
+        <SnackBar
+          openDialog={open}
+          message={response.data.message}
+          onclose={handleClose}
+          severity={'success'}
+        />
+      )}
+      {response && response.data?.statusCode === 404 && (
+        <SnackBar
+          openDialog={open}
+          message={response.data.message}
+          onclose={handleClose}
+          severity={'info'}
+        />
+      )}
+      {response && response.data?.statusCode === 400 && (
+        <SnackBar
+          openDialog={open}
+          message={response.data.message}
+          onclose={handleClose}
+          severity={'info'}
+        />
+      )}
+      {response && response.name === 'Error' && (
+        <SnackBar
+          openDialog={open}
+          message={response.message}
+          onclose={handleClose}
+          severity={'error'}
+        />
+      )}
+      {response && response.data?.statusCode === 502 && (
+        <SnackBar
+          openDialog={open}
+          message={response.data.message}
+          onclose={handleClose}
+          severity={'error'}
+        />
+      )}
     </Box>
   )
 }

@@ -86,7 +86,7 @@ function Static({ doctorDetails }) {
         <TextField
           className={classes.notchedOutline}
           variant="outlined"
-          value={doctorDetails?.experience}
+          value={`${doctorDetails?.experience} ${'years'}`}
           disabled
         />
         <Typography className={classes.text}>Email ID</Typography>

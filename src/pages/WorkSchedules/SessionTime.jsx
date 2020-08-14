@@ -125,7 +125,7 @@ const SessionTime = ({ data, handleUpdate, response }) => {
         }
       </div>
       {response && response.statusCode === 200 && (
-        <SnackBar open={open} message={response.message} onclose={handleClose} />
+        <SnackBar openDialog={open} message={response.message} onclose={handleClose} severity={'success'} />
       )}
       {
         openDialog && (

@@ -11,7 +11,7 @@ const useStyle = makeStyles(() => ({
   },
   availableSlots: {
     paddingTop: 145,
-    paddingLeft: 40,
+    paddingLeft: 20,
     height: '100%',
   },
   time: {

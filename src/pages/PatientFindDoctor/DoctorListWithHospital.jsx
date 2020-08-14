@@ -13,6 +13,10 @@ const useStyle = makeStyles(() => ({
     flexWrap: 'wrap',
     overflowY: 'auto',
   },
+  error: {
+    padding: 15,
+    color: '#e11515',
+  },
 }))
 
 function DoctorListWithHospital({ doctorAndHospitalList }) {
@@ -47,6 +51,10 @@ function DoctorListWithHospital({ doctorAndHospitalList }) {
             />
           )
         })}
+        {
+          hospitalList.length === 0 && doctorList.length === 0 &&
+          <Typography className={classes.error}>There is no Doctors and Hospitals related to your search</Typography>
+        }
     </Box>
   )
 }

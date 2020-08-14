@@ -196,7 +196,7 @@ const Cancellation = ({ configDetails, doctorKey, onSave, isAbleToWrite, respons
       )}
 
       {response && response.statusCode === 200 && (
-        <SnackBar open={open} message={response.message} onclose={handleClose} />
+        <SnackBar openDialog={open} message={response.message} onclose={handleClose} severity={'success'} />
       )}
     </Box>
   )

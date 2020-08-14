@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react'
 import { useHistory } from 'react-router-dom'
 import moment from 'moment'
-import { Box, makeStyles, Typography } from '@material-ui/core'
+import { Box, makeStyles, Typography, Snackbar } from '@material-ui/core'
 import MomentUtils from '@date-io/moment'
 import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers'
 
@@ -10,7 +10,8 @@ import useManualFetch from '../../hooks/useManualFetch'
 import { METHOD, URL } from '../../api'
 import useCustomFecth from '../../hooks/useCustomFetch'
 import SnackBar from '../../components/SnackBar'
-
+import { useEffect } from 'react'
+import { tr } from 'date-fns/locale'
 
 const useStyle = makeStyles(() => ({
   container: {
@@ -76,6 +77,12 @@ const useStyle = makeStyles(() => ({
     color: '#f7f7f7',
     paddingTop: 2,
   },
+  errorMessage: {
+    fontSize: 17,
+    textAlign: 'end',
+    color: '#de1d1d',
+    paddingRight: 85,
+  }
 }))
 
 function AppointmentDatePicker({ doctorKey }) {
@@ -85,14 +92,18 @@ function AppointmentDatePicker({ doctorKey }) {
 
   const [date, setDate] = useState(new Date())
 
+  const [open, setOpen] = useState(false)
+
+  const [error, setError] = useState(false)
+
   const selectedDate = moment(date).format('YYYY-MM-DD')
 
   const key = useMemo(() => {
     return {
       doctorKey: doctorKey,
-      appointmentDate: selectedDate
+      appointmentDate: selectedDate,
     }
-  },[doctorKey, selectedDate])
+  }, [doctorKey, selectedDate])
 
   const [time, setTime] = useState({ start: '00:00:00', end: '00:00:00' })
 
@@ -100,34 +111,50 @@ function AppointmentDatePicker({ doctorKey }) {
 
   const [slots] = useCustomFecth(METHOD.GET, URL.patientAppointmentSlotsView, key)
 
+  useEffect(() => {
+    if (data) {
+      setOpen(true)
+    }
+  }, [data])
+
+
   const handleDateChange = (event) => {
     setDate(event)
   }
 
   function handleSubmit() {
-    const params = {
-      patientId: Number(localStorage.getItem('patientId')),
-      doctorKey: doctorKey,
-      startTime: moment(time.start, 'HH:mm:ss').format('HH:mm'),
-      endTime: moment(time.end, 'HH:mm:ss').format('HH:mm'),
-      appointmentDate: selectedDate,
-      paymentOption: 'directPayment',
-      consultationMode: 'online',
+    if (time.statusCode !== '00:00:00' && time.end !== '00:00:00') {
+      const params = {
+        patientId: Number(localStorage.getItem('patientId')),
+        doctorKey: doctorKey,
+        startTime: moment(time.start, 'HH:mm:ss').format('HH:mm'),
+        endTime: moment(time.end, 'HH:mm:ss').format('HH:mm'),
+        appointmentDate: selectedDate,
+        paymentOption: 'directPayment',
+        consultationMode: 'online',
+      }
+      updateData(METHOD.POST, URL.patientBookAppointment, params)
+    } else {
+      setError(true)
     }
-    updateData(METHOD.POST, URL.patientBookAppointment, params)
-    // history.push('/patient/appointments/upcoming')
   }
 
   const handleSlotTiming = (time) => {
     setTime(time)
+    if (error === true) {
+      setError(false)
+    }
   }
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
-      return;
+      return
     }
-    history.push('/patient/appointments/upcoming')
-  };
+    setOpen(false)
+    if(data?.appointment) {
+      history.push('/patient/appointments/upcoming')
+    }
+  }
 
   return (
     <Box display="flex" className={classes.container}>
@@ -150,34 +177,59 @@ function AppointmentDatePicker({ doctorKey }) {
             <Typography className={classes.confirmText}>CONFIRM</Typography>
           </Box>
         </Box>
+        {error && <Typography className={classes.errorMessage}>Please select any free slot</Typography>}
       </Box>
       {slots && (
         <AvailableSlots availableSlots={slots} handleSlotTiming={handleSlotTiming} />
       )}
-      { 
-      data && data?.appointment &&
-      <SnackBar message={'Sucessfully Created'} onclose={handleClose} severity={'success'} />
-      }
-      {
-        data && data?.statusCode === 417 &&
-        <SnackBar message={data.message} onclose={handleClose} severity={'warning'} />
-      }
-      {
-        data && data?.statusCode === 200 &&
-        <SnackBar message={data.message} onclose={handleClose} severity={'success'} />
-      }
-      {
-        data && data?.statusCode === 404 &&
-        <SnackBar message={data.message} onclose={handleClose} severity={'information'} />
-      }
-      {
-        data && data?.statusCode === 500 &&
-        <SnackBar message={'Internal Server Error'} onclose={handleClose} severity={'error'} />
-      }
-      {
-        data && data.name === 'Error' &&
-        <SnackBar message={data.message} onclose={handleClose} severity={'error'} />
-      }
+      {data && data?.appointment && (
+        <SnackBar
+          openDialog={open}
+          message={'Sucessfully Created'}
+          onclose={handleClose}
+          severity={'success'}
+        />
+      )}
+      {data && data?.statusCode === 417 && (
+        <SnackBar
+          openDialog={open}
+          message={data.message}
+          onclose={handleClose}
+          severity={'warning'}
+        />
+      )}
+      {data && data?.statusCode === 200 && (
+        <SnackBar
+          openDialog={open}
+          message={data.message}
+          onclose={handleClose}
+          severity={'success'}
+        />
+      )}
+      {data && data?.statusCode === 404 && (
+        <SnackBar
+          openDialog={open}
+          message={data.message}
+          onclose={handleClose}
+          severity={'information'}
+        />
+      )}
+      {data && data?.statusCode === 500 && (
+        <SnackBar
+          openDialog={open}
+          message={'Internal Server Error'}
+          onclose={handleClose}
+          severity={'error'}
+        />
+      )}
+      {data && data.name === 'Error' && (
+        <SnackBar
+          openDialog={open}
+          message={data.message}
+          onclose={handleClose}
+          severity={'error'}
+        />
+      )}
     </Box>
   )
 }

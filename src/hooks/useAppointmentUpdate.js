@@ -19,8 +19,7 @@ function useAppointmentUpdate(refetch) {
       .then((res) => {
         setLoading(false)
         refetch()
-        console.log(res)
-        setData(res.data)
+        setData(res)
 
       })
       .catch((err) => {

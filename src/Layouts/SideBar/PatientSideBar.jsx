@@ -18,7 +18,7 @@ const useStyles = makeStyles(() => ({
   item: {
     color: "#9ddcf8",
     fontSize: 22,
-    paddingTop: 10,
+    paddingTop: 7,
     paddingBottom: 16,
     display: 'flex',
     justifyContent: 'center',

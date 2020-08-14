@@ -19,6 +19,7 @@ const useStyle = makeStyles(() => ({
     width: 20,
     cursor: 'pointer',
     height: '3.7%',
+    marginTop: 3,
   },
 }))
 

@@ -193,7 +193,7 @@ function ConsulationAndSignature({
         {/* <img src={doctorDetails?.signature} alt="signature"/> */}
       </div>
       {response && response.statusCode === 200 && (
-        <SnackBar open={open} message={response.message} onclose={handleClose} />
+        <SnackBar openDialog={open} message={response.message} onclose={handleClose} severity={'success'} />
       )}
     </Box>
   )
