@@ -10,9 +10,11 @@ import OpenViduLayout from '../layout/openvidu-layout'
 import UserModel from '../models/user-model'
 import ToolbarComponent from './toolbar/ToolbarComponent'
 
+
 var localUser = new UserModel()
 
 class VideoRoomComponent extends Component {
+
   constructor(props) {
     super(props)
     this.hasBeenUpdated = false
@@ -29,6 +31,7 @@ class VideoRoomComponent extends Component {
       subscribers: [],
       chatDisplay: 'none',
     }
+
 
     this.joinSession = this.joinSession.bind(this)
     this.leaveSession = this.leaveSession.bind(this)
@@ -166,6 +169,9 @@ class VideoRoomComponent extends Component {
   leaveSession() {
     const mySession = this.state.session
 
+    this.props.leaveCall()
+    // const  history  = useHistory()
+
     if (mySession) {
       mySession.disconnect()
     }
@@ -182,6 +188,9 @@ class VideoRoomComponent extends Component {
     if (this.props.leaveSession) {
       this.props.leaveSession()
     }
+
+    this.props.endCall()
+
   }
   camStatusChanged() {
     localUser.setVideoActive(!localUser.isVideoActive())
@@ -465,6 +474,9 @@ class VideoRoomComponent extends Component {
                 camStatusChanged={this.camStatusChanged}
                 micStatusChanged={this.micStatusChanged}
                 leaveSession={this.leaveSession}
+                patientList={this.props.patientList}
+                doctorName={this.props.doctorName}
+                patientName={this.props.patientName}
               />
             </div>
           )}

@@ -56,12 +56,24 @@ export default class StreamComponent extends Component {
     }
   }
 
+  
+
   render() {
     const ToolBarComponent = this.props.ToolBarComponent
     return (
       <div className="OT_widget-container">
         <div className="pointer nickname">
-          <div onClick={this.props.onPatientJoining}>doctorName</div>
+          <div style={{display: 'flex'}}>
+          <div onClick={this.props.onPatientJoining}>{this.props.doctorName}</div>
+          {
+            this.props.patientName &&
+            <div>{`${', '}${this.props.patientName}`}</div>
+          }
+        </div>
+        {
+          this.props.patientName && 
+          <div> 2 paticipants</div>
+        }
         </div>
 
         {this.props.user !== undefined &&
@@ -79,6 +91,8 @@ export default class StreamComponent extends Component {
                 onVideoStateChange={this.props.camStatusChanged}
                 onMuteStateChange={this.props.micStatusChanged}
                 onLeaveSession={this.props.leaveSession}
+                onJoiningPatient={this.props.onPatientJoining}
+                patientList={this.props.patientList}
               />
             ) : null}
             <VideocamOff id="statusCam" />
