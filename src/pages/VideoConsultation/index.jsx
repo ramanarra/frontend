@@ -1,7 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import { useLocation } from 'react-router-dom'
 import socketIOClient from 'socket.io-client'
-import { useLocation } from 'react-router-dom'
 
 import ConfirmationModal from './ConfirmationModel'
 import Video from './Video'
