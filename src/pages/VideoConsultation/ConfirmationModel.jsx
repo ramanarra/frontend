@@ -138,11 +138,11 @@ function ConfirmationPopUp({ open, handleOnOpen, isJoinDisabled }) {
           </Box>
           <Box display="flex">
             <Box className={classes.box}>
-              <Webcam
+              {/* <Webcam
                 audio={false}
                 width="212"
                 height="160"
-              />
+              /> */}
             </Box>
             <Box className={classes.right}>
               {isJoinDisabled ? (
