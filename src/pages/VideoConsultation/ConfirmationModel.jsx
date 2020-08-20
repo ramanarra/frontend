@@ -1,5 +1,6 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
+import Webcam from 'react-webcam'
 import {
   Box,
   Dialog,
@@ -117,10 +118,9 @@ function ConfirmationPopUp({ open, handleOnOpen, isJoinDisabled }) {
 
   function handleClose() {
     handleOnOpen(false)
-    if(localStorage.getItem('loginUser') === 'doctor') {
+    if (localStorage.getItem('loginUser') === 'doctor') {
       history.push('/doctors')
-    }
-    else {
+    } else {
       history.push('/patient/appointments/upcoming')
     }
   }
@@ -137,13 +137,19 @@ function ConfirmationPopUp({ open, handleOnOpen, isJoinDisabled }) {
             <CloseIcon className={classes.closeIcon} onClick={handleClose} />
           </Box>
           <Box display="flex">
-            <Box className={classes.box}></Box>
+            <Box className={classes.box}>
+              <Webcam
+                audio={false}
+                width="212"
+                height="160"
+              />
+            </Box>
             <Box className={classes.right}>
-              {
-                isJoinDisabled ?
-                <img src={Wait} className={classes.waiting} /> :
+              {isJoinDisabled ? (
+                <img src={Wait} className={classes.waiting} />
+              ) : (
                 <img src={Join} className={classes.join} />
-              }
+              )}
               <Box className={classes.button}>
                 <Button
                   className={classes.joinButton}
@@ -153,11 +159,12 @@ function ConfirmationPopUp({ open, handleOnOpen, isJoinDisabled }) {
                 >
                   JOIN
                 </Button>
-                {
-                  isJoinDisabled &&
-                  <Typography className={classes.errorMsg}>Doctor not yet start the meeting</Typography>
-                }
-              </Box>  
+                {isJoinDisabled && (
+                  <Typography className={classes.errorMsg}>
+                    Doctor not yet start the meeting
+                  </Typography>
+                )}
+              </Box>
             </Box>
           </Box>
         </DialogContent>

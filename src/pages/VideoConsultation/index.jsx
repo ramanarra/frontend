@@ -5,7 +5,7 @@ import ConfirmationModal from './ConfirmationModel'
 import Video from './Video'
 import { useLocation } from 'react-router-dom'
 
-const ENDPOINT = 'https://dev.virujh.com/'
+const ENDPOINT = 'http://dev-api.virujh.com:8081/'
 
 function VideoConsulation() {
   const [open, setOpen] = useState(false)
