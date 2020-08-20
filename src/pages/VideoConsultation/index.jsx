@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom'
 import ConfirmationModal from './ConfirmationModel'
 import Video from './Video'
 
-const ENDPOINT = 'https://dev.virujh.com/api'
+const ENDPOINT = 'https://dev.virujh.com'
 
 function VideoConsulation() {
   const [open, setOpen] = useState(false)
@@ -25,12 +25,13 @@ function VideoConsulation() {
   useEffect(() => {
     setOpen(true)
 
-    const socket = socketIOClient(ENDPOINT, {
-      // transports: ['websocket'],
+    const socket = socketIOClient(ENDPOINT,  {
+      transports: ['websocket'],
       jsonp: false,
       query: {
         token: localStorage.getItem('virujhToken'),
       },
+      path: '/socket.io'
     })
 
     socket.on('connect', function () {
