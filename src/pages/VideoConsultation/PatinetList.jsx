@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import classNames from 'classnames'
+import { useHistory } from 'react-router-dom'
 import {
   Box,
   Typography,
@@ -11,6 +12,7 @@ import {
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 
 import getTimeFormatWithNoon, { getTimeFormat } from '../../lib/dateLib'
+
 
 const useStyle = makeStyles((theme) => ({
   dialog: {
@@ -79,24 +81,20 @@ const useStyle = makeStyles((theme) => ({
   }
 }))
 
-function PatientList({ patientList, open, onClose, onJoiningPatient, end, endCall }) {
+function PatientList({ patientList, open, onClose, onJoiningPatient, endCall, appointmentId }) {
   const classes = useStyle()
 
-  const [selected, setSelected] = useState(null)
 
   function handleOnClose(event) {
     onClose(event)
   }
 
-  const handleOnPatientJoining = (appointmentId, firstName, lastName) => {
-    const name = lastName ? (firstName + lastName) : (firstName)
-    onJoiningPatient(appointmentId, name)
-    setSelected(appointmentId)
+  const handleOnPatientJoining = (appointmentId, firstName, lastName, index) => {
+    onJoiningPatient(appointmentId, firstName, lastName, index)
   }
 
-  if(end) {
-    setSelected(null)
-  }
+
+
 
   return (
     <Box>
@@ -113,13 +111,14 @@ function PatientList({ patientList, open, onClose, onJoiningPatient, end, endCal
                     display="flex"
                     key={index}
                     className={classNames(classes.patientDetails, {
-                      [classes.selecedTab]: selected === patientDetails.appointmentId,
+                      [classes.selecedTab]: appointmentId === patientDetails.appointmentId,
                     })}
                     onClick={() =>
                       handleOnPatientJoining(
                         patientDetails.appointmentId,
                         patientDetails.firstName,
-                        patientDetails.lastName
+                        patientDetails.lastName,
+                        index
                       )
                     }
                   >

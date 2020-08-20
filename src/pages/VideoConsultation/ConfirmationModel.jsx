@@ -43,10 +43,18 @@ const useStyle = makeStyles(() => ({
   joinButton: {
     paddingLeft: 150,
     paddingRight: 150,
+    borderRadius: 5,
   },
   errorMsg: {
     color: '#ea2121',
     paddingTop: 5,
+  },
+  message: {
+    color: '#ea2121',
+    position: 'absolute',
+    fontSize: 17,
+    bottom: 150,
+    right: 145,
   },
   header: {
     textAlign: 'center',
@@ -138,17 +146,16 @@ function ConfirmationPopUp({ open, handleOnOpen, isJoinDisabled }) {
           </Box>
           <Box display="flex">
             <Box className={classes.box}>
-              <Webcam
-                audio={false}
-                width="212"
-                height="160"
-              />
+              <Webcam audio={false} width="212" height="160" />
             </Box>
             <Box className={classes.right}>
               {isJoinDisabled ? (
                 <img src={Wait} className={classes.waiting} />
               ) : (
-                <img src={Join} className={classes.join} />
+                <Box>
+                  <img src={Join} className={classes.join} />
+                  <Typography className={classes.message}>Take Online Doctor Consultaion</Typography>
+                </Box>
               )}
               <Box className={classes.button}>
                 <Button

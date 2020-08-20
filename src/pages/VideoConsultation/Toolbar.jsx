@@ -13,8 +13,7 @@ import CallOnIcon from '../../assets/img/call-on.svg'
 import AddCallIcon from '../../assets/img/person.png'
 import VideoOffIcon from '../../assets/img/video-off.svg'
 import MicOffIcon from '../../assets/img/mic-off.svg'
-import CallOffIcon from '../../assets/img/call-off.svg'
-import AddCallOff from '../../assets/img/add-call-off.svg'
+
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -71,11 +70,11 @@ function Toolbar({
   onLeaveSession,
   onJoiningPatient,
   patientList,
+  AddNextPatient
 }) {
   const classes = useStyles()
 
 
- 
   return (
     <div>
       <div className={classes.root}>
@@ -98,7 +97,7 @@ function Toolbar({
         <img src={CallOnIcon} className={classes.videoIcon} />
       </IconButton>
 
-      <IconButton className={classes.iconButton} onClick >
+      <IconButton className={classes.iconButton} onClick={AddNextPatient} >
         <img src={AddCallIcon} className={classes.addIcon} />
       </IconButton>
       </div>

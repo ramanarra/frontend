@@ -93,6 +93,7 @@ export default class StreamComponent extends Component {
                 onLeaveSession={this.props.leaveSession}
                 onJoiningPatient={this.props.onPatientJoining}
                 patientList={this.props.patientList}
+                AddNextPatient={this.props.AddNextPatient}
               />
             ) : null}
             <VideocamOff id="statusCam" />

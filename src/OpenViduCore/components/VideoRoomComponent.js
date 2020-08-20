@@ -477,6 +477,7 @@ class VideoRoomComponent extends Component {
                 patientList={this.props.patientList}
                 doctorName={this.props.doctorName}
                 patientName={this.props.patientName}
+                AddNextPatient={this.props.AddNextPatient}
               />
             </div>
           )}

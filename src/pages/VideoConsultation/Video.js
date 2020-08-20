@@ -12,6 +12,8 @@ function VideoConsultotion({ location, token, sessionID, patientList, socket }) 
 
   const [end, setEnd] = useState(false)
 
+  const [open, setOpen] = useState(false)
+
   const history = useHistory()
 
   const doctorName =
@@ -39,6 +41,15 @@ function VideoConsultotion({ location, token, sessionID, patientList, socket }) 
     setEnd(!end)
   }
 
+  function AddNextPatient() {
+    console.log('true')
+    setOpen(true)
+  }
+
+  function onClose() {
+    setOpen(false)
+  }
+
   return (
     <Fragment>
       {token && (
@@ -53,12 +64,16 @@ function VideoConsultotion({ location, token, sessionID, patientList, socket }) 
             patientName={patientName}
             leaveCall={leaveCall}
             endCall={endCall}
+            AddNextPatient={AddNextPatient}
           />
           <SideBar
             patientList={patientList}
             onPatientJoining={onPatientJoining}
             endCall={endCall}
             end={end}
+            socket={socket}
+            openDialog={open}
+            onClose={onClose}
           />
         </Box>
       )}
