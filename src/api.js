@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export default axios.create({
-  baseURL: 'http://dev-api.virujh.com:8081/api',
+  baseURL: 'https://dev.virujh.com/api',
 })
 
 export const METHOD = {

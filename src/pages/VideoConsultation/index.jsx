@@ -74,7 +74,7 @@ function VideoConsulation() {
         <Video
           token={token}
           socket={socket}
-          sessionID={setSessionID}
+          sessionID={sessionID}
           patientList={patientList}
         />
       )}
