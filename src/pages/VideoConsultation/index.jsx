@@ -4,7 +4,7 @@ import socketIOClient from 'socket.io-client'
 import ConfirmationModal from './ConfirmationModel'
 import Video from './Video'
 
-const ENDPOINT = 'https://dev.virujh.com'
+const ENDPOINT = 'https://dev.virujh.com/'
 
 function VideoConsulation() {
   const [open, setOpen] = useState(false)
