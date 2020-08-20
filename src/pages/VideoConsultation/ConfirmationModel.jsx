@@ -6,19 +6,12 @@ import {
   DialogContent,
   Button,
   makeStyles,
-  TextField,
   Typography,
 } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
-import VideocamIcon from '@material-ui/icons/Videocam'
-import VideocamOffIcon from '@material-ui/icons/VideocamOff'
-import MicNoneIcon from '@material-ui/icons/MicNone'
-import MicOffIcon from '@material-ui/icons/MicOff'
-import IconButton from '@material-ui/core/IconButton'
-import PersonIcon from '@material-ui/icons/Person'
-import StopScreenShareIcon from '@material-ui/icons/StopScreenShare'
 
-import Select from '../../components/Select'
+import Wait from '../../assets/img/wait.svg'
+import Join from '../../assets/img/join.svg'
 
 const useStyle = makeStyles(() => ({
   dialog: {
@@ -47,31 +40,33 @@ const useStyle = makeStyles(() => ({
     paddingTop: 10,
   },
   joinButton: {
-    paddingLeft: 360,
-    paddingRight: 360,
-    backgroundColor: '#3952ec',
+    paddingLeft: 150,
+    paddingRight: 150,
+  },
+  errorMsg: {
+    color: '#ea2121',
+    paddingTop: 5,
   },
   header: {
-      textAlign: 'center',
-      backgroundColor: '#d8d6d6',
-      height: 30,
+    textAlign: 'center',
+    backgroundColor: '#d8d6d6',
+    height: 30,
   },
   text: {
-      paddingTop: 5,
+    paddingTop: 5,
   },
   right: {
-    width: 450,
-    height: 400,
-    paddingLeft: 15,
+    width: 425,
+    paddingLeft: 75,
   },
   nickName: {
-      paddingTop: 20,
+    paddingTop: 20,
   },
   personbutton: {
-      marginTop: 16,
-      padding: 7,
-      backgroundColor: '#e3dede',
-      marginRight: 20,
+    marginTop: 16,
+    padding: 7,
+    backgroundColor: '#e3dede',
+    marginRight: 20,
   },
   name: {
     width: 400,
@@ -79,10 +74,10 @@ const useStyle = makeStyles(() => ({
   microPhone: {
     width: 400,
     '& div': {
-      width: 400,
+      width: 380,
       '& div': {
         paddingTop: 14,
-    },
+      },
     },
   },
   microPhoneButton: {
@@ -104,9 +99,9 @@ const useStyle = makeStyles(() => ({
   video: {
     width: 400,
     '& div': {
-      width: 400,
+      width: 380,
       '& div': {
-          paddingTop: 14,
+        paddingTop: 14,
       },
     },
   },
@@ -115,27 +110,6 @@ const useStyle = makeStyles(() => ({
   },
 }))
 
-const microPhoneOption = [
-  { value: 'none', label: 'None' },
-  {
-    value: 'Default - Microphone (HD Webcam C310) (046d:081b)',
-    label: 'Default - Microphone (HD Webcam C310) (046d:081b)',
-  },
-  {
-    value: 'Communications - Microphone (HD Webcam C310) (046d:081b)',
-    label: 'Communications - Microphone (HD Webcam C310) (046d:081b)',
-  },
-  { value: 'Microphone (Realtek(R) Audio)', label: 'Microphone (Realtek(R) Audio)' },
-]
-
-const videoOptions = [
-  { value: 'none', label: 'None' },
-  {
-    value: 'Logitech HD Webcam C310 (046d:081b)',
-    label: 'Logitech HD Webcam C310 (046d:081b)',
-  },
-]
-
 function ConfirmationPopUp({ open, handleOnOpen, isJoinDisabled }) {
   const classes = useStyle()
 
@@ -143,6 +117,12 @@ function ConfirmationPopUp({ open, handleOnOpen, isJoinDisabled }) {
 
   function handleClose() {
     handleOnOpen(false)
+    if(localStorage.getItem('loginUser') === 'doctor') {
+      history.push('/doctors')
+    }
+    else {
+      history.push('/patient/appointments/upcoming')
+    }
   }
 
   function handleOnClick() {
@@ -159,48 +139,26 @@ function ConfirmationPopUp({ open, handleOnOpen, isJoinDisabled }) {
           <Box display="flex">
             <Box className={classes.box}></Box>
             <Box className={classes.right}>
-                <Box className={classes.header}>
-                    <Typography className={classes.text}>AVATAR</Typography>
-                </Box>
-              <Box display="flex" className={classes.nickName}>
-                <IconButton className={classes.personbutton}> 
-                  <PersonIcon />
-                </IconButton>
-                <TextField className={classes.name} label="Nick name" />
-              </Box>
-              <Box display="flex" className={classes.nickName}>
-                <IconButton className={classes.microPhoneButton}>
-                  <MicNoneIcon />
-                </IconButton>
-                <Box className={classes.microPhone}>
-                  <Select options={microPhoneOption} />
-                </Box>
-              </Box>
-              <Box display="flex" className={classes.nickName}>
-                <IconButton className={classes.videoButton}>
-                  <VideocamIcon />
-                </IconButton>
-                <Box className={classes.video}>
-                  <Select options={videoOptions} />
-                </Box>
-              </Box>
-              <Box display="flex" className={classes.nickName}>
-                <IconButton className={classes.shareButton}>
-                  <StopScreenShareIcon />
-                </IconButton>
-                <TextField className={classes.screen} value="None" label="Screen" disabled />
-              </Box>
+              {
+                isJoinDisabled ?
+                <img src={Wait} className={classes.waiting} /> :
+                <img src={Join} className={classes.join} />
+              }
+              <Box className={classes.button}>
+                <Button
+                  className={classes.joinButton}
+                  onClick={handleOnClick}
+                  disabled={isJoinDisabled}
+                  style={{ backgroundColor: '#0ee5ff' }}
+                >
+                  JOIN
+                </Button>
+                {
+                  isJoinDisabled &&
+                  <Typography className={classes.errorMsg}>Doctor not yet start the meeting</Typography>
+                }
+              </Box>  
             </Box>
-          </Box>
-          <Box className={classes.button}>
-            <Button
-              className={classes.joinButton}
-              onClick={handleOnClick}
-              disabled={isJoinDisabled}
-              style={{ backgroundColor: '#3952ec' }}
-            >
-              JOIN
-            </Button>
           </Box>
         </DialogContent>
       </Dialog>

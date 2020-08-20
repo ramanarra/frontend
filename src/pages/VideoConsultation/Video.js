@@ -1,89 +1,16 @@
 import React, { useState, Fragment } from 'react'
 import { useHistory } from 'react-router-dom'
-import { makeStyles, Snackbar } from '@material-ui/core'
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
+import { Box } from '@material-ui/core'
 
 import OpenViduReact from '../../OpenViduCore/components/VideoRoomComponent'
 import ToolBarComponent from './Toolbar'
-import PatientList from './PatinetList'
-import waitingIcon from '../../assets/img/waiting.svg'
-import tabIcon from '../../assets/img/tab.svg'
-import chatIcon from '../../assets/img/chat-icon.svg'
-import Chat from './Chat'
-import MedicineList from './MedicineList'
+import SideBar from './SideBar'
 
 const ENDPOINT = 'http://dev-api.virujh.com:8081/'
 
-const useStyle = makeStyles(() => ({
-  topBar: {
-    width: 355,
-    height: 60,
-    backgroundColor: '#ffffff',
-    position: 'absolute',
-    top: '0px',
-    right: '0px',
-  },
-  groupIcon: {
-    width: 26,
-    marginLeft: 53,
-    marginRight: 50,
-    cursor: 'pointer',
-    marginTop: 3,
-  },
-  arrowIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: '50%',
-    position: 'absolute',
-    top: 10,
-    right: 338,
-    backgroundColor: '#ffffff',
-    cursor: 'pointer',
-    boxShadow: '5px 0px 15px 0px #f3eeee',
-  },
-  icon: {
-    marginTop: 8,
-    marginLeft: 12,
-    color: '#a8a8a8',
-  },
-  chatIcon: {
-    width: 30,
-    marginLeft: 44,
-    marginRight: 40,
-    cursor: 'pointer',
-    marginTop: 7,
-  },
-  tabIcon: {
-    width: 28,
-    marginLeft: 30,
-    cursor: 'pointer',
-    marginTop: 21,
-  },
-  icons: {
-    display: 'flex',
-  },
-  groupIconHeader: {
-    width: 125,
-    borderRight: '1px solid #d9d6d6',
-    marginTop: 13,
-  },
-  chatIconHeader: {
-    width: 120,
-    borderRight: '1px solid #d9d6d6',
-    marginTop: 13,
-  },
-}))
-
 function VideoConsultotion({ location, token, sessionID, patientList, socket }) {
-  const [open, setOpen] = useState(false)
-
-  const [openChat, setOpenChat] = useState(false)
-
-  const [openMedicine, setOPenMedicine] = useState(false)
 
   const [end, setEnd] = useState(false)
-
-  const classes = useStyle()
 
   const history = useHistory()
 
@@ -99,40 +26,13 @@ function VideoConsultotion({ location, token, sessionID, patientList, socket }) 
     setPatientName(patientName)
   }
 
-  function handleOnPatientList() {
-    setOpen(true)
-    setOpenChat(false)
-    setOPenMedicine(false)
-  }
-
-  function handleOnClose(event) {
-    setOpen(false)
-
-    event.preventDefault()
-  }
-
-  function handleClose() {
-    history.push('/patient/appointments/upcoming')
-  }
-
   function leaveCall() {
     if (localStorage.getItem('loginUser') === 'doctor') {
+      socket.emit('removeSessionAndTokenByDoctor')
       history.push('/doctors')
     } else {
       history.push('/patient/appointments/upcoming')
     }
-  }
-
-  function handleOnChat() {
-    setOpenChat(true)
-    setOPenMedicine(false)
-    setOpen(false)
-  }
-
-  function handleOnMedicine() {
-    setOPenMedicine(true)
-    setOpenChat(false)
-    setOpen(false)
   }
 
   function endCall() {
@@ -142,74 +42,25 @@ function VideoConsultotion({ location, token, sessionID, patientList, socket }) 
   return (
     <Fragment>
       {token && (
-        <OpenViduReact
-          ToolBarComponent={ToolBarComponent}
-          onPatientJoining={onPatientJoining}
-          sessionName={sessionID}
-          token={token}
-          patientList={patientList}
-          doctorName={doctorName}
-          patientName={patientName}
-          leaveCall={leaveCall}
-          endCall={endCall}
-        />
-      )}
-      {localStorage.getItem('loginUser') === 'doctor' && (
-        <div>
-          <div className={classes.topBar}>
-            {!open && (
-              <div className={classes.arrowIcon}>
-                <ArrowBackIosIcon
-                  className={classes.icon}
-                  onClick={handleOnPatientList}
-                />
-              </div>
-            )}
-            <div className={classes.icons}>
-              <div className={classes.groupIconHeader}>
-                <img
-                  src={waitingIcon}
-                  className={classes.groupIcon}
-                  onClick={handleOnPatientList}
-                />
-              </div>
-              <div className={classes.chatIconHeader}>
-                <img
-                  src={chatIcon}
-                  className={classes.chatIcon}
-                  onClick={handleOnChat}
-                />
-              </div>
-              <div className={classes.tabIconHeader}>
-                <img
-                  src={tabIcon}
-                  className={classes.tabIcon}
-                  onClick={handleOnMedicine}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-      {open && (
-        <PatientList
-          patientList={patientList}
-          open={open}
-          onClose={handleOnClose}
-          onJoiningPatient={onPatientJoining}
-          end={end}
-          endCall={endCall}
-        />
-      )}
-      {openChat && <Chat />}
-      {openMedicine && <MedicineList />}
-      {token === '' && localStorage.getItem('loginUser') === 'patient' && (
-        <Snackbar
-          open={true}
-          message={'Doctor not yet started the meeting'}
-          onClose={handleClose}
-          autoHideDuration={4000}
-        />
+        <Box>
+          <OpenViduReact
+            ToolBarComponent={ToolBarComponent}
+            onPatientJoining={onPatientJoining}
+            sessionName={sessionID}
+            token={token}
+            patientList={patientList}
+            doctorName={doctorName}
+            patientName={patientName}
+            leaveCall={leaveCall}
+            endCall={endCall}
+          />
+          <SideBar
+            patientList={patientList}
+            onPatientJoining={onPatientJoining}
+            endCall={endCall}
+            end={end}
+          />
+        </Box>
       )}
     </Fragment>
   )

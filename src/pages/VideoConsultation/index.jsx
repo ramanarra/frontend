@@ -3,6 +3,7 @@ import socketIOClient from 'socket.io-client'
 
 import ConfirmationModal from './ConfirmationModel'
 import Video from './Video'
+import { useLocation } from 'react-router-dom'
 
 const ENDPOINT = 'http://dev-api.virujh.com:8081/'
 
@@ -17,6 +18,8 @@ function VideoConsulation() {
   const [socket, setSocket] = useState('')
 
   const [patientList, setPatientList] = useState('')
+
+  const location = useLocation()
 
   useEffect(() => {
     setOpen(true)
@@ -49,9 +52,11 @@ function VideoConsulation() {
       })
 
       socket.on('videoTokenForPatient', (data) => {
-        setIsJoinDisabled(false)
-        setSessionID(data.sessionId)
-        setToken(data.token)
+        if (data.isToken) {
+          setIsJoinDisabled(false)
+          setSessionID(data.sessionId)
+          setToken(data.token)
+        }
       })
     })
 
