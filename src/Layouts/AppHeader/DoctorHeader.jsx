@@ -10,7 +10,6 @@ import Logo from '../../assets/img/logo.png'
 import HospitalLogo from '../../assets/img/hospitalLogo.png'
 import useManualFetch from '../../hooks/useManualFetch'
 import { METHOD, URL } from '../../api'
-import ConfirmationPopUp from './ConfirmationPopUp'
 
 const useStyles = makeStyles(() => ({
   appBar: {
@@ -99,13 +98,10 @@ export default function DoctorHeader() {
 
   const [open, setOpen] = useState(false)
 
-  const [openDialog, setOpenDialog] =  useState(false)
-
   const [updateData, updateError, isUpdating, data] = useManualFetch()
 
   function handleOnVideoClick() {
-    // history.push('/video-consultation')
-    setOpenDialog(true)
+    history.push('/video-consultation')
   }
 
   function handleOnClick() {
@@ -172,14 +168,6 @@ export default function DoctorHeader() {
           )}
         </Box>
       </ClickAwayListener>
-      {
-        openDialog &&
-        (<ConfirmationPopUp
-          open={openDialog}
-          onClose={handleOnClose}
-           />
-        )
-      }
     </Box>
   )
 }

@@ -136,18 +136,17 @@ const videoOptions = [
   },
 ]
 
-function ConfirmationPopUp({ open, onClose }) {
+function ConfirmationPopUp({ open, handleOnOpen, isJoinDisabled }) {
   const classes = useStyle()
 
   const history = useHistory()
 
   function handleClose() {
-    onClose()
+    handleOnOpen(false)
   }
 
   function handleOnClick() {
-    onClose()
-    history.push('/video-consultation')
+    handleOnOpen(false)
   }
 
   return (
@@ -197,6 +196,7 @@ function ConfirmationPopUp({ open, onClose }) {
             <Button
               className={classes.joinButton}
               onClick={handleOnClick}
+              disabled={isJoinDisabled}
               style={{ backgroundColor: '#3952ec' }}
             >
               JOIN
