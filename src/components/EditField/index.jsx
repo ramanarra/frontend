@@ -3,7 +3,7 @@ import { IconButton } from '@material-ui/core'
 import { Edit, Done, Close } from '@material-ui/icons'
 import './style.scss'
 
-const EditField = ({ value, name, type, onChange, onSave }) => {
+const EditField = ({ value, name, type, onChange, onSave, error }) => {
   const [isEdit, setEdit] = useState(false)
   const [newValue, setNewValue] = useState(value)
 
@@ -51,10 +51,11 @@ const EditField = ({ value, name, type, onChange, onSave }) => {
         {isEdit ? <Close fontSize="small" /> : <Edit fontSize="small" />}
       </IconButton>
       {isEdit && (
-        <IconButton className="save-btn" onClick={handleSave}>
+        <IconButton className="done-toggle-btn" onClick={handleSave}>
           <Done fontSize="small" />
         </IconButton>
       )}
+      {!!error && <div className="err-msg">{error}</div>}
     </div>
   )
 }

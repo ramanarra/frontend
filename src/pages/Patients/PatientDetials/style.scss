@@ -4,6 +4,8 @@
   padding: 0 20px 20px;
   font-size: 14px;
   font-weight: normal;
+  max-height: calc(100vh - 65px);
+  overflow-y: auto;
 
   .title {
     font-size: 18px;
@@ -23,9 +25,7 @@
       }
 
       .field-value {
-        .edit-field {
-          color: #929292;
-        }
+        color: #929292;
       }
     }
   }
@@ -40,21 +40,42 @@
       margin: 10px 0 15px;
       color: #515151;
     }
-    .edit-field-area {
+    .field-area {
       height: 115px;
       width: 40vw;
+      border: 1px solid #e0e0e0;
+      color: #929292;
+      padding: 10px;
     }
   }
 
   .allergy-list {
     margin-top: 20px;
+
+    .field-name {
+      vertical-align: top;
+    }
+
+    .field-value {
+      .allergies {
+        list-style: none;
+
+        .allergy {
+          margin-top: 10px;
+        }
+      }
+    }
   }
 
-  .save-btn {
+  .edit-btn {
     background: #0bb5ff;
     color: #fff;
     border-radius: 20px;
     width: 150px;
     margin-top: 30px;
+
+    &:hover {
+      background: #0bb5ff;
+    }
   }
 }

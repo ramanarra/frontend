@@ -3,6 +3,7 @@
 .doctor-patients-list {
   padding: 0px 50px;
   font-size: 14px;
+
   .header-bar {
     @include lrPartition;
     border-bottom: 1px solid #aaaaaa55;
