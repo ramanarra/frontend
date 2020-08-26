@@ -46,7 +46,7 @@ function PatientBookAppointment() {
     <Box className={classes.container} display="flex">
       <img src={LeftArrow} alt="Left Arrow" className={classes.leftArrow} onClick={handleOnClick} />
       {doctorDetails && <DoctorDetails doctorDetails={doctorDetails} />}
-      <AppointmentDatePicker doctorKey={id} />
+      {doctorDetails && <AppointmentDatePicker doctorKey={id} doctorDetails={doctorDetails} />}
     </Box>
   )
 }
