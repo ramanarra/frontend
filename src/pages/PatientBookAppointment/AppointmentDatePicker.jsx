@@ -1,7 +1,7 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import moment from 'moment'
-import { Box, makeStyles, Typography, Snackbar } from '@material-ui/core'
+import { Box, makeStyles, Typography } from '@material-ui/core'
 import MomentUtils from '@date-io/moment'
 import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers'
 
@@ -10,8 +10,7 @@ import useManualFetch from '../../hooks/useManualFetch'
 import { METHOD, URL } from '../../api'
 import useCustomFecth from '../../hooks/useCustomFetch'
 import SnackBar from '../../components/SnackBar'
-import { useEffect } from 'react'
-import { tr } from 'date-fns/locale'
+import OverBooking from  './OverBookingDialog'
 
 const useStyle = makeStyles(() => ({
   container: {
@@ -82,19 +81,24 @@ const useStyle = makeStyles(() => ({
     textAlign: 'end',
     color: '#de1d1d',
     paddingRight: 85,
-  }
+  },
 }))
 
-function AppointmentDatePicker({ doctorKey }) {
+function AppointmentDatePicker({ doctorKey, doctorDetails }) {
   const classes = useStyle()
 
   const history = useHistory()
 
   const [date, setDate] = useState(new Date())
 
+
   const [open, setOpen] = useState(false)
 
   const [error, setError] = useState(false)
+
+  const [time, setTime] = useState({ start: '00:00:00', end: '00:00:00' })
+
+  const [confirmation, setConfirmation] = useState(true)
 
   const selectedDate = moment(date).format('YYYY-MM-DD')
 
@@ -102,14 +106,13 @@ function AppointmentDatePicker({ doctorKey }) {
     return {
       doctorKey: doctorKey,
       appointmentDate: selectedDate,
+      confirmation: confirmation,
     }
   }, [doctorKey, selectedDate])
 
-  const [time, setTime] = useState({ start: '00:00:00', end: '00:00:00' })
-
   const [updateData, updateError, isUpdating, data] = useManualFetch()
 
-  const [slots] = useCustomFecth(METHOD.GET, URL.patientAppointmentSlotsView, key)
+  const [slots] = useCustomFecth(METHOD.POST, URL.patientAppointmentSlotsView, key)
 
   useEffect(() => {
     if (data) {
@@ -117,13 +120,13 @@ function AppointmentDatePicker({ doctorKey }) {
     }
   }, [data])
 
-
   const handleDateChange = (event) => {
     setDate(event)
+    setConfirmation(false)
   }
 
-  function handleSubmit() {
-    if (time.statusCode !== '00:00:00' && time.end !== '00:00:00') {
+  function handleSubmit(confirmation) {
+    if (time.start !== '00:00:00' && time.end !== '00:00:00') {
       const params = {
         patientId: Number(localStorage.getItem('patientId')),
         doctorKey: doctorKey,
@@ -132,6 +135,7 @@ function AppointmentDatePicker({ doctorKey }) {
         appointmentDate: selectedDate,
         paymentOption: 'directPayment',
         consultationMode: 'online',
+        confirmation: confirmation,
       }
       updateData(METHOD.POST, URL.patientBookAppointment, params)
     } else {
@@ -141,7 +145,7 @@ function AppointmentDatePicker({ doctorKey }) {
 
   const handleSlotTiming = (time) => {
     setTime(time)
-    if (error === true) {
+    if (error) {
       setError(false)
     }
   }
@@ -151,7 +155,7 @@ function AppointmentDatePicker({ doctorKey }) {
       return
     }
     setOpen(false)
-    if(data?.appointment) {
+    if (data?.appointment) {
       history.push('/patient/appointments/upcoming')
     }
   }
@@ -159,28 +163,34 @@ function AppointmentDatePicker({ doctorKey }) {
   return (
     <Box display="flex" className={classes.container}>
       <Box className={classes.datePicker}>
-        <MuiPickersUtilsProvider utils={MomentUtils}>
-          <DatePicker
-            autoOk
-            disablePast
-            disableToolbar
-            orientation="landscape"
-            variant="static"
-            openTo="date"
-            value={date}
-            onChange={handleDateChange}
-            className={classes.dateContainer}
-          />
-        </MuiPickersUtilsProvider>
+        {slots?.date && (
+          <MuiPickersUtilsProvider utils={MomentUtils}>
+            <DatePicker
+              autoOk
+              disablePast
+              disableToolbar
+              orientation="landscape"
+              variant="static"
+              openTo="date"
+              value={new Date(slots.date)}
+              onChange={handleDateChange}
+              className={classes.dateContainer}
+            />
+          </MuiPickersUtilsProvider>
+        )}
         <Box className={classes.button}>
-          <Box className={classes.confirmButton} onClick={handleSubmit}>
+          <Box className={classes.confirmButton} onClick={() => handleSubmit(false)}>
             <Typography className={classes.confirmText}>CONFIRM</Typography>
           </Box>
         </Box>
-        {error && <Typography className={classes.errorMessage}>Please select any free slot</Typography>}
+        {error && (
+          <Typography className={classes.errorMessage}>
+            Please select any free slot
+          </Typography>
+        )}
       </Box>
-      {slots && (
-        <AvailableSlots availableSlots={slots} handleSlotTiming={handleSlotTiming} />
+      {slots?.slots && (
+        <AvailableSlots availableSlots={slots.slots} handleSlotTiming={handleSlotTiming} doctorDetails={doctorDetails} />
       )}
       {data && data?.appointment && (
         <SnackBar
@@ -188,38 +198,6 @@ function AppointmentDatePicker({ doctorKey }) {
           message={'Sucessfully Created'}
           onclose={handleClose}
           severity={'success'}
-        />
-      )}
-      {data && data?.statusCode === 417 && (
-        <SnackBar
-          openDialog={open}
-          message={data.message}
-          onclose={handleClose}
-          severity={'warning'}
-        />
-      )}
-      {data && data?.statusCode === 200 && (
-        <SnackBar
-          openDialog={open}
-          message={data.message}
-          onclose={handleClose}
-          severity={'success'}
-        />
-      )}
-      {data && data?.statusCode === 404 && (
-        <SnackBar
-          openDialog={open}
-          message={data.message}
-          onclose={handleClose}
-          severity={'information'}
-        />
-      )}
-      {data && data?.statusCode === 500 && (
-        <SnackBar
-          openDialog={open}
-          message={'Internal Server Error'}
-          onclose={handleClose}
-          severity={'error'}
         />
       )}
       {data && data.name === 'Error' && (
@@ -230,6 +208,46 @@ function AppointmentDatePicker({ doctorKey }) {
           severity={'error'}
         />
       )}
+      {(data && data?.statusCode && 
+      (data?.statusCode === 417 && (
+        <OverBooking
+          openDialog={open}
+          onclose={handleClose}
+          onSubmit={handleSubmit}
+        />
+      )) ||
+        (data?.statusCode === 200 && (
+          <SnackBar
+            openDialog={open}
+            message={data.message}
+            onclose={handleClose}
+            severity={'success'}
+          />
+        )) ||
+        (data?.statusCode === 404 && (
+          <SnackBar
+            openDialog={open}
+            message={data.message}
+            onclose={handleClose}
+            severity={'information'}
+          />
+        )) ||
+        (data?.statusCode === 500 && (
+          <SnackBar
+            openDialog={open}
+            message={'Internal Server Error'}
+            onclose={handleClose}
+            severity={'error'}
+          />
+        )) ||
+        (data?.statusCode && (
+          <SnackBar
+            openDialog={open}
+            message={data.message}
+            onclose={handleClose}
+            severity={'error'}
+          />
+        )))}
     </Box>
   )
 }
