@@ -1,0 +1,24 @@
+@mixin lrPartition {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@mixin rowCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin colCenter {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin equalSplitPartiton {
+  display: grid;
+  grid-template-columns: 48.5% 48.5%;
+  column-gap: 3%;
+}
