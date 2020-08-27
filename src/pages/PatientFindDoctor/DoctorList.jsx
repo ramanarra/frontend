@@ -12,14 +12,14 @@ const useStyle = makeStyles(() => ({
   },
 }))
 
-function DoctorList({ doctorLists }) {
+function DoctorList({ doctorLists, isHospital }) {
   const classes = useStyle()
 
   return (
     <Box className={classes.container}>
       {doctorLists &&
         doctorLists.map((doctorDetail, index) => {
-          return <DoctorInfoCard doctorDetail={doctorDetail} key={index} />
+          return <DoctorInfoCard doctorDetail={doctorDetail} key={index} isHospital={isHospital} />
         })}
     </Box>
   )

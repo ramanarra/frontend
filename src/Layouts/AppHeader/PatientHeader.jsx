@@ -1,40 +1,43 @@
-import React from 'react'
+import React, { useState } from 'react'
 import classNames from 'classnames'
 import { useHistory } from 'react-router-dom'
 import { Box, Button, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import SearchRoundedIcon from '@material-ui/icons/SearchRounded'
+import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 
 import Stretch from '../../components/Stretch'
 import Logo from '../../assets/img/logo.png'
-import HospitalLogo from '../../assets/img/hospitalLogo.png'
-
+import appointmentIcon from '../../assets/img/appointmentIcon.svg'
+import useManualFetch from '../../hooks/useManualFetch'
+import { METHOD, URL } from '../../api'
 
 const useStyles = makeStyles(() => ({
   appBar: {
     height: 65,
     paddingLeft: 20,
-    paddingRight: 70,
+    paddingRight: 50,
     display: 'flex',
     alignItems: 'center',
     borderBottom: '1px solid #dddddd',
   },
 
   searchDoctorButton: {
-    fontSize: 9.5,
+    fontSize: 10,
     borderRadius: 19,
     boxShadow: 'none',
-    padding: '2px 6px',
+    padding: '2px 7px',
   },
 
   searchIcon: {
-    width: 18,
-    paddingTop: 2,
+    width: 15.5,
+    marginBottom: 4,
+    marginTop: 4,
     marginLeft: 6,
   },
 
   findDoctorText: {
     marginRight: 5,
+    paddingLeft: 6,
   },
 
   gap: {
@@ -60,8 +63,39 @@ const useStyles = makeStyles(() => ({
   },
 
   hospitalLogo: {
-    width: 30,
+    width: 21,
     paddingTop: 5,
+    cursor: 'pointer',
+    marginLeft: 10,
+    borderRadius: '50%',
+  },
+
+  logout: {
+    position: 'absolute',
+    zIndex: 1,
+    right: 70,
+    width: 140,
+    padding: 5,
+    backgroundColor: '#ffffff',
+    border: '1px solid #c1c1c1',
+    '& :hover': {
+      backgroundColor: '#f7f7f7',
+    },
+  },
+  logoutText: {
+    fontSize: 14,
+    cursor: 'pointer',
+    paddingTop: 2.5,
+    color: '#5c5a5a',
+    paddingLeft: 5,
+  },
+  edit: {
+    fontSize: 14,
+    cursor: 'pointer',
+    color: '#5c5a5a',
+    paddingLeft: 5,
+    paddingBottom: 2.5,
+    borderBottom: '1px solid #f3f3f3',
   },
 }))
 
@@ -70,8 +104,36 @@ export default function PatientHeader() {
 
   const history = useHistory()
 
+  const [open, setOpen] = useState(false)
+
+  const [updateData, updateError, isUpdating, data] = useManualFetch()
+
   function handleFindDoctor() {
-      history.push('/patient/find-doctor')
+    history.push('/patient/find-doctor')
+  }
+
+  function handleOnClick() {
+    setOpen(!open)
+  }
+
+  function handleOnAwayClick() {
+    setOpen(false)
+  }
+
+  function handleOnLogout() {
+    updateData(METHOD.GET, URL.logout)
+  }
+
+  if (data) {
+    if (data.message === 'sucessfully loggedout') {
+      localStorage.clear()
+      history.push('/login')
+    }
+  }
+
+  function handleOnEdit() {
+    history.push('/patient/setting')
+    setOpen(false)
   }
 
   return (
@@ -85,23 +147,34 @@ export default function PatientHeader() {
           color="primary"
           onClick={handleFindDoctor}
         >
-          <SearchRoundedIcon className={classes.searchIcon} />
-          <span className={classes.findDoctorText}>FIND DOCTOR</span>
+          <img src={appointmentIcon} className={classes.searchIcon} />
+          <span className={classes.findDoctorText}>BOOK APPOINTMENT</span>
         </Button>
       </Box>
       <Box className={classes.gap}>
         <i className={classNames('icon-notify', classes.notificationImg)}></i>
       </Box>
       <Box className={classes.gap}>
-        <Typography className={classes.text}>Aravindaswamy</Typography>
+        <Typography className={classes.text}>{localStorage.getItem('patientName')}</Typography>
       </Box>
-      <Box className={classes.hospitalLogoContainer}>
-        <img
-          src={HospitalLogo}
-          alt="hospital logo"
-          className={classes.hospitalLogo}
-        />
-      </Box>
+      <ClickAwayListener onClickAway={handleOnAwayClick}>
+        <Box className={classes.hospitalLogoContainer}>
+          <img
+            src={localStorage.getItem('photo')}
+            alt="patient photo"
+            className={classes.hospitalLogo}
+            onClick={handleOnClick}
+          />
+          {open && (
+            <Box className={classes.logout}>
+              <Typography className={classes.edit} onClick={handleOnEdit}>Edit Profile</Typography>
+              <Typography className={classes.logoutText} onClick={handleOnLogout}>
+                Logout
+              </Typography>
+            </Box>
+          )}
+        </Box>
+      </ClickAwayListener>
     </Box>
   )
 }

@@ -22,11 +22,11 @@ const useStyle = makeStyles(() => ({
     width: 240,
     height: 25,
     backgroundColor: '#f4f2f2',
-    marginLeft: 165,
+    marginLeft: 167,
   },
   text: {
     paddingTop: 7,
-    fontSize: 10,
+    fontSize: 10.5,
     textAlign: 'center',
     color: '#6a6a6a',
   },

@@ -4,12 +4,10 @@ import { makeStyles } from '@material-ui/core/styles'
 import { Edit, Check, Clear } from '@material-ui/icons'
 import IconButton from '@material-ui/core/IconButton'
 
-
 import Switch from '../../components/Switch'
 import NumberTextField from '../../components/NumberTextField'
 import UnpaidBooking from './UnpaidBooking'
 import SnackBar from '../../components/SnackBar'
-
 
 const useStyles = makeStyles(() => ({
   text: {
@@ -39,10 +37,16 @@ const useStyles = makeStyles(() => ({
   message: {
     color: '#ec1144',
     fontSize: 14,
-  }
+  },
 }))
 
-const Cancellation = ({ configDetails, doctorKey, onSave, isAbleToWrite, response }) => {
+const Cancellation = ({
+  configDetails,
+  doctorKey,
+  onSave,
+  isAbleToWrite,
+  response,
+}) => {
   const classes = useStyles()
   const [isPatientRescheduleAllowed, setIsPatientRescheduleAllowed] = useState(false)
   const [rescheduleDays, setRescheduleDays] = useState(0)
@@ -179,10 +183,11 @@ const Cancellation = ({ configDetails, doctorKey, onSave, isAbleToWrite, respons
               </Box>
             )}
           </Box>
-          {
-            response && response.statusCode !== 200 && 
-            <Typography className={classes.message}>{response.data.message.message}</Typography>
-          }
+          {response && response.statusCode !== 200 && (
+            <Typography className={classes.message}>
+              {response.data.message.message}
+            </Typography>
+          )}
           <Box marginTop={4}>
             <UnpaidBooking
               configDetails={configDetails}
@@ -196,7 +201,21 @@ const Cancellation = ({ configDetails, doctorKey, onSave, isAbleToWrite, respons
       )}
 
       {response && response.statusCode === 200 && (
-        <SnackBar openDialog={open} message={response.message} onclose={handleClose} severity={'success'} />
+        <SnackBar
+          openDialog={open}
+          message={response.message}
+          onclose={handleClose}
+          severity={'success'}
+        />
+      )}
+
+      {response && response.name === 'Error' && (
+        <SnackBar
+          openDialog={open}
+          message={response.message}
+          onclose={handleClose}
+          severity={'error'}
+        />
       )}
     </Box>
   )

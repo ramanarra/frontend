@@ -39,30 +39,34 @@ const WorkSchedule = () => {
 
   return (
     <div style={{ width: 'calc(100% - 257px)' }} className="doc-work-schedule-wrap">
-      <Box>
-        <Box display="flex">
-          <img
-            src={LeftArrow}
-            alt="leftArrow"
-            className="leftArrow"
-            onClick={handleBackButton}
-          />
-          <Typography className="doctor-name">{`${'Dr. '}${localStorage.getItem(
-            'doctorName'
-          )}`}</Typography>
-        </Box>
-        <Typography variant="h1" className="main-head">
-          Work Schedules
-        </Typography>
-      </Box>
+      {data && (
+        <Box>
+          <Box>
+            <Box display="flex">
+              <img
+                src={LeftArrow}
+                alt="leftArrow"
+                className="leftArrow"
+                onClick={handleBackButton}
+              />
+              <Typography className="doctor-name">{`${'Dr. '}${localStorage.getItem(
+                'doctorName'
+              )}`}</Typography>
+            </Box>
+            <Typography variant="h1" className="main-head">
+              Work Schedules
+            </Typography>
+          </Box>
 
-      <SessionTime
-        data={data?.configDetails?.consultationSessionTimings}
-        handleUpdate={handleUpdate}
-        response={response}
-      />
-      {/* <OverBooking data={data?.configDetails} handleUpdate={handleUpdate} /> */}
-      <Schedules data={data} handleUpdate={handleUpdate} />
+          <SessionTime
+            data={data?.configDetails?.consultationSessionTimings}
+            handleUpdate={handleUpdate}
+            response={response}
+          />
+          {/* <OverBooking data={data?.configDetails} handleUpdate={handleUpdate} /> */}
+          <Schedules data={data} handleUpdate={handleUpdate} />
+        </Box>
+      )}
     </div>
   )
 }

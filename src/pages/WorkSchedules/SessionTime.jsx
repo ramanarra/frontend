@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { Typography, TextField } from '@material-ui/core'
+import { Typography, TextField, Snackbar } from '@material-ui/core'
 
 import OptionBox from './OptionBox'
 import { minsSuffix } from '../../components/commonFormat.js'
 import SnackBar from '../../components/SnackBar'
 import ConfimationDialog from './ConfirmationDialog'
-
 
 const SessionTime = ({ data, handleUpdate, response }) => {
   const [sessionTime, setSessionTime] = useState(null)
@@ -17,10 +16,13 @@ const SessionTime = ({ data, handleUpdate, response }) => {
 
   const [value, setValue] = useState(null)
 
+  const [isEdit, setEdit] = useState(false)
+
   useEffect(() => {
     if (!!data) {
       const defaultTimes = [15, 30, 45, 60]
       defaultTimes.includes(data) ? setSessionTime(data) : setCustomTime(data)
+      defaultTimes.includes(data) ? setCustomTime('') : setCustomTime(data)
     }
   }, [data])
 
@@ -36,15 +38,17 @@ const SessionTime = ({ data, handleUpdate, response }) => {
   }
 
   const handleChange = (value, type) => {
-    if (!!type) {
-      !!sessionTime && value !== '' && setSessionTime(null)
-      setCustomTime(value)
-      !isChanged && setChanged(true)
-    } else {
-      if (!!value && value !== sessionTime) {
-        !!customTime && setCustomTime('')
-        setSessionTime(value)
-        handleSave(value)
+    if (value > 0) {
+      if (!!type) {
+        !!sessionTime && value !== '' && setSessionTime(null)
+        setCustomTime(value)
+        !isChanged && setChanged(true)
+      } else {
+        if (!!value && value !== sessionTime) {
+          !!customTime && setCustomTime('')
+          setSessionTime(value)
+          handleSave(value)
+        }
       }
     }
   }
@@ -54,8 +58,9 @@ const SessionTime = ({ data, handleUpdate, response }) => {
   }
 
   const handleKey = (e) => {
+    setEdit(true)
     if (e.keyCode === 13) {
-      isChanged && handleSave()
+      isChanged && setOpenDialog(true)
     }
   }
 
@@ -67,13 +72,15 @@ const SessionTime = ({ data, handleUpdate, response }) => {
     setOpen(false)
   }
 
-  const handleOnClick = (value) =>{
+  const handleOnClick = (value) => {
     setValue(value)
     setOpenDialog(true)
   }
 
   const handleOnClose = (event) => {
     setOpenDialog(false)
+
+    setEdit(false)
 
     event.preventDefault()
   }
@@ -111,32 +118,46 @@ const SessionTime = ({ data, handleUpdate, response }) => {
             onChange={(e) => handleChange(e.target.value, 1)}
             onKeyDown={handleKey}
             placeholder="20mins."
-            inputProps={{
-              onBlur: () => isChanged && handleSave(),
-            }}
             InputProps={{
               inputComponent: minsSuffix,
             }}
           />
         </div>
-        {
-          response && response.statusCode !== 200 &&
-          <Typography>{response.message}</Typography>
-        }
       </div>
       {response && response.statusCode === 200 && (
-        <SnackBar openDialog={open} message={response.message} onclose={handleClose} severity={'success'} />
+        <SnackBar
+          openDialog={open}
+          message={response.message}
+          onclose={handleClose}
+          severity={'success'}
+        />
       )}
-      {
-        openDialog && (
-          <ConfimationDialog
+      {response && response.statusCode !== 200 && (
+        <Snackbar
+          openDialog={open}
+          message={response.message}
+          onclose={handleClose}
+          severity={'error'}
+        />
+      )}
+      {response && response.name === 'Error' && (
+        <SnackBar
+          openDialog={open}
+          message={response.message}
+          onclose={handleClose}
+          severity={'error'}
+        />
+      )}
+      {openDialog && (
+        <ConfimationDialog
           open={openDialog}
           onClose={handleOnClose}
           handleChange={handleChange}
           value={value}
-           />
-        )
-      }
+          handleSave={handleSave}
+          isEdit={isEdit}
+        />
+      )}
     </div>
   )
 }

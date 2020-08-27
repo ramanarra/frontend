@@ -21,10 +21,10 @@ const useStyle = makeStyles(() => ({
   },
 
   closeIcon: {
-      width: 25,
-      marginLeft: 250,
-      marginTop: 5,
-      cursor: 'pointer',
+    width: 25,
+    marginLeft: 250,
+    marginTop: 5,
+    cursor: 'pointer',
   },
 
   confimationText: {
@@ -82,7 +82,14 @@ const useStyle = makeStyles(() => ({
   },
 }))
 
-function ConfirmationDialog({ open, onClose, handleChange, value }) {
+function ConfirmationDialog({
+  open,
+  onClose,
+  handleChange,
+  value,
+  handleSave,
+  isEdit,
+}) {
   const classes = useStyle()
 
   function handleClose(event) {
@@ -90,15 +97,22 @@ function ConfirmationDialog({ open, onClose, handleChange, value }) {
   }
 
   function handleOnClick(event) {
-    onClose(event)
-    handleChange(value)
+    if (isEdit) {
+      onClose(event)
+      handleSave()
+    } else {
+      onClose(event)
+      handleChange(value)
+    }
   }
   return (
     <Box>
       <Dialog open={open}>
         <DialogTitle>
           <Box display="flex">
-            <Typography className={classes.titleText} variant="h5">Confirmation</Typography>
+            <Typography className={classes.titleText} variant="h5">
+              Confirmation
+            </Typography>
             <CloseIcon className={classes.closeIcon} onClick={handleClose} />
           </Box>
         </DialogTitle>

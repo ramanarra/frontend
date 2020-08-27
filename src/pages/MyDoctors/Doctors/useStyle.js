@@ -77,7 +77,6 @@ export const useInfocardStyles = makeStyles((theme) => ({
       borderBottom: '2px solid #0bb5ff',
       boxShadow: '5px 0px 15px 0px #f3eeee',
       height: 208,
-      // width: 335,
     },
   
     large: {

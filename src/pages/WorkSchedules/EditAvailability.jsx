@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { Dialog, IconButton, Typography, Button, TextField } from '@material-ui/core'
 import { Close, DeleteOutline } from '@material-ui/icons'
-import { KeyboardTimePicker, TimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
+import { KeyboardTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import moment from 'moment'
 import MomentUtils from '@date-io/moment'
+
 import { timeFmt } from '../../components/commonFormat'
 
 const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
@@ -83,7 +84,6 @@ const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
           KeyboardButtonProps={{
             'aria-label': 'change time',
           }}
-          // format="hh:mmA"
         />
         -
         <KeyboardTimePicker
@@ -104,7 +104,6 @@ const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
               },
             })
           }
-          // format="hh:mmA"
         />
       </MuiPickersUtilsProvider>
       <IconButton className="del-btn" onClick={handleDelete.bind(this, data)}>

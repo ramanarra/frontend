@@ -1,7 +1,9 @@
 import axios from 'axios'
 
 export default axios.create({
-  baseURL: 'https://dev.virujh.com/api',
+  // baseURL: 'https://dev.virujh.com/api/',
+  baseURL: 'http://dev-api.virujh.com:8081/api',
+  // baseURL: 'https://8992e0854253.ngrok.io/api',
 })
 
 export const METHOD = {
@@ -29,6 +31,7 @@ export const URL = {
   patientSearch: '/calendar/doctor/patientSearch',
   createAppointment: '/calendar/doctor/createAppointment',
   createAppointmentAlongWIthRegisteringPatient: '/calendar/doctor/creatingAppointmetAlongWithRegisteringPatient',
+  hospitalDetailsView: '/calendar/doctor/hospitaldetailsView',
   patientUpcomingAppointments: '/calendar/patient/upcomingAppointmentsList',
   patientPastAppointments: '/calendar/patient/pastAppointmentsList',
   patientDoctorList: '/calendar/patient/doctorList',
@@ -37,5 +40,9 @@ export const URL = {
   appointmentDoctorDetails: '/calendar/patient/appointmentDoctorDetails',
   viewDoctorDetails: '/calendar/patient/viewDoctorDetails',
   patientAppointmentSlotsView: '/calendar/patient/appointmentSlotsView',
-  patientBookAppointment: '/calendar/patient/bookAppointment'
+  patientBookAppointment: '/calendar/patient/bookAppointment',
+  patientViewDetails: '/calendar/patient/viewPatientDetails',
+  patientDetailsEdit: '/calendar/patient/detailsEdit',
+  patientAppointmentCancel: '/calendar/patient/appointmentCancel',
+  patientAppointmentReschedule: '/calendar/patient/patientAppointmentReschedule',
 }

@@ -42,6 +42,7 @@ function PastAppointments() {
               appointmentDetail={appointmentDetail}
               borderColor={borderColors[index % 4]}
               key={index}
+              past={true}
             />
           )
         })}

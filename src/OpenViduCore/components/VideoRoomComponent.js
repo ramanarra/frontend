@@ -169,7 +169,6 @@ class VideoRoomComponent extends Component {
   leaveSession() {
     const mySession = this.state.session
 
-    this.props.leaveCall()
     // const  history  = useHistory()
 
     if (mySession) {
@@ -189,7 +188,9 @@ class VideoRoomComponent extends Component {
       this.props.leaveSession()
     }
 
-    this.props.endCall()
+    // this.props.endCall()
+
+    this.props.leaveCall()
 
   }
   camStatusChanged() {
@@ -478,6 +479,8 @@ class VideoRoomComponent extends Component {
                 doctorName={this.props.doctorName}
                 patientName={this.props.patientName}
                 AddNextPatient={this.props.AddNextPatient}
+                videoAvailability={this.props.videoAvailability}
+                audioAvailability={this.props.audioAvailability}
               />
             </div>
           )}

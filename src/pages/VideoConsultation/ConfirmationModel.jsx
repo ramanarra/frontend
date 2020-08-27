@@ -1,4 +1,5 @@
-import React from 'react'
+import React, {useState} from 'react'
+import classNames from 'classnames'
 import { useHistory } from 'react-router-dom'
 import Webcam from 'react-webcam'
 import {
@@ -44,6 +45,7 @@ const useStyle = makeStyles(() => ({
     paddingLeft: 150,
     paddingRight: 150,
     borderRadius: 5,
+    color: '#ffffff',
   },
   errorMsg: {
     color: '#ea2121',
@@ -117,12 +119,30 @@ const useStyle = makeStyles(() => ({
   screen: {
     width: 400,
   },
+  selecedTab: {
+    backgroundColor: '#000000',
+  },
+  error: {
+    color: '#ffffff',
+    position: 'fixed',
+    top: 330,
+    left: 430,
+    fontSize: 20,
+  },
 }))
 
-function ConfirmationPopUp({ open, handleOnOpen, isJoinDisabled }) {
+function ConfirmationPopUp({
+  open,
+  handleOnOpen,
+  isJoinDisabled,
+  videoAvailability,
+  audioAvailability,
+}) {
   const classes = useStyle()
 
   const history = useHistory()
+
+  const [videoAvailable, setVideoAvailable] = useState(true)
 
   function handleClose() {
     handleOnOpen(false)
@@ -137,6 +157,21 @@ function ConfirmationPopUp({ open, handleOnOpen, isJoinDisabled }) {
     handleOnOpen(false)
   }
 
+  navigator.getUserMedia(
+    { audio: true },
+    function () {
+    },
+    function () {
+      audioAvailability(false)
+    }
+  )
+
+  function handleOnVideo() {
+    setVideoAvailable(false)
+    videoAvailability(false)
+  }
+
+
   return (
     <Box>
       <Dialog open={open} className={classes.dialog}>
@@ -145,8 +180,22 @@ function ConfirmationPopUp({ open, handleOnOpen, isJoinDisabled }) {
             <CloseIcon className={classes.closeIcon} onClick={handleClose} />
           </Box>
           <Box display="flex">
-            <Box className={classes.box}>
-              <Webcam audio={false} width="212" height="160" />
+            <Box
+              className={classNames(classes.box, {
+                [classes.selecedTab]: !videoAvailable,
+              })}
+            >
+              <Webcam
+                audio={false}
+                width="212"
+                height="160"
+                onUserMediaError={() =>
+                  handleOnVideo()
+                }
+              />
+              {!videoAvailable && (
+                <Typography className={classes.error}>Camera not found</Typography>
+              )}
             </Box>
             <Box className={classes.right}>
               {isJoinDisabled ? (
@@ -154,7 +203,9 @@ function ConfirmationPopUp({ open, handleOnOpen, isJoinDisabled }) {
               ) : (
                 <Box>
                   <img src={Join} className={classes.join} />
-                  <Typography className={classes.message}>Take Online Doctor Consultaion</Typography>
+                  <Typography className={classes.message}>
+                    Take Online Doctor Consultaion
+                  </Typography>
                 </Box>
               )}
               <Box className={classes.button}>
@@ -162,15 +213,16 @@ function ConfirmationPopUp({ open, handleOnOpen, isJoinDisabled }) {
                   className={classes.joinButton}
                   onClick={handleOnClick}
                   disabled={isJoinDisabled}
-                  style={{ backgroundColor: '#0ee5ff' }}
+                  style={{ backgroundColor: '#0bb5ff' }}
                 >
                   JOIN
                 </Button>
-                {isJoinDisabled && (
-                  <Typography className={classes.errorMsg}>
-                    Doctor not yet start the meeting
-                  </Typography>
-                )}
+                {isJoinDisabled &&
+                  localStorage.getItem('loginUser') === 'patient' && (
+                    <Typography className={classes.errorMsg}>
+                      Doctor not yet start the meeting
+                    </Typography>
+                  )}
               </Box>
             </Box>
           </Box>

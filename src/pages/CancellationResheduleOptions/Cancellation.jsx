@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { Box, Typography, Paper, Divider } from '@material-ui/core'
+import { Box, Typography, Paper, Divider, Snackbar } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { Edit, Check, Clear, ErrorOutline } from '@material-ui/icons'
 import IconButton from '@material-ui/core/IconButton'
-
-
 
 import Switch from '../../components/Switch'
 import NumberTextField from '../../components/NumberTextField'
@@ -221,7 +219,7 @@ const Cancellation = ({ configDetails, doctorKey, onSave, isAbleToWrite, respons
                 <div className={classes.noteContainer}>
                   <p className={classes.noteContent}>
                     <b className={classes.cancellationText}>Note</b> : Cancellation
-                    with in the allowed timings, the payment willbe refunded to the
+                    with in the allowed timings, the payment will be refunded to the
                     original payment method. if paid through VIRUJH{' '}
                   </p>
                 </div>
@@ -235,6 +233,11 @@ const Cancellation = ({ configDetails, doctorKey, onSave, isAbleToWrite, respons
       {response && response.statusCode === 200 && (
         <SnackBar openDialog={open} message={response.message} onclose={handleClose} severity={'success'} />
       )}
+      {
+        response && response.name === 'Error' && (
+          <Snackbar openDialog={open} message={response.message} onclose={handleClose} severity={'error'} />
+        )
+      }
     </Box>
   )
 }

@@ -1,18 +1,23 @@
 import React, { useState, useEffect, Fragment } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useHistory } from 'react-router-dom'
 import socketIOClient from 'socket.io-client'
 
 import ConfirmationModal from './ConfirmationModel'
 import Video from './Video'
 
-const ENDPOINT = 'https://dev.virujh.com'
+const ENDPOINT = 'http://dev-api.virujh.com:8081'
 
 function VideoConsulation() {
   const [open, setOpen] = useState(false)
 
   const [isJoinDisabled, setIsJoinDisabled] = useState(true)
 
+  const [videoAvailability, setVideoAvailability] = useState(true)
+
+  const [audioAvailability, setAudioAvailability] = useState(true)
+
   const [sessionID, setSessionID] = useState('')
+
   const [token, setToken] = useState('')
 
   const [socket, setSocket] = useState('')
@@ -20,6 +25,8 @@ function VideoConsulation() {
   const [patientList, setPatientList] = useState('')
 
   const location = useLocation()
+
+  const history = useHistory()
 
   useEffect(() => {
     setOpen(true)
@@ -53,13 +60,31 @@ function VideoConsulation() {
       })
 
       socket.on('videoTokenForPatient', (data) => {
-        console.log('data....', data)
+        console.log('data:', data)
         if (data.isToken) {
           setIsJoinDisabled(false)
           setSessionID(data.sessionId)
           setToken(data.token)
         }
       })
+    })
+
+    socket.on('videoTokenRemoved', (data) => {
+      console.log('data',data)
+      if (data.isRemoved) {
+        if(localStorage.getItem('loginUser') === 'patient') {
+        history.push('/patient/appointments/upcoming')
+        }
+      }
+    })
+
+    socket.on('videoSessionRemoved', (data) => {
+      console.log('data', data)
+      if(data.isRemoved) {
+        if(localStorage.getItem('loginUser') === 'patient') {
+          history.push('/patient/appointments/upcoming')
+        }
+      }
     })
 
     setSocket(socket)
@@ -75,6 +100,8 @@ function VideoConsulation() {
         open={open}
         handleOnOpen={setOpen}
         isJoinDisabled={isJoinDisabled}
+        videoAvailability={setVideoAvailability}
+        audioAvailability={setAudioAvailability}
       />
 
       {!isJoinDisabled && token && !open && (
@@ -83,6 +110,8 @@ function VideoConsulation() {
           socket={socket}
           sessionID={sessionID}
           patientList={patientList}
+          videoAvailability={videoAvailability}
+          audioAvailability={audioAvailability}
         />
       )}
     </Fragment>

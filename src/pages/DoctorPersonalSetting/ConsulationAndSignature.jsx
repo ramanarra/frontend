@@ -37,7 +37,6 @@ const useStyles = makeStyles(() => ({
     backgroundColor: '#f7f7f7',
     width: 620,
     height: 90,
-    paddingTop: 20,
     overflow: 'hidden',
     position: 'relative',
 
@@ -50,6 +49,12 @@ const useStyles = makeStyles(() => ({
       left: -3,
       right: -3,
     },
+  },
+
+  sign: {
+    marginLeft: 200,
+    height: 90,
+    fill: '#f7f7f7',
   },
 
   iconStart: {
@@ -96,6 +101,7 @@ const useStyles = makeStyles(() => ({
 function ConsulationAndSignature({
   docKey,
   configDetails,
+  doctorDetails,
   onSave,
   isAbleToWrite,
   response,
@@ -190,7 +196,7 @@ function ConsulationAndSignature({
         <Typography className={classes.response}>{response.message}</Typography>
       )}
       <div className={classes.signature}>
-        {/* <img src={doctorDetails?.signature} alt="signature"/> */}
+        <img src={doctorDetails?.signature} alt="signature" className={classes.sign} />
       </div>
       {response && response.statusCode === 200 && (
         <SnackBar openDialog={open} message={response.message} onclose={handleClose} severity={'success'} />

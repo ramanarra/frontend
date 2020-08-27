@@ -29,6 +29,7 @@ function MyDoctors() {
 
   const pathName = path.length === 2 ? path[1] : ''
 
+
   return (
     <Box className={classes.container}>
       <Navigation doctorList={data?.doctorList[0]} />

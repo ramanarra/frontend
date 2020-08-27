@@ -4,6 +4,7 @@ import LoginUI from './LoginUI'
 import Api, { URL } from '../../api'
 
 function PatientLogin({ history }) {
+  localStorage.clear()
   localStorage.setItem('loginUser', 'patient')
   function onLogin(userName, password, setError) {
     const credentials = {
@@ -24,6 +25,8 @@ function PatientLogin({ history }) {
         }
         localStorage.setItem('virujhToken', data.accessToken)
         localStorage.setItem('patientId', data.patientId)
+        localStorage.setItem('patientName', `${data.firstName} ${data.lastName}`)
+        localStorage.setItem('photo', data.photo)
         history.push('/patient/appointments/upcoming')
       })
       .catch(() => {

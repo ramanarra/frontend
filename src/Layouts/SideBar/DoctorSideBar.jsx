@@ -1,12 +1,9 @@
 import React from 'react'
-import { Link, useLocation, useHistory } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { Box } from '@material-ui/core'
 import classNames from 'classnames'
 import { makeStyles } from '@material-ui/core/styles'
-import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
 
-import useManualFetch from '../../hooks/useManualFetch'
-import { METHOD, URL } from '../../api'
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -48,26 +45,11 @@ function DoctorSideaBar() {
   const classes = useStyles()
   const location = useLocation()
 
-  const history = useHistory()
 
   const path = location.pathname.split('/')
 
   const pathName = path.length === 2 ? path[1] : ''
 
-  const [updateData, updateError, isUpdating, data] = useManualFetch()
-
-  function handleOnLogout() {
-    updateData(METHOD.GET, URL.logout)
-  }
-
-  if(data) {
-    if(data.message === 'sucessfully loggedout') {
-      localStorage.clear()
-      history.push('/login')
-    }
-  }
-  
-  
   
   return (
     <Box className={classes.container}>
@@ -93,9 +75,6 @@ function DoctorSideaBar() {
             })} to="/settings">
           <i className="icon-settings "></i>
         </Link>
-        <PowerSettingsNewIcon className={classNames(classes.item, classes.logout, {
-          [classes.selectedColor]: pathName === 'logout',
-        })}  onClick={handleOnLogout} />
       </Box>
     </Box>
   )

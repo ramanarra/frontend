@@ -80,6 +80,8 @@ function Appointment({ doctorList }) {
       <Box className={classes.body} display="flex">
         <ScheduledDoctors doctorDetails={doctorList} />
         <Box className={classes.schedule}>
+          {
+            appointmentSlots &&
           <AppointmentContainer
             appointmentSlots={appointmentSlots}
             doctorKey={id}
@@ -88,6 +90,7 @@ function Appointment({ doctorList }) {
             paginationNumber={paginationNumber}
             onSave={onSave}
           />
+        }
         </Box>
       </Box>
       {response && response.data?.appointment && (
@@ -98,38 +101,6 @@ function Appointment({ doctorList }) {
           severity={'success'}
         />
       )}
-      {response && response.data?.statusCode === 417 && (
-        <OverBooking
-          open={open}
-          onCloseDialog={handleClose}
-          data={response.config.data}
-          onSave={onSave}
-        />
-      )}
-      {response && response.data?.statusCode === 200 && (
-        <SnackBar
-          openDialog={open}
-          message={response.data.message}
-          onclose={handleClose}
-          severity={'success'}
-        />
-      )}
-      {response && response.data?.statusCode === 404 && (
-        <SnackBar
-          openDialog={open}
-          message={response.data.message}
-          onclose={handleClose}
-          severity={'info'}
-        />
-      )}
-      {response && response.data?.statusCode === 400 && (
-        <SnackBar
-          openDialog={open}
-          message={response.data.message}
-          onclose={handleClose}
-          severity={'info'}
-        />
-      )}
       {response && response.name === 'Error' && (
         <SnackBar
           openDialog={open}
@@ -138,14 +109,56 @@ function Appointment({ doctorList }) {
           severity={'error'}
         />
       )}
-      {response && response.data?.statusCode === 502 && (
-        <SnackBar
-          openDialog={open}
-          message={response.data.message}
-          onclose={handleClose}
-          severity={'error'}
-        />
-      )}
+      {(response &&
+        response.data?.statusCode &&
+        response.data?.statusCode === 200 && (
+          <SnackBar
+            openDialog={open}
+            message={response.data.message}
+            onclose={handleClose}
+            severity={'success'}
+          />
+        )) ||
+        (response && response.data?.statusCode === 404 && (
+          <SnackBar
+            openDialog={open}
+            message={response.data.message}
+            onclose={handleClose}
+            severity={'info'}
+          />
+        )) ||
+        (response && response.data?.statusCode === 400 && (
+          <SnackBar
+            openDialog={open}
+            message={response.data.message}
+            onclose={handleClose}
+            severity={'info'}
+          />
+        )) ||
+        (response && response.data?.statusCode === 502 && (
+          <SnackBar
+            openDialog={open}
+            message={response.data.message}
+            onclose={handleClose}
+            severity={'error'}
+          />
+        )) ||
+        (response && response.data?.statusCode === 417 && (
+          <OverBooking
+            open={open}
+            onCloseDialog={handleClose}
+            data={response.config.data}
+            onSave={onSave}
+          />
+        )) ||
+        (response && response.data?.statusCode && (
+          <SnackBar
+            openDialog={open}
+            message={response.data.message}
+            onClose={handleClose}
+            severity={'error'}
+          />
+        ))}
     </Box>
   )
 }

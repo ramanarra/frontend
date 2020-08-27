@@ -74,10 +74,10 @@ function SideBar({
   patientList,
   onPatientJoining,
   endCall,
-  end,
   socket,
   openDialog,
   onClose,
+  setAppointmentId
 }) {
   const classes = useStyle()
 
@@ -90,8 +90,6 @@ function SideBar({
   const [selected, setSelected] = useState(null)
 
   const [index, setIndex] = useState(null)
-
-  console.log(patientList.length)
 
   function handleOnPatientList() {
     setOpen(true)
@@ -117,18 +115,19 @@ function SideBar({
     setOpen(false)
   }
 
-  const handleOnPatientJoining = (appointmentId, firstName, lastName, index) => {
+   const handleOnPatientJoining = (appointmentId, firstName, lastName, index) => {
     const name = lastName ? firstName + lastName : firstName
     onPatientJoining(appointmentId, name)
     if (selected) {
-      socket.emit('removePatientTokenByDoctor', selected)
+      socket.emit('removePatientTokenByDoctor', {appointmentId: selected, status: "completed"})
     }
     setSelected(appointmentId)
     setIndex(index)
+    setAppointmentId(appointmentId)
   }
 
   function NextPatient() {
-    if (index !== null && index !== patientList.length - 1) {
+    if (index !== null && index < patientList.length - 1) {
       handleOnPatientJoining(
         patientList[index + 1].appointmentId,
         patientList[index + 1].firstName,
@@ -136,7 +135,7 @@ function SideBar({
         index + 1
       )
     }
-    else if(index === null && patientList.length !== 0) {
+    else if(index === null && patientList.length === 1) {
         handleOnPatientJoining(
             patientList[0].appointmentId,
             patientList[0].firstName,
@@ -144,21 +143,23 @@ function SideBar({
             Number(0)
           )
     }
-    else if(index === (patientList.length)-1) {
-
-    }
   }
 
-  if (end) {
-    setSelected(null)
+  function handleChatClose() {
+    setOpenChat(false)
   }
+
+  function handleMedicineClose() {
+      setOPenMedicine(false)
+  }
+
 
   return (
     <Box>
       {localStorage.getItem('loginUser') === 'doctor' && (
         <div>
           <div className={classes.topBar}>
-            {!open && (
+            {!open  && !openChat && !openMedicine && (
               <div className={classes.arrowIcon}>
                 <ArrowBackIosIcon
                   className={classes.icon}
@@ -203,8 +204,8 @@ function SideBar({
           index={index}
         />
       )}
-      {openChat && <Chat />}
-      {openMedicine && <MedicineList />}
+      {openChat && <Chat onClose={handleChatClose} />}
+      {openMedicine && <MedicineList onClose={handleMedicineClose} />}
       {openDialog && (
         <AddNewPatientConfirmationModel open={openDialog} onClose={onClose} NextPatient={NextPatient} />
       )}

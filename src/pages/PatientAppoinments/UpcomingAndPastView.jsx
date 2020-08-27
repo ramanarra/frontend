@@ -12,12 +12,9 @@ import {
 } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 import StarIcon from '@material-ui/icons/Star'
-import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined'
 import VerticalAlignBottomOutlinedIcon from '@material-ui/icons/VerticalAlignBottomOutlined'
-
 import useCustomFecth from '../../hooks/useCustomFetch'
 import { METHOD, URL } from '../../api'
-import { getTimeFormat } from '../../lib/dateLib'
 
 const useStyle = makeStyles(() => ({
   dialogBox: {
@@ -89,16 +86,17 @@ const useStyle = makeStyles(() => ({
   button: {
     alignItems: 'center',
     justifyContent: 'center',
-    padding: '10px 327px',
+    padding: '10px 180px',
     paddingTop: 30,
     paddingBottom: 10,
   },
   startConsultationButton: {
-    padding: 6,
+    padding: '6px 20px',
     backgroundColor: '#0bb5ff',
     borderRadius: 17,
     textAlign: 'center',
     cursor: 'pointer',
+    marginRight: 15,
   },
   startConsultationText: {
     fontSize: 10,
@@ -109,6 +107,7 @@ const useStyle = makeStyles(() => ({
     justifyContent: 'center',
     alignItems: 'center',
     paddingBottom: 40,
+    paddingLeft: 13,
   },
   starIcon: {
     width: 10,
@@ -119,6 +118,27 @@ const useStyle = makeStyles(() => ({
     fontSize: 16.5,
     color: '#a8a8a8',
   },
+  rescheduleButton: {
+    marginRight: 15,
+    padding: '5px 40px',
+    borderRadius: 17,
+    border: '1.5px solid #0bb5ff',
+    cursor: 'pointer',
+  },
+  rescheduleText: {
+    fontSize: 10.5,
+    color: '0bb5ff',
+  },
+  cancelButton: {
+    padding: '6px 47px',
+    borderRadius: 17,
+    backgroundColor: '#e4e3e3',
+    cursor: 'pointer',
+  },
+  cancelText: {
+    fontSize: 10.5,
+    color: '#7a7979',
+  },
 }))
 
 function UpcomingAndPastView({
@@ -128,6 +148,9 @@ function UpcomingAndPastView({
   endTime,
   preConsultationTime,
   onClose,
+  past,
+  onCancel,
+  onReschedule,
 }) {
   const classes = useStyle()
 
@@ -154,8 +177,6 @@ function UpcomingAndPastView({
 
   const appointmentDateWithTime = appointmentDate + ' ' + appointmentDetail.startTime
 
-  const startingTime = getTimeFormat(appointmentDetail.startTime)
-
   const date = moment(appointmentDetail.appointmentDate).format('DD MMMM YYYY')
 
   const doctorName = appointmentDetail.doctorLastName
@@ -177,15 +198,23 @@ function UpcomingAndPastView({
     NumberToWords.toWords(differenceInDays.hours()).slice(1)
 
   function handleOnClose(event) {
-    onClose(event)
+    onCancel(event)
   }
 
   function handleOnStartConsulation() {
     history.push({
       pathname: '/video-consultation',
       state: appointmentDetail.appointmentId,
-      name: doctorName,
+      doctorName: doctorName,
     })
+  }
+
+  function handleOnCancel(event) {
+    onClose(event)
+  }
+
+  function handleOnReschedule(event) {
+    onReschedule(event)
   }
 
   return (
@@ -228,7 +257,7 @@ function UpcomingAndPastView({
                   <Typography
                     className={classes.value}
                     variant="h5"
-                  >{`${startingTime}${' - '}${endTime}`}</Typography>
+                  >{`${startTime}${' - '}${endTime}`}</Typography>
                 </Box>
               </Box>
               <Box className={classes.rightSide}>
@@ -250,7 +279,7 @@ function UpcomingAndPastView({
                     {date}
                   </Typography>
                 </Box>
-                {!appointmentDetail.preConsultationHours && (
+                {past && (
                   <Box display="flex" className={classes.prescription}>
                     <Typography className={classes.name}>Prescription : </Typography>
                     <Box display="flex" className={classes.download}>
@@ -260,22 +289,26 @@ function UpcomingAndPastView({
                       <VerticalAlignBottomOutlinedIcon
                         className={classes.downloadIcon}
                       />
-                      <button onClick={handleOnStartConsulation}>click</button>
                     </Box>
                   </Box>
                 )}
               </Box>
             </Box>
-            {appointmentDetail.preConsultationHours && (
+            {!past && (
               <Box>
-                <Box display="flex" className={classes.preConsultaion}>
+                {/* <Box display="flex" className={classes.preConsultaion}>
                   <InfoOutlinedIcon className={classes.infoIcon} />
                   <Typography className={classes.preConsultaionTime}>
                     PreConsultaion starts at <b>{preConsultationTime}</b>. Doctor
                     consultation starts at <b>{startTime}</b>
                   </Typography>
-                </Box>
-                <Box className={classes.button}>
+                </Box> */}
+                <Box className={classes.button} display="flex">
+                  <Box className={classes.rescheduleButton} onClick={handleOnReschedule}>
+                    <Typography className={classes.rescheduleText}>
+                      RESCHEDULE
+                    </Typography>
+                  </Box>
                   <Box className={classes.startConsultationButton}>
                     <Typography
                       onClick={handleOnStartConsulation}
@@ -283,6 +316,9 @@ function UpcomingAndPastView({
                     >
                       START CONSULTATION
                     </Typography>
+                  </Box>
+                  <Box className={classes.cancelButton} onClick={handleOnCancel}>
+                    <Typography className={classes.cancelText}>CANCEL</Typography>
                   </Box>
                 </Box>
                 <Box display="flex" className={classes.hoursToJoinText}>

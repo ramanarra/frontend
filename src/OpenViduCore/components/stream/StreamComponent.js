@@ -56,24 +56,23 @@ export default class StreamComponent extends Component {
     }
   }
 
-  
-
   render() {
     const ToolBarComponent = this.props.ToolBarComponent
     return (
       <div className="OT_widget-container">
         <div className="pointer nickname">
-          <div style={{display: 'flex'}}>
-          <div onClick={this.props.onPatientJoining}>{this.props.doctorName}</div>
-          {
-            this.props.patientName &&
-            <div>{`${', '}${this.props.patientName}`}</div>
-          }
-        </div>
-        {
-          this.props.patientName && 
-          <div> 2 paticipants</div>
-        }
+          <div style={{ display: 'flex' }}>
+            <div onClick={this.props.onPatientJoining}>{this.props.doctorName}</div>
+            {this.props.patientName && (
+              <div>{`${', '}${this.props.patientName}`}</div>
+            )}
+          </div>
+          {this.props.patientName && (
+            <div>
+              {' '}
+              2 paticipants{' '}
+            </div>
+          )}
         </div>
 
         {this.props.user !== undefined &&
@@ -94,6 +93,8 @@ export default class StreamComponent extends Component {
                 onJoiningPatient={this.props.onPatientJoining}
                 patientList={this.props.patientList}
                 AddNextPatient={this.props.AddNextPatient}
+                videoAvailability={this.props.videoAvailability}
+                audioAvailability={this.props.audioAvailability}
               />
             ) : null}
             <VideocamOff id="statusCam" />

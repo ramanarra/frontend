@@ -42,7 +42,7 @@ const useStyle = makeStyles(() => ({
     backgroundColor: '#f7f7f7',
     marginLeft: 109,
     paddingTop: 5,
-    fontSize: 10,
+    fontSize: 10.5,
     marginTop: 10,
     color: '#7e7e7e',
   },
@@ -90,6 +90,11 @@ const useStyle = makeStyles(() => ({
     paddingLeft: 6,
     paddingTop: 5,
     color: '#797272',
+  },
+  errorMsg: {
+    fontSize: 14,
+    color: '#ef1414',
+    paddingLeft: 5,
   },
   detail: {
     fontSize: 9,

@@ -30,7 +30,7 @@ const useStyles = makeStyles(() => ({
     fontSize: 17.5,
     marginBottom: 41,
     paddingLeft: 20,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
 
   text: {
@@ -63,40 +63,45 @@ function CancellationResheduleOptions() {
 
   const [onSave, response] = useDoctorConfigUpdate(refetch)
 
-  console.log(response)
   return (
     <Box className={classes.container}>
-      <Box>
-        <Box display="flex">
-          <img
-            src={LeftArrow}
-            slt="leftArrow"
-            className={classes.leftArrow}
-            onClick={handleBackButton}
-          />
-          {data?.doctorDetails && (
-            <Typography className={classes.name}>{`${'Dr. '}${data.doctorDetails.doctorName}`}</Typography>
-          )}
-        </Box>
-        <Typography className={classes.text}>
-          Cancellation/Reschedule Options
-        </Typography>
-      </Box>
+      {data && (
+        <Box>
+          <Box>
+            <Box display="flex">
+              <img
+                src={LeftArrow}
+                slt="leftArrow"
+                className={classes.leftArrow}
+                onClick={handleBackButton}
+              />
+              {data?.doctorDetails && (
+                <Typography className={classes.name}>{`${'Dr. '}${
+                  data.doctorDetails.doctorName
+                }`}</Typography>
+              )}
+            </Box>
+            <Typography className={classes.text}>
+              Cancellation/Reschedule Options
+            </Typography>
+          </Box>
 
-      <Cancellation
-        configDetails={data?.configDetails}
-        doctorKey={id}
-        onSave={onSave}
-        isAbleToWrite={isAbleToWrite}
-        response={response}
-      />
-      <Reschedule
-        configDetails={data?.configDetails}
-        doctorKey={id}
-        onSave={onSave}
-        isAbleToWrite={isAbleToWrite}
-        response={response}
-      />
+          <Cancellation
+            configDetails={data?.configDetails}
+            doctorKey={id}
+            onSave={onSave}
+            isAbleToWrite={isAbleToWrite}
+            response={response}
+          />
+          <Reschedule
+            configDetails={data?.configDetails}
+            doctorKey={id}
+            onSave={onSave}
+            isAbleToWrite={isAbleToWrite}
+            response={response}
+          />
+        </Box>
+      )}
     </Box>
   )
 }

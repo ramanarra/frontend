@@ -2,10 +2,11 @@ import React, { useState } from 'react'
 import moment from 'moment'
 import { Box, makeStyles, Typography } from '@material-ui/core'
 import ScheduleIcon from '@material-ui/icons/Schedule'
-import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined'
 
 import getTimeFormatWithNoon from '../../lib/dateLib'
 import UpcomingAndPastView from './UpcomingAndPastView'
+import CancelAppointmentModal from './CancelAppointmentModal'
+import RescheduleAppointmentModal from './RescheduleAppointmentModal'
 
 const useStyle = makeStyles(() => ({
   container: {
@@ -70,14 +71,22 @@ const useStyle = makeStyles(() => ({
     letterSpacing: 0.5,
   },
 }))
-function PatientAppointmentSlot({ appointmentDetail, borderColor }) {
+function PatientAppointmentSlot({ appointmentDetail, borderColor, onSave, past }) {
   const classes = useStyle()
 
   const [open, setOpen] = useState(false)
 
+  const [openCancel, setOpenCancel] = useState(false)
+
+  const [openReschedule, setOpenReschedule] = useState(false)
+
   const month = moment(appointmentDetail.appointmentDate).format('MMMM')
 
   const date = moment(appointmentDetail.appointmentDate).format('DD')
+
+  const appointmentDate = moment(appointmentDetail.appointmentDate).format(
+    'DD/MM/YYYY'
+  )
 
   const startTime = getTimeFormatWithNoon(appointmentDetail.startTime)
 
@@ -107,7 +116,27 @@ function PatientAppointmentSlot({ appointmentDetail, borderColor }) {
 
   function handleOnClose(event) {
     setOpen(false)
+    setOpenCancel(true)
     event.stopPropagation()
+  }
+
+  function handleOnCancel(event) {
+    setOpen(false)
+    event.stopPropagation()
+  }
+
+  function handleClose() {
+    setOpenCancel(false)
+  }
+
+  function handleOnReschedule(event) {
+    setOpen(false)
+    setOpenReschedule(true)
+    event.stopPropagation()
+  }
+
+  function handleCloseReschedule() {
+    setOpenReschedule(false)
   }
 
   return (
@@ -139,15 +168,6 @@ function PatientAppointmentSlot({ appointmentDetail, borderColor }) {
             <Typography className={classes.hospitalName}>
               {appointmentDetail.hospitalName}
             </Typography>
-            {appointmentDetail.preConsultationHours && (
-              <Box display="flex">
-                <InfoOutlinedIcon className={classes.infoIcon} />
-                <Typography className={classes.preConsultaion}>
-                  Preconsultaion starts at <b>{preConsultaionTime}</b>. Doctor
-                  consultation at <b>{startTime}</b>
-                </Typography>
-              </Box>
-            )}
           </Box>
         </Box>
       </Box>
@@ -159,6 +179,30 @@ function PatientAppointmentSlot({ appointmentDetail, borderColor }) {
           endTime={endTime}
           preConsultationTime={preConsultaionTime}
           onClose={handleOnClose}
+          onSave={onSave}
+          past={past}
+          onCancel={handleOnCancel}
+          onReschedule={handleOnReschedule}
+        />
+      )}
+      {openCancel && (
+        <CancelAppointmentModal
+          open={openCancel}
+          time={startTime}
+          date={appointmentDate}
+          onClose={handleClose}
+          appointmentId={appointmentDetail.appointmentId}
+          onSave={onSave}
+        />
+      )}
+      {openReschedule && (
+        <RescheduleAppointmentModal
+          open={openReschedule}
+          onClose={handleCloseReschedule}
+          time={startTime}
+          date={appointmentDate}
+          appointmentDetail={appointmentDetail}
+          onSave={onSave}
         />
       )}
     </Box>

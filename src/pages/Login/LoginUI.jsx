@@ -20,6 +20,7 @@ const Login = ({
   const history = useHistory()
   const classes = useStyles()
 
+
   const [error, setError] = useState(false)
 
   const [isEyeVisible, setIsEyeVisible] = useState(false)
@@ -43,8 +44,8 @@ const Login = ({
     }
   }
 
+
   function doctorLoginPage() {
-    localStorage.setItem('loginUser', 'doctor')
     history.push('/doctor/login')
   }
 
@@ -67,6 +68,7 @@ const Login = ({
   }
 
   function handleOnSubmit(values) {
+
     if (UserNameAutoComplete === 'email') {
       if (values.userName === '') {
         setUserNameIndicate('Please enter your email')
@@ -88,9 +90,9 @@ const Login = ({
       }
     } else if (UserNameText === 'Phone Number') {
       if (values.userName === '') {
-        setUserNameIndicate('Please enter your phone Number')
+        setUserNameIndicate('Please enter your phone number')
       } else if (String(values.userName).length < 10) {
-        setUserNameIndicate('Phone Number atleast have 10 Numbers')
+        setUserNameIndicate('Please enter the valid phone number')
       }
       if (values.password == '') {
         setPasswordIndicate('Please enter your password')

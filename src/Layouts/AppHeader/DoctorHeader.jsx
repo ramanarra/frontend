@@ -128,9 +128,6 @@ export default function DoctorHeader() {
     setOpen(false)
   }
 
-  function handleOnClose() {
-    setOpenDialog(false)
-  }
 
   return (
     <Box className={classes.appBar}>

@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import API, { URL } from '../api'
 
-function useDoctorConfigUpdate(refetch) {
+function usePatientDetailsUpdate(refetch) {
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState(null)
 
@@ -11,7 +11,7 @@ function useDoctorConfigUpdate(refetch) {
     const token = localStorage.getItem('virujhToken')
     const authStr = 'Bearer '.concat(token)
 
-    API.post(URL.doctorConfigUpdate, params, {
+    API.post(URL.patientDetailsEdit, params, {
       headers: {
         Authorization: authStr,
       },
@@ -31,4 +31,4 @@ function useDoctorConfigUpdate(refetch) {
   return [handleOnFetch, data, loading]
 }
 
-export default useDoctorConfigUpdate
+export default usePatientDetailsUpdate

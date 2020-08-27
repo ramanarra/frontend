@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 import { Box, Typography, TextField, makeStyles } from '@material-ui/core'
 import SearchIcon from '@material-ui/icons/Search'
 
@@ -7,7 +8,6 @@ import useManualFetch from '../../hooks/useManualFetch'
 import DoctorList from './DoctorList'
 import DoctorListwithHospital from './DoctorListWithHospital'
 import LeftArrow from '../../assets/img/left-arrow.svg'
-import { useHistory } from 'react-router-dom'
 
 const useStyle = makeStyles(() => ({
   container: {
@@ -66,15 +66,20 @@ const useStyle = makeStyles(() => ({
 function PatientFindDoctor() {
   const classes = useStyle()
 
+  const history = useHistory()
+
+  const [heading, setHeading] = useState('')
+
   const [name, setName] = useState('')
 
-  const history = useHistory()
+  const [isHospital, setIsHospital] = useState(false)
 
   const [updateData, updateError, isUpdating, data] = useManualFetch()
 
   useEffect(() => {
     if (name === '') {
       updateData(METHOD.GET, URL.patientDoctorList)
+      setHeading('Find Your Doctors / Hospitals')
     }
   }, [])
 
@@ -86,6 +91,8 @@ function PatientFindDoctor() {
       })
     } else {
       updateData(METHOD.GET, URL.patientDoctorList)
+      setHeading('Find Your Doctors / Hospitals')
+      setIsHospital(false)
     }
   }
 
@@ -104,7 +111,7 @@ function PatientFindDoctor() {
             onClick={handleOnClick}
           />
           <Typography className={classes.heading} variant="h5">
-            Find Your Doctors / Hospitals
+            {heading}
           </Typography>
         </Box>
 
@@ -117,9 +124,16 @@ function PatientFindDoctor() {
         />
       </Box>
       <Box className={classes.doctorList}>
-        {name === '' && Array.isArray(data) && <DoctorList doctorLists={data} />}
+        {name === '' && Array.isArray(data) && (
+          <DoctorList doctorLists={data} isHospital={isHospital} />
+        )}
         {name !== '' && !Array.isArray(data) && (
-          <DoctorListwithHospital doctorAndHospitalList={data} />
+          <DoctorListwithHospital
+            doctorAndHospitalList={data}
+            name={setHeading}
+            isHospital={isHospital}
+            hospital={setIsHospital}
+          />
         )}
       </Box>
     </Box>

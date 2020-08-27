@@ -4,6 +4,8 @@ import LoginUI from './LoginUI'
 import Api, { URL } from '../../api'
 
 function DoctorLogin({ history }) {
+  localStorage.clear()
+  localStorage.setItem('loginUser', 'doctor')
   function onLogin(userName, password, setError) {
     const credentials = {
       email: userName,

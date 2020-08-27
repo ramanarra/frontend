@@ -86,7 +86,7 @@ const useInfocardStyles = makeStyles((theme) => ({
   },
 }))
 
-const DoctorInfoCard = ({ doctorDetail, doctorListInHospital }) => {
+const DoctorInfoCard = ({ doctorDetail, doctorListInHospital, isHospital }) => {
   const classes = useInfocardStyles()
 
   const hisrory = useHistory()
@@ -100,8 +100,8 @@ const DoctorInfoCard = ({ doctorDetail, doctorListInHospital }) => {
     hisrory.push(`/patient/${doctorKey}/book-appointment`)
   }
 
-  function handleHospital(accountKey) {
-    doctorListInHospital(accountKey)
+  function handleHospital(accountKey, hospitalName) {
+    doctorListInHospital(accountKey, hospitalName)
   }
 
   return (
@@ -131,7 +131,7 @@ const DoctorInfoCard = ({ doctorDetail, doctorListInHospital }) => {
               {doctorDetail.speciality}
             </Typography>
           )}
-          {doctorDetail.doctorKey && (
+          {doctorDetail.doctorKey && !isHospital && (
             <Typography className={classes.hospitalName}>
               {doctorDetail.hospitalName}
             </Typography>
@@ -148,9 +148,12 @@ const DoctorInfoCard = ({ doctorDetail, doctorListInHospital }) => {
             >{`₹${doctorDetail.fee}`}</Typography>
           </Box>
         )}
-        <Box paddingLeft={4} className={classNames(classes.contactNumber, {
-          [classes.hospital] : !doctorDetail.doctorKey,
-        })}>
+        <Box
+          paddingLeft={4}
+          className={classNames(classes.contactNumber, {
+            [classes.hospital]: !doctorDetail.doctorKey,
+          })}
+        >
           <Typography className={classes.text}>Contact Number</Typography>
           <Typography
             className={classes.value}
@@ -167,7 +170,9 @@ const DoctorInfoCard = ({ doctorDetail, doctorListInHospital }) => {
         {!doctorDetail.doctorKey ? (
           <Button
             className={classes.hospitalButton}
-            onClick={() => handleHospital(doctorDetail.accountKey)}
+            onClick={() =>
+              handleHospital(doctorDetail.accountKey, doctorDetail.hospitalName)
+            }
             variant="outlined"
             style={{ backgroundColor: '#0bb5ff' }}
           >

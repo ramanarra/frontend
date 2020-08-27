@@ -45,14 +45,17 @@ function RescheduleAppointment({
 
   const [show, setShow] = useState(false)
 
+  const [confirmation, setConfirmation] = useState(true)
+
   const key = useMemo(() => {
     return {
       doctorKey: id,
       appointmentDate: currentDate,
+      confirmation: confirmation
     }
-  }, [id, currentDate])
+  }, [id, currentDate, confirmation])
 
-  const [availableSlots] = useCustomFecth(METHOD.GET, URL.availableSlot, key, true)
+  const [availableSlots] = useCustomFecth(METHOD.POST, URL.availableSlot, key, true)
 
   function handleClose(event) {
     onClose(event)
@@ -78,10 +81,11 @@ function RescheduleAppointment({
 
   const handleDateChange = (event) => {
     setDate(event)
+    setConfirmation(false)
   }
 
   const handleOnClick = (slotTiming) => {
-    if(show === true) {
+    if(show) {
       setShow(false)
     }
     setTime(slotTiming)
@@ -151,22 +155,25 @@ function RescheduleAppointment({
             </Typography>
           </Box>
           <Box className={classes.date}>
-            <DatePicker
+            {
+              availableSlots?.date &&
+              <DatePicker
               name={'Select Your Date'}
               dateChange={handleDateChange}
-              value={date}
+              value={moment(availableSlots.date)}
               width={236}
               fontSize={12}
               disablePast={true}
             />
+            }
           </Box>
           <Box className={classes.available}>
             <Typography className={classes.availableText} variant="h5">
               Available Time Slots:
             </Typography>
             <Box display="flex" flexWrap="wrap" className={classes.availableSlots}>
-              {availableSlots &&
-                availableSlots.map((data, index) => {
+              {availableSlots?.slots &&
+                availableSlots.slots.map((data, index) => {
                   return (
                     <Button
                       className={classNames(classes.time, {
