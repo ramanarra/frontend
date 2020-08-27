@@ -43,4 +43,7 @@ export const URL = {
   patientDetailsEdit: '/calendar/patient/detailsEdit',
   patientAppointmentCancel: '/calendar/patient/appointmentCancel',
   patientAppointmentReschedule: '/calendar/patient/patientAppointmentReschedule',
+  appointmentPresentOnDate: 'calendar/patient/appointmentPresentOnDate',
+  paymentOrder: '/calendar/payment/order',
+  verification: '/calendar/payment/verification'
 }

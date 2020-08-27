@@ -7,10 +7,10 @@ import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers'
 
 import AvailableSlots from './AvailableSlots'
 import useManualFetch from '../../hooks/useManualFetch'
-import { METHOD, URL } from '../../api'
+import axios, { METHOD, URL } from '../../api'
 import useCustomFecth from '../../hooks/useCustomFetch'
 import SnackBar from '../../components/SnackBar'
-import OverBooking from  './OverBookingDialog'
+import OverBooking from './OverBookingDialog'
 
 const useStyle = makeStyles(() => ({
   container: {
@@ -91,7 +91,6 @@ function AppointmentDatePicker({ doctorKey, doctorDetails }) {
 
   const [date, setDate] = useState(new Date())
 
-
   const [open, setOpen] = useState(false)
 
   const [error, setError] = useState(false)
@@ -112,6 +111,13 @@ function AppointmentDatePicker({ doctorKey, doctorDetails }) {
 
   const [updateData, updateError, isUpdating, data] = useManualFetch()
 
+  const [
+    updateRazerPay,
+    updateRazerPayError,
+    isRazerPayUpdating,
+    razerPayResponse,
+  ] = useManualFetch()
+
   const [slots] = useCustomFecth(METHOD.POST, URL.patientAppointmentSlotsView, key)
 
   useEffect(() => {
@@ -120,14 +126,21 @@ function AppointmentDatePicker({ doctorKey, doctorDetails }) {
     }
   }, [data])
 
-  const handleDateChange = (event) => {
-    setDate(event)
-    setConfirmation(false)
-  }
+  useEffect(() => {
+    if (data?.statusCode === 200) {
+      onRazorpay()
+    }
+  }, [data])
 
-  function handleSubmit(confirmation) {
-    if (time.start !== '00:00:00' && time.end !== '00:00:00') {
-      const params = {
+  useEffect(() => {
+    if (razerPayResponse?.statusCode === 200) {
+      onBookAppoinment()
+    }
+  }, [razerPayResponse])
+
+
+  const onBookAppoinment = () => {
+     const params = {
         patientId: Number(localStorage.getItem('patientId')),
         doctorKey: doctorKey,
         startTime: moment(time.start, 'HH:mm:ss').format('HH:mm'),
@@ -135,9 +148,78 @@ function AppointmentDatePicker({ doctorKey, doctorDetails }) {
         appointmentDate: selectedDate,
         paymentOption: 'directPayment',
         consultationMode: 'online',
-        confirmation: confirmation,
+        confirmation: 'yes',
       }
+
       updateData(METHOD.POST, URL.patientBookAppointment, params)
+  }
+
+  const onRazorpay = async () => {
+    const token = localStorage.getItem('virujhToken')
+    const authStr = 'Bearer '.concat(token)
+    const params = { amount: Number(doctorDetails.fee) }
+    const response = await axios.post(URL.paymentOrder, params, {
+      headers: {
+        Authorization: authStr,
+      },
+    })
+
+    var options = {
+      description: 'Credits towards consultation',
+      image: 'https://i.imgur.com/3g7nmJC.png',
+      currency: 'INR',
+      key: 'rzp_test_7aIsTw8qZyCQOy',
+      name: 'VIRUJH',
+      order_id: response.data.id,
+      handler: async (response) => {
+        try {
+          const params = {
+            razorpay_order_id: response.razorpay_order_id,
+            razorpay_payment_id: response.razorpay_payment_id,
+            razorpay_signature: response.razorpay_signature,
+          }
+
+          updateRazerPay(METHOD.POST, URL.verification, params)
+        } catch (err) {}
+      },
+      prefill: {
+        // email: this.state.patientDetail.email,
+        contact: '8667809253', //this.state.patientDetail.phone,
+        // name: this.state.patientDetail.firstName + " " + this.state.patientDetail.lastName
+      },
+      theme: { color: '#0bb5ff' },
+    }
+
+    const rzp1 = new window.Razorpay(options)
+    rzp1.open()
+  }
+
+  const handleDateChange = (event) => {
+    setDate(event)
+    setConfirmation(false)
+  }
+
+  function handleSubmit(confirmation) {
+    console.log(confirmation)
+    if (time.start !== '00:00:00' && time.end !== '00:00:00') {
+      // const params = {
+      //   patientId: Number(localStorage.getItem('patientId')),
+      //   doctorKey: doctorKey,
+      //   startTime: moment(time.start, 'HH:mm:ss').format('HH:mm'),
+      //   endTime: moment(time.end, 'HH:mm:ss').format('HH:mm'),
+      //   appointmentDate: selectedDate,
+      //   paymentOption: 'directPayment',
+      //   consultationMode: 'online',
+      //   confirmation: confirmation,
+      // }
+
+      // const params = {
+      //   doctorKey : doctorKey,
+      //   appointmentDate : selectedDate,
+      // }
+
+      const url = `${URL.appointmentPresentOnDate}?doctorKey=${doctorKey}&appointmentDate=${selectedDate}`
+      updateData(METHOD.GET, url)
     } else {
       setError(true)
     }
@@ -190,9 +272,17 @@ function AppointmentDatePicker({ doctorKey, doctorDetails }) {
         )}
       </Box>
       {slots?.slots && (
-        <AvailableSlots availableSlots={slots.slots} handleSlotTiming={handleSlotTiming} doctorDetails={doctorDetails} />
+        <AvailableSlots
+          availableSlots={slots.slots}
+          handleSlotTiming={handleSlotTiming}
+          doctorDetails={doctorDetails}
+        />
       )}
-      {data && data?.appointment && (
+
+      {data?.statusCode === 400 && (
+        <OverBooking openDialog={open} onclose={handleClose} onSubmit={onRazorpay} />
+      )}
+      {/* {data && data?.appointment && (
         <SnackBar
           openDialog={open}
           message={'Sucessfully Created'}
@@ -247,7 +337,7 @@ function AppointmentDatePicker({ doctorKey, doctorDetails }) {
             onclose={handleClose}
             severity={'error'}
           />
-        )))}
+        )))} */}
     </Box>
   )
 }
