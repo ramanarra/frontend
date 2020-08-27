@@ -1,9 +1,7 @@
 import axios from 'axios'
 
 export default axios.create({
-  // baseURL: 'https://dev.virujh.com/api/',
-  baseURL: 'http://dev-api.virujh.com:8081/api',
-  // baseURL: 'https://8992e0854253.ngrok.io/api',
+  baseURL: 'https://dev.virujh.com/api/',
 })
 
 export const METHOD = {
