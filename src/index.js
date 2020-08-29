@@ -18,7 +18,7 @@ import VideoConsultation from './pages/VideoConsultation'
 
 ReactDOM.render(
     <ThemeProvider theme={theme}>
-      <BrowserRouter basename="/react">
+      <BrowserRouter>
         <Switch>
           <Route exact path={'/select-role'} component={SelectRole} />
           <Route exact path={'/login'} component={Login} />
