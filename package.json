@@ -2,7 +2,7 @@
   "name": "virujh",
   "version": "0.1.0",
   "private": true,
-  "homepage": "/react",
+  "homepage": "/app",
   "dependencies": {
     "@date-io/date-fns": "1.x",
     "@date-io/moment": "1.x",
