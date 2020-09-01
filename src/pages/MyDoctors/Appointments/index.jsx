@@ -80,17 +80,16 @@ function Appointment({ doctorList }) {
       <Box className={classes.body} display="flex">
         <ScheduledDoctors doctorDetails={doctorList} />
         <Box className={classes.schedule}>
-          {
-            appointmentSlots &&
-          <AppointmentContainer
-            appointmentSlots={appointmentSlots}
-            doctorKey={id}
-            forwardPagination={forwardPagination}
-            backwardPagination={backwardPagination}
-            paginationNumber={paginationNumber}
-            onSave={onSave}
-          />
-        }
+          {appointmentSlots && (
+            <AppointmentContainer
+              appointmentSlots={appointmentSlots}
+              doctorKey={id}
+              forwardPagination={forwardPagination}
+              backwardPagination={backwardPagination}
+              paginationNumber={paginationNumber}
+              onSave={onSave}
+            />
+          )}
         </Box>
       </Box>
       {response && response.data?.appointment && (
@@ -101,14 +100,22 @@ function Appointment({ doctorList }) {
           severity={'success'}
         />
       )}
-      {response && response.name === 'Error' && (
+      {(response && response.name === 'Error' && response.status === 500 && (
         <SnackBar
           openDialog={open}
-          message={response.message}
+          message={'Internal server error'}
           onclose={handleClose}
           severity={'error'}
         />
-      )}
+      )) ||
+        (response && response.name === 'Error' && response.status !== 500 && (
+          <SnackBar
+            openDialog={open}
+            message={'Something went wrong'}
+            onclose={handleClose}
+            severity={'error'}
+          />
+        ))}
       {(response &&
         response.data?.statusCode &&
         response.data?.statusCode === 200 && (

@@ -211,7 +211,7 @@ function CreateAppointmentForNewPatient({
               </Box>
             </Box>
           </Box>
-          <Box className={classes.newPatientPreConsultation}>
+          {/* <Box className={classes.newPatientPreConsultation}>
             <Typography className={classes.optionHeader}>
               Pre-Consultation
             </Typography>
@@ -221,7 +221,7 @@ function CreateAppointmentForNewPatient({
               variant="outlined"
               disabled
             />
-          </Box>
+          </Box> */}
           {
             error &&
             <Typography className={classes.errorMsg}>Please fill out the details</Typography>

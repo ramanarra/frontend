@@ -28,10 +28,11 @@ const useStyle = makeStyles(() => ({
     width: 385,
   },
   text: {
-    fontSize: 13.5,
+    fontSize: 13,
     color: '#424141',
     paddingTop: 5,
     paddingRight: 5,
+    paddingLeft: 5,
   },
   right: {
     width: 385,
@@ -54,21 +55,24 @@ const useStyle = makeStyles(() => ({
   },
 }))
 
-function HospitalDetails({ hospitalDetails }) {
+function HospitalDetails({ hospitalDetails, isAbleToWrite, onSave }) {
   const classes = useStyle()
 
   const [fieldName, setFieldName] = useState('')
 
   const [values, setValues] = useState({
+    accountKey: hospitalDetails.accountKey,
+    hospitalPhoto: hospitalDetails.hospitalPhoto,
     hospitalName: hospitalDetails.hospitalName,
     landmark: hospitalDetails.landmark,
     country: hospitalDetails.country,
     phone: hospitalDetails.phone,
-    address: `${hospitalDetails.street1}${','} ${hospitalDetails.street2}`,
-    state: `${hospitalDetails.city}${','} ${hospitalDetails.state}`,
+    street1: hospitalDetails.street1,
+    street2: hospitalDetails.street2,
+    city: hospitalDetails.city,
+    state: hospitalDetails.state,
     pincode: hospitalDetails.pincode,
-    email: hospitalDetails.supportEmail,
-    discount: hospitalDetails.discount,
+    supportEmail: hospitalDetails.supportEmail,
   })
 
   function handleOnChange(value) {
@@ -86,6 +90,10 @@ function HospitalDetails({ hospitalDetails }) {
     setFieldName('')
   }
 
+  function handleOnSave() {
+    onSave(values)
+  }
+
   return (
     <Box className={classes.container}>
       <Box display="flex">
@@ -99,12 +107,15 @@ function HospitalDetails({ hospitalDetails }) {
               onChange={handleOnEdit}
               disabled={'hospitalName' === fieldName ? false : true}
             />
-            <EditButton
-              value={'-5px'}
-              name={'hospitalName'}
-              onChange={handleOnChange}
-              disable={handleDisable}
-            />
+            {isAbleToWrite && (
+              <EditButton
+                value={'-5px'}
+                name={'hospitalName'}
+                onChange={handleOnChange}
+                disable={handleDisable}
+                save={handleOnSave}
+              />
+            )}
           </Box>
           <Box className={classes.box} display="flex">
             <TextField
@@ -115,12 +126,15 @@ function HospitalDetails({ hospitalDetails }) {
               onChange={handleOnEdit}
               disabled={'landmark' === fieldName ? false : true}
             />
-            <EditButton
-              value={'-5px'}
-              name={'landmark'}
-              onChange={handleOnChange}
-              disable={handleDisable}
-            />
+            {isAbleToWrite && (
+              <EditButton
+                value={'-5px'}
+                name={'landmark'}
+                onChange={handleOnChange}
+                disable={handleDisable}
+                save={handleOnSave}
+              />
+            )}
           </Box>
           <Box className={classes.box} display="flex">
             <TextField
@@ -131,12 +145,15 @@ function HospitalDetails({ hospitalDetails }) {
               onChange={handleOnEdit}
               disabled={'country' === fieldName ? false : true}
             />
-            <EditButton
-              value={'-5px'}
-              name={'country'}
-              onChange={handleOnChange}
-              disable={handleDisable}
-            />
+            {isAbleToWrite && (
+              <EditButton
+                value={'-5px'}
+                name={'country'}
+                onChange={handleOnChange}
+                disable={handleDisable}
+                save={handleOnSave}
+              />
+            )}
           </Box>
           <Box className={classes.box} display="flex">
             <TextField
@@ -147,45 +164,54 @@ function HospitalDetails({ hospitalDetails }) {
               onChange={handleOnEdit}
               disabled={'phone' === fieldName ? false : true}
             />
-            <EditButton
-              value={'-5px'}
-              name={'phone'}
-              onChange={handleOnChange}
-              disable={handleDisable}
-            />
+            {isAbleToWrite && (
+              <EditButton
+                value={'-5px'}
+                name={'phone'}
+                onChange={handleOnChange}
+                disable={handleDisable}
+                save={handleOnSave}
+              />
+            )}
           </Box>
         </Box>
         <Box className={classes.left}>
           <Box className={classes.box} display="flex">
             <TextField
-              name="address"
+              name="street1"
               className={classes.textField}
               variant="outlined"
-              value={values.address}
+              value={`${values.street1}${', '}${values.street2}`}
               onChange={handleOnEdit}
               disabled={'address' === fieldName ? false : true}
             />
-            <EditButton
-              value={'-5px'}
-              name={'address'}
-              onChange={handleOnChange}
-              disable={handleDisable}
-            />
+            {isAbleToWrite && (
+              <EditButton
+                value={'-5px'}
+                name={'address'}
+                onChange={handleOnChange}
+                disable={handleDisable}
+                save={handleOnSave}
+              />
+            )}
           </Box>
           <Box className={classes.box} display="flex">
             <TextField
               name="state"
               className={classes.textField}
               variant="outlined"
-              value={values.state}
+              value={`${values.city}${', '}${values.state}`}
               disabled={'state' === fieldName ? false : true}
             />
-            <EditButton
-              value={'-5px'}
-              name={'state'}
-              onChange={handleOnChange}
-              disable={handleDisable}
-            />
+            {isAbleToWrite && (
+              <EditButton
+                value={'-5px'}
+                name={'state'}
+                onChange={handleOnChange}
+                disable={handleDisable}
+                save={handleOnSave}
+              />
+            )}
           </Box>
           <Box className={classes.box} display="flex">
             <TextField
@@ -196,28 +222,34 @@ function HospitalDetails({ hospitalDetails }) {
               onChange={handleOnEdit}
               disabled={'pincode' === fieldName ? false : true}
             />
-            <EditButton
-              value={'-5px'}
-              name={'pincode'}
-              onChange={handleOnChange}
-              disable={handleDisable}
-            />
+            {isAbleToWrite && (
+              <EditButton
+                value={'-5px'}
+                name={'pincode'}
+                onChange={handleOnChange}
+                disable={handleDisable}
+                save={handleOnSave}
+              />
+            )}
           </Box>
           <Box className={classes.box} display="flex">
             <TextField
               name="email"
               className={classes.textField}
               variant="outlined"
-              value={values.email}
+              value={values.supportEmail}
               onChange={handleOnEdit}
               disabled={'email' === fieldName ? false : true}
             />
-            <EditButton
-              value={'-5px'}
-              name={'email'}
-              onChange={handleOnChange}
-              disable={handleDisable}
-            />
+            {isAbleToWrite && (
+              <EditButton
+                value={'-5px'}
+                name={'email'}
+                onChange={handleOnChange}
+                disable={handleDisable}
+                save={handleOnSave}
+              />
+            )}
           </Box>
         </Box>
       </Box>
@@ -231,12 +263,15 @@ function HospitalDetails({ hospitalDetails }) {
           value="0"
           disabled={'discount' === fieldName ? false : true}
         />
-        <EditButton
-          value={'-5px'}
-          name={'discount'}
-          onChange={handleOnChange}
-          disable={handleDisable}
-        />
+        {isAbleToWrite && (
+          <EditButton
+            value={'-5px'}
+            name={'discount'}
+            onChange={handleOnChange}
+            disable={handleDisable}
+            save={handleOnSave}
+          />
+        )}
       </Box>
     </Box>
   )

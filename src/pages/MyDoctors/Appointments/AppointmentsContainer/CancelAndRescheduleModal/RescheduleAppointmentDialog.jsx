@@ -18,6 +18,7 @@ import { URL, METHOD } from '../../../../../api'
 import DatePicker from '../../../../../components/DatePicker'
 import useStyle from './useRescheduleStyle'
 import getTimeFormatWithNoon from '../../../../../lib/dateLib'
+import ConfirmationModal from './ConfirmationModal'
 
 function RescheduleAppointment({
   appointmentId,
@@ -32,6 +33,9 @@ function RescheduleAppointment({
   firstName,
   lastName,
   email,
+  setOpenConfirmation,
+  setParameter,
+  openConfirmation,
 }) {
   const classes = useStyle()
 
@@ -74,8 +78,10 @@ function RescheduleAppointment({
         startTime: moment(time.start, 'HH:mm:ss').format('HH:mm'),
         endTime: moment(time.end, 'HH:mm:ss').format('HH:mm'),
         appointmentDate: moment(date).format('YYYY-MM-DD'),
+        confirmation: true,
       }
-      onSave(URL.appointmentReschedule, parameter)
+      setOpenConfirmation(true)
+      setParameter(parameter)
     }
   }
 

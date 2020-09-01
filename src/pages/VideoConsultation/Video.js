@@ -18,6 +18,8 @@ function VideoConsultotion({
 
   const [open, setOpen] = useState(false)
 
+  const [byDoctor, setByDoctor] = useState(false)
+
   const [appointmenttId, setAppointmentId] = useState(null)
 
   const history = useHistory()
@@ -57,7 +59,13 @@ function VideoConsultotion({
 
   function onClose() {
     setOpen(false)
+    setByDoctor(false)
   }
+
+  function clickByDoctor() {
+    setByDoctor(true)
+  }
+
 
   return (
     <Fragment>
@@ -90,6 +98,9 @@ function VideoConsultotion({
             openDialog={open}
             onClose={onClose}
             setAppointmentId={setAppointmentId}
+            AddNextPatient={AddNextPatient}
+            byDoctor={byDoctor}
+            clickByDoctor={clickByDoctor}
           />
         </Box>
       )}

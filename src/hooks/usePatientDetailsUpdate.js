@@ -23,7 +23,7 @@ function usePatientDetailsUpdate(refetch) {
       })
       .catch((res) => {
         setLoading(false)
-        const response = {name: 'Error',message: 'Something went to wrong'}
+        const response = {name: 'Error',status: res.response.status}
         setData(response)
       })
   }

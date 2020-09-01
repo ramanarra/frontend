@@ -50,7 +50,6 @@ function VideoConsulation() {
       socket.emit('getAppointmentListForDoctor')
 
       socket.on('getDoctorAppointments', (data) => {
-        console.log(data)
         setPatientList(data)
       })
       socket.on('videoTokenForDoctor', (data) => {
@@ -60,7 +59,6 @@ function VideoConsulation() {
       })
 
       socket.on('videoTokenForPatient', (data) => {
-        console.log('data:', data)
         if (data.isToken) {
           setIsJoinDisabled(false)
           setSessionID(data.sessionId)
@@ -70,7 +68,6 @@ function VideoConsulation() {
     })
 
     socket.on('videoTokenRemoved', (data) => {
-      console.log('data',data)
       if (data.isRemoved) {
         if(localStorage.getItem('loginUser') === 'patient') {
         history.push('/patient/appointments/upcoming')
@@ -79,7 +76,6 @@ function VideoConsulation() {
     })
 
     socket.on('videoSessionRemoved', (data) => {
-      console.log('data', data)
       if(data.isRemoved) {
         if(localStorage.getItem('loginUser') === 'patient') {
           history.push('/patient/appointments/upcoming')

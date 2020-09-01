@@ -77,11 +77,12 @@ const useStyle = makeStyles(() => ({
   },
 }))
 
-function OverBooking({ openDialog, onclose, onSubmit }) {
+function OverBooking({ openDialog, onclose, onSubmit, overBookingConfirmation }) {
   const classes = useStyle()
 
   function handleOnSubmit(event) {
-    onSubmit(true)
+    overBookingConfirmation(true)
+    onSubmit()
     onclose(event)
   }
 

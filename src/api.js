@@ -2,6 +2,8 @@ import axios from 'axios'
 
 export default axios.create({
   baseURL: 'https://dev.virujh.com/api/',
+  // baseURL: 'https://137a553c14eb.ngrok.io/api/',
+  // baseURL: 'https://virujh.com/api/',
 })
 
 export const METHOD = {
@@ -15,6 +17,7 @@ export const URL = {
   patientLogin: 'auth/patientLogin',
   patientSignup: '/auth/patientRegistration',
   logout: '/auth/logout',
+  hospitalDetailsEdit: '/calendar/doctor/hospitaldetailsEdit',
   doctorSettingsPersonalView: '/calendar/doctor/personalSettingsView',
   doctorConfigUpdate: '/calendar/doctor/configUpdate',
   workschedule: {

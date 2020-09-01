@@ -19,7 +19,7 @@ const useStyle = makeStyles(() => ({
 }))
 
 const key = {
-  limit: String(18),
+  limit: String(30),
   paginationNumber: 0,
 }
 
@@ -72,14 +72,22 @@ function UpcomingAppointments() {
           severity={'success'}
         />
       )}
-      {response && response.name === 'Error' && (
+      {(response && response.name === 'Error' && response.status === 500 && (
         <SnackBar
           openDialog={open}
-          message={response.message}
+          message={'Internal server error'}
           onclose={handleClose}
           severity={'error'}
         />
-      )}
+      )) ||
+        (response && response.name === 'Error' && response.status !== 500 && (
+          <SnackBar
+            openDialog={open}
+            message={'Something went wrong'}
+            onclose={handleClose}
+            severity={'error'}
+          />
+        ))}
       {(response &&
         response.data?.statusCode &&
         response.data?.statusCode === 200 && (

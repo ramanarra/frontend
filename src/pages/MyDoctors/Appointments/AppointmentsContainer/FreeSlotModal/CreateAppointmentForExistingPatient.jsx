@@ -189,7 +189,7 @@ function CreateAppointmentForExistingPatient({
                 </Box>
               </Box>
             </Box>
-            <Box className={classes.fieldBox}>
+            {/* <Box className={classes.fieldBox}>
               <Typography className={classes.detailstext} variant="h5">
                 Pre-Consultation
               </Typography>
@@ -199,7 +199,7 @@ function CreateAppointmentForExistingPatient({
                 variant="outlined"
                 disabled
               />
-            </Box>
+            </Box> */}
             <Box className={classes.button}>
               <Box className={classes.submitbtn} onClick={handleOnSubmit}>
                 <Typography className={classes.submitText}>

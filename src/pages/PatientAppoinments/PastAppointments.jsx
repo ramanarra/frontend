@@ -19,7 +19,7 @@ const useStyle = makeStyles(() => ({
 }))
 
 const key = {
-  limit: '10',
+  limit: '30',
   paginationNumber: 0,
 }
 

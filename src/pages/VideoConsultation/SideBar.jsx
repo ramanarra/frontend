@@ -77,7 +77,10 @@ function SideBar({
   socket,
   openDialog,
   onClose,
-  setAppointmentId
+  setAppointmentId,
+  AddNextPatient,
+  byDoctor,
+  clickByDoctor,
 }) {
   const classes = useStyle()
 
@@ -90,6 +93,8 @@ function SideBar({
   const [selected, setSelected] = useState(null)
 
   const [index, setIndex] = useState(null)
+
+  const [nextPatientDetails, setNextPatientDetails] = useState(null)
 
   function handleOnPatientList() {
     setOpen(true)
@@ -115,11 +120,14 @@ function SideBar({
     setOpen(false)
   }
 
-   const handleOnPatientJoining = (appointmentId, firstName, lastName, index) => {
+  const handleOnPatientJoining = (appointmentId, firstName, lastName, index) => {
     const name = lastName ? firstName + lastName : firstName
     onPatientJoining(appointmentId, name)
     if (selected) {
-      socket.emit('removePatientTokenByDoctor', {appointmentId: selected, status: "completed"})
+      socket.emit('removePatientTokenByDoctor', {
+        appointmentId: selected,
+        status: 'completed',
+      })
     }
     setSelected(appointmentId)
     setIndex(index)
@@ -134,14 +142,21 @@ function SideBar({
         patientList[index + 1].lastName,
         index + 1
       )
-    }
-    else if(index === null && patientList.length === 1) {
-        handleOnPatientJoining(
-            patientList[0].appointmentId,
-            patientList[0].firstName,
-            patientList[0].lastName,
-            Number(0)
-          )
+    }  
+    else if (index === null && patientList.length === 1) {
+      handleOnPatientJoining(
+        patientList[0].appointmentId,
+        patientList[0].firstName,
+        patientList[0].lastName,
+        Number(0)
+      )
+    } else if (index === null && patientList.length > 1) {
+      handleOnPatientJoining(
+        patientList[0].appointmentId,
+        patientList[0].firstName,
+        patientList[0].lastName,
+        Number(0)
+      )
     }
   }
 
@@ -150,16 +165,15 @@ function SideBar({
   }
 
   function handleMedicineClose() {
-      setOPenMedicine(false)
+    setOPenMedicine(false)
   }
-
 
   return (
     <Box>
       {localStorage.getItem('loginUser') === 'doctor' && (
         <div>
           <div className={classes.topBar}>
-            {!open  && !openChat && !openMedicine && (
+            {!open && !openChat && !openMedicine && (
               <div className={classes.arrowIcon}>
                 <ArrowBackIosIcon
                   className={classes.icon}
@@ -200,14 +214,24 @@ function SideBar({
           onClose={handleOnClose}
           onJoiningPatient={handleOnPatientJoining}
           endCall={endCall}
-          appointmentId={selected}
+          presentAppointmentId={selected}
           index={index}
+          AddNextPatient={AddNextPatient}
+          nextPatientDetails={setNextPatientDetails}
+          clickByDoctor={clickByDoctor}
         />
       )}
       {openChat && <Chat onClose={handleChatClose} />}
       {openMedicine && <MedicineList onClose={handleMedicineClose} />}
       {openDialog && (
-        <AddNewPatientConfirmationModel open={openDialog} onClose={onClose} NextPatient={NextPatient} />
+        <AddNewPatientConfirmationModel
+          open={openDialog}
+          onClose={onClose}
+          NextPatient={NextPatient}
+          onPatientJoining={handleOnPatientJoining}
+          nextPatientDetails={nextPatientDetails}
+          byDoctor={byDoctor}
+        />
       )}
     </Box>
   )

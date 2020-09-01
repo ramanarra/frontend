@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Paper, Button, Snackbar } from '@material-ui/core'
 import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers'
 import { GoCalendar } from 'react-icons/go'
@@ -8,6 +8,8 @@ import MomentUtils from '@date-io/moment'
 import Textfield from '../../components/Textfield'
 import './style.scss'
 import Api, { URL } from '../../api'
+import { data } from 'jquery'
+import { tr } from 'date-fns/locale'
 
 const SnackbarPosition = { vertical: 'bottom', horizontal: 'center' }
 
@@ -16,33 +18,48 @@ const PatientSignup = (props) => {
 
   const [Error, setError] = useState(false)
 
+  const [message, setMessage] = useState(null)
+
   const redirectToLogin = () => props.history.push('/login')
   const onSubmit = (data) => {
-    Api.post(
-      URL.patientSignup,
-      data
-    )
-      .then((res) => { 
+    Api.post(URL.patientSignup, data)
+      .then((res) => {
         const { data } = res
-        if (!data.patient?.accessToken) {
+        console.log(data)
+        if (data.patient?.accessToken) {
+          localStorage.setItem('virujhToken', data.patient.accessToken)
+          localStorage.setItem('patientId', data.patient.patientId)
+          localStorage.setItem('patientName', `${data.firstName} ${data.lastName}`)
+          props.history.push('/patient/appointments/upcoming')
+        }
+        else if (data.patient.update === 'updated password') {
           setError(true)
-
+          setMessage('Created successfully...Please do signin')
+        }
+        else {
+          setError(true)
+          setMessage(data.message)
           return
         }
-        localStorage.setItem('virujhToken', data.patient.accessToken)
-        localStorage.setItem('patientId', data.patient.patientId)
-        props.history.push('/patient/appointments/upcoming')
       })
       .catch(() => {
         setError(true)
       })
   }
 
-
   const validationErr = {
     name: 'Invalid name',
     phone: 'Invalid phone number',
     age: 'Invalid age',
+    passwordValidation: 'password must contain one alphabet and one numeric',
+    passwordLength: 'Password must has minimum length of 6 and maximum length of 12',
+  }
+
+  function handleOnClose(reason) {
+    if (reason === 'clickaway') {
+      return
+    }
+    setError(false)
   }
 
   return (
@@ -205,7 +222,23 @@ const PatientSignup = (props) => {
               label="Password"
               type="password"
               placeholder="********"
-              inputProps={{ ref: register({ required: 'Required' }) }}
+              inputProps={{
+                ref: register({
+                  required: 'Required',
+                  maxLength: {
+                    value: 12,
+                    message: validationErr.passwordLength,
+                  },
+                  minLength: {
+                    value: 6,
+                    message: validationErr.passwordLength,
+                  },
+                  pattern: {
+                    value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,12}$/,
+                    message: validationErr.passwordValidation,
+                  },
+                }),
+              }}
               error={!!errors.password && errors.password.message}
               hasValidation
             />
@@ -226,9 +259,10 @@ const PatientSignup = (props) => {
       <Snackbar
         anchorOrigin={SnackbarPosition}
         open={Error}
-        autoHideDuration={2000}
-        message={'Signed up successfully'}
+        autoHideDuration={3000}
+        message={message}
         key={SnackbarPosition.horizontal + SnackbarPosition.vertical}
+        onClose={handleOnClose}
       />
     </div>
   )

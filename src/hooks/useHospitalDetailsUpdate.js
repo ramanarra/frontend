@@ -1,30 +1,29 @@
 import { useState } from 'react'
 
-import API from '../api'
+import API, { URL } from '../api'
 
-function useAppointmentUpdate(refetch) {
+function useHospitalDetailsUpdate(refetch) {
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState(null)
 
-  function handleOnFetch(url,{...params}) {
+  function handleOnFetch(params) {
     setLoading(true)
     const token = localStorage.getItem('virujhToken')
     const authStr = 'Bearer '.concat(token)
 
-    API.post(url, params, {
+    API.post(URL.hospitalDetailsEdit, params, {
       headers: {
         Authorization: authStr,
       },
     })
       .then((res) => {
         setLoading(false)
+        setData(res.data)
         refetch()
-        setData(res)
-
       })
-      .catch((err) => {
+      .catch((res) => {
         setLoading(false)
-        const response = {name: 'Error', status: err.response.status}
+        const response = {name: 'Error', status: res.response.status}
         setData(response)
       })
   }
@@ -32,4 +31,4 @@ function useAppointmentUpdate(refetch) {
   return [handleOnFetch, data, loading]
 }
 
-export default useAppointmentUpdate
+export default useHospitalDetailsUpdate

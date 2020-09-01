@@ -240,6 +240,12 @@
               }
             }
           }
+          .MuiFormHelperText-root.Mui-error {
+            margin-left: 0px;
+            margin-right: 0px;
+            position: absolute;
+            top: 23px;
+          }
         }
         .txt-field.end-time {
           margin-left: 10px;
@@ -259,7 +265,7 @@
     }
 
     .list-btns {
-      padding: 5px 20px;
+      padding: 8px 20px;
       font-size: 12px;
       color: #0bb5ff;
       font-weight: 500;

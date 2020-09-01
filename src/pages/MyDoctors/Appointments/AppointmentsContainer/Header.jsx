@@ -5,6 +5,7 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 import EventIcon from '@material-ui/icons/Event'
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord'
+
 import Stretch from '../../../../components/Stretch'
 import useStyle from './useHeaderStyle'
 import Select from '../../../../components/Select'
@@ -18,12 +19,7 @@ function Header({ forwardPagination, backwardPagination, slots, paginationNumber
 
   const [date, setDate] = useState(currentDay)
 
-  const currentDate = Moment.utc(date)
-
-  const startDay =
-    paginationNumber === 0
-      ? currentDate.format('DD MMM, YYYY')
-      : Moment.utc(slots[0].day).format('DD MMM, YYYY')
+  const startDay = Moment.utc(slots[0].day).format('DD MMM, YYYY')
 
   const endDay = Moment.utc(slots[(slots.length) - 1].day).format('DD MMM, YYYY')
 

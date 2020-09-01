@@ -102,12 +102,12 @@ function PatientDetails({ patientDetails, patientId, onSave }) {
       <Box display="flex">
         <Box className={classes.photoContainer} display="flex">
           <Avatar src={values.photo} className={classes.photo} name="photo" />
-          <EditButton
+          {/* <EditButton
             value={'110px'}
             name="photo"
             onChange={handleOnChange}
             disable={handleDisable}
-          />
+          /> */}
         </Box>
         <Box display="flex" className={classes.detailsContainer}>
           <Box className={classes.right}>

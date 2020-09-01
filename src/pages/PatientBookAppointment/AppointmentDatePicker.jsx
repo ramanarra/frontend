@@ -89,9 +89,13 @@ function AppointmentDatePicker({ doctorKey, doctorDetails }) {
 
   const history = useHistory()
 
+  const patientId = localStorage.getItem('patientId')
+
   const [date, setDate] = useState(new Date())
 
   const [open, setOpen] = useState(false)
+
+  const [openConfirmation, setOpenConfirmation] = useState()
 
   const [error, setError] = useState(false)
 
@@ -99,7 +103,11 @@ function AppointmentDatePicker({ doctorKey, doctorDetails }) {
 
   const [confirmation, setConfirmation] = useState(true)
 
+  const [overBookingConfirmation, setOverBookingConfirmation] = useState(false)
+
   const selectedDate = moment(date).format('YYYY-MM-DD')
+
+  const [patientDetails] = useCustomFecth(METHOD.GET, `${URL.patientViewDetails}${'?patientId='}${patientId}`)
 
   const key = useMemo(() => {
     return {
@@ -112,6 +120,13 @@ function AppointmentDatePicker({ doctorKey, doctorDetails }) {
   const [updateData, updateError, isUpdating, data] = useManualFetch()
 
   const [
+    updateOverBooking,
+    updateOverBookingError,
+    isoverBookingUpdating,
+    overBookingResponse,
+  ] = useManualFetch()
+
+  const [
     updateRazerPay,
     updateRazerPayError,
     isRazerPayUpdating,
@@ -121,16 +136,16 @@ function AppointmentDatePicker({ doctorKey, doctorDetails }) {
   const [slots] = useCustomFecth(METHOD.POST, URL.patientAppointmentSlotsView, key)
 
   useEffect(() => {
-    if (data) {
-      setOpen(true)
+    if (overBookingResponse?.statusCode === 400) {
+      setOpenConfirmation(true)
     }
-  }, [data])
+  }, [overBookingResponse])
 
   useEffect(() => {
-    if (data?.statusCode === 200) {
+    if (overBookingResponse?.statusCode === 200) {
       onRazorpay()
     }
-  }, [data])
+  }, [overBookingResponse])
 
   useEffect(() => {
     if (razerPayResponse?.statusCode === 200) {
@@ -138,22 +153,22 @@ function AppointmentDatePicker({ doctorKey, doctorDetails }) {
     }
   }, [razerPayResponse])
 
-
   const onBookAppoinment = () => {
-     const params = {
-        patientId: Number(localStorage.getItem('patientId')),
-        doctorKey: doctorKey,
-        startTime: moment(time.start, 'HH:mm:ss').format('HH:mm'),
-        endTime: moment(time.end, 'HH:mm:ss').format('HH:mm'),
-        appointmentDate: selectedDate,
-        paymentOption: 'directPayment',
-        consultationMode: 'online',
-        confirmation: 'yes',
-      }
+    const params = {
+      patientId: Number(localStorage.getItem('patientId')),
+      doctorKey: doctorKey,
+      startTime: moment(time.start, 'HH:mm:ss').format('HH:mm'),
+      endTime: moment(time.end, 'HH:mm:ss').format('HH:mm'),
+      appointmentDate: moment(slots.date).format('YYYY-MM-DD'),
+      paymentOption: 'directPayment',
+      consultationMode: 'online',
+      paymentId: razerPayResponse?.paymentId,
+      confirmation: overBookingConfirmation,
+    }
 
-      updateData(METHOD.POST, URL.patientBookAppointment, params)
+    updateData(METHOD.POST, URL.patientBookAppointment, params)
+    setOpen(true)
   }
-
   const onRazorpay = async () => {
     const token = localStorage.getItem('virujhToken')
     const authStr = 'Bearer '.concat(token)
@@ -178,14 +193,13 @@ function AppointmentDatePicker({ doctorKey, doctorDetails }) {
             razorpay_payment_id: response.razorpay_payment_id,
             razorpay_signature: response.razorpay_signature,
           }
-
           updateRazerPay(METHOD.POST, URL.verification, params)
         } catch (err) {}
       },
       prefill: {
-        // email: this.state.patientDetail.email,
-        contact: '8667809253', //this.state.patientDetail.phone,
-        // name: this.state.patientDetail.firstName + " " + this.state.patientDetail.lastName
+        name: patientDetails?.firstName + " " + patientDetails?.lastName,
+        email: patientDetails?.email,
+        contact: patientDetails?.phone,
       },
       theme: { color: '#0bb5ff' },
     }
@@ -200,26 +214,9 @@ function AppointmentDatePicker({ doctorKey, doctorDetails }) {
   }
 
   function handleSubmit(confirmation) {
-    console.log(confirmation)
     if (time.start !== '00:00:00' && time.end !== '00:00:00') {
-      // const params = {
-      //   patientId: Number(localStorage.getItem('patientId')),
-      //   doctorKey: doctorKey,
-      //   startTime: moment(time.start, 'HH:mm:ss').format('HH:mm'),
-      //   endTime: moment(time.end, 'HH:mm:ss').format('HH:mm'),
-      //   appointmentDate: selectedDate,
-      //   paymentOption: 'directPayment',
-      //   consultationMode: 'online',
-      //   confirmation: confirmation,
-      // }
-
-      // const params = {
-      //   doctorKey : doctorKey,
-      //   appointmentDate : selectedDate,
-      // }
-
       const url = `${URL.appointmentPresentOnDate}?doctorKey=${doctorKey}&appointmentDate=${selectedDate}`
-      updateData(METHOD.GET, url)
+      updateOverBooking(METHOD.GET, url)
     } else {
       setError(true)
     }
@@ -240,6 +237,10 @@ function AppointmentDatePicker({ doctorKey, doctorDetails }) {
     if (data?.appointment) {
       history.push('/patient/appointments/upcoming')
     }
+  }
+
+  const handleCloseConfirmation =() => {
+    setOpenConfirmation(false)
   }
 
   return (
@@ -279,10 +280,15 @@ function AppointmentDatePicker({ doctorKey, doctorDetails }) {
         />
       )}
 
-      {data?.statusCode === 400 && (
-        <OverBooking openDialog={open} onclose={handleClose} onSubmit={onRazorpay} />
+      {overBookingResponse?.statusCode === 400 && (
+        <OverBooking
+          openDialog={openConfirmation}
+          onclose={handleCloseConfirmation}
+          onSubmit={onRazorpay}
+          overBookingConfirmation={setOverBookingConfirmation}
+        />
       )}
-      {/* {data && data?.appointment && (
+      {data && data?.appointment && (
         <SnackBar
           openDialog={open}
           message={'Sucessfully Created'}
@@ -290,30 +296,30 @@ function AppointmentDatePicker({ doctorKey, doctorDetails }) {
           severity={'success'}
         />
       )}
-      {data && data.name === 'Error' && (
+      {(data && data.name === 'Error' && data.status === 500 && (
+        <SnackBar
+          openDialog={open}
+          message={'Internal server error'}
+          onclose={handleClose}
+          severity={'error'}
+        />
+      )) ||
+        (data && data.name === 'Error' && data.status !== 500 && (
+          <SnackBar
+            openDialog={open}
+            message={'Something went wrong'}
+            onclose={handleClose}
+            severity={'error'}
+          />
+        ))}
+      {(data && data?.statusCode && data?.statusCode === 200 && (
         <SnackBar
           openDialog={open}
           message={data.message}
           onclose={handleClose}
-          severity={'error'}
-        />
-      )}
-      {(data && data?.statusCode && 
-      (data?.statusCode === 417 && (
-        <OverBooking
-          openDialog={open}
-          onclose={handleClose}
-          onSubmit={handleSubmit}
+          severity={'success'}
         />
       )) ||
-        (data?.statusCode === 200 && (
-          <SnackBar
-            openDialog={open}
-            message={data.message}
-            onclose={handleClose}
-            severity={'success'}
-          />
-        )) ||
         (data?.statusCode === 404 && (
           <SnackBar
             openDialog={open}
@@ -330,14 +336,14 @@ function AppointmentDatePicker({ doctorKey, doctorDetails }) {
             severity={'error'}
           />
         )) ||
-        (data?.statusCode && (
+        (data?.statusCode && data?.statusCode !== 400 && (
           <SnackBar
             openDialog={open}
             message={data.message}
             onclose={handleClose}
             severity={'error'}
           />
-        )))} */}
+        ))}
     </Box>
   )
 }

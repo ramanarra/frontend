@@ -8,9 +8,9 @@ import getTimeFormatWithNoon from '../../lib/dateLib'
 
 const useStyle = makeStyles(() => ({
   availableSlots: {
-    paddingTop: 145,
+    marginTop: 145,
     paddingLeft: 20,
-    height: 450,
+    height: 305,
     overflowY: 'auto',
   },
   time: {
@@ -51,13 +51,14 @@ const useStyle = makeStyles(() => ({
     padding: 10,
     width: 'fit-content',
     marginLeft: 35,
-    marginBottom: 15,
+    marginTop: 15,
   },
   rescheduleContent: {
     backgroundColor: '#f7fcff',
     padding: 10,
     width: 'fit-content',
     marginLeft: 35,
+    marginTop: 15,
   },
   reportIcon: {
     color: '#345860',
@@ -82,32 +83,32 @@ function AvailableSlots({ availableSlots, handleSlotTiming, doctorDetails }) {
   }
 
   const cancellationDays =
-    doctorDetails.cancellationDays !== '0'
+    doctorDetails.cancellationDays && doctorDetails.cancellationDays !== '0'
       ? `${doctorDetails.cancellationDays} ${'days'} `
       : ''
   const cancellationHours =
-    doctorDetails.cancellationHours !== '0'
+    doctorDetails.cancellationHours && doctorDetails?.cancellationHours !== '0'
       ? `${doctorDetails.cancellationHours} ${'hours'} `
       : ''
 
   const cancellationMins =
-    doctorDetails.cancellationMins !== '0'
+    doctorDetails.cancellationMins && doctorDetails.cancellationMins !== '0'
       ? `${doctorDetails.cancellationMins} ${'mins'}`
       : ''
 
   const cancellation = `${cancellationDays}${cancellationHours}${cancellationMins}`
 
   const rescheduleDays =
-    doctorDetails.rescheduleDays !== '0'
+    doctorDetails.rescheduleDays && doctorDetails.rescheduleDays !== '0'
       ? `${doctorDetails.rescheduleDays} ${'days'} `
       : ''
   const rescheduleHours =
-    doctorDetails.rescheduleHours !== '0'
-      ? `${doctorDetails.rescheduleHours} ${'hours'} `
+    doctorDetails.rescheduleHours && doctorDetails.rescheduleHours !== '0'
+      ? `${doctorDetails?.rescheduleHours} ${'hours'} `
       : ''
 
   const rescheduleMins =
-    doctorDetails.rescheduleMins !== '0'
+    doctorDetails.rescheduleMins && doctorDetails.rescheduleMins !== '0'
       ? `${doctorDetails.rescheduleMins} ${'mins'}`
       : ''  
 

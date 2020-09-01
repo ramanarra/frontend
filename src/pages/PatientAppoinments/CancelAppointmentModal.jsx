@@ -64,7 +64,7 @@ function CancelAppointmentModal({ open, time, date, onClose, appointmentId, onSa
   }
 
   function handleOnClick() {
-    onSave(URL.patientAppointmentCancel, {appointmentId: appointmentId})
+    onSave(URL.patientAppointmentCancel, {appointmentId: appointmentId, confirmation: true})
     onClose()
   }
 

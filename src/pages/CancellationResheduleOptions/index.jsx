@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useState, useEffect } from 'react'
 import { useParams, useHistory } from 'react-router-dom'
 import { Box, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
@@ -10,6 +10,7 @@ import useCustomFetch from '../../hooks/useCustomFetch'
 import useDoctorConfigUpdate from '../../hooks/useDoctorConfigUpdate'
 import useDocSettingWrite from '../../hooks/useDocSettingWrite'
 import LeftArrow from '../../assets/img/left-arrow.svg'
+import SnackBar from '../../components/SnackBar'
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -46,6 +47,8 @@ function CancellationResheduleOptions() {
 
   const isAbleToWrite = useDocSettingWrite()
 
+  const [open, setOpen] = useState(false)
+
   const key = useMemo(() => {
     return {
       doctorKey: id,
@@ -62,6 +65,18 @@ function CancellationResheduleOptions() {
   }
 
   const [onSave, response] = useDoctorConfigUpdate(refetch)
+
+  useEffect(() => {
+    setOpen(true)
+  },[response])
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return
+    }
+
+    setOpen(false)
+  }
 
   return (
     <Box className={classes.container}>
@@ -91,16 +106,46 @@ function CancellationResheduleOptions() {
             doctorKey={id}
             onSave={onSave}
             isAbleToWrite={isAbleToWrite}
-            response={response}
           />
           <Reschedule
             configDetails={data?.configDetails}
             doctorKey={id}
             onSave={onSave}
             isAbleToWrite={isAbleToWrite}
-            response={response}
           />
         </Box>
+      )}
+      {response && response.statusCode && response.statusCode === 200 && (
+        <SnackBar
+          openDialog={open}
+          message={response.message}
+          onclose={handleClose}
+          severity={'success'}
+        />
+      )}
+      {(response && response.name === 'Error' && response.status === 500 && (
+        <SnackBar
+          openDialog={open}
+          message={'Internal server error'}
+          onclose={handleClose}
+          severity={'error'}
+        />
+      )) ||
+        (response && response.name === 'Error' && response.status !== 500 && (
+          <SnackBar
+            openDialog={open}
+            message={'Something went wrong'}
+            onclose={handleClose}
+            severity={'error'}
+          />
+        ))}
+      {response && response.statusCode && response.statusCode !== 200 && (
+        <SnackBar
+          openDialog={open}
+          message={response.message}
+          onclose={handleClose}
+          severity={'error'}
+        />
       )}
     </Box>
   )

@@ -1,18 +1,9 @@
-import React, {useState} from 'react'
+import React from 'react'
 import classNames from 'classnames'
-import { useHistory } from 'react-router-dom'
-import {
-  Box,
-  Typography,
-  Dialog,
-  DialogContent,
-  Avatar,
-  makeStyles,
-} from '@material-ui/core'
+import { Box, Typography, Avatar, makeStyles } from '@material-ui/core'
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 
 import getTimeFormatWithNoon, { getTimeFormat } from '../../lib/dateLib'
-
 
 const useStyle = makeStyles((theme) => ({
   dialog: {
@@ -78,23 +69,34 @@ const useStyle = makeStyles((theme) => ({
     backgroundColor: '#e6f7ff',
     borderLeft: '3px solid #20cfe1',
     paddingLeft: 10,
-  }
+  },
 }))
 
-function PatientList({ patientList, open, onClose, onJoiningPatient, endCall, appointmentId }) {
+function PatientList({
+  patientList,
+  open,
+  onClose,
+  onJoiningPatient,
+  presentAppointmentId,
+  AddNextPatient,
+  nextPatientDetails,
+  clickByDoctor,
+}) {
   const classes = useStyle()
-
 
   function handleOnClose(event) {
     onClose(event)
   }
 
   const handleOnPatientJoining = (appointmentId, firstName, lastName, index) => {
-    onJoiningPatient(appointmentId, firstName, lastName, index)
+    if (presentAppointmentId) {
+      nextPatientDetails({appointmentId: appointmentId, firstName: firstName, lastName: lastName, index: index})
+      clickByDoctor()
+      AddNextPatient()
+    } else {
+      onJoiningPatient(appointmentId, firstName, lastName, index)
+    }
   }
-
-
-
 
   return (
     <Box>
@@ -111,7 +113,8 @@ function PatientList({ patientList, open, onClose, onJoiningPatient, endCall, ap
                     display="flex"
                     key={index}
                     className={classNames(classes.patientDetails, {
-                      [classes.selecedTab]: appointmentId === patientDetails.appointmentId,
+                      [classes.selecedTab]:
+                        presentAppointmentId === patientDetails.appointmentId,
                     })}
                     onClick={() =>
                       handleOnPatientJoining(

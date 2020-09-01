@@ -140,14 +140,22 @@ const SessionTime = ({ data, handleUpdate, response }) => {
           severity={'error'}
         />
       )}
-      {response && response.name === 'Error' && (
+      {(response && response.name === 'Error' && response.status === 500 && (
         <SnackBar
           openDialog={open}
-          message={response.message}
+          message={'Internal server error'}
           onclose={handleClose}
           severity={'error'}
         />
-      )}
+      )) ||
+        (response && response.name === 'Error' && response.status !== 500 && (
+          <SnackBar
+            openDialog={open}
+            message={'Something went wrong'}
+            onclose={handleClose}
+            severity={'error'}
+          />
+        ))}
       {openDialog && (
         <ConfimationDialog
           open={openDialog}

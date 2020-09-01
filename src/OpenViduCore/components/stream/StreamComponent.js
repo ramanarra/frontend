@@ -60,7 +60,7 @@ export default class StreamComponent extends Component {
     const ToolBarComponent = this.props.ToolBarComponent
     return (
       <div className="OT_widget-container">
-        <div className="pointer nickname">
+        {/* <div className="pointer nickname">
           <div style={{ display: 'flex' }}>
             <div onClick={this.props.onPatientJoining}>{this.props.doctorName}</div>
             {this.props.patientName && (
@@ -73,7 +73,7 @@ export default class StreamComponent extends Component {
               2 paticipants{' '}
             </div>
           )}
-        </div>
+        </div> */}
 
         {this.props.user !== undefined &&
         this.props.user.getStreamManager() !== undefined ? (
