@@ -116,7 +116,7 @@ function ConsulationAndSignature({
   }, [configDetails])
 
   const setfee = (event) => {
-    if (!isNaN(event.target.value)) {
+    if (!isNaN(event.target.value) && event.target.value < 10000) {
       setFees(event.target.value)
     }
   }

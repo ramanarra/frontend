@@ -1,5 +1,6 @@
-import React, {useState, useEffect} from 'react'
-import { Box, makeStyles } from '@material-ui/core'
+import React, { useState, useEffect } from 'react'
+import { Box, makeStyles, Button } from '@material-ui/core'
+import { useHistory } from 'react-router-dom'
 
 import PatientAppointmentSlot from './PatientAppointmentSlot'
 import useCustomFecth from '../../hooks/useCustomFetch'
@@ -7,6 +8,8 @@ import { METHOD, URL } from '../../api'
 import borderColors from './constants'
 import useAppointmentUpdate from '../../hooks/useAppointmentUpdate'
 import SnackBar from '../../components/SnackBar'
+import ScheduleImg from '../../assets/img/Schedule.svg'
+
 
 const useStyle = makeStyles(() => ({
   container: {
@@ -15,6 +18,18 @@ const useStyle = makeStyles(() => ({
     paddingLeft: 14,
     paddingRight: 12,
     overflowY: 'auto',
+  },
+  noappointmentsBox: {
+    width: '100%',
+    textAlign: 'center',
+  },
+  noappointmentsImage: {
+    width: 450,
+  },
+  button: {
+    padding: '8px 18px',
+    borderRadius: 25,
+    color: '#ffffff',
   },
 }))
 
@@ -28,13 +43,15 @@ function UpcomingAppointments() {
 
   const [open, setOpen] = useState(false)
 
+  const history = useHistory()
+
   const [appointmentsList, refetch] = useCustomFecth(
     METHOD.GET,
     URL.patientUpcomingAppointments,
     key
   )
 
-  const [onSave, response] =  useAppointmentUpdate(refetch)
+  const [onSave, response] = useAppointmentUpdate(refetch)
 
   useEffect(() => {
     if (response) {
@@ -47,6 +64,10 @@ function UpcomingAppointments() {
       return
     }
     setOpen(false)
+  }
+
+  function handleOnClick() {
+    history.push('/patient/find-doctor')
   }
 
   return (
@@ -64,7 +85,21 @@ function UpcomingAppointments() {
             />
           )
         })}
-         {response && response.data?.appointment && (
+      {appointmentsList && appointmentsList.length === 0 && (
+        <Box className={classes.noappointmentsBox}>
+          <img src={ScheduleImg} className={classes.noappointmentsImage} />
+          <Box>
+            <Button
+              className={classes.button}
+              style={{ backgroundColor: '#0bb5ff' }}
+              onClick={handleOnClick}
+            >
+              Book Now
+            </Button>
+          </Box>
+        </Box>
+      )}
+      {response && response.data?.appointment && (
         <SnackBar
           openDialog={open}
           message={'Created Sucessfully'}

@@ -119,7 +119,7 @@ export default function DoctorHeader() {
   if (data) {
     if (data.message === 'sucessfully loggedout') {
       localStorage.clear()
-      history.push('/login')
+      history.push('/doctor/login')
     }
   }
 
@@ -128,19 +128,24 @@ export default function DoctorHeader() {
     setOpen(false)
   }
 
-
   return (
     <Box className={classes.appBar}>
       <img className={classes.logoImg} src={Logo} alt="logo" />
       <Stretch />
-      <Box className={classes.gap}>
-        <Button className={classes.videoButton} variant="contained" color="primary">
-          <i className="icon-video "></i>
-          <span onClick={handleOnVideoClick} className={classes.videoText}>
-            VIDEO CONSULTATION
-          </span>
-        </Button>
-      </Box>
+      {localStorage.getItem('role') === 'DOCTOR' && (
+        <Box className={classes.gap}>
+          <Button
+            className={classes.videoButton}
+            variant="contained"
+            color="primary"
+          >
+            <i className="icon-video "></i>
+            <span onClick={handleOnVideoClick} className={classes.videoText}>
+              VIDEO CONSULTATION
+            </span>
+          </Button>
+        </Box>
+      )}
       <Box className={classes.gap}>
         <i className={classNames('icon-notify', classes.notificationImg)}></i>
       </Box>
@@ -157,7 +162,9 @@ export default function DoctorHeader() {
           />
           {open && (
             <Box className={classes.logout}>
-              <Typography className={classes.edit} onClick={handleOnEdit}>Edit Profile</Typography>
+              <Typography className={classes.edit} onClick={handleOnEdit}>
+                Edit Profile
+              </Typography>
               <Typography className={classes.logoutText} onClick={handleOnLogout}>
                 Logout
               </Typography>

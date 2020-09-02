@@ -5,7 +5,7 @@ import { Avatar, Box, Typography, Button, makeStyles } from '@material-ui/core'
 
 const useInfocardStyles = makeStyles((theme) => ({
   container: {
-    width: 325,
+    width: '23%',
     marginTop: 20,
     marginRight: 27.2,
     backgroundColor: 'white',

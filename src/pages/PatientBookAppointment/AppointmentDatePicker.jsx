@@ -211,6 +211,7 @@ function AppointmentDatePicker({ doctorKey, doctorDetails }) {
   const handleDateChange = (event) => {
     setDate(event)
     setConfirmation(false)
+    setTime({ start: '00:00:00', end: '00:00:00' })
   }
 
   function handleSubmit(confirmation) {
@@ -277,6 +278,7 @@ function AppointmentDatePicker({ doctorKey, doctorDetails }) {
           availableSlots={slots.slots}
           handleSlotTiming={handleSlotTiming}
           doctorDetails={doctorDetails}
+          time={time}
         />
       )}
 

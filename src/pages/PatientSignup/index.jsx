@@ -8,8 +8,6 @@ import MomentUtils from '@date-io/moment'
 import Textfield from '../../components/Textfield'
 import './style.scss'
 import Api, { URL } from '../../api'
-import { data } from 'jquery'
-import { tr } from 'date-fns/locale'
 
 const SnackbarPosition = { vertical: 'bottom', horizontal: 'center' }
 
@@ -58,6 +56,9 @@ const PatientSignup = (props) => {
   function handleOnClose(reason) {
     if (reason === 'clickaway') {
       return
+    }
+    if(message === 'Created successfully...Please do signin') {
+      props.history.push('/login')
     }
     setError(false)
   }

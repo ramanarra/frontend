@@ -304,7 +304,10 @@ function UpcomingAndPastView({
                   </Typography>
                 </Box> */}
                 <Box className={classes.button} display="flex">
-                  <Box className={classes.rescheduleButton} onClick={handleOnReschedule}>
+                  <Box
+                    className={classes.rescheduleButton}
+                    onClick={handleOnReschedule}
+                  >
                     <Typography className={classes.rescheduleText}>
                       RESCHEDULE
                     </Typography>
@@ -324,9 +327,15 @@ function UpcomingAndPastView({
                 <Box display="flex" className={classes.hoursToJoinText}>
                   <StarIcon className={classes.starIcon} />
                   {differenceInDays.days() !== 0 ? (
-                    <Typography
-                      className={classes.text}
-                    >{`${days} days and ${hours} more hours to join`}</Typography>
+                    differenceInDays.days() === 1 ? (
+                      <Typography
+                        className={classes.text}
+                      >{`${days} day and ${hours} more hours to join`}</Typography>
+                    ) : (
+                      <Typography
+                        className={classes.text}
+                      >{`${days} days and ${hours} more hours to join`}</Typography>
+                    )
                   ) : (
                     <Typography
                       className={classes.text}

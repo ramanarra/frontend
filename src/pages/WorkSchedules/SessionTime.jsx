@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { Typography, TextField, Snackbar } from '@material-ui/core'
+import { Typography, TextField } from '@material-ui/core'
 
 import OptionBox from './OptionBox'
 import { minsSuffix } from '../../components/commonFormat.js'
-import SnackBar from '../../components/SnackBar'
 import ConfimationDialog from './ConfirmationDialog'
 
 const SessionTime = ({ data, handleUpdate, response }) => {
   const [sessionTime, setSessionTime] = useState(null)
   const [customTime, setCustomTime] = useState('')
   const [isChanged, setChanged] = useState(false)
-  const [open, setOpen] = useState(false)
 
   const [openDialog, setOpenDialog] = useState(false)
 
@@ -22,9 +20,10 @@ const SessionTime = ({ data, handleUpdate, response }) => {
     if (!!data) {
       const defaultTimes = [15, 30, 45, 60]
       defaultTimes.includes(data) ? setSessionTime(data) : setCustomTime(data)
-      defaultTimes.includes(data) ? setCustomTime('') : setCustomTime(data)
+      defaultTimes.includes(data) ? setCustomTime('') : setCustomTime(data) 
     }
-  }, [data])
+  }, [data, response])
+
 
   const handleSave = (saveValue) => {
     const time = saveValue || sessionTime || customTime || 0
@@ -34,7 +33,6 @@ const SessionTime = ({ data, handleUpdate, response }) => {
         consultationSessionTimings: time,
       },
     })
-    setOpen(true)
   }
 
   const handleChange = (value, type) => {
@@ -64,13 +62,7 @@ const SessionTime = ({ data, handleUpdate, response }) => {
     }
   }
 
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return
-    }
-
-    setOpen(false)
-  }
+  
 
   const handleOnClick = (value) => {
     setValue(value)
@@ -124,38 +116,7 @@ const SessionTime = ({ data, handleUpdate, response }) => {
           />
         </div>
       </div>
-      {response && response.statusCode === 200 && (
-        <SnackBar
-          openDialog={open}
-          message={response.message}
-          onclose={handleClose}
-          severity={'success'}
-        />
-      )}
-      {response && response.statusCode !== 200 && (
-        <Snackbar
-          openDialog={open}
-          message={response.message}
-          onclose={handleClose}
-          severity={'error'}
-        />
-      )}
-      {(response && response.name === 'Error' && response.status === 500 && (
-        <SnackBar
-          openDialog={open}
-          message={'Internal server error'}
-          onclose={handleClose}
-          severity={'error'}
-        />
-      )) ||
-        (response && response.name === 'Error' && response.status !== 500 && (
-          <SnackBar
-            openDialog={open}
-            message={'Something went wrong'}
-            onclose={handleClose}
-            severity={'error'}
-          />
-        ))}
+     
       {openDialog && (
         <ConfimationDialog
           open={openDialog}

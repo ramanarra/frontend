@@ -14,6 +14,7 @@ import CloseIcon from '@material-ui/icons/Close'
 
 import Wait from '../../assets/img/wait.svg'
 import Join from '../../assets/img/join.svg'
+import CameraOff from '../../assets/img/camera-off.svg'
 
 const useStyle = makeStyles(() => ({
   dialog: {
@@ -124,11 +125,15 @@ const useStyle = makeStyles(() => ({
   },
   error: {
     color: '#ffffff',
-    position: 'fixed',
-    top: 330,
-    left: 430,
     fontSize: 20,
   },
+  errorBox: {
+    marginTop: -240,
+    textAlign: 'center',
+  },
+  cameraOff: {
+    width: 35,
+  }
 }))
 
 function ConfirmationPopUp({
@@ -194,7 +199,10 @@ function ConfirmationPopUp({
                 }
               />
               {!videoAvailable && (
-                <Typography className={classes.error}>Camera not found</Typography>
+                <Box className={classes.errorBox}>
+                  <img src={CameraOff} className={classes.cameraOff} />
+                  <Typography className={classes.error}>Camera not found</Typography>
+                </Box>
               )}
             </Box>
             <Box className={classes.right}>
@@ -204,7 +212,7 @@ function ConfirmationPopUp({
                 <Box>
                   <img src={Join} className={classes.join} />
                   <Typography className={classes.message}>
-                    Take Online Doctor Consultaion
+                    Take Online Doctor Consultation
                   </Typography>
                 </Box>
               )}

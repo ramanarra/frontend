@@ -72,13 +72,13 @@ const useStyle = makeStyles(() => ({
   },
 }))
 
-function AvailableSlots({ availableSlots, handleSlotTiming, doctorDetails }) {
+function AvailableSlots({ availableSlots, handleSlotTiming, doctorDetails, time }) {
   const classes = useStyle()
 
-  const [time, setTime] = useState({ start: '00:00:00', end: '00:00:00' })
+  // const [time, setTime] = useState({ start: '00:00:00', end: '00:00:00' })
 
   const handleOnClick = (slot) => {
-    setTime(slot)
+    // setTime(slot)
     handleSlotTiming(slot)
   }
 

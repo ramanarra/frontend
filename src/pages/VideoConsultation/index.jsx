@@ -4,6 +4,7 @@ import socketIOClient from 'socket.io-client'
 
 import ConfirmationModal from './ConfirmationModel'
 import Video from './Video'
+import SnackBar from '../../components/SnackBar'
 
 const ENDPOINT = 'https://dev.virujh.com'
 
@@ -23,6 +24,10 @@ function VideoConsulation() {
   const [socket, setSocket] = useState('')
 
   const [patientList, setPatientList] = useState('')
+
+  const [openDialog, setOpenDialog] = useState(false)
+
+  const [data, setData] = useState(null)
 
   const location = useLocation()
 
@@ -53,9 +58,15 @@ function VideoConsulation() {
         setPatientList(data)
       })
       socket.on('videoTokenForDoctor', (data) => {
-        setIsJoinDisabled(false)
-        setSessionID(data.sessionId)
-        setToken(data.token)
+        if (data.isToken) {
+          setIsJoinDisabled(false)
+          setSessionID(data.sessionId)
+          setToken(data.token)
+        }
+        else {
+          setData(data)
+          setOpenDialog(true)
+        }
       })
 
       socket.on('videoTokenForPatient', (data) => {
@@ -90,6 +101,16 @@ function VideoConsulation() {
     }
   }, [])
 
+  function handleOnClose(event, reason) {
+    if (reason === 'clickaway') {
+      return
+    }
+
+    setOpenDialog(false)
+    setData(null)
+    history.push('/doctors')
+  }
+
   return (
     <Fragment>
       <ConfirmationModal
@@ -110,6 +131,15 @@ function VideoConsulation() {
           audioAvailability={audioAvailability}
         />
       )}
+      {
+        openDialog && data &&
+        <SnackBar
+        openDialog={openDialog}
+        message={data.message}
+        onclose={handleOnClose}
+        severity={'error'}
+        />
+      }
     </Fragment>
   )
 }

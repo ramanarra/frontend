@@ -23,7 +23,6 @@ function useDoctorConfigUpdate(refetch) {
       })
       .catch((res) => {
         setLoading(false)
-        console.log(res.response.status)
         const response = {name: 'Error', status: res.response.status }
         setData(response)
       })

@@ -14,6 +14,7 @@ function VideoConsultotion({
   videoAvailability,
   audioAvailability,
 }) {
+  
   const [end, setEnd] = useState(false)
 
   const [open, setOpen] = useState(false)
