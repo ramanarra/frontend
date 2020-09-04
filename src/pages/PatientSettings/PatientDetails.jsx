@@ -34,7 +34,7 @@ const useStyle = makeStyles((theme) => ({
   textField: {
     width: 315,
     '& .MuiInputBase-root': {
-      backgroundColor: '#f7f7f7',
+      backgroundColor: '#f1f1f1 !important',
       height: 35,
       '& input': {
         color: '#777777',

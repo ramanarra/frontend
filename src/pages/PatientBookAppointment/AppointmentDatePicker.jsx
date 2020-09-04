@@ -153,6 +153,10 @@ function AppointmentDatePicker({ doctorKey, doctorDetails }) {
     }
   }, [razerPayResponse])
 
+  useEffect(() => {
+    setOpen(true)
+  }, [slots])
+
   const onBookAppoinment = () => {
     const params = {
       patientId: Number(localStorage.getItem('patientId')),
@@ -293,7 +297,7 @@ function AppointmentDatePicker({ doctorKey, doctorDetails }) {
       {data && data?.appointment && (
         <SnackBar
           openDialog={open}
-          message={'Sucessfully Created'}
+          message={'Appointment created Sucessfully'}
           onclose={handleClose}
           severity={'success'}
         />
@@ -346,6 +350,16 @@ function AppointmentDatePicker({ doctorKey, doctorDetails }) {
             severity={'error'}
           />
         ))}
+        {
+          slots && slots.statusCode && slots.statusCode !== 200 && (
+            <SnackBar
+            openDialog={open}
+            message={slots.message}
+            onclose={handleClose}
+            severity={'error'}
+            />
+          )
+        }
     </Box>
   )
 }

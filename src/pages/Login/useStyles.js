@@ -52,7 +52,7 @@ const useStyles = makeStyles(() => ({
       border: '1px solid #ff9007',
       '& fieldset': {
         top: -3.8,
-        right: -0.5,
+        right: -0.3,
         borderColor: '#ffffff',
       }
     },
@@ -60,7 +60,8 @@ const useStyles = makeStyles(() => ({
     emptyPasswordField: {
       border: '1px solid #ff9007',
       '& fieldset': {
-        right: -0.5,
+        right: -0.3,
+        top: -3.8
       },
     },
   

@@ -36,7 +36,7 @@ const SessionTime = ({ data, handleUpdate, response }) => {
   }
 
   const handleChange = (value, type) => {
-    if (value > 0) {
+    if (Number(value) > 0 && Number(value) <= 60) {
       if (!!type) {
         !!sessionTime && value !== '' && setSessionTime(null)
         setCustomTime(value)
