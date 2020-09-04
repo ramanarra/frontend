@@ -26,6 +26,7 @@ function useAppointmentUpdate(refetch) {
         setLoading(false)
         const response = {name: 'Error', status: err.response.status}
         setData(response)
+        refetch()
       })
   }
 

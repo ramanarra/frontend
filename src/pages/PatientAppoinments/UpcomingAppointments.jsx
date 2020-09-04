@@ -85,7 +85,7 @@ function UpcomingAppointments() {
             />
           )
         })}
-      {appointmentsList && appointmentsList.length === 0 && (
+      {appointmentsList && (appointmentsList.length === 0 || appointmentsList.statusCode === 204) && (
         <Box className={classes.noappointmentsBox}>
           <img src={ScheduleImg} className={classes.noappointmentsImage} />
           <Box>

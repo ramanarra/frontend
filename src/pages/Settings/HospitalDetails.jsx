@@ -253,7 +253,7 @@ function HospitalDetails({ hospitalDetails, isAbleToWrite, onSave }) {
           </Box>
         </Box>
       </Box>
-      <Box display="flex" className={classes.discountField}>
+      {/* <Box display="flex" className={classes.discountField}>
         <Typography className={classes.text}>
           Discount for new Patient First Consultancy
         </Typography>
@@ -272,7 +272,7 @@ function HospitalDetails({ hospitalDetails, isAbleToWrite, onSave }) {
             save={handleOnSave}
           />
         )}
-      </Box>
+      </Box> */}
     </Box>
   )
 }

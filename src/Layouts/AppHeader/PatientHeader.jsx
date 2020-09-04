@@ -68,6 +68,7 @@ const useStyles = makeStyles(() => ({
     cursor: 'pointer',
     marginLeft: 10,
     borderRadius: '50%',
+    fontSize: 15,
   },
 
   logout: {

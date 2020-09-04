@@ -49,10 +49,19 @@ const useStyles = makeStyles(() => ({
     },
 
     emptyField: {
-      border: '1px solid #ff0000',
+      border: '1px solid #ff9007',
       '& fieldset': {
         top: -3.8,
+        right: -0.5,
+        borderColor: '#ffffff',
       }
+    },
+
+    emptyPasswordField: {
+      border: '1px solid #ff9007',
+      '& fieldset': {
+        right: -0.5,
+      },
     },
   
     content: {

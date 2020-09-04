@@ -12,8 +12,10 @@ const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
   const [tempId, setTempId] = useState(1)
   const scheduledayid = data && data[0]?.scheduledayid
 
+  console.log(data)
+
   useEffect(() => {
-    data && data?.length > 0 && setSlotList(data)
+    data && data?.length > 1 && setSlotList(data)
   }, [data])
 
   const handleAdd = () => {

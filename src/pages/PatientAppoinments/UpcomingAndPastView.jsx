@@ -325,8 +325,11 @@ function UpcomingAndPastView({
                   </Box>
                 </Box>
                 <Box display="flex" className={classes.hoursToJoinText}>
-                  <StarIcon className={classes.starIcon} />
-                  {differenceInDays.days() !== 0 ? (
+                  {
+                    (differenceInDays.days() > 0 || differenceInDays.hours >= 0)  &&
+                    <StarIcon className={classes.starIcon} />
+                  }
+                  {differenceInDays.days() > 0 ? (
                     differenceInDays.days() === 1 ? (
                       <Typography
                         className={classes.text}
@@ -337,9 +340,16 @@ function UpcomingAndPastView({
                       >{`${days} days and ${hours} more hours to join`}</Typography>
                     )
                   ) : (
-                    <Typography
-                      className={classes.text}
-                    >{`${hours} more hours to join`}</Typography>
+                    differenceInDays.hours() >= 0 &&
+                    (differenceInDays.hours() === 1 ? (
+                      <Typography
+                        className={classes.text}
+                      >{`${hours} more hour to join`}</Typography>
+                    ) : (
+                      <Typography
+                        className={classes.text}
+                      >{`${hours} more hours to join`}</Typography>
+                    ))
                   )}
                 </Box>
               </Box>

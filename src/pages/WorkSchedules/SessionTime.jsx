@@ -65,6 +65,7 @@ const SessionTime = ({ data, handleUpdate, response }) => {
   
 
   const handleOnClick = (value) => {
+    setEdit(false)
     setValue(value)
     setOpenDialog(true)
   }

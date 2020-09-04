@@ -55,7 +55,7 @@ const useStyles = makeStyles(() => ({
   },
 
   hospitalLogo: {
-    width: 30,
+    width: 33,
     paddingTop: 5,
     cursor: 'pointer',
   },

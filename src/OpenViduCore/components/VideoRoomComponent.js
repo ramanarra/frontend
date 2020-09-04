@@ -192,6 +192,8 @@ class VideoRoomComponent extends Component {
 
     this.props.leaveCall()
 
+    console.log('closed')
+
   }
   camStatusChanged() {
     localUser.setVideoActive(!localUser.isVideoActive())

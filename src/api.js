@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export default axios.create({
   baseURL: 'https://dev.virujh.com/api/',
-  // baseURL: 'https://7d59ccc763c7.ngrok.io/api/',
+  // baseURL: 'http://8faab9f9390c.ngrok.io/api/',
   // baseURL: 'https://virujh.com/api/',
 })
 
@@ -48,5 +48,5 @@ export const URL = {
   patientAppointmentReschedule: '/calendar/patient/patientAppointmentReschedule',
   appointmentPresentOnDate: 'calendar/patient/appointmentPresentOnDate',
   paymentOrder: '/calendar/payment/order',
-  verification: '/calendar/payment/verification'
+  verification: '/calendar/payment/verification',
 }

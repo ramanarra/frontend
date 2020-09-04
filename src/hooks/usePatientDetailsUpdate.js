@@ -25,6 +25,7 @@ function usePatientDetailsUpdate(refetch) {
         setLoading(false)
         const response = {name: 'Error',status: res.response.status}
         setData(response)
+        refetch()
       })
   }
 

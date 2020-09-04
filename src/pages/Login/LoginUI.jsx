@@ -49,6 +49,10 @@ const Login = ({
     history.push('/doctor/login')
   }
 
+  function patientLoginPage() {
+    history.push('/login')
+  }
+
   const validate = () => {
     const errors = {}
 
@@ -176,7 +180,7 @@ const Login = ({
                   autoComplete="current-password"
                   placeholder="********"
                   className={classNames(classes.textField, {
-                    [classes.emptyField]: passwordIndicate !== '',
+                    [classes.emptyPasswordField]: passwordIndicate !== '',
                   })}
                   type={type}
                   onChange={formik.handleChange}
@@ -213,9 +217,9 @@ const Login = ({
                     {errorMessage}
                   </Typography>
                 )}
-                <Typography className={classes.forgotPassword} variant="h5">
+                {/* <Typography className={classes.forgotPassword} variant="h5">
                   FORGOT PASSWORD?
-                </Typography>
+                </Typography> */}
               </Box>
             </Box>
             <Button
@@ -241,6 +245,16 @@ const Login = ({
                 If you are a doctor?
               </Typography>
               <Typography color="primary" variant="h4" onClick={doctorLoginPage}>
+                Click here
+              </Typography>
+            </Centralize>
+          )}
+          {localStorage.getItem('loginUser') === 'doctor' && (
+            <Centralize className={classes.singupContent}>
+              <Typography className={classes.singupLabel} variant="h6">
+                If you are a patient?
+              </Typography>
+              <Typography color="primary" variant="h4" onClick={patientLoginPage}>
                 Click here
               </Typography>
             </Centralize>

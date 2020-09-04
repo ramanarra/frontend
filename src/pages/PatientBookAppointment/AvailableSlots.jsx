@@ -75,10 +75,7 @@ const useStyle = makeStyles(() => ({
 function AvailableSlots({ availableSlots, handleSlotTiming, doctorDetails, time }) {
   const classes = useStyle()
 
-  // const [time, setTime] = useState({ start: '00:00:00', end: '00:00:00' })
-
   const handleOnClick = (slot) => {
-    // setTime(slot)
     handleSlotTiming(slot)
   }
 
@@ -147,14 +144,14 @@ function AvailableSlots({ availableSlots, handleSlotTiming, doctorDetails, time 
         cancellation && 
         <Box display="flex" className={classes.cancellationContent}>
           <ReportProblemOutlinedIcon className={classes.reportIcon} />
-          <Typography className={classes.text}>Cancellation allowed for within in {cancellation}</Typography>
+          <Typography className={classes.text}>Cancellation allowed for within {cancellation}</Typography>
         </Box>
       }
       {
         reschedule &&
         <Box display="flex" className={classes.rescheduleContent}>
           <ReportProblemOutlinedIcon className={classes.reportIcon} />
-          <Typography className={classes.text}>Reschedule allowed for within in {reschedule}</Typography>
+          <Typography className={classes.text}>Reschedule allowed for within {reschedule}</Typography>
         </Box>
       }
     </Box>

@@ -99,7 +99,7 @@ function AppointmentDatePicker({ doctorKey, doctorDetails }) {
 
   const [error, setError] = useState(false)
 
-  const [time, setTime] = useState({ start: '00:00:00', end: '00:00:00' })
+  const [time, setTime] = useState({ start: '', end: '' })
 
   const [confirmation, setConfirmation] = useState(true)
 
@@ -211,11 +211,11 @@ function AppointmentDatePicker({ doctorKey, doctorDetails }) {
   const handleDateChange = (event) => {
     setDate(event)
     setConfirmation(false)
-    setTime({ start: '00:00:00', end: '00:00:00' })
+    setTime({ start: '', end: '' })
   }
 
   function handleSubmit(confirmation) {
-    if (time.start !== '00:00:00' && time.end !== '00:00:00') {
+    if (time.start !== '' && time.end !== '') {
       const url = `${URL.appointmentPresentOnDate}?doctorKey=${doctorKey}&appointmentDate=${selectedDate}`
       updateOverBooking(METHOD.GET, url)
     } else {

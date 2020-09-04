@@ -2,6 +2,7 @@ import React from 'react'
 import classNames from 'classnames'
 import { Box, Typography, Avatar, makeStyles } from '@material-ui/core'
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
+import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord'
 
 import getTimeFormatWithNoon, { getTimeFormat } from '../../lib/dateLib'
 
@@ -31,6 +32,7 @@ const useStyle = makeStyles((theme) => ({
     paddingBottom: 8,
     paddingTop: 8,
     cursor: 'pointer',
+    height: 75,
   },
   icon: {
     marginTop: 7.5,
@@ -69,6 +71,20 @@ const useStyle = makeStyles((theme) => ({
     backgroundColor: '#e6f7ff',
     borderLeft: '3px solid #20cfe1',
     paddingLeft: 10,
+  },
+  onlineStatus: {
+    width: 13,
+    color: '#20ff05',
+    position: 'relative',
+    left: 35,
+    bottom: 19,
+  },
+  offlineStatus: {
+    width: 13,
+    color: '#f30505',
+    position: 'relative',
+    left: 35,
+    bottom: 19,
   },
 }))
 
@@ -125,7 +141,14 @@ function PatientList({
                       )
                     }
                   >
+                    <Box>
                     <Avatar src={patientDetails.photo} className={classes.photo} />
+                    {
+                      patientDetails.patientLiveStatus === 'online' ?
+                      <FiberManualRecordIcon className={classes.onlineStatus} /> :
+                      <FiberManualRecordIcon className={classes.offlineStatus} />  
+                    }
+                    </Box>
                     <Box className={classes.detail}>
                       <Box display="flex">
                         <Typography className={classes.firstName} variant="h5">

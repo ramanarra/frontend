@@ -48,7 +48,7 @@ const Navigation = ({ doctorList }) => {
             className="icon-doctor"
           ></i>
           {
-            localStorage.getItem('loginUser') === 'doctor' ?
+            localStorage.getItem('role') === 'DOCTOR' ?
             <Typography className={classes.content}>My Hospital</Typography> :
             <Typography className={classes.content}>My Doctors</Typography>
           }
