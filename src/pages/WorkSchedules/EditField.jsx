@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { IconButton } from '@material-ui/core'
 import { Edit, Done, Close } from '@material-ui/icons'
 
-const EditField = ({ value, name, onChange, onSave }) => {
+const EditField = ({ value, type, name, onChange, onSave, error }) => {
   const [isEdit, setEdit] = useState(false)
   const [newValue, setNewValue] = useState(value)
 
@@ -38,7 +38,7 @@ const EditField = ({ value, name, onChange, onSave }) => {
   return (
     <div className="edit-field-wrap">
       <input
-        type="text"
+        type={type || 'text'}
         className="edit-field"
         name={name}
         value={newValue}
@@ -54,6 +54,7 @@ const EditField = ({ value, name, onChange, onSave }) => {
           <Done fontSize="small" />
         </IconButton>
       )}
+      {!!error && <div className="err-msg">{error}</div>}
     </div>
   )
 }

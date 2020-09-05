@@ -24,6 +24,13 @@ export const URL = {
     data: '/calendar/doctor/workScheduleView',
     update: '/calendar/doctor/workScheduleEdit',
   },
+  patient: {
+    list: '/calendar/admin/patients',
+    info: '/calendar/doctor/detailsofpatient',
+    upcomingApp: '/calendar/doctor/patientUpcomingAppList',
+    pastApp: '/calendar/doctor/patientPastAppList',
+    search: '/calendar/doctor/patientGeneralSearch',
+  },
   appointmentSlotsView: '/calendar/doctor/appointmentSlotsView',
   appointmentView: '/calendar/appointmentView',
   appointmentCancel: '/calendar/doctor/appointmentCancel',

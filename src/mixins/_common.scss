@@ -17,6 +17,12 @@
   align-items: center;
 }
 
+@mixin colMiddle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 @mixin equalSplitPartiton {
   display: grid;
   grid-template-columns: 48.5% 48.5%;
