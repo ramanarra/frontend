@@ -1,7 +1,7 @@
 @import '../../../mixins/common';
 
 .patient-detials-edit {
-  padding: 0 20px 20px;
+  padding: 0 25px 20px;
   font-size: 14px;
   font-weight: normal;
   max-height: calc(100vh - 65px);
@@ -17,7 +17,7 @@
     table {
       .tbl-cell {
         min-width: 17vw;
-        padding: 15px 0;
+        padding: 17px 0;
       }
 
       .field-name {
@@ -31,6 +31,7 @@
   }
 
   .more-desc {
+    margin-top: 40px;
     .sub-title {
       font-size: 16px;
       font-weight: 500;
@@ -72,10 +73,55 @@
     color: #fff;
     border-radius: 20px;
     width: 150px;
-    margin-top: 30px;
 
     &:hover {
       background: #0bb5ff;
+    }
+  }
+
+  .appointment-section {
+    margin-top: 40px;
+    .appointment-type-tab {
+      display: flex;
+      padding: 20px 0;
+
+      .appointment-tab {
+        color: #6b6b6b;
+        cursor: pointer;
+      }
+
+      .appointment-tab.active {
+        color: #0bb5ff;
+        position: relative;
+
+        &::after {
+          content: ' ';
+          display: block;
+          position: absolute;
+          height: 3.5px;
+          width: 93%;
+          left: 0;
+          right: 0;
+          top: 19px;
+          margin-left: auto;
+          margin-right: auto;
+          bottom: 2px;
+          background: #0bb5ff;
+        }
+      }
+
+      .upcoming-tab-wrap {
+        margin-right: 50px;
+      }
+    }
+
+    .appointment-list-wrap {
+      max-width: 53vw;
+
+      .no-appointment {
+        padding-top: 10px;
+        padding-bottom: 50px;
+      }
     }
   }
 }

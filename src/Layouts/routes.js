@@ -8,10 +8,12 @@ import DocBody from './DocBody'
 import PatientAppoinments from '../pages/PatientAppoinments'
 import PatientSettings from '../pages/PatientSettings'
 import PatientDetials from '../pages/Patients/PatientDetials'
+import PatientFindDoctor from '../pages/PatientFindDoctor'
+import PatientBookAppointment from '../pages/PatientBookAppointment'
 
 export const PatientRoutes = [
   {
-    path: '/patient/appoinments',
+    path: ['/patient/appointments/upcoming', '/patient/appointments/past'],
     name: 'patientAppoinments',
     exact: true,
     component: PatientAppoinments,
@@ -22,34 +24,18 @@ export const PatientRoutes = [
     exact: true,
     component: PatientSettings,
   },
-import PatientFindDoctor from '../pages/PatientFindDoctor'
-import PatientBookAppointment from '../pages/PatientBookAppointment'
-
-export const PatientRoutes = [
   {
-      path: ['/patient/appointments/upcoming', '/patient/appointments/past'],
-      name: 'patientAppoinments',
-      exact: true,
-      component: PatientAppoinments,
-    },
-    {
-      path: '/patient/setting',
-      name: 'PatientSetting',
-      exact: true,
-      component: PatientSettings,
-    },
-    {
-      path: '/patient/find-doctor',
-      name: 'PatientFindDoctor',
-      exact: true,
-      component: PatientFindDoctor,
-    },
-    {
-      path: '/patient/:id/book-appointment',
-      name: 'PatientBookAppointment',
-      exact: true,
-      component: PatientBookAppointment
-    }
+    path: '/patient/find-doctor',
+    name: 'PatientFindDoctor',
+    exact: true,
+    component: PatientFindDoctor,
+  },
+  {
+    path: '/patient/:id/book-appointment',
+    name: 'PatientBookAppointment',
+    exact: true,
+    component: PatientBookAppointment,
+  },
 ]
 
 const DoctorRoutes = [

@@ -14,6 +14,10 @@ export const timeFmt = (time) => {
   return moment(time, 'hh:mmA').format('hh:mmA')
 }
 
+export const dateFmt = (date) => {
+  return moment(date, 'YYYY-MM-DD').format('DD-MM-YYYY')
+}
+
 export const minsSuffix = (details) => {
   const { inputRef, onChange, ...other } = details
 

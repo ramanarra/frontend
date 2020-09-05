@@ -1,44 +1,48 @@
 import React, { useState, useEffect } from 'react'
-import EditField from '../../../components/EditField'
 import { useParams } from 'react-router-dom'
-import useCustomFecth from '../../../hooks/useCustomFetch'
-import { URL } from '../../../api'
+import api, { URL } from '../../../api'
 
 import './style.scss'
-import { Button } from '@material-ui/core'
-import useManualFetch from '../../../hooks/useManualFetch'
-import moment from 'moment'
+import { Button, Grid } from '@material-ui/core'
+import AppointmentCard from './Appointment/AppointmentCard'
+import { dateFmt } from '../../../components/commonFormat'
 
 const PatientDetials = (props) => {
+  const [data, setData] = useState(null)
+  const [appointment, setAppointment] = useState(null)
+  const [tab, setTab] = useState(0)
+
   const { patientId } = useParams()
   const doctorKey = localStorage.getItem('docKey')
-  const params = { patientId, doctorKey }
-  const [patientDet] = useCustomFecth('GET', URL.patient.detials, params)
-  const [handleUpdate, error, isLoading, res] = useManualFetch()
-  const [data, setData] = useState(null)
-  const description =
-    'sadlkfas;ldk fsahdjfalskdjflsa dflajsld fasldkjf asldfj saldfas dflkasd flasdf;saldflasjd fsaljdfsald flsadjflsajdlfajsldfj'
-  const allergies = ['asdfads', 'asdfasdf', 'adsfasdfa', 'adsfasfa']
-
-  const handleSave = () =>
-    handleUpdate('POST', URL.patient.update, {
-      ...data,
-      patientId: parseInt(patientId),
-    })
+  const params = { patientId: parseInt(patientId), doctorKey }
+  const token = localStorage.getItem('virujhToken')
+  const headers = {
+    Authorization: 'Bearer '.concat(token),
+  }
 
   useEffect(() => {
-    !!patientDet?.patientDetails && setData(patientDet.patientDetails)
-  }, [patientDet])
+    loadData()
+  }, [])
 
-  const handleChange = (e) => {
-    const { name, value } = e.target
-    setData((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      }
+  useEffect(() => {
+    loadAppointment()
+  }, [tab])
+
+  const loadData = () => {
+    api.get(URL.patient.info, { params, headers }).then((res) => {
+      setData(res.data)
     })
   }
+  const loadAppointment = () => {
+    const url = !tab ? URL.patient.upcomingApp : URL.patient.pastApp
+    api.post(url, params, { headers }).then((res) => setAppointment(res.data))
+  }
+
+  const switchTab = (id) => {
+    setTab(id)
+  }
+
+  const description = data?.description
 
   return (
     <div className="patient-detials-edit">
@@ -61,8 +65,7 @@ const PatientDetials = (props) => {
             <tr>
               <td className="tbl-cell field-name">Date of Birth</td>
               <td className="tbl-cell field-value">
-                {data?.dataOfBirth &&
-                  moment(data?.dateOfBirth, 'YYYY-MM-DD').format('DD-MM-YYYY')}
+                {!!data?.dateOfBirth && dateFmt(data?.dateOfBirth)}
               </td>
             </tr>
             <tr>
@@ -83,7 +86,7 @@ const PatientDetials = (props) => {
                 <td className="tbl-cell field-name">Allergies List</td>
                 <td className="tbl-cell field-value">
                   <ul className="allergies">
-                    {allergies.map((i) => (
+                    {data?.allergiesList?.map((i) => (
                       <li className="allergy">{i}</li>
                     ))}
                   </ul>
@@ -93,9 +96,41 @@ const PatientDetials = (props) => {
           </table>
         </div>
         <div className="edit-btn-wrap">
-          <Button className="edit-btn" onClick={handleSave}>
-            Edit
-          </Button>
+          <Button className="edit-btn">Edit</Button>
+        </div>
+        <div className="appointment-section">
+          <div className="appointment-type-tab">
+            <div className="upcoming-tab-wrap">
+              <span
+                className={'upcoming-tab appointment-tab' + (!tab ? ' active' : '')}
+                onClick={switchTab.bind(this, 0)}
+              >
+                Upcoming
+              </span>
+            </div>
+            <div className="past-tab-wrap">
+              <span
+                className={'past-tab appointment-tab' + (!!tab ? ' active' : '')}
+                onClick={switchTab.bind(this, 1)}
+              >
+                Past
+              </span>
+            </div>
+          </div>
+
+          <Grid container spacing={2} className="appointment-list-wrap">
+            {!!appointment?.length ? (
+              appointment?.map((i, index) => (
+                <Grid item xs={6}>
+                  <AppointmentCard data={i} isPast={!!tab} index={index} />
+                </Grid>
+              ))
+            ) : (
+              <Grid item xs={6} className="no-appointment">
+                No {tab === 0 ? 'upcoming' : 'past'} appointments
+              </Grid>
+            )}
+          </Grid>
         </div>
       </div>
     </div>
