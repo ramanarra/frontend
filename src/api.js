@@ -27,7 +27,6 @@ export const URL = {
   patient: {
     list: '/calendar/admin/patients',
     info: '/calendar/doctor/detailsofpatient',
-    // info: '​/calendar/doctor/detailsofpatient',
     upcomingApp: '/calendar/doctor/patientUpcomingAppList',
     pastApp: '/calendar/doctor/patientPastAppList',
     search: '/calendar/doctor/patientGeneralSearch',
