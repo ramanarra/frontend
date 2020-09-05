@@ -5,7 +5,7 @@ import moment from 'moment'
 import { timeFmt } from '../../../../components/commonFormat'
 
 const AppointmentCard = ({ data, index, isPast }) => {
-  const timing = `${timeFmt(data?.startTime)} - ${data?.endTime}`
+  const timing = `${timeFmt(data?.startTime)} - ${timeFmt(data?.endTime)}`
   const day = moment(data?.appointmentDate, 'YYYY-MM-DD').format('DD')
   const month = moment(data?.appointmentDate, 'YYYY-MM-DD').format('MMM')
   const doctorName = `${data?.doctorFirstName} ${data?.doctorLastName}`

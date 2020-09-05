@@ -12,7 +12,7 @@ function SnackBar({ openDialog, message, onclose, severity }) {
   }
 
   return (
-    <Snackbar open={openDialog} autoHideDuration={4000} onClose={handleClose}>
+    <Snackbar open={openDialog} autoHideDuration={3000} onClose={handleClose}>
       <Alert severity={severity}>{message}</Alert>
     </Snackbar>
   )

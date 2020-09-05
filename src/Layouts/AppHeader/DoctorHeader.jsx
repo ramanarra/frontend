@@ -4,6 +4,8 @@ import { useHistory } from 'react-router-dom'
 import { Box, Button, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import ClickAwayListener from '@material-ui/core/ClickAwayListener'
+import ExitToAppIcon from '@material-ui/icons/ExitToApp'
+import AccountBoxIcon from '@material-ui/icons/AccountBox'
 
 import Stretch from '../../components/Stretch'
 import Logo from '../../assets/img/logo.png'
@@ -80,14 +82,22 @@ const useStyles = makeStyles(() => ({
     paddingTop: 2.5,
     color: '#5c5a5a',
     paddingLeft: 5,
+    marginLeft: 5,
   },
   edit: {
+    marginLeft: 5,
     fontSize: 14,
     cursor: 'pointer',
     color: '#5c5a5a',
     paddingLeft: 5,
     paddingBottom: 2.5,
     borderBottom: '1px solid #f3f3f3',
+  },
+  profileIcon: {
+    width: 22,
+  },
+  exitIcon: {
+    width: 22,
   },
 }))
 
@@ -162,12 +172,18 @@ export default function DoctorHeader() {
           />
           {open && (
             <Box className={classes.logout}>
+              <Box display="flex">
+                <AccountBoxIcon className={classes.profileIcon} />
               <Typography className={classes.edit} onClick={handleOnEdit}>
                 Edit Profile
               </Typography>
-              <Typography className={classes.logoutText} onClick={handleOnLogout}>
-                Logout
-              </Typography>
+              </Box>
+              <Box display="flex">
+                <ExitToAppIcon className={classes.exitIcon} />
+                <Typography className={classes.logoutText} onClick={handleOnLogout}>
+                  Logout
+                </Typography>
+              </Box>
             </Box>
           )}
         </Box>

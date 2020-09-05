@@ -12,10 +12,8 @@ const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
   const [tempId, setTempId] = useState(1)
   const scheduledayid = data && data[0]?.scheduledayid
 
-  console.log(data)
-
   useEffect(() => {
-    data && data?.length > 1 && setSlotList(data)
+    data && data?.length > 0 && setSlotList(data)
   }, [data])
 
   const handleAdd = () => {
@@ -37,7 +35,10 @@ const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
     setSlotList((prev) => {
       return prev?.map((i) => {
         if ((!!id && i.scheduletimeid === id) || (!!tempId && i.tempId === tempId)) {
-          return { ...i, [name]: timeFmt(value) }
+          if( name === 'isDelete') {
+            return {...i, [name]: true}
+          }
+          return { ...i, [name]: moment(value).format('HH:mm:ss') }
         }
         return i
       })
@@ -50,6 +51,7 @@ const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
     })
     onClose()
   }
+
 
   const handleDelete = (data) => {
     if (!!data.tempId) {

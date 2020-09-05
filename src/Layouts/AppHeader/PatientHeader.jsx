@@ -4,6 +4,8 @@ import { useHistory } from 'react-router-dom'
 import { Box, Button, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import ClickAwayListener from '@material-ui/core/ClickAwayListener'
+import ExitToAppIcon from '@material-ui/icons/ExitToApp'
+import AccountBoxIcon from '@material-ui/icons/AccountBox'
 
 import Stretch from '../../components/Stretch'
 import Logo from '../../assets/img/logo.png'
@@ -89,6 +91,7 @@ const useStyles = makeStyles(() => ({
     paddingTop: 2.5,
     color: '#5c5a5a',
     paddingLeft: 5,
+    marginLeft: 5,
   },
   edit: {
     fontSize: 14,
@@ -97,6 +100,13 @@ const useStyles = makeStyles(() => ({
     paddingLeft: 5,
     paddingBottom: 2.5,
     borderBottom: '1px solid #f3f3f3',
+    marginLeft: 5,
+  },
+  profileIcon: {
+    width: 22,
+  },
+  exitIcon: {
+    width: 22,
   },
 }))
 
@@ -156,7 +166,9 @@ export default function PatientHeader() {
         <i className={classNames('icon-notify', classes.notificationImg)}></i>
       </Box>
       <Box className={classes.gap}>
-        <Typography className={classes.text}>{localStorage.getItem('patientName')}</Typography>
+        <Typography className={classes.text}>
+          {localStorage.getItem('patientName')}
+        </Typography>
       </Box>
       <ClickAwayListener onClickAway={handleOnAwayClick}>
         <Box className={classes.hospitalLogoContainer}>
@@ -168,10 +180,18 @@ export default function PatientHeader() {
           />
           {open && (
             <Box className={classes.logout}>
-              <Typography className={classes.edit} onClick={handleOnEdit}>Edit Profile</Typography>
-              <Typography className={classes.logoutText} onClick={handleOnLogout}>
-                Logout
-              </Typography>
+              <Box display="flex">
+                <AccountBoxIcon className={classes.profileIcon} />
+                <Typography className={classes.edit} onClick={handleOnEdit}>
+                  Edit Profile
+                </Typography>
+              </Box>
+              <Box display="flex">
+                <ExitToAppIcon className={classes.exitIcon} />
+                <Typography className={classes.logoutText} onClick={handleOnLogout}>
+                  Logout
+                </Typography>
+              </Box>
             </Box>
           )}
         </Box>
