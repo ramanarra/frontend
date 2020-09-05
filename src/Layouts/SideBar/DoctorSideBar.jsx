@@ -4,6 +4,7 @@ import { Box } from '@material-ui/core'
 import classNames from 'classnames'
 import { makeStyles } from '@material-ui/core/styles'
 
+
 const useStyles = makeStyles(() => ({
   container: {
     width: '79px',
@@ -30,6 +31,11 @@ const useStyles = makeStyles(() => ({
     fontSize: 19,
     paddingTop: 14,
   },
+  logout: {
+    fontSize: 52,
+    marginLeft: 13,
+    cursor: 'pointer',
+  },
   selectedColor: {
     color: "#f7f7f7",
   },
@@ -38,6 +44,7 @@ const useStyles = makeStyles(() => ({
 function DoctorSideaBar() {
   const classes = useStyles()
   const location = useLocation()
+
 
   const path = location.pathname.split('/')
 

@@ -1,7 +1,7 @@
 import React from 'react'
+import classNames from 'classnames'
 import { Link, useLocation } from 'react-router-dom'
 import { Box } from '@material-ui/core'
-import classNames from 'classnames'
 import { makeStyles } from '@material-ui/core/styles'
 
 import appointmentIcon from '../../assets/img/appointments.svg'
@@ -15,7 +15,7 @@ const useStyles = makeStyles(() => ({
   item: {
     color: "#9ddcf8",
     fontSize: 22,
-    paddingTop: 10,
+    paddingTop: 7,
     paddingBottom: 16,
     display: 'flex',
     justifyContent: 'center',
@@ -23,12 +23,17 @@ const useStyles = makeStyles(() => ({
   },
   appointmentIcon: {
     width: 19,
-    paddingTop: 2,
+    paddingTop: 12,
     color: '#9ddcf8',
   },
   setting: {
     fontSize: 19,
     paddingTop: 14,
+  },
+  logout: {
+    fontSize: 52,
+    marginLeft: 13,
+    cursor: 'pointer',
   },
   selectedColor: {
     color: "#f7f7f7",
@@ -39,6 +44,7 @@ function PatientSideBar() {
   const classes = useStyles()
   
   const location = useLocation()
+
 
   const path = location.pathname.split('/')
 

@@ -15,6 +15,7 @@ import useManualFetch from '../../../../../hooks/useManualFetch'
 import CancleAppointment from './CancleAppointmentDialog'
 import RescheduleAppointment from './RescheduleAppointmentDialog'
 import useStyle from './useStyle'
+import ConfirmationModal from './ConfirmationModal'
 
 function CancleAndRescheduleModal({
   appointmentId,
@@ -36,6 +37,10 @@ function CancleAndRescheduleModal({
   const [openCanclationDialog, setCanclationDialog] = useState(false)
 
   const [openReschedule, setOpenReschedule] = useState(false)
+
+  const [openConfirmation, setOpenConfirmation] = useState(false)
+
+  const [parameter, setParameter] = useState(null)
 
   useEffect(() => {
     if (open) {
@@ -78,9 +83,17 @@ function CancleAndRescheduleModal({
     setOpenReschedule(true)
   }
 
+  function handleOnClose() {
+    setOpenConfirmation(false)
+  }
+
+  function handleConfirmation() {
+    setOpenConfirmation(true)
+  }
+
   return (
     <Box>
-      {patientView ? (
+      {patientView && (
         <Dialog open={open} className={classes.dialogBox}>
           <DialogTitle className={classes.dialogTitle}>
             <Box display="flex">
@@ -147,6 +160,11 @@ function CancleAndRescheduleModal({
             </Box>
           </DialogContent>
           <Box display="flex" className={classes.buttons}>
+            <Box className={classes.close} onClick={handleClose}>
+              <Typography variant="h5" className={classes.closeBtn}>
+                CLOSE
+              </Typography>
+            </Box>
             <Box className={classes.cancle} onClick={handleCancle}>
               <Typography variant="h5" className={classes.cancleBtn}>
                 CANCEL APPOINTMENT
@@ -159,7 +177,7 @@ function CancleAndRescheduleModal({
             </Box>
           </Box>
         </Dialog>
-      ) : null}
+      )}
 
       {openCanclationDialog && (
         <CancleAppointment
@@ -187,6 +205,17 @@ function CancleAndRescheduleModal({
           firstName={firstName}
           lastName={lastName}
           email={email}
+          setOpenConfirmation={handleConfirmation}
+          setParameter={setParameter}
+        />
+      )}
+      {openConfirmation && (
+        <ConfirmationModal
+          open={openConfirmation}
+          slotTime={slotTime}
+          onClose={handleOnClose}
+          parameter={parameter}
+          onSave={onSave}
         />
       )}
     </Box>

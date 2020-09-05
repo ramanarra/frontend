@@ -1,16 +1,21 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
+import classNames from 'classnames'
 import { Avatar, Box, Typography, Button, makeStyles } from '@material-ui/core'
 
 const useInfocardStyles = makeStyles((theme) => ({
   container: {
     width: 325,
     marginTop: 20,
-    marginRight: 27.5,
+    marginRight: 27.2,
     backgroundColor: 'white',
     padding: '15px 14px 10px 20px',
     borderBottom: '2px solid #0bb5ff',
     boxShadow: '5px 0px 15px 0px #f3eeee',
+  },
+
+  mainDetails: {
+    height: 64,
   },
 
   large: {
@@ -35,10 +40,15 @@ const useInfocardStyles = makeStyles((theme) => ({
 
   fees: {
     paddingLeft: 5,
+    width: 60,
   },
 
   contactNumber: {
-    paddingLeft: 30,
+    paddingLeft: 15,
+  },
+
+  hospital: {
+    marginLeft: 55,
   },
 
   location: {
@@ -64,9 +74,19 @@ const useInfocardStyles = makeStyles((theme) => ({
     color: '#0bb5ff',
     borderRadius: 3,
   },
+
+  hospitalButton: {
+    textTransform: 'capitalize',
+    fontSize: 13,
+    padding: '1px 15px',
+    border: '1.5px solid #94dfff',
+    backgroundColor: '#0bb5ff',
+    color: '#f7f7f7',
+    borderRadius: 3,
+  },
 }))
 
-const DoctorInfoCard = ({ doctorDetail, doctorListInHospital }) => {
+const DoctorInfoCard = ({ doctorDetail, doctorListInHospital, isHospital }) => {
   const classes = useInfocardStyles()
 
   const hisrory = useHistory()
@@ -80,13 +100,13 @@ const DoctorInfoCard = ({ doctorDetail, doctorListInHospital }) => {
     hisrory.push(`/patient/${doctorKey}/book-appointment`)
   }
 
-  function handleHospital(accountKey) {
-    doctorListInHospital(accountKey)
+  function handleHospital(accountKey, hospitalName) {
+    doctorListInHospital(accountKey, hospitalName)
   }
 
   return (
     <Box className={classes.container}>
-      <Box display="flex">
+      <Box display="flex" className={classes.mainDetails}>
         <Avatar
           alt="Remy Sharp"
           src={doctorDetail.photo}
@@ -111,7 +131,7 @@ const DoctorInfoCard = ({ doctorDetail, doctorListInHospital }) => {
               {doctorDetail.speciality}
             </Typography>
           )}
-          {doctorDetail.doctorKey && (
+          {doctorDetail.doctorKey && !isHospital && (
             <Typography className={classes.hospitalName}>
               {doctorDetail.hospitalName}
             </Typography>
@@ -128,7 +148,12 @@ const DoctorInfoCard = ({ doctorDetail, doctorListInHospital }) => {
             >{`₹${doctorDetail.fee}`}</Typography>
           </Box>
         )}
-        <Box paddingLeft={4} className={classes.contactNumber}>
+        <Box
+          paddingLeft={4}
+          className={classNames(classes.contactNumber, {
+            [classes.hospital]: !doctorDetail.doctorKey,
+          })}
+        >
           <Typography className={classes.text}>Contact Number</Typography>
           <Typography
             className={classes.value}
@@ -144,9 +169,12 @@ const DoctorInfoCard = ({ doctorDetail, doctorListInHospital }) => {
       <Box marginTop={2} display="flex" justifyContent="flex-end">
         {!doctorDetail.doctorKey ? (
           <Button
-            className={classes.button}
-            onClick={() => handleHospital(doctorDetail.accountKey)}
+            className={classes.hospitalButton}
+            onClick={() =>
+              handleHospital(doctorDetail.accountKey, doctorDetail.hospitalName)
+            }
             variant="outlined"
+            style={{ backgroundColor: '#0bb5ff' }}
           >
             Our Doctors
           </Button>

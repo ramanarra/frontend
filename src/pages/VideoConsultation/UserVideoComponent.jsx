@@ -3,15 +3,14 @@ import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(() => ({
   video: {
-    position: 'absolute',
-    right: '0',
-    minWidth: '100%',
-    minHeight: '100%',
-    width: 'auto', 
-    height: 'auto',
-    zIndex: -100,
-    backgroundSize: 'cover',
-    overflow: 'hidden',
+    objectFit: 'cover',
+    width: '100%',
+    height: '100%',
+    color: '#ffffff',
+    margin: '0',
+    padding: '0',
+    border: '0',
+    fontDize: '100%',
   },
 }))
 

@@ -16,7 +16,7 @@
     min-width: 37vw;
 
     .title {
-      font-size: 20px;
+      font-size: 16px;
       text-align: center;
       letter-spacing: 2.5px;
       position: relative;
@@ -58,6 +58,9 @@
     .txt-field-wrap {
       .txt-field {
         width: 100%;
+        .MuiOutlinedInput-notchedOutline {
+          border-color: #dedede !important;
+        }
       }
       .err-msg {
         font-size: 11px;
@@ -76,6 +79,10 @@
 
       .field-label {
         margin-bottom: 8px;
+      }
+
+      .MuiOutlinedInput-notchedOutline {
+        border-color: #dedede !important;
       }
 
       .error-msg {
@@ -111,7 +118,7 @@
       .signin-btn-wrap {
         font-size: 12px;
         padding: 7px 0;
-        color: #d5d5d5;
+        color: #9e9d9d !important;
 
         .signin-btn {
           color: #0bb5ff;

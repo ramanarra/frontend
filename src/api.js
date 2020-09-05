@@ -2,6 +2,8 @@ import axios from 'axios'
 
 export default axios.create({
   baseURL: 'https://dev.virujh.com/api/',
+  // baseURL: 'http://8faab9f9390c.ngrok.io/api/',
+  // baseURL: 'https://virujh.com/api/',
 })
 
 export const METHOD = {
@@ -14,6 +16,8 @@ export const URL = {
   doctorList: `/calendar/doctor/list`,
   patientLogin: 'auth/patientLogin',
   patientSignup: '/auth/patientRegistration',
+  logout: '/auth/logout',
+  hospitalDetailsEdit: '/calendar/doctor/hospitaldetailsEdit',
   doctorSettingsPersonalView: '/calendar/doctor/personalSettingsView',
   doctorConfigUpdate: '/calendar/doctor/configUpdate',
   workschedule: {
@@ -35,8 +39,8 @@ export const URL = {
   appointmentReschedule: '/calendar/doctor/appointmentReschedule',
   patientSearch: '/calendar/doctor/patientSearch',
   createAppointment: '/calendar/doctor/createAppointment',
-  createAppointmentAlongWIthRegisteringPatient:
-    '/calendar/doctor/creatingAppointmetAlongWithRegisteringPatient',
+  createAppointmentAlongWIthRegisteringPatient: '/calendar/doctor/creatingAppointmetAlongWithRegisteringPatient',
+  hospitalDetailsView: '/calendar/doctor/hospitaldetailsView',
   patientUpcomingAppointments: '/calendar/patient/upcomingAppointmentsList',
   patientPastAppointments: '/calendar/patient/pastAppointmentsList',
   patientDoctorList: '/calendar/patient/doctorList',
@@ -46,4 +50,11 @@ export const URL = {
   viewDoctorDetails: '/calendar/patient/viewDoctorDetails',
   patientAppointmentSlotsView: '/calendar/patient/appointmentSlotsView',
   patientBookAppointment: '/calendar/patient/bookAppointment',
+  patientViewDetails: '/calendar/patient/viewPatientDetails',
+  patientDetailsEdit: '/calendar/patient/detailsEdit',
+  patientAppointmentCancel: '/calendar/patient/appointmentCancel',
+  patientAppointmentReschedule: '/calendar/patient/patientAppointmentReschedule',
+  appointmentPresentOnDate: 'calendar/patient/appointmentPresentOnDate',
+  paymentOrder: '/calendar/payment/order',
+  verification: '/calendar/payment/verification',
 }

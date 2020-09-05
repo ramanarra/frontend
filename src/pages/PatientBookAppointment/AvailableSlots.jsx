@@ -2,17 +2,16 @@ import React, { useState } from 'react'
 import classNames from 'classnames'
 import { Box, makeStyles, Button, Typography } from '@material-ui/core'
 import CheckCircleRoundedIcon from '@material-ui/icons/CheckCircleRounded'
+import ReportProblemOutlinedIcon from '@material-ui/icons/ReportProblemOutlined'
 
 import getTimeFormatWithNoon from '../../lib/dateLib'
 
 const useStyle = makeStyles(() => ({
-  container: {
-    
-  },
   availableSlots: {
-    paddingTop: 145,
-    paddingLeft: 40,
-    height: '100%',
+    marginTop: 145,
+    paddingLeft: 20,
+    height: 305,
+    overflowY: 'auto',
   },
   time: {
     width: 100,
@@ -39,7 +38,7 @@ const useStyle = makeStyles(() => ({
   },
   selectedText: {
     color: '#ffffff',
-    fontSize: 14,
+    fontSize: 13,
     paddingTop: 2,
   },
   icon: {
@@ -47,17 +46,70 @@ const useStyle = makeStyles(() => ({
     color: '#ffffff',
     marginLeft: 6,
   },
+  cancellationContent: {
+    backgroundColor: '#f7fcff',
+    padding: 10,
+    width: 'fit-content',
+    marginLeft: 35,
+    marginTop: 15,
+  },
+  rescheduleContent: {
+    backgroundColor: '#f7fcff',
+    padding: 10,
+    width: 'fit-content',
+    marginLeft: 35,
+    marginTop: 15,
+  },
+  reportIcon: {
+    color: '#345860',
+    width: 20,
+  },
+  text: {
+    color: '#345860',
+    fontSize: 13,
+    paddingLeft:10,
+    paddingTop: 3,
+  },
 }))
 
-function AvailableSlots({ availableSlots, handleSlotTiming }) {
+function AvailableSlots({ availableSlots, handleSlotTiming, doctorDetails, time }) {
   const classes = useStyle()
 
-  const [time, setTime] = useState({ start: '00:00:00', end: '00:00:00' })
-
   const handleOnClick = (slot) => {
-    setTime(slot)
     handleSlotTiming(slot)
   }
+
+  const cancellationDays =
+    doctorDetails.cancellationDays && doctorDetails.cancellationDays !== '0'
+      ? `${doctorDetails.cancellationDays} ${'days'} `
+      : ''
+  const cancellationHours =
+    doctorDetails.cancellationHours && doctorDetails?.cancellationHours !== '0'
+      ? `${doctorDetails.cancellationHours} ${'hours'} `
+      : ''
+
+  const cancellationMins =
+    doctorDetails.cancellationMins && doctorDetails.cancellationMins !== '0'
+      ? `${doctorDetails.cancellationMins} ${'mins'}`
+      : ''
+
+  const cancellation = `${cancellationDays}${cancellationHours}${cancellationMins}`
+
+  const rescheduleDays =
+    doctorDetails.rescheduleDays && doctorDetails.rescheduleDays !== '0'
+      ? `${doctorDetails.rescheduleDays} ${'days'} `
+      : ''
+  const rescheduleHours =
+    doctorDetails.rescheduleHours && doctorDetails.rescheduleHours !== '0'
+      ? `${doctorDetails?.rescheduleHours} ${'hours'} `
+      : ''
+
+  const rescheduleMins =
+    doctorDetails.rescheduleMins && doctorDetails.rescheduleMins !== '0'
+      ? `${doctorDetails.rescheduleMins} ${'mins'}`
+      : ''  
+
+  const reschedule = `${rescheduleDays}${rescheduleHours}${rescheduleMins}`
 
   return (
     <Box className={classes.container}>
@@ -69,7 +121,8 @@ function AvailableSlots({ availableSlots, handleSlotTiming }) {
                 className={classNames(classes.time, {
                   [classes.selectedTab]: time.start === slot.start,
                 })}
-                onClick={() => handleOnClick(slot)} key={index}
+                onClick={() => handleOnClick(slot)}
+                key={index}
               >
                 {time.start === slot.start ? (
                   <Box display="flex">
@@ -87,6 +140,20 @@ function AvailableSlots({ availableSlots, handleSlotTiming }) {
             )
           })}
       </Box>
+      {
+        cancellation && 
+        <Box display="flex" className={classes.cancellationContent}>
+          <ReportProblemOutlinedIcon className={classes.reportIcon} />
+          <Typography className={classes.text}>Cancellation allowed for within {cancellation}</Typography>
+        </Box>
+      }
+      {
+        reschedule &&
+        <Box display="flex" className={classes.rescheduleContent}>
+          <ReportProblemOutlinedIcon className={classes.reportIcon} />
+          <Typography className={classes.text}>Reschedule allowed for within {reschedule}</Typography>
+        </Box>
+      }
     </Box>
   )
 }

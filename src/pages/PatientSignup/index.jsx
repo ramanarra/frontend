@@ -16,19 +16,29 @@ const PatientSignup = (props) => {
 
   const [Error, setError] = useState(false)
 
+  const [message, setMessage] = useState(null)
+
   const redirectToLogin = () => props.history.push('/login')
   const onSubmit = (data) => {
     Api.post(URL.patientSignup, data)
       .then((res) => {
         const { data } = res
-        if (!data.patient?.accessToken) {
+        console.log(data)
+        if (data.patient?.accessToken) {
+          localStorage.setItem('virujhToken', data.patient.accessToken)
+          localStorage.setItem('patientId', data.patient.patientId)
+          localStorage.setItem('patientName', `${data.details.firstName} ${data.details.lastName}`)
+          props.history.push('/patient/appointments/upcoming')
+        }
+        else if (data.patient.update === 'updated password') {
           setError(true)
-
+          setMessage('Created successfully...Please do signin')
+        }
+        else {
+          setError(true)
+          setMessage(data.message)
           return
         }
-        localStorage.setItem('virujhToken', data.patient.accessToken)
-        localStorage.setItem('patientId', data.patient.patientId)
-        props.history.push('/patient/appointments/upcoming')
       })
       .catch(() => {
         setError(true)
@@ -39,6 +49,18 @@ const PatientSignup = (props) => {
     name: 'Invalid name',
     phone: 'Invalid phone number',
     age: 'Invalid age',
+    passwordValidation: 'password must contain one alphabet and one numeric',
+    passwordLength: 'Password must has minimum length of 6 and maximum length of 12',
+  }
+
+  function handleOnClose(reason) {
+    if (reason === 'clickaway') {
+      return
+    }
+    if(message === 'Created successfully...Please do signin') {
+      props.history.push('/login')
+    }
+    setError(false)
   }
 
   return (
@@ -51,7 +73,7 @@ const PatientSignup = (props) => {
         />
       </div>
       <Paper className="card" elevation={0}>
-        <h3 className="title">Register into your Virujh account</h3>
+        <h3 className="title">Patient register</h3>
         <form className="fields" onSubmit={handleSubmit(onSubmit)}>
           <div className="field-wrap field-partition">
             <Textfield
@@ -60,7 +82,7 @@ const PatientSignup = (props) => {
               placeholder="Arul"
               inputProps={{
                 ref: register({
-                  required: 'Required',
+                  required: 'Please enter your first name',
                   minLength: {
                     value: 3,
                     message: validationErr.name,
@@ -80,6 +102,7 @@ const PatientSignup = (props) => {
               label="Last Name"
               inputProps={{
                 ref: register({
+                  required: 'Please enter your last name',
                   pattern: {
                     value: /^[A-Za-z]*$/,
                     message: validationErr.name,
@@ -98,7 +121,7 @@ const PatientSignup = (props) => {
               type="number"
               inputProps={{
                 ref: register({
-                  required: 'Required',
+                  required: 'Please enter your phone number',
                   maxLength: {
                     value: 10,
                     message: validationErr.phone,
@@ -119,6 +142,7 @@ const PatientSignup = (props) => {
               type="number"
               inputProps={{
                 ref: register({
+                  required: 'Please enter your alternate number',
                   maxLength: {
                     value: 10,
                     message: validationErr.phone,
@@ -157,7 +181,7 @@ const PatientSignup = (props) => {
                   }
                   defaultValue={null}
                   rules={{
-                    required: 'Required',
+                    required: 'Please select your date of birth',
                   }}
                 />
                 <div className="error-msg">
@@ -172,7 +196,7 @@ const PatientSignup = (props) => {
               placeholder="35"
               inputProps={{
                 ref: register({
-                  required: 'Required',
+                  required: 'Please enter your age',
                   maxLength: {
                     value: 3,
                     message: validationErr.age,
@@ -189,7 +213,7 @@ const PatientSignup = (props) => {
               label="Address"
               placeholder="#123, xyz st"
               inputProps={{
-                ref: register({ required: 'Required' }),
+                ref: register({ required: 'Please enter your address' }),
               }}
               error={!!errors.address && errors.address.message}
               hasValidation
@@ -201,7 +225,23 @@ const PatientSignup = (props) => {
               label="Password"
               type="password"
               placeholder="********"
-              inputProps={{ ref: register({ required: 'Required' }) }}
+              inputProps={{
+                ref: register({
+                  required: 'Please enter your password',
+                  maxLength: {
+                    value: 12,
+                    message: validationErr.passwordLength,
+                  },
+                  minLength: {
+                    value: 6,
+                    message: validationErr.passwordLength,
+                  },
+                  pattern: {
+                    value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,12}$/,
+                    message: validationErr.passwordValidation,
+                  },
+                }),
+              }}
               error={!!errors.password && errors.password.message}
               hasValidation
             />
@@ -222,9 +262,10 @@ const PatientSignup = (props) => {
       <Snackbar
         anchorOrigin={SnackbarPosition}
         open={Error}
-        autoHideDuration={2000}
-        message={'Signed up successfully'}
+        autoHideDuration={3000}
+        message={message}
         key={SnackbarPosition.horizontal + SnackbarPosition.vertical}
+        onClose={handleOnClose}
       />
     </div>
   )

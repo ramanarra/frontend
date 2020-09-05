@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { Dialog, IconButton, Typography, Button } from '@material-ui/core'
+import { Dialog, IconButton, Typography, Button, TextField } from '@material-ui/core'
 import { Close, DeleteOutline } from '@material-ui/icons'
-import { TimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
+import { KeyboardTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import moment from 'moment'
 import MomentUtils from '@date-io/moment'
+
 import { timeFmt } from '../../components/commonFormat'
 
 const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
@@ -11,8 +12,10 @@ const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
   const [tempId, setTempId] = useState(1)
   const scheduledayid = data && data[0]?.scheduledayid
 
+  console.log(data)
+
   useEffect(() => {
-    data && data?.length > 0 && setSlotList(data)
+    data && data?.length > 1 && setSlotList(data)
   }, [data])
 
   const handleAdd = () => {
@@ -66,11 +69,10 @@ const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
   const slot = (data) => (
     <div key={data?.scheduletimeid || data?.tempId} className="slot">
       <MuiPickersUtilsProvider utils={MomentUtils}>
-        <TimePicker
-          autoOk
-          // variant="inline"
-          inputVariant="outlined"
-          size="small"
+      <KeyboardTimePicker
+          margin="normal"
+          id="time-picker"
+          inputVariant='outlined'
           className="txt-field start-time"
           value={moment(data?.startTime, 'HH:mmA')}
           onChange={(e) =>
@@ -81,16 +83,21 @@ const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
               },
             })
           }
-          format="hh:mmA"
+          KeyboardButtonProps={{
+            'aria-label': 'change time',
+          }}
         />
         -
-        <TimePicker
-          autoOk
-          // variant="inline"
+        <KeyboardTimePicker
+         margin="normal"
+         id="time-picker"
           inputVariant="outlined"
           size="small"
           className="txt-field end-time"
           value={moment(data?.endTime, 'HH:mmA')}
+          InputProps={{
+            disableUnderline: true,
+          }}
           onChange={(e) =>
             handleChange(data, {
               target: {
@@ -99,7 +106,6 @@ const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
               },
             })
           }
-          format="hh:mmA"
         />
       </MuiPickersUtilsProvider>
       <IconButton className="del-btn" onClick={handleDelete.bind(this, data)}>

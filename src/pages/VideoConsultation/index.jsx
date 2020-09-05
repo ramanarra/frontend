@@ -1,154 +1,149 @@
-import React, { useEffect, useState, Fragment } from 'react'
+import React, { useState, useEffect, Fragment } from 'react'
+import { useLocation, useHistory } from 'react-router-dom'
 import socketIOClient from 'socket.io-client'
-import { OpenVidu } from 'openvidu-browser'
-import OpenViduSession from 'openvidu-react'
 
-import UserVideoComponent from './UserVideoComponent'
-import ToolBar from './Toolbar'
+import ConfirmationModal from './ConfirmationModel'
+import Video from './Video'
+import SnackBar from '../../components/SnackBar'
 
-const ENDPOINT = 'http://dev-api.virujh.com:8081/'
+const ENDPOINT = 'https://dev.virujh.com'
 
-function VideoConsultotion() {
-  const [isVideoActive, setIsVideoActive] = useState(true)
-  const [isAudioActive, setIsAudioActive] = useState(true)
+function VideoConsulation() {
+  const [open, setOpen] = useState(false)
+
+  const [isJoinDisabled, setIsJoinDisabled] = useState(true)
+
+  const [videoAvailability, setVideoAvailability] = useState(true)
+
+  const [audioAvailability, setAudioAvailability] = useState(true)
+
   const [sessionID, setSessionID] = useState('')
+
   const [token, setToken] = useState('')
 
-  const [subscribers, setSubscribers] = useState()
+  const [socket, setSocket] = useState('')
 
-  const [socket, setSocket] = useState()
+  const [patientList, setPatientList] = useState('')
 
-  const [stream, setStream] = useState()
+  const [openDialog, setOpenDialog] = useState(false)
+
+  const [data, setData] = useState(null)
+
+  const location = useLocation()
+
+  const history = useHistory()
+
   useEffect(() => {
-    const socket = socketIOClient(ENDPOINT, {
+    setOpen(true)
+
+    const socket = socketIOClient(ENDPOINT,  {
       transports: ['websocket'],
       jsonp: false,
       query: {
         token: localStorage.getItem('virujhToken'),
       },
+      path: '/socket.io'
     })
 
     socket.on('connect', function () {
       if (localStorage.getItem('loginUser') === 'doctor') {
         socket.emit('createTokenForDoctor')
       } else {
-        socket.emit('getPatientTokenForDoctor', 480)
+        socket.emit('getPatientTokenForDoctor', location.state)
       }
 
       socket.emit('getAppointmentListForDoctor')
 
       socket.on('getDoctorAppointments', (data) => {
         console.log(data)
+        setPatientList(data)
       })
       socket.on('videoTokenForDoctor', (data) => {
-        console.log('called')
-        setSessionID(data.sessionId)
-        setToken(data.token)
+        if (data.isToken) {
+          setIsJoinDisabled(false)
+          setSessionID(data.sessionId)
+          setToken(data.token)
+        }
+        else {
+          setData(data)
+          setOpenDialog(true)
+        }
       })
 
       socket.on('videoTokenForPatient', (data) => {
-        console.log('called')
-        setSessionID(data.sessionId)
-        setToken(data.token)
+        if (data.isToken) {
+          setIsJoinDisabled(false)
+          setSessionID(data.sessionId)
+          setToken(data.token)
+        }
       })
+    })
+
+    socket.on('videoTokenRemoved', (data) => {
+      if (data.isRemoved) {
+        if(localStorage.getItem('loginUser') === 'patient') {
+        history.push('/patient/appointments/upcoming')
+        }
+      }
+    })
+
+    socket.on('videoSessionRemoved', (data) => {
+      if(data.isRemoved) {
+        if(localStorage.getItem('loginUser') === 'patient') {
+          history.push('/patient/appointments/upcoming')
+        }
+      }
     })
 
     setSocket(socket)
+
+    return () => {
+      socket.disconnect()
+    }
   }, [])
 
-  useEffect(() => {
-    if (token) {
-      console.log(token)
-      const openViduClinet = new OpenVidu()
-
-      const session = openViduClinet.initSession()
-
-      session.connect(token).then(() => {
-        const publisher = openViduClinet.initPublisher(undefined, {
-          audioSource: undefined,
-          videoSource: undefined,
-          publishAudio: true,
-          publishVideo: true,
-          frameRate: 30,
-          insertMode: 'APPEND',
-        })
-        session.publish(publisher)
-
-        subscribeToStreamCreated(session)
-        setStream(publisher)
-      })
+  function handleOnClose(event, reason) {
+    if (reason === 'clickaway') {
+      return
     }
-  }, [token])
 
-  function subscribeToStreamCreated(seion) {
-    seion.on('streamCreated', (event) => {
-      const subscriber = seion.subscribe(event.stream, undefined)
-
-      console.log(subscriber)
-      // var subscribers = this.state.subscribers;
-
-      setSubscribers(subscriber)
-    })
+    setOpenDialog(false)
+    setData(null)
+    history.push('/doctors')
   }
 
-  function onVideoStateChange() {
-    stream.publishVideo(!stream.stream.videoActive)
-
-    setIsVideoActive(stream.stream.videoActive)
-  }
-
-  function onMuteStateChnage() {
-    stream.publishAudio(!stream.stream.audioActive)
-
-    setIsAudioActive(stream.stream.audioActive)
-  }
-
-  function onLeaveSession() {
-    stream.disconnect()
-  }
-
-  function onJoiningPatient() {
-    socket.emit('createTokenForPatientByDoctor', 480)
-  }
-
-  function buttonClick() {
-    const value = document.getElementById('input').value
-
-    console.log(value)
-    setToken(value)
-  }
 
   return (
     <Fragment>
-      <input id="input" />
-      <button onClick={buttonClick}>onClick</button>
-      {stream && (
-        <div style={{ position: 'relative' }}>
-          <ToolBar
-            isVideoActive={isVideoActive}
-            isAudioActive={isAudioActive}
-            onVideoStateChange={onVideoStateChange}
-            onMuteStateChnage={onMuteStateChnage}
-            onLeaveSession={onLeaveSession}
-            onJoiningPatient={onJoiningPatient}
-          />
+      <ConfirmationModal
+        open={open}
+        handleOnOpen={setOpen}
+        isJoinDisabled={isJoinDisabled}
+        videoAvailability={setVideoAvailability}
+        audioAvailability={setAudioAvailability}
+      />
 
-          <div style={{ display: 'flex'}}>
-          <div>
-          <UserVideoComponent stream={1} streamManager={stream} />
-          </div>
-
-           <div>
-          {subscribers && (
-            <UserVideoComponent stream={2}  streamManager={subscribers.stream.streamManager} />
-          )}
-          </div>
-
-          </div>
-        </div>
+      {!isJoinDisabled && token && !open && (
+        <Video
+          token={token}
+          socket={socket}
+          sessionID={sessionID}
+          patientList={patientList}
+          videoAvailability={videoAvailability}
+          audioAvailability={audioAvailability}
+        />
       )}
+      {
+        openDialog && data &&
+        <SnackBar
+        openDialog={openDialog}
+        message={data.message}
+        onclose={handleOnClose}
+        severity={'error'}
+        />
+      }
     </Fragment>
   )
 }
 
-export default VideoConsultotion
+export default VideoConsulation

@@ -50,7 +50,7 @@ const AppBody = () => {
         <Route
           extact
           path={'/'}
-          render={() => <Redirect to={'/patient/appoinments'} />}
+          render={() => <Redirect to={'/patient/appointments/upcoming'} />}
         />
       </Switch>
     </div>

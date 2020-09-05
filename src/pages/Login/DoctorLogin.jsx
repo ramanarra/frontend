@@ -4,6 +4,8 @@ import LoginUI from './LoginUI'
 import Api, { URL } from '../../api'
 
 function DoctorLogin({ history }) {
+  localStorage.clear()
+  localStorage.setItem('loginUser', 'doctor')
   function onLogin(userName, password, setError) {
     const credentials = {
       email: userName,
@@ -36,12 +38,12 @@ function DoctorLogin({ history }) {
 
   return (
     <LoginUI
-      UserNameText="Email"
+      UserNameText="Email ID"
       UserNameAutoComplete="email"
       useNamePlaceHolder="johndoe@gmail.com"
       UserNameErrorText="Please enter your Email"
       onLogin={onLogin}
-      errorMessage="Incorrect UserName and Password"
+      errorMessage="Incorrect UserName or Password"
     />
   )
 }

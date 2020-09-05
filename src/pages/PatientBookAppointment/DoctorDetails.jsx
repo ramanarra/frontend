@@ -12,6 +12,7 @@ const useStyle = makeStyles((theme) => ({
   title: {
     fontSize: 17.5,
     color: '#5e5e5e',
+    paddingTop: 3,
   },
   mainDetail: {
     paddingTop: 17,

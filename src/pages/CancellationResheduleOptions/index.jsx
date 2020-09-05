@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useState, useEffect } from 'react'
 import { useParams, useHistory } from 'react-router-dom'
 import { Box, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
@@ -10,6 +10,7 @@ import useCustomFetch from '../../hooks/useCustomFetch'
 import useDoctorConfigUpdate from '../../hooks/useDoctorConfigUpdate'
 import useDocSettingWrite from '../../hooks/useDocSettingWrite'
 import LeftArrow from '../../assets/img/left-arrow.svg'
+import SnackBar from '../../components/SnackBar'
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -25,11 +26,18 @@ const useStyles = makeStyles(() => ({
     marginBottom: 41,
   },
 
+  name: {
+    color: '#2b2929',
+    fontSize: 17.5,
+    marginBottom: 41,
+    paddingLeft: 20,
+    fontWeight: 'bold',
+  },
+
   text: {
     color: '#2b2929',
     fontSize: 16.5,
     marginBottom: 41,
-    paddingLeft: 20,
   },
 }))
 function CancellationResheduleOptions() {
@@ -38,6 +46,8 @@ function CancellationResheduleOptions() {
   const history = useHistory()
 
   const isAbleToWrite = useDocSettingWrite()
+
+  const [open, setOpen] = useState(false)
 
   const key = useMemo(() => {
     return {
@@ -56,35 +66,87 @@ function CancellationResheduleOptions() {
 
   const [onSave, response] = useDoctorConfigUpdate(refetch)
 
-  console.log(response)
+  useEffect(() => {
+    setOpen(true)
+  },[response])
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return
+    }
+
+    setOpen(false)
+  }
+
   return (
     <Box className={classes.container}>
-      <Box display="flex">
-        <img
-          src={LeftArrow}
-          slt="leftArrow"
-          className={classes.leftArrow}
-          onClick={handleBackButton}
-        />
-        <Typography className={classes.text}>
-          Cancellation/Reschedule Options
-        </Typography>
-      </Box>
+      {data && (
+        <Box>
+          <Box>
+            <Box display="flex">
+              <img
+                src={LeftArrow}
+                slt="leftArrow"
+                className={classes.leftArrow}
+                onClick={handleBackButton}
+              />
+              {data?.doctorDetails && (
+                <Typography className={classes.name}>{`${'Dr. '}${
+                  data.doctorDetails.doctorName
+                }`}</Typography>
+              )}
+            </Box>
+            <Typography className={classes.text}>
+              Cancellation/Reschedule Options
+            </Typography>
+          </Box>
 
-      <Cancellation
-        configDetails={data?.configDetails}
-        doctorKey={id}
-        onSave={onSave}
-        isAbleToWrite={isAbleToWrite}
-        response={response}
-      />
-      <Reschedule
-        configDetails={data?.configDetails}
-        doctorKey={id}
-        onSave={onSave}
-        isAbleToWrite={isAbleToWrite}
-        response={response}
-      />
+          <Cancellation
+            configDetails={data?.configDetails}
+            doctorKey={id}
+            onSave={onSave}
+            isAbleToWrite={isAbleToWrite}
+          />
+          <Reschedule
+            configDetails={data?.configDetails}
+            doctorKey={id}
+            onSave={onSave}
+            isAbleToWrite={isAbleToWrite}
+          />
+        </Box>
+      )}
+      {response && response.statusCode && response.statusCode === 200 && (
+        <SnackBar
+          openDialog={open}
+          message={response.message}
+          onclose={handleClose}
+          severity={'success'}
+        />
+      )}
+      {(response && response.name === 'Error' && response.status === 500 && (
+        <SnackBar
+          openDialog={open}
+          message={'Internal server error'}
+          onclose={handleClose}
+          severity={'error'}
+        />
+      )) ||
+        (response && response.name === 'Error' && response.status !== 500 && (
+          <SnackBar
+            openDialog={open}
+            message={'Something went wrong'}
+            onclose={handleClose}
+            severity={'error'}
+          />
+        ))}
+      {response && response.statusCode && response.statusCode !== 200 && (
+        <SnackBar
+          openDialog={open}
+          message={response.message}
+          onclose={handleClose}
+          severity={'error'}
+        />
+      )}
     </Box>
   )
 }

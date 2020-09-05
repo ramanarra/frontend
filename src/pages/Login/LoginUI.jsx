@@ -1,59 +1,124 @@
 import React, { useState, Fragment } from 'react'
+import classNames from 'classnames'
 import { useHistory } from 'react-router-dom'
-import {
-  Paper,
-  Box,
-  Typography,
-  TextField,
-  Button,
-  Snackbar,
-} from '@material-ui/core'
+import { useFormik } from 'formik'
+import { Paper, Box, Typography, TextField, Button } from '@material-ui/core'
+import VisibilityIcon from '@material-ui/icons/Visibility'
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff'
 
 import Centralize from '../../components/Centralize'
 import Logo from '../../assets/img/logo.png'
 import useStyles from './useStyles'
 
-const SnackbarPosition = { vertical: 'bottom', horizontal: 'center' }
-
 const Login = ({
   UserNameText,
   UserNameAutoComplete,
   useNamePlaceHolder,
-  UserNameErrorText,
   onLogin,
   errorMessage,
 }) => {
-  const [userName, setUserName] = useState('')
-  const [password, setPassword] = useState('')
-  const [isPasswordEmpty, setIsPasswordEmpty] = useState(false)
-  const [isEmailEmpty, setIsEmailEmpty] = useState(false)
-  const [error, setError] = useState(false)
   const history = useHistory()
   const classes = useStyles()
 
-  function handleOnPasswordChange(event) {
-    setIsPasswordEmpty(false)
-    setPassword(event.target.value)
-  }
 
-  function handeOnEmailChange(event) {
-    setIsEmailEmpty(false)
-    setUserName(event.target.value)
-  }
+  const [error, setError] = useState(false)
 
-  function handleOnLogin() {
-    if (!password || !userName) {
-      setIsPasswordEmpty(!password)
-      setIsEmailEmpty(!userName)
+  const [isEyeVisible, setIsEyeVisible] = useState(false)
 
-      return
-    }
+  const [userNameIndicate, setUserNameIndicate] = useState('')
 
-    onLogin(userName, password, setError)
-  }
+  const [passwordIndicate, setPasswordIndicate] = useState('')
+
+  const name =
+    localStorage.getItem('loginUser') === 'patient'
+      ? 'Patient login'
+      : 'Doctor login'
+
+  const type = isEyeVisible === true ? 'text' : 'password'
 
   function handleSignup() {
-    history.push('/patient/registration')
+    if (localStorage.getItem('loginUser') === 'patient') {
+      history.push('/patient/registration')
+    } else {
+      history.push('/doctor/registration')
+    }
+  }
+
+
+  function doctorLoginPage() {
+    history.push('/doctor/login')
+  }
+
+  function patientLoginPage() {
+    history.push('/login')
+  }
+
+  const validate = () => {
+    const errors = {}
+
+    if (error) {
+      setError(false)
+    }
+
+    if (userNameIndicate !== '') {
+      setUserNameIndicate('')
+    }
+
+    if (passwordIndicate !== '') {
+      setPasswordIndicate('')
+    }
+
+    return errors
+  }
+
+  function handleOnSubmit(values) {
+
+    if (UserNameAutoComplete === 'email') {
+      if (values.userName === '') {
+        setUserNameIndicate('Please enter your email')
+      } else if (
+        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.userName)
+      ) {
+        setUserNameIndicate('Invalid email address')
+      }
+
+      if (values.password == '') {
+        setPasswordIndicate('Please enter your password')
+      }
+
+      if (
+        /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.userName) &&
+        values.password !== ''
+      ) {
+        onLogin(values.userName, values.password, setError)
+      }
+    } else if (UserNameText === 'Phone Number') {
+      if (values.userName === '') {
+        setUserNameIndicate('Please enter your phone number')
+      } else if (String(values.userName).length < 10) {
+        setUserNameIndicate('Please enter the valid phone number')
+      }
+      if (values.password == '') {
+        setPasswordIndicate('Please enter your password')
+      }
+
+      if (String(values.userName).length > 9 && values.password !== '') {
+        onLogin(values.userName, values.password, setError)
+      }
+    }
+  }
+
+  const formik = useFormik({
+    initialValues: {
+      userName: '',
+      password: '',
+    },
+    validate,
+    onSubmit: handleOnSubmit,
+  })
+
+  const handlePasswordVisibility = () => {
+    setIsEyeVisible(!isEyeVisible)
   }
 
   return (
@@ -64,64 +129,108 @@ const Login = ({
         </div>
         <Paper className={classes.paper} variant="outlined" square>
           <Typography className={classes.heading} variant="subtitle1">
-            Login into your virujh account
+            {name}
             <span className={classes.line} />
           </Typography>
-
-          <Box className={classes.content}>
-            <Box className={classes.emailContent}>
-              <Typography className={classes.text} variant="h4">
-                {UserNameText}
-              </Typography>
-              <TextField
-                autoComplete={UserNameAutoComplete}
-                className={classes.textField}
-                type="userName"
-                error={isEmailEmpty}
-                onChange={handeOnEmailChange}
-                placeholder={useNamePlaceHolder}
-                variant="outlined"
-                value={userName}
-              />
-
-              {isEmailEmpty && (
-                <Typography className={classes.emptytext} variant="h6">
-                  {UserNameErrorText}
+          <form onSubmit={formik.handleSubmit}>
+            <Box className={classes.content}>
+              <Box className={classes.emailContent}>
+                <Typography className={classes.text} variant="h5">
+                  {UserNameText}
                 </Typography>
-              )}
-            </Box>
-            <Box>
-              <Typography className={classes.text} variant="h4">
-                Password
-              </Typography>
-              <TextField
-                autoComplete="current-password"
-                placeholder="********"
-                className={classes.textField}
-                type="password"
-                error={isPasswordEmpty}
-                onChange={handleOnPasswordChange}
-                variant="outlined"
-                value={password}
-              />
-              {isPasswordEmpty && (
-                <Typography className={classes.emptytext} variant="h6">
-                  Please enter your Password
+                {UserNameAutoComplete === 'email' ? (
+                  <TextField
+                    id="userName"
+                    autoComplete={UserNameAutoComplete}
+                    className={classNames(classes.textField, {
+                      [classes.emptyField]: userNameIndicate !== '',
+                    })}
+                    type="email"
+                    onChange={formik.handleChange}
+                    placeholder={useNamePlaceHolder}
+                    variant="outlined"
+                    value={formik.values.userName}
+                  />
+                ) : (
+                  <TextField
+                    id="userName"
+                    autoComplete={UserNameAutoComplete}
+                    className={classNames(classes.textField, {
+                      [classes.emptyField]: userNameIndicate !== '',
+                    })}
+                    type="number"
+                    onChange={formik.handleChange}
+                    placeholder={useNamePlaceHolder}
+                    variant="outlined"
+                    value={formik.values.userName}
+                  />
+                )}
+                {userNameIndicate !== '' && (
+                  <Typography className={classes.emptytext} variant="h6">
+                    {userNameIndicate}
+                  </Typography>
+                )}
+              </Box>
+              <Box>
+                <Typography className={classes.text} variant="h5">
+                  Password
                 </Typography>
-              )}
-              <Typography className={classes.forgotPassword} variant="h6">
-                FORGOT PASSWORD?
-              </Typography>
+                <TextField
+                  id="password"
+                  autoComplete="current-password"
+                  placeholder="********"
+                  className={classNames(classes.textField, {
+                    [classes.emptyPasswordField]: passwordIndicate !== '',
+                  })}
+                  type={type}
+                  onChange={formik.handleChange}
+                  variant="outlined"
+                  value={formik.values.password}
+                  InputProps={
+                    type === 'text'
+                      ? {
+                          endAdornment: (
+                            <VisibilityOffIcon
+                              onClick={handlePasswordVisibility}
+                              className={classes.icon}
+                            />
+                          ),
+                        }
+                      : {
+                          endAdornment: (
+                            <VisibilityIcon
+                              onClick={handlePasswordVisibility}
+                              className={classes.icon}
+                            />
+                          ),
+                        }
+                  }
+                />
+
+                {passwordIndicate !== '' && (
+                  <Typography className={classes.emptytext} variant="h6">
+                    {passwordIndicate}
+                  </Typography>
+                )}
+                {error && (
+                  <Typography className={classes.emptytext} variant="h6">
+                    {errorMessage}
+                  </Typography>
+                )}
+                {/* <Typography className={classes.forgotPassword} variant="h5">
+                  FORGOT PASSWORD?
+                </Typography> */}
+              </Box>
             </Box>
-          </Box>
-          <Button
-            className={classes.loginButton}
-            onClick={handleOnLogin}
-            variant="contained"
-            color="primary"
-          >
-            LOGIN
-          </Button>
+            <Button
+              className={classes.loginButton}
+              variant="contained"
+              color="primary"
+              type="submit"
+            >
+              LOGIN
+            </Button>
+          </form>
           <Centralize className={classes.singupContent}>
             <Typography className={classes.singupLabel} variant="h6">
               I am new?
@@ -130,16 +239,28 @@ const Login = ({
               Signup
             </Typography>
           </Centralize>
+          {localStorage.getItem('loginUser') === 'patient' && (
+            <Centralize className={classes.singupContent}>
+              <Typography className={classes.singupLabel} variant="h6">
+                If you are a doctor?
+              </Typography>
+              <Typography color="primary" variant="h4" onClick={doctorLoginPage}>
+                Click here
+              </Typography>
+            </Centralize>
+          )}
+          {localStorage.getItem('loginUser') === 'doctor' && (
+            <Centralize className={classes.singupContent}>
+              <Typography className={classes.singupLabel} variant="h6">
+                If you are a patient?
+              </Typography>
+              <Typography color="primary" variant="h4" onClick={patientLoginPage}>
+                Click here
+              </Typography>
+            </Centralize>
+          )}
         </Paper>
       </Centralize>
-
-      <Snackbar
-        anchorOrigin={SnackbarPosition}
-        open={error}
-        onClose={() => setError(false)}
-        message={errorMessage}
-        key={SnackbarPosition.horizontal + SnackbarPosition.vertical}
-      />
     </Fragment>
   )
 }

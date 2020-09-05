@@ -28,7 +28,7 @@ const useStyle = makeStyles((theme) => ({
   leftArrow: {
     width: 20,
     color: '#444444',
-    cursor: 'pointer'
+    cursor: 'pointer',
   },
 
   photo: {
@@ -77,35 +77,42 @@ function DoctorPersonalSetting() {
 
   return (
     <Box className={classes.container}>
-      <Box display="flex">
-        <Box className={classes.leftSide}>
-          <Box display="flex">
-            <img src={LeftArrow} alt="leftArrow" className={classes.leftArrow} onClick={handleOnBack} />
-            <Typography className={classes.text}>Doctors Details</Typography>
+      {data && (
+        <Box display="flex">
+          <Box className={classes.leftSide}>
+            <Box display="flex">
+              <img
+                src={LeftArrow}
+                alt="leftArrow"
+                className={classes.leftArrow}
+                onClick={handleOnBack}
+              />
+              <Typography className={classes.text}>Doctors Details</Typography>
+            </Box>
+            {data?.doctorDetails && (
+              <Avatar src={data.doctorDetails.photo} className={classes.photo} />
+            )}
           </Box>
-          {data?.doctorDetails && (
-            <Avatar src={data.doctorDetails.photo} className={classes.photo} />
-          )}
-        </Box>
-        <Box className={classes.rightSide}>
-          <Static doctorDetails={data?.doctorDetails} />
-          <ConsulationAndSignature
-            docKey={id}
-            configDetails={data?.configDetails}
-            doctorDetails={data?.doctorDetails}
-            onSave={onSave}
-            isAbleToWrite={isAbleToWrite}
-            response={response}
-          />
-          {/* <Preconsultancy
+          <Box className={classes.rightSide}>
+            <Static doctorDetails={data?.doctorDetails} />
+            <ConsulationAndSignature
+              docKey={id}
+              configDetails={data?.configDetails}
+              doctorDetails={data?.doctorDetails}
+              onSave={onSave}
+              isAbleToWrite={isAbleToWrite}
+              response={response}
+            />
+            {/* <Preconsultancy
             refetch={refetch}
             docKey={id}
             configDetails={data?.configDetails}
             onSave={onSave}
             isAbleToWrite={isAbleToWrite}
           /> */}
+          </Box>
         </Box>
-      </Box>
+      )}
     </Box>
   )
 }

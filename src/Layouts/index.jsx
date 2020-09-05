@@ -35,7 +35,7 @@ function Layout() {
           </Box>
         </Fragment>
       ) : (
-        <Redirect to={'/select-role'} />
+        <Redirect to={'/login'} />
       )}
     </div>
   )

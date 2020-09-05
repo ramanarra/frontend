@@ -29,18 +29,26 @@ function FreeSlotModal({ slot, open, onClose, onSave, slotTime, doctorKey }) {
 
   const [detail, setDetail] = useState(null)
 
+  const [error, setError] = useState(false)
+
   function handleOnClick(event) {
-    onClose(event)
+    if(phoneNumber !== '' && String(phoneNumber).length === 10) {
+      onClose(event)
+      setOpenNew(true)
+    }
+    else {
+      setError(true)
+    }
     if(detail) {
       if(detail.phone !== phoneNumber) {
         setDetail(null)
       }
     }
-    setOpenNew(true)
   }
 
   function handleClear() {
     setPhoneNumber('')
+    setOpenOption(false)
   }
 
   function handleDetail() {
@@ -66,6 +74,9 @@ function FreeSlotModal({ slot, open, onClose, onSave, slotTime, doctorKey }) {
     }
     if (!openOption) {
       setOpenOption(true)
+    }
+    if(error) {
+      setError(false)
     }
   }
 
@@ -132,6 +143,10 @@ function FreeSlotModal({ slot, open, onClose, onSave, slotTime, doctorKey }) {
               </Box>
             )}
           </Box>
+          {
+            error && 
+            <Typography className={classes.errorMsg}>Please enter valid phone number</Typography>
+          }
           <Box>
             <Box display="flex" className={classes.noteOne}>
               <StarIcon className={classes.star} />
@@ -166,7 +181,7 @@ function FreeSlotModal({ slot, open, onClose, onSave, slotTime, doctorKey }) {
           handleClear={handleClear}
         />
       ) }
-      {!detail && openNew && (
+      {!detail && openNew && phoneNumber !== '' && (
         <CreateAppointmentForNewPatient
           doctorKey={doctorKey}
           open={openNew}

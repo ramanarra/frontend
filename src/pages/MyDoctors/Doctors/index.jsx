@@ -12,6 +12,12 @@ const userReadRoles = [
 function Doctors({ doctorList }) {
   const [isUserSettingsRead, isAccountUserSettingsRead] = usePermissions(userReadRoles)
 
+  const loginUser = localStorage.getItem('loginUser')
+
+  if(loginUser === 'doctor') {
+    localStorage.setItem('doctorName', doctorList[0].doctorName)
+  }
+
   return (
     <Box>
       <Box display="flex" flexWrap="wrap">

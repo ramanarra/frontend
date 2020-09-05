@@ -6,7 +6,15 @@
   .leftArrow {
     width: 20px;
     cursor: pointer;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+  }
+
+  .doctor-name {
+    color: #2b2929;
+    font-size: 17.5px;
+    margin-bottom: 15px;
+    padding-left: 20px;
+    font-weight: bold;
   }
 
   .main-head {
@@ -14,7 +22,6 @@
     padding: 7px 0;
     font-weight: 500;
     margin-bottom: 10px;
-    padding-left: 20px;
   }
 
   .sub-head {
@@ -147,6 +154,7 @@
           font-weight: 400;
           font-size: 10px;
           white-space: nowrap;
+          text-align: center;
           :hover {
             border: none;
           }
@@ -214,14 +222,36 @@
       .slot {
         display: flex;
         align-items: center;
-        padding: 10px 0;
+        // padding: 10px 0;
 
         .txt-field {
-          max-width: 100px;
+          max-width: 165px;
           margin-right: 10px;
+          margin-top: 10px;
 
           .MuiInputBase-input {
-            height: 10px;
+            height: 27px;
+            width: 140px;
+            padding: 0px 5px 0px 12px;
+
+          }
+          .MuiInputAdornment-positionEnd {
+            margin-left: 0px;
+            .MuiIconButton-root {
+              padding: 0px;
+              .MuiIconButton-label {
+                width: 10px;
+                .MuiSvgIcon-root {
+                  width: 15px;
+                }
+              }
+            }
+          }
+          .MuiFormHelperText-root.Mui-error {
+            margin-left: 0px;
+            margin-right: 0px;
+            position: absolute;
+            top: 23px;
           }
         }
         .txt-field.end-time {
@@ -242,7 +272,7 @@
     }
 
     .list-btns {
-      padding: 5px 20px;
+      padding: 8px 20px;
       font-size: 12px;
       color: #0bb5ff;
       font-weight: 500;

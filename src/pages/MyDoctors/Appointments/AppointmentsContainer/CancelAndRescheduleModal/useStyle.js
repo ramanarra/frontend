@@ -22,11 +22,11 @@ const useStyle = makeStyles(() => ({
     width: 240,
     height: 25,
     backgroundColor: '#f4f2f2',
-    marginLeft: 165,
+    marginLeft: 167,
   },
   text: {
     paddingTop: 7,
-    fontSize: 10,
+    fontSize: 10.5,
     textAlign: 'center',
     color: '#6a6a6a',
   },
@@ -80,29 +80,43 @@ const useStyle = makeStyles(() => ({
     paddingTop: 15,
     paddingBottom: 38,
   },
-  cancle: {
-    padding: '11px 30px',
+  close: {
+    padding: '11px 55px',
     backgroundColor: '#f4f2f2',
     borderRadius: 17,
     textAlign: 'center',
     cursor: 'pointer',
+    marginLeft: 10,
+  },
+  cancle: {
+    padding: '11px 22px',
+    backgroundColor: '#f4f2f2',
+    borderRadius: 17,
+    textAlign: 'center',
+    cursor: 'pointer',
+    marginLeft: 15,
   },
   reschedule: {
-    padding: '10px 18px',
+    padding: '10px 14px',
     backgroundColor: '#0bb5ff',
     borderRadius: 17,
     textAlign: 'center',
     cursor: 'pointer',
-    marginLeft:22,
+    marginLeft:17,
   },
   cancleBtn: {
-    fontSize: 13,
+    fontSize: 11,
     color: '#a8a8a8',
   },
   rescheduleBtn: {
-    fontSize: 13,
+    fontSize: 11,
     color: 'white',
   },
+  closeBtn: {
+    fontSize: 11,
+    color: '#a8a8a8',
+  },
 }))
+
 
 export default useStyle

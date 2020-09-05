@@ -47,7 +47,11 @@ const Navigation = ({ doctorList }) => {
             style={{ color: pathName === 'doctors' ? '#0bb5ff' : '#c7c7c7' }}
             className="icon-doctor"
           ></i>
-          <Typography className={classes.content}>My Doctors</Typography>
+          {
+            localStorage.getItem('role') === 'DOCTOR' ?
+            <Typography className={classes.content}>My Hospital</Typography> :
+            <Typography className={classes.content}>My Doctors</Typography>
+          }
         </Box>
         <Box
           className={classNames(classes.button, {

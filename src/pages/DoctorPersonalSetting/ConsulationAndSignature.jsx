@@ -37,7 +37,6 @@ const useStyles = makeStyles(() => ({
     backgroundColor: '#f7f7f7',
     width: 620,
     height: 90,
-    paddingTop: 20,
     overflow: 'hidden',
     position: 'relative',
 
@@ -50,6 +49,12 @@ const useStyles = makeStyles(() => ({
       left: -3,
       right: -3,
     },
+  },
+
+  sign: {
+    marginLeft: 200,
+    height: 90,
+    fill: '#f7f7f7',
   },
 
   iconStart: {
@@ -96,6 +101,7 @@ const useStyles = makeStyles(() => ({
 function ConsulationAndSignature({
   docKey,
   configDetails,
+  doctorDetails,
   onSave,
   isAbleToWrite,
   response,
@@ -110,7 +116,7 @@ function ConsulationAndSignature({
   }, [configDetails])
 
   const setfee = (event) => {
-    if (!isNaN(event.target.value)) {
+    if (!isNaN(event.target.value) && event.target.value < 10000) {
       setFees(event.target.value)
     }
   }
@@ -127,7 +133,7 @@ function ConsulationAndSignature({
     if (fees) {
       const params = {
         doctorKey: docKey,
-        consultationCost: fees,
+        consultationCost: Number(fees),
       }
 
       onSave(params)
@@ -138,11 +144,11 @@ function ConsulationAndSignature({
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
-      return;
+      return
     }
 
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   return (
     <Box>
@@ -186,15 +192,45 @@ function ConsulationAndSignature({
           </div>
         )}
       </Box>
-      {response && response?.statusCode !== 200 && (
-        <Typography className={classes.response}>{response.message}</Typography>
-      )}
       <div className={classes.signature}>
-        {/* <img src={doctorDetails?.signature} alt="signature"/> */}
+        <img
+          src={doctorDetails?.signature}
+          alt="signature"
+          className={classes.sign}
+        />
       </div>
-      {response && response.statusCode === 200 && (
-        <SnackBar open={open} message={response.message} onclose={handleClose} />
-      )}
+      {(response && response.statusCode && response.statusCode === 200 && (
+        <SnackBar
+          openDialog={open}
+          message={response.message}
+          onclose={handleClose}
+          severity={'success'}
+        />
+      )) ||
+      (response && response.statusCode && response.statusCode !== 200 && (
+        <SnackBar
+          openDialog={open}
+          message={response.message}
+          onclose={handleClose}
+          severity={'error'}
+        />
+      ))}
+      {(response && response.name === 'Error' && response.status === 500 && (
+        <SnackBar
+          openDialog={open}
+          message={'Internal server error'}
+          onclose={handleClose}
+          severity={'error'}
+        />
+      )) ||
+        (response && response.name === 'Error' && response.status !== 500 && (
+          <SnackBar
+            openDialog={open}
+            message={'Something went wrong'}
+            onclose={handleClose}
+            severity={'error'}
+          />
+        ))}
     </Box>
   )
 }

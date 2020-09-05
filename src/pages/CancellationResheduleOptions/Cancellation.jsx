@@ -4,12 +4,8 @@ import { makeStyles } from '@material-ui/core/styles'
 import { Edit, Check, Clear, ErrorOutline } from '@material-ui/icons'
 import IconButton from '@material-ui/core/IconButton'
 
-
-
 import Switch from '../../components/Switch'
 import NumberTextField from '../../components/NumberTextField'
-import SnackBar from '../../components/SnackBar'
-
 
 const useStyles = makeStyles(() => ({
   text: {
@@ -37,7 +33,7 @@ const useStyles = makeStyles(() => ({
   },
 
   paper: {
-    width: 430,
+    width: 450,
     background: '#f7fdff',
     borderRadius: 0,
     boxShadow: 'none',
@@ -55,7 +51,7 @@ const useStyles = makeStyles(() => ({
   },
 
   noteContent: {
-    fontSize: 11,
+    fontSize: 13,
     marginTop: 5,
     color: '#3A7D94',
   },
@@ -64,7 +60,7 @@ const useStyles = makeStyles(() => ({
   },
 
   cancellationText: {
-    fontSize: 11,
+    fontSize: 13,
     color: '#216C86',
   },
 
@@ -76,14 +72,18 @@ const useStyles = makeStyles(() => ({
   },
 }))
 
-const Cancellation = ({ configDetails, doctorKey, onSave, isAbleToWrite, response }) => {
+const Cancellation = ({
+  configDetails,
+  doctorKey,
+  onSave,
+  isAbleToWrite,
+}) => {
   const classes = useStyles()
   const [isCancellationAllowed, setIsCancellationAllowed] = useState(false)
   const [cancellationHrs, setCancellationHrs] = useState(0)
   const [cancellationDays, setCancellationDays] = useState(0)
   const [cancellationMins, setCancellationMins] = useState(0)
   const [disable, setDisable] = useState(false)
-  const [open, setOpen] = useState(false)
 
   useEffect(() => {
     if (configDetails) {
@@ -120,7 +120,6 @@ const Cancellation = ({ configDetails, doctorKey, onSave, isAbleToWrite, respons
       }
       onSave(params)
       setDisable(false)
-      setOpen(true)
     }
   }
 
@@ -142,13 +141,6 @@ const Cancellation = ({ configDetails, doctorKey, onSave, isAbleToWrite, respons
     }
   }
 
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setOpen(false);
-  };
 
   return (
     <Box>
@@ -189,31 +181,32 @@ const Cancellation = ({ configDetails, doctorKey, onSave, isAbleToWrite, respons
             />
             {isAbleToWrite && (
               <Box paddingLeft={1} marginTop={0}>
-              {!disable ? (
-                <IconButton className={classes.iconButton} onClick={() => setDisable(true)}>
-                  <Edit
-                    className={classes.editIcon}
-                  />
-                </IconButton>
-              ) : (
-                <div>
-                  <IconButton className={classes.iconButton} onClick={handleOnCancel}>
-                    <Clear
-                      className={classes.cancelation}
-                    />
+                {!disable ? (
+                  <IconButton
+                    className={classes.iconButton}
+                    onClick={() => setDisable(true)}
+                  >
+                    <Edit className={classes.editIcon} />
                   </IconButton>
-                  <IconButton className={classes.iconButton} onClick={handleOnSave}>
-                    <Check className={classes.checkIcon} />
-                  </IconButton>
-                </div>
-              )}
-            </Box>
+                ) : (
+                  <div>
+                    <IconButton
+                      className={classes.iconButton}
+                      onClick={handleOnCancel}
+                    >
+                      <Clear className={classes.cancelation} />
+                    </IconButton>
+                    <IconButton
+                      className={classes.iconButton}
+                      onClick={handleOnSave}
+                    >
+                      <Check className={classes.checkIcon} />
+                    </IconButton>
+                  </div>
+                )}
+              </Box>
             )}
           </Box>
-          {
-            response  && response.statusCode !== 200 &&
-            <Typography>{response.message}</Typography>
-          }
           <Box marginTop={2.5}>
             <Paper className={classes.paper}>
               <Box className={classes.paperContainer}>
@@ -221,7 +214,7 @@ const Cancellation = ({ configDetails, doctorKey, onSave, isAbleToWrite, respons
                 <div className={classes.noteContainer}>
                   <p className={classes.noteContent}>
                     <b className={classes.cancellationText}>Note</b> : Cancellation
-                    with in the allowed timings, the payment willbe refund to the
+                    with in the allowed timings, the payment will be refunded to the
                     original payment method. if paid through VIRUJH{' '}
                   </p>
                 </div>
@@ -232,9 +225,6 @@ const Cancellation = ({ configDetails, doctorKey, onSave, isAbleToWrite, respons
       )}
 
       <Divider className={classes.divider} />
-      {response && response.statusCode === 200 && (
-        <SnackBar open={open} message={response.message} onclose={handleClose} />
-      )}
     </Box>
   )
 }

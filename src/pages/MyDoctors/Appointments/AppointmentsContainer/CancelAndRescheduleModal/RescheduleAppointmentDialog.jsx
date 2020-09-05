@@ -18,6 +18,7 @@ import { URL, METHOD } from '../../../../../api'
 import DatePicker from '../../../../../components/DatePicker'
 import useStyle from './useRescheduleStyle'
 import getTimeFormatWithNoon from '../../../../../lib/dateLib'
+import ConfirmationModal from './ConfirmationModal'
 
 function RescheduleAppointment({
   appointmentId,
@@ -32,6 +33,9 @@ function RescheduleAppointment({
   firstName,
   lastName,
   email,
+  setOpenConfirmation,
+  setParameter,
+  openConfirmation,
 }) {
   const classes = useStyle()
 
@@ -43,36 +47,53 @@ function RescheduleAppointment({
 
   const [time, setTime] = useState({ start: '00:00:00', end: '00:00:00' })
 
+  const [show, setShow] = useState(false)
+
+  const [confirmation, setConfirmation] = useState(true)
+
   const key = useMemo(() => {
     return {
       doctorKey: id,
       appointmentDate: currentDate,
+      confirmation: confirmation
     }
-  }, [id, currentDate])
+  }, [id, currentDate, confirmation])
 
-  const [availableSlots] = useCustomFecth(METHOD.GET, URL.availableSlot, key, true)
+  const [availableSlots] = useCustomFecth(METHOD.POST, URL.availableSlot, key, true)
 
   function handleClose(event) {
     onClose(event)
   }
 
   function handleSubmit(event) {
-    onClose(event)
-    const parameter = {
-      appointmentId: appointmentId,
-      patientId: Number(patientId),
-      startTime: moment(time.start, 'HH:mm:ss').format('HH:mm'),
-      endTime: moment(time.end, 'HH:mm:ss').format('HH:mm'),
-      appointmentDate: moment(date).format('YYYY-MM-DD'),
+    if(time.start === '00:00:00' && time.end === '00:00:00') {
+      setShow(true)
     }
-    onSave(URL.appointmentReschedule, parameter)
+
+    else {
+      onClose(event)
+      const parameter = {
+        appointmentId: appointmentId,
+        patientId: Number(patientId),
+        startTime: moment(time.start, 'HH:mm:ss').format('HH:mm'),
+        endTime: moment(time.end, 'HH:mm:ss').format('HH:mm'),
+        appointmentDate: moment(date).format('YYYY-MM-DD'),
+        confirmation: true,
+      }
+      setOpenConfirmation(true)
+      setParameter(parameter)
+    }
   }
 
   const handleDateChange = (event) => {
     setDate(event)
+    setConfirmation(false)
   }
 
   const handleOnClick = (slotTiming) => {
+    if(show) {
+      setShow(false)
+    }
     setTime(slotTiming)
   }
 
@@ -140,28 +161,32 @@ function RescheduleAppointment({
             </Typography>
           </Box>
           <Box className={classes.date}>
-            <DatePicker
+            {
+              availableSlots?.date &&
+              <DatePicker
               name={'Select Your Date'}
               dateChange={handleDateChange}
-              value={date}
+              value={moment(availableSlots.date)}
               width={236}
               fontSize={12}
               disablePast={true}
             />
+            }
           </Box>
           <Box className={classes.available}>
             <Typography className={classes.availableText} variant="h5">
               Available Time Slots:
             </Typography>
             <Box display="flex" flexWrap="wrap" className={classes.availableSlots}>
-              {availableSlots &&
-                availableSlots.map((data) => {
+              {availableSlots?.slots &&
+                availableSlots.slots.map((data, index) => {
                   return (
                     <Button
                       className={classNames(classes.time, {
                         [classes.selectedTab]: time.start === data.start,
                       })}
                       onClick={() => handleOnClick(data)}
+                      key={index}
                     >
                       <Typography
                         className={classNames(classes.timeText, {
@@ -181,6 +206,10 @@ function RescheduleAppointment({
             <Typography className={classes.submitText}>SUBMIT</Typography>
           </Box>
         </Box>
+        {
+          show &&
+          <Typography className={classes.error}>Please select any free slot</Typography>
+        }
       </Dialog>
     </Box>
   )

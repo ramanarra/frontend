@@ -4,6 +4,7 @@ import API from '../api'
 
 function useAppointmentUpdate(refetch) {
   const [loading, setLoading] = useState(false)
+  const [data, setData] = useState(null)
 
   function handleOnFetch(url,{...params}) {
     setLoading(true)
@@ -15,16 +16,21 @@ function useAppointmentUpdate(refetch) {
         Authorization: authStr,
       },
     })
-      .then(() => {
+      .then((res) => {
         setLoading(false)
         refetch()
+        setData(res)
+
       })
-      .catch(() => {
+      .catch((err) => {
         setLoading(false)
+        const response = {name: 'Error', status: err.response.status}
+        setData(response)
+        refetch()
       })
   }
 
-  return [handleOnFetch, loading]
+  return [handleOnFetch, data, loading]
 }
 
 export default useAppointmentUpdate

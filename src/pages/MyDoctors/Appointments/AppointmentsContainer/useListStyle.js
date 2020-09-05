@@ -29,7 +29,7 @@ const useListStyle = makeStyles(() => ({
     fontSize: 14.5,
     letterSpacing: 2,
     fontWeight: 600,
-    color: '#373636',
+    color: '#535252',
   },
 }))
 
