@@ -7,18 +7,19 @@ const useListStyle = makeStyles(() => ({
     marginRight: 10,
     background: '#f9f9f9',
     backgroundColor: 'white',
+    width: '11.8%'
   },
   dateContainer: {
-    width: 138,
+    width: '100%',
   },
   box: {
-    width: 145,
+    width: '100%',
     height: 42,
     cursor: 'pointer',
   },
   day: {
     textAlign: 'center',
-    fontSize: 11,
+    fontSize: '55%',
     color: '#727070',
     paddingTop: 4,
     paddingBottom: 10,
@@ -26,7 +27,7 @@ const useListStyle = makeStyles(() => ({
   },
   date: {
     textAlign: 'center',
-    fontSize: 14.5,
+    fontSize: '72%',
     letterSpacing: 2,
     fontWeight: 600,
     color: '#535252',

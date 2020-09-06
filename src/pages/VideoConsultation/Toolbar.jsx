@@ -15,7 +15,7 @@ const useStyles = makeStyles(() => ({
     position: 'fixed',
     zIndex: 5,
     left: '36.5%',
-    top: '82%',
+    top: '85%',
   },
 
   iconButton: {

@@ -10,6 +10,7 @@ import Chat from './Chat'
 import MedicineList from './MedicineList'
 import AddNewPatientConfirmationModel from './AddNewPatientConfirmationModel'
 
+
 const useStyle = makeStyles(() => ({
   topBar: {
     width: 355,

@@ -55,7 +55,6 @@ function VideoConsulation() {
       socket.emit('getAppointmentListForDoctor')
 
       socket.on('getDoctorAppointments', (data) => {
-        console.log(data)
         setPatientList(data)
       })
       socket.on('videoTokenForDoctor', (data) => {
@@ -131,6 +130,7 @@ function VideoConsulation() {
           patientList={patientList}
           videoAvailability={videoAvailability}
           audioAvailability={audioAvailability}
+          appointmentId={location.state}
         />
       )}
       {

@@ -13,6 +13,7 @@ function VideoConsultotion({
   socket,
   videoAvailability,
   audioAvailability,
+  appointmentId,
 }) {
   
   const [end, setEnd] = useState(false)
@@ -46,7 +47,10 @@ function VideoConsultotion({
       }
       history.push('/doctors')
     } else {
-      history.push('/patient/appointments/upcoming')
+      history.push({
+        pathname: '/patient/appointments/upcoming',
+        state: appointmentId,
+      })
     }
   }
 

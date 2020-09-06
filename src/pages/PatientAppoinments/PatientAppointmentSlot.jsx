@@ -1,12 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import moment from 'moment'
 import { Box, makeStyles, Typography } from '@material-ui/core'
 import ScheduleIcon from '@material-ui/icons/Schedule'
+import socketIOClient from 'socket.io-client'
 
 import getTimeFormatWithNoon from '../../lib/dateLib'
 import UpcomingAndPastView from './UpcomingAndPastView'
 import CancelAppointmentModal from './CancelAppointmentModal'
 import RescheduleAppointmentModal from './RescheduleAppointmentModal'
+import { useHistory, useLocation } from 'react-router-dom'
+
+const ENDPOINT = 'https://dev.virujh.com'
 
 const useStyle = makeStyles(() => ({
   container: {
@@ -71,14 +75,23 @@ const useStyle = makeStyles(() => ({
     letterSpacing: 0.5,
   },
 }))
-function PatientAppointmentSlot({ appointmentDetail, borderColor, onSave, past }) {
+function PatientAppointmentSlot({
+  appointmentDetail,
+  borderColor,
+  onSave,
+  past,
+}) {
   const classes = useStyle()
 
   const [open, setOpen] = useState(false)
 
+  const history = useHistory()
+
   const [openCancel, setOpenCancel] = useState(false)
 
   const [openReschedule, setOpenReschedule] = useState(false)
+
+  const location = useLocation()
 
   const month = moment(appointmentDetail.appointmentDate).format('MMMM')
 
@@ -109,6 +122,48 @@ function PatientAppointmentSlot({ appointmentDetail, borderColor, onSave, past }
       )
       .format('hh:mm A')
   )
+
+  function handleOnOpen(appointmentId) {
+    history.push({
+      pathname: '/video-consultation',
+      state: appointmentId,
+    })
+  }
+
+
+  useEffect(() => {
+    const socket = socketIOClient(ENDPOINT, {
+      transports: ['websocket'],
+      jsonp: false,
+      query: {
+        token: localStorage.getItem('virujhToken'),
+      },
+      path: '/socket.io',
+    })
+
+    socket.on('connect', function () {
+      if (localStorage.getItem('loginUser') === 'doctor') {
+        socket.emit('createTokenForDoctor')
+      } else {
+        if (!past) {
+          socket.emit('getPatientTokenForDoctor', appointmentDetail.appointmentId)
+        }
+      }
+
+      socket.on('videoTokenForPatient', (data) => {
+        if (data.isToken) {
+          if (data.appointmentId !== location.state) {
+            handleOnOpen(data.appointmentId)
+          }
+        }
+      })
+
+    })
+
+    return () => {
+      socket.disconnect()
+    }
+  }, [])
 
   function handleOnClick() {
     setOpen(true)

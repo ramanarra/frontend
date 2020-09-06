@@ -5,14 +5,14 @@ import { Box, Typography, makeStyles, Avatar } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    width: '250px',
+    width: '18%',
     background: '#f9f9f9',
     backgroundColor: 'white',
     height: '100%',
     borderRight: '1px solid #ebebeb',
   },
   heading: {
-    fontSize: 18,
+    fontSize: '90%',
     paddingTop: '20px',
     paddingLeft: '25px',
     color: '#645f5f',
@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
   name: {
     paddingLeft: '7px',
-    fontSize: '14px',
+    fontSize: '70%',
     color: '#645f5f',
   },
   selecedTab: {

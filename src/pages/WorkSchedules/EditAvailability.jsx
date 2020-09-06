@@ -17,16 +17,29 @@ const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
   }, [data])
 
   const handleAdd = () => {
-    setSlotList([
-      ...slotList,
-      {
-        tempId,
-        scheduledayid,
-        startTime: timeFmt(new Date()),
-        endTime: timeFmt(new Date()),
-      },
-    ])
-    setTempId((prev) => prev + 1)
+    if(slotList.length === 1) {
+      setSlotList([
+        {
+          tempId,
+          scheduledayid,
+          startTime: timeFmt(new Date()),
+          endTime: timeFmt(new Date()),
+        },
+      ])
+      setTempId((prev) => prev + 1)
+    }
+    else {
+      setSlotList([
+        ...slotList,
+        {
+          tempId,
+          scheduledayid,
+          startTime: timeFmt(new Date()),
+          endTime: timeFmt(new Date()),
+        },
+      ])
+      setTempId((prev) => prev + 1)
+    }
   }
 
   const handleChange = (data, e) => {

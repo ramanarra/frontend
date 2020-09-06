@@ -4,12 +4,11 @@ const useSlotsStyle = makeStyles(() => ({
   container: {
     marginLeft: 18,
     marginBottom: 10,
-    height: 45,
     background: '#f9f9f9',
     backgroundColor: 'white',
   },
   box: {
-    width: 138,
+    width: '100%',
     height: 42,
     cursor: 'pointer',
   },
@@ -25,27 +24,27 @@ const useSlotsStyle = makeStyles(() => ({
     paddingLeft: 11,
   },
   name: {
-    fontSize: 11,
+    fontSize: '55%',
     paddingTop: 3,
     paddingLeft: 2,
     alignSelf: 'flex-start',
     textTransform: 'capitalize',
   },
   schedule: {
-    width: 10,
-    height: 10,
+    width: '7%',
+    height: '9%',
     marginTop: 1,
   },
   fromTime: {
-    fontSize: 9,
+    fontSize: '45%',
     paddingLeft: 2,
   },
   toTime: {
-    fontSize: 9,
+    fontSize: '45%',
     paddingLeft: 5,
   },
   total: {
-    fontSize: 8,
+    fontSize: '40%',
     paddingRight: 7,
   },
   radio: {
@@ -56,7 +55,7 @@ const useSlotsStyle = makeStyles(() => ({
     },
   },
   star: {
-    width: 12,
+    width: '9%',
     paddingBottom: 3,
   },
   singleSlot: {
@@ -64,8 +63,8 @@ const useSlotsStyle = makeStyles(() => ({
   },
 
   round: {
-    width: 12,
-    height: 12,
+    width: '10%',
+    height: '60%',
     borderRadius: '50%',
     backgroundColor: 'white',
     marginTop: 1,
@@ -79,7 +78,7 @@ const useSlotsStyle = makeStyles(() => ({
   },
 
   star: {
-    width: 11,
+    width: '9%',
     marginTop: -1,
   },
 }))

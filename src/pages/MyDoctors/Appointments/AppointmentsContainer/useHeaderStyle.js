@@ -6,7 +6,7 @@ const useHeaderStyle = makeStyles(() => ({
     background: '#f9f9f9',
     backgroundColor: 'white',
     paddingTop: 20,
-    height: 70,
+    height: '14%',
   },
   search: {
     width: 22,
@@ -55,7 +55,7 @@ const useHeaderStyle = makeStyles(() => ({
     },
   },
   eventIcon: {
-    fontSize: 16,
+    fontSize: '78%',
     marginTop: 2,
     marginLeft: 17,
     color: '#dadada',
@@ -75,13 +75,13 @@ const useHeaderStyle = makeStyles(() => ({
   },
   text: {
     paddingTop: 2,
-    fontSize: 15,
+    fontSize: '75%',
     fontWeight: 600,
     letterSpacing: 2,
   },
   txt: {
     paddingRight: 10,
-    fontSize: 9,
+    fontSize: '45%',
     color: '#535252',
     paddingTop: 7,
   },
