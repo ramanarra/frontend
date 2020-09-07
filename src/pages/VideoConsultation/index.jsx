@@ -48,8 +48,10 @@ function VideoConsulation() {
     socket.on('connect', function () {
       if (localStorage.getItem('loginUser') === 'doctor') {
         socket.emit('createTokenForDoctor')
+        socket.emit('updateLiveStatusOfUser', { status: 'online' })
       } else {
         socket.emit('getPatientTokenForDoctor', location.state)
+        socket.emit('updateLiveStatusOfUser', { status: 'online' })
       }
 
       socket.emit('getAppointmentListForDoctor')
@@ -73,7 +75,7 @@ function VideoConsulation() {
         if (data.isToken) {
           setIsJoinDisabled(false)
           setSessionID(data.sessionId)
-          setToken(data.token)
+          setToken(data.token) 
         }
       })
     })
@@ -120,6 +122,7 @@ function VideoConsulation() {
         isJoinDisabled={isJoinDisabled}
         videoAvailability={setVideoAvailability}
         audioAvailability={setAudioAvailability}
+        socket={socket}
       />
 
       {!isJoinDisabled && token && !open && (

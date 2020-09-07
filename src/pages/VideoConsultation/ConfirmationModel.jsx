@@ -142,6 +142,7 @@ function ConfirmationPopUp({
   isJoinDisabled,
   videoAvailability,
   audioAvailability,
+  socket,
 }) {
   const classes = useStyle()
 
@@ -160,6 +161,7 @@ function ConfirmationPopUp({
 
   function handleOnClick() {
     handleOnOpen(false)
+    socket.emit('updateLiveStatusOfUser', { status: 'inSession ' })
   }
 
   navigator.getUserMedia(

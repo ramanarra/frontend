@@ -121,13 +121,14 @@ function SideBar({
     setOpen(false)
   }
 
-  const handleOnPatientJoining = (appointmentId, firstName, lastName, index) => {
+  const handleOnPatientJoining = (appointmentId, firstName, lastName, index, status) => {
     const name = lastName ? firstName + lastName : firstName
     onPatientJoining(appointmentId, name)
+    socket.emit('updateLiveStatusOfUser', { status: 'videoSessionReady' })
     if (selected) {
       socket.emit('removePatientTokenByDoctor', {
         appointmentId: selected,
-        status: 'completed',
+        status: status,
       })
     }
     setSelected(appointmentId)
@@ -135,13 +136,14 @@ function SideBar({
     setAppointmentId(appointmentId)
   }
 
-  function NextPatient() {
+  function NextPatient(status) {
     if (index !== null && index < patientList.length - 1) {
       handleOnPatientJoining(
         patientList[index + 1].appointmentId,
         patientList[index + 1].firstName,
         patientList[index + 1].lastName,
-        index + 1
+        index + 1,
+        status,
       )
     }  
     else if (index === null && patientList.length === 1) {
@@ -149,14 +151,16 @@ function SideBar({
         patientList[0].appointmentId,
         patientList[0].firstName,
         patientList[0].lastName,
-        Number(0)
+        Number(0),
+        status,
       )
     } else if (index === null && patientList.length > 1) {
       handleOnPatientJoining(
         patientList[0].appointmentId,
         patientList[0].firstName,
         patientList[0].lastName,
-        Number(0)
+        Number(0),
+        status
       )
     }
   }

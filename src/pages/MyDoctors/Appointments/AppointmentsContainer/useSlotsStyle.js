@@ -63,7 +63,7 @@ const useSlotsStyle = makeStyles(() => ({
   },
 
   round: {
-    width: '10%',
+    width: '8.5%',
     height: '60%',
     borderRadius: '50%',
     backgroundColor: 'white',
