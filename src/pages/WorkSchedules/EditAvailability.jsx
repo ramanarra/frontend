@@ -17,7 +17,7 @@ const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
   }, [data])
 
   const handleAdd = () => {
-    if(slotList.length === 1) {
+    if(slotList.length === 1 && !slotList[0].scheduletimeid ) {
       setSlotList([
         {
           tempId,
@@ -79,6 +79,15 @@ const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
         },
       })
     }
+  }
+
+  const handleUnavailable = (slotList) => {
+    const slots = slotList.map(slot => {
+      return {
+        ...slot, isDelete: true,
+      }
+    })
+    setSlotList(slots)
   }
 
   const slot = (data) => (
@@ -152,7 +161,7 @@ const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
             </span>
           </div>
           <div className="btn-wrap">
-            <span className="make-unavailable" onClick={setSlotList.bind(this, [])}>
+            <span className="make-unavailable" onClick={() => handleUnavailable(slotList)}>
               I'm unavailable
             </span>
           </div>

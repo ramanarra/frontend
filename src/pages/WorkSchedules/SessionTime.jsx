@@ -30,7 +30,7 @@ const SessionTime = ({ data, handleUpdate, response }) => {
     isChanged && setChanged(false)
     handleUpdate({
       workScheduleConfig: {
-        consultationSessionTimings: time,
+        consultationSessionTimings: Number(time),
       },
     })
   }

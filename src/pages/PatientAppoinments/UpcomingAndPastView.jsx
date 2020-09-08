@@ -206,6 +206,7 @@ function UpcomingAndPastView({
       pathname: '/video-consultation',
       state: appointmentDetail.appointmentId,
       doctorName: doctorName,
+      liveStatus: appointmentDetail.liveStatus,
     })
   }
 

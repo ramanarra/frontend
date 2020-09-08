@@ -18,6 +18,8 @@ const PatientSignup = (props) => {
 
   const [message, setMessage] = useState(null)
 
+  const [detail, setDetail] = useState(null)
+
   const redirectToLogin = () => props.history.push('/login')
   const onSubmit = (data) => {
     Api.post(URL.patientSignup, data)
@@ -28,20 +30,23 @@ const PatientSignup = (props) => {
           localStorage.setItem('virujhToken', data.patient.accessToken)
           localStorage.setItem('patientId', data.patient.patientId)
           localStorage.setItem('patientName', `${data.details.firstName} ${data.details.lastName}`)
-          props.history.push('/patient/appointments/upcoming')
+          setMessage('Successfully Created...')
+          setDetail(data)
+          setError(true)
         }
-        else if (data.patient.update === 'updated password') {
+        else if (data?.patient.update === 'updated password') {
           setError(true)
           setMessage('Created successfully...Please do signin')
         }
-        else {
+        else if (data?.statusCode) {
           setError(true)
-          setMessage(data.message)
-          return
+          setMessage(data?.message)
         }
       })
-      .catch(() => {
+      .catch((err) => {
+        const { data } = err
         setError(true)
+        setMessage(data?.message)
       })
   }
 
@@ -60,8 +65,12 @@ const PatientSignup = (props) => {
     if(message === 'Created successfully...Please do signin') {
       props.history.push('/login')
     }
+    if(detail?.patient?.accessToken) {
+      props.history.push('/patient/appointments/upcoming')
+    }
     setError(false)
   }
+
 
   return (
     <div className="patient-sign-up">
@@ -172,6 +181,7 @@ const PatientSignup = (props) => {
                       size="small"
                       format="DD/MM/YYYY"
                       placeholder="07/03/1985"
+                      // onChange={handle}
                       disableFuture
                       autoOk
                       InputProps={{

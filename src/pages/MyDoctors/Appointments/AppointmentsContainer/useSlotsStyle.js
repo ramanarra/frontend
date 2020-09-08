@@ -36,11 +36,11 @@ const useSlotsStyle = makeStyles(() => ({
     marginTop: 1,
   },
   fromTime: {
-    fontSize: '45%',
+    fontSize: '42%',
     paddingLeft: 2,
   },
   toTime: {
-    fontSize: '45%',
+    fontSize: '42%',
     paddingLeft: 5,
   },
   total: {

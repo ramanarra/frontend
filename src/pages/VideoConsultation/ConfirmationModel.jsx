@@ -143,6 +143,7 @@ function ConfirmationPopUp({
   videoAvailability,
   audioAvailability,
   socket,
+  liveStatus,
 }) {
   const classes = useStyle()
 
@@ -230,7 +231,7 @@ function ConfirmationPopUp({
                 {isJoinDisabled &&
                   localStorage.getItem('loginUser') === 'patient' && (
                     <Typography className={classes.errorMsg}>
-                      Doctor not yet start the meeting
+                      Doctor is an {liveStatus}
                     </Typography>
                   )}
               </Box>

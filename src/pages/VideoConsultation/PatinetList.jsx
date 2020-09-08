@@ -81,7 +81,7 @@ const useStyle = makeStyles((theme) => ({
   },
   offlineStatus: {
     width: 13,
-    color: '#f30505',
+    color: '#a5a5a5',
     position: 'relative',
     left: 35,
     bottom: 19,

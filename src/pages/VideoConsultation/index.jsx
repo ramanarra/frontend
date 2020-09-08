@@ -123,6 +123,7 @@ function VideoConsulation() {
         videoAvailability={setVideoAvailability}
         audioAvailability={setAudioAvailability}
         socket={socket}
+        liveStatus={location.liveStatus}
       />
 
       {!isJoinDisabled && token && !open && (

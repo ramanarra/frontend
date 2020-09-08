@@ -252,6 +252,7 @@ function AppointmentDatePicker({ doctorKey, doctorDetails }) {
     <Box display="flex" className={classes.container}>
       <Box className={classes.datePicker}>
         {slots?.date && (
+          <Box>
           <MuiPickersUtilsProvider utils={MomentUtils}>
             <DatePicker
               autoOk
@@ -265,12 +266,13 @@ function AppointmentDatePicker({ doctorKey, doctorDetails }) {
               className={classes.dateContainer}
             />
           </MuiPickersUtilsProvider>
-        )}
         <Box className={classes.button}>
           <Box className={classes.confirmButton} onClick={() => handleSubmit(false)}>
             <Typography className={classes.confirmText}>CONFIRM</Typography>
           </Box>
         </Box>
+        </Box>
+        )}
         {error && (
           <Typography className={classes.errorMessage}>
             Please select any free slot
