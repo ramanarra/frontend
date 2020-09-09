@@ -45,14 +45,14 @@ function VideoConsultotion({
   }
 
   function leaveCall(status) {
-    console.log(status)
     if (localStorage.getItem('loginUser') === 'doctor') {
       if (appointmenttId) {
+        console.log(status)
         socket.emit('removePatientTokenByDoctor', {
           appointmentId: appointmenttId,
           status: status,
         })
-        socket.emit('removeSessionAndTokenByDoctor', appointmenttId)
+        socket.emit('removeSessionAndTokenByDoctor')
       }
       socket.emit('updateLiveStatusOfUser', { status: status })
       history.push('/doctors')

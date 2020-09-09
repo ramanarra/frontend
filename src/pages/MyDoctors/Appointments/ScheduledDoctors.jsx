@@ -13,8 +13,9 @@ const useStyles = makeStyles((theme) => ({
   },
   heading: {
     fontSize: '90%',
-    paddingTop: '20px',
-    paddingLeft: '25px',
+    paddingTop: '9.5%',
+    paddingLeft: '11.5%',
+    paddingRight: '11.5%',
     color: '#645f5f',
   },
   photo: {
@@ -22,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     height: theme.spacing(3),
   },
   doctorlist: {
-    paddingTop: '17px',
+    paddingTop: '8.5%',
   },
   doctor: {
     cursor: 'pointer',

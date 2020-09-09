@@ -19,9 +19,9 @@ function Header({ forwardPagination, backwardPagination, slots, paginationNumber
 
   const [date, setDate] = useState(currentDay)
 
-  const startDay = Moment.utc(slots[0].day).format('DD MMM, YYYY')
+  const startDay = Moment(slots[0].day).format('DD MMM, YYYY')
 
-  const endDay = Moment.utc(slots[(slots.length) - 1].day).format('DD MMM, YYYY')
+  const endDay = Moment(slots[(slots.length) - 1].day).format('DD MMM, YYYY')
 
   const month = Moment(startDay).format('MMMM, YYYY')
 

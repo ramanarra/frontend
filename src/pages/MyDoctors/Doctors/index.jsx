@@ -7,7 +7,6 @@ import InfoCard from './InfoCard'
 import usePermissions from '../../../hooks/usePermissions'
 import WaitingPatientList from './WaitingPatientList'
 
-
 const ENDPOINT = 'https://dev.virujh.com'
 
 const userReadRoles = ['SELF_USER_SETTINGS_READ', 'ACCOUNT_USERS_SETTINGS_READ']
@@ -24,12 +23,6 @@ function Doctors({ doctorList }) {
   const [patientList, setPatientList] = useState(null)
 
   const [socket, setSocket] = useState(null)
-
-  const [isJoinDisabled, setIsJoinDisabled] = useState(null)
-
-  const [sessionID, setSessionID] = useState(null)
-
-  const [token, setToken] = useState(null)
 
   const [open, setOpen] = useState(false)
 
@@ -54,17 +47,10 @@ function Doctors({ doctorList }) {
         socket.emit('createTokenForDoctor')
       }
 
-      socket.emit('getAppointmentListForDoctor')
+      setInterval(() => socket.emit('getAppointmentListForDoctor'), 10000)
 
       socket.on('getDoctorAppointments', (data) => {
         setPatientList(data)
-      })
-      socket.on('videoTokenForDoctor', (data) => {
-        if (data.isToken) {
-          setIsJoinDisabled(false)
-          setSessionID(data.sessionId)
-          setToken(data.token)
-        }
       })
     })
     setSocket(socket)
@@ -75,7 +61,6 @@ function Doctors({ doctorList }) {
     patientList.filter(
       (patient) => patient.patientLiveStatus === 'videoSessionReady'
     )
-
 
   useEffect(() => {
     if (readyPatient && readyPatient.length > 0 && count === 0) {

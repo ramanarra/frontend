@@ -61,6 +61,8 @@ function FreeSlotModal({ slot, open, onClose, onSave, slotTime, doctorKey }) {
 
   function handleClose(event) {
     onClose(event)
+    setPhoneNumber('')
+    setOpenOption(false)
   }
 
   function handleOnchange(event) {

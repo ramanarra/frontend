@@ -81,7 +81,7 @@ function LeaveCallModal({ open, setOpenLeaveModal, onLeaveSession }) {
               Finish Consultation and leave the call
             </Typography>
             <Typography className={classes.text} variant="h5">
-              Are you sure wan to leace the call?
+              Are you sure wan to leave the call?
             </Typography>
             <Box className={classes.buttons} display="flex">
               <Box

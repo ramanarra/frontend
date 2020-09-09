@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import classNames from 'classnames'
 import { useHistory } from 'react-router-dom'
-import { Box, Button, Typography } from '@material-ui/core'
+import { Box, Button, Typography, Avatar } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
@@ -65,12 +65,10 @@ const useStyles = makeStyles(() => ({
   },
 
   hospitalLogo: {
-    width: 21,
-    paddingTop: 5,
     cursor: 'pointer',
     marginLeft: 10,
-    borderRadius: '50%',
-    fontSize: 15,
+    height: 23,
+    width: 23,
   },
 
   logout: {
@@ -172,9 +170,8 @@ export default function PatientHeader() {
       </Box>
       <ClickAwayListener onClickAway={handleOnAwayClick}>
         <Box className={classes.hospitalLogoContainer}>
-          <img
+          <Avatar
             src={localStorage.getItem('photo')}
-            alt="patient photo"
             className={classes.hospitalLogo}
             onClick={handleOnClick}
           />
