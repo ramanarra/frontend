@@ -231,7 +231,11 @@ function ConfirmationPopUp({
                 {isJoinDisabled &&
                   localStorage.getItem('loginUser') === 'patient' && (
                     <Typography className={classes.errorMsg}>
-                      Doctor is an {liveStatus}
+                      {
+                        liveStatus ?
+                        `${'Doctor is an '}${liveStatus}` :
+                        `${'Waiting for Doctor to come online'}`
+                      }
                     </Typography>
                   )}
               </Box>

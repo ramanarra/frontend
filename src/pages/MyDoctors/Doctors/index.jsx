@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import { Box } from '@material-ui/core'
 import socketIOClient from 'socket.io-client'
 
 import InfoCard from './InfoCard'
 import usePermissions from '../../../hooks/usePermissions'
-import { SettingsPowerRounded } from '@material-ui/icons'
 import WaitingPatientList from './WaitingPatientList'
-import { useHistory } from 'react-router-dom'
+
 
 const ENDPOINT = 'https://dev.virujh.com'
 
@@ -33,6 +33,8 @@ function Doctors({ doctorList }) {
 
   const [open, setOpen] = useState(false)
 
+  const [count, setCount] = useState(0)
+
   if (loginUser === 'doctor') {
     localStorage.setItem('doctorName', doctorList[0].doctorName)
   }
@@ -55,7 +57,6 @@ function Doctors({ doctorList }) {
       socket.emit('getAppointmentListForDoctor')
 
       socket.on('getDoctorAppointments', (data) => {
-        console.log(data)
         setPatientList(data)
       })
       socket.on('videoTokenForDoctor', (data) => {
@@ -77,7 +78,7 @@ function Doctors({ doctorList }) {
 
 
   useEffect(() => {
-    if (readyPatient && readyPatient.length > 0) {
+    if (readyPatient && readyPatient.length > 0 && count === 0) {
       setOpen(true)
     }
   }, [readyPatient])
@@ -110,6 +111,7 @@ function Doctors({ doctorList }) {
           patientList={readyPatient}
           setOpen={setOpen}
           handleJoinVideo={handleJOinVideo}
+          setCount={setCount}
         />
       )}
     </Box>

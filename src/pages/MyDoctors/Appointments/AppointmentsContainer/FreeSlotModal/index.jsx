@@ -64,7 +64,7 @@ function FreeSlotModal({ slot, open, onClose, onSave, slotTime, doctorKey }) {
   }
 
   function handleOnchange(event) {
-    if (!isNaN(event.target.value)) {
+    if (!isNaN(event.target.value) && (event.target.value).length < 11) {
       setPhoneNumber(event.target.value)
       if (event.target.value !== '') {
         updateData(METHOD.POST, URL.patientSearch, {
@@ -77,6 +77,9 @@ function FreeSlotModal({ slot, open, onClose, onSave, slotTime, doctorKey }) {
     }
     if(error) {
       setError(false)
+    }
+    if(event.target.value === '') {
+      setOpenOption(false)
     }
   }
 

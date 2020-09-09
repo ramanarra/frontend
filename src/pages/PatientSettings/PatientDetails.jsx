@@ -61,6 +61,7 @@ const useStyle = makeStyles((theme) => ({
 }))
 
 function PatientDetails({ patientDetails, patientId, onSave }) {
+  localStorage.setItem('patientName', `${patientDetails.name}`)
   const classes = useStyle()
 
   const [fieldName, setFieldName] = useState('')

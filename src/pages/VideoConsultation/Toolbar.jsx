@@ -9,6 +9,7 @@ import AddCallIcon from '../../assets/img/person.png'
 import VideoOffIcon from '../../assets/img/video-off.svg'
 import MicOffIcon from '../../assets/img/mic-off.svg'
 import NonAvailabilityModal from './NonAvailabilityModal'
+import LeaveCallModal from './LeaveCallModal'
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -72,9 +73,21 @@ function Toolbar({
 
   const [name, setName] = useState('')
 
+  const [openLeaveModal, setOpenLeaveModal] = useState(false)
+
   function handleOnClick(name) {
     setOpen(true)
     setName(name)
+  }
+
+  function handleOnLeave() {
+    if(localStorage.getItem('loginUser') === 'doctor') {
+      setOpenLeaveModal(true)
+    }
+    else {
+      onLeaveSession()
+    }
+    
   }
 
   return (
@@ -108,7 +121,7 @@ function Toolbar({
           </IconButton>
         )}
 
-        <IconButton className={classes.iconButton} onClick={onLeaveSession}>
+        <IconButton className={classes.iconButton} onClick={handleOnLeave}>
           <img src={CallOnIcon} className={classes.videoIcon} />
         </IconButton>
         {localStorage.getItem('loginUser') === 'doctor' && (
@@ -118,6 +131,13 @@ function Toolbar({
         )}
       </div>
       {open && <NonAvailabilityModal open={open} onClose={setOpen} name={name} />}
+      {openLeaveModal && (
+        <LeaveCallModal
+          open={openLeaveModal}
+          setOpenLeaveModal={setOpenLeaveModal}
+          onLeaveSession={onLeaveSession}
+        />
+      )}
     </div>
   )
 }

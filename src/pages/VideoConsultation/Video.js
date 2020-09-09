@@ -18,7 +18,6 @@ function VideoConsultotion({
   isWaiting,
   waitingIndex,
 }) {
-  
   const [end, setEnd] = useState(false)
 
   const [open, setOpen] = useState(false)
@@ -45,11 +44,17 @@ function VideoConsultotion({
     setPatientName(patientName)
   }
 
-  function leaveCall() {
+  function leaveCall(status) {
+    console.log(status)
     if (localStorage.getItem('loginUser') === 'doctor') {
-      if(appointmenttId) {
+      if (appointmenttId) {
+        socket.emit('removePatientTokenByDoctor', {
+          appointmentId: appointmenttId,
+          status: status,
+        })
         socket.emit('removeSessionAndTokenByDoctor', appointmenttId)
       }
+      socket.emit('updateLiveStatusOfUser', { status: status })
       history.push('/doctors')
     } else {
       history.push({
@@ -75,7 +80,6 @@ function VideoConsultotion({
   function clickByDoctor() {
     setByDoctor(true)
   }
-
 
   return (
     <Fragment>

@@ -51,6 +51,8 @@ function VideoConsulation() {
       if (localStorage.getItem('loginUser') === 'doctor') {
         socket.emit('createTokenForDoctor')
         socket.emit('updateLiveStatusOfUser', { status: 'online' })
+      } else {
+        socket.emit('getPatientTokenForDoctor', location.state)
       }
 
       socket.emit('getAppointmentListForDoctor')

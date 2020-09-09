@@ -166,7 +166,7 @@ class VideoRoomComponent extends Component {
     })
   }
 
-  leaveSession() {
+  leaveSession(status) {
     const mySession = this.state.session
 
     // const  history  = useHistory()
@@ -190,7 +190,7 @@ class VideoRoomComponent extends Component {
 
     // this.props.endCall()
 
-    this.props.leaveCall()
+    this.props.leaveCall(status)
 
     console.log('closed')
 

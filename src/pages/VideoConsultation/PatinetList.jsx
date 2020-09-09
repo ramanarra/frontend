@@ -101,6 +101,8 @@ function PatientList({
   waitingPatient,
   isWaiting,
   waitingIndex,
+  count,
+  setCount,
 }) {
   const classes = useStyle()
 
@@ -124,13 +126,14 @@ function PatientList({
   }
 
   useEffect(() => {
-    if (isWaiting) {
+    if (isWaiting && count === 0) {
       onJoiningPatient(
         waitingPatient.appointmentId,
         waitingPatient.firstName,
         waitingPatient.lastName,
         waitingIndex
       )
+      setCount(1)
     }
   }, [isWaiting])
 

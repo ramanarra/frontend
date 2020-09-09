@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Box, makeStyles } from '@material-ui/core'
 import { connect } from 'react-redux'
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
@@ -104,6 +104,14 @@ function SideBar({
 
   const [nextPatientDetails, setNextPatientDetails] = useState(null)
 
+  const [count, setCount] = useState(0)
+
+  useEffect(() => {
+    if(isWaiting) {
+      setOpen(true)
+    }
+  }, [isWaiting])
+
   function handleOnPatientList() {
     setOpen(true)
     setOpenChat(false)
@@ -132,7 +140,6 @@ function SideBar({
     const name = lastName ? firstName + lastName : firstName
     onPatientJoining(appointmentId, name)
     socket.emit('updateLiveStatusOfUser', { status: 'videoSessionReady' })
-    console.log('sideBar: videoSessionReady')
     if (selected) {
       socket.emit('removePatientTokenByDoctor', {
         appointmentId: selected,
@@ -142,7 +149,6 @@ function SideBar({
     setSelected(appointmentId)
     setIndex(index)
     setAppointmentId(appointmentId)
-    // setPatientClicked()
     setIsPatientClick(true)
   }
 
@@ -237,6 +243,8 @@ function SideBar({
           waitingPatient={waitingPatient}
           isWaiting={isWaiting}
           waitingIndex={waitingIndex}
+          count={count}
+          setCount={setCount}
         />
       )}
       {openChat && <Chat onClose={handleChatClose} />}
