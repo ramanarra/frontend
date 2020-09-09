@@ -170,7 +170,7 @@ class VideoRoomComponent extends Component {
     const mySession = this.state.session
 
     // const  history  = useHistory()
-
+    mySession.disconnect()
     if (mySession) {
       mySession.disconnect()
     }
@@ -483,6 +483,8 @@ class VideoRoomComponent extends Component {
                 AddNextPatient={this.props.AddNextPatient}
                 videoAvailability={this.props.videoAvailability}
                 audioAvailability={this.props.audioAvailability}
+                subscribers={this.state.subscribers}
+                isPatientClick={this.props.isPatientClick}
               />
             </div>
           )}

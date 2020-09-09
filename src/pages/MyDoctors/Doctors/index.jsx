@@ -1,21 +1,94 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box } from '@material-ui/core'
+import socketIOClient from 'socket.io-client'
 
 import InfoCard from './InfoCard'
 import usePermissions from '../../../hooks/usePermissions'
+import { SettingsPowerRounded } from '@material-ui/icons'
+import WaitingPatientList from './WaitingPatientList'
+import { useHistory } from 'react-router-dom'
 
-const userReadRoles = [
-  'SELF_USER_SETTINGS_READ',
-  'ACCOUNT_USERS_SETTINGS_READ',
-]
+const ENDPOINT = 'https://dev.virujh.com'
+
+const userReadRoles = ['SELF_USER_SETTINGS_READ', 'ACCOUNT_USERS_SETTINGS_READ']
 
 function Doctors({ doctorList }) {
-  const [isUserSettingsRead, isAccountUserSettingsRead] = usePermissions(userReadRoles)
+  const [isUserSettingsRead, isAccountUserSettingsRead] = usePermissions(
+    userReadRoles
+  )
 
   const loginUser = localStorage.getItem('loginUser')
 
-  if(loginUser === 'doctor') {
+  const history = useHistory()
+
+  const [patientList, setPatientList] = useState(null)
+
+  const [socket, setSocket] = useState(null)
+
+  const [isJoinDisabled, setIsJoinDisabled] = useState(null)
+
+  const [sessionID, setSessionID] = useState(null)
+
+  const [token, setToken] = useState(null)
+
+  const [open, setOpen] = useState(false)
+
+  if (loginUser === 'doctor') {
     localStorage.setItem('doctorName', doctorList[0].doctorName)
+  }
+
+  useEffect(() => {
+    const socket = socketIOClient(ENDPOINT, {
+      transports: ['websocket'],
+      jsonp: false,
+      query: {
+        token: localStorage.getItem('virujhToken'),
+      },
+      path: '/socket.io',
+    })
+
+    socket.on('connect', function () {
+      if (localStorage.getItem('loginUser') === 'doctor') {
+        socket.emit('createTokenForDoctor')
+      }
+
+      socket.emit('getAppointmentListForDoctor')
+
+      socket.on('getDoctorAppointments', (data) => {
+        console.log(data)
+        setPatientList(data)
+      })
+      socket.on('videoTokenForDoctor', (data) => {
+        if (data.isToken) {
+          setIsJoinDisabled(false)
+          setSessionID(data.sessionId)
+          setToken(data.token)
+        }
+      })
+    })
+    setSocket(socket)
+  }, [])
+
+  const readyPatient =
+    patientList &&
+    patientList.filter(
+      (patient) => patient.patientLiveStatus === 'videoSessionReady'
+    )
+
+
+  useEffect(() => {
+    if (readyPatient && readyPatient.length > 0) {
+      setOpen(true)
+    }
+  }, [readyPatient])
+
+  function handleJOinVideo(patient) {
+    history.push({
+      pathname: '/video-consultation',
+      state: patient,
+      isWaiting: true,
+      socket: socket,
+    })
   }
 
   return (
@@ -31,6 +104,14 @@ function Doctors({ doctorList }) {
           )
         })}
       </Box>
+      {readyPatient && (
+        <WaitingPatientList
+          open={open}
+          patientList={readyPatient}
+          setOpen={setOpen}
+          handleJoinVideo={handleJOinVideo}
+        />
+      )}
     </Box>
   )
 }

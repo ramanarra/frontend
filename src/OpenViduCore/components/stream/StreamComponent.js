@@ -81,6 +81,8 @@ export default class StreamComponent extends Component {
             <OvVideoComponent
               user={this.props.user}
               mutedSound={this.state.mutedSound}
+              subscribers={this.props.subscribers}
+              isPatientClick={this.props.isPatientClick}
             />
 
             {this.props.user.isLocal() ? (

@@ -14,6 +14,9 @@ function VideoConsultotion({
   videoAvailability,
   audioAvailability,
   appointmentId,
+  waitingPatient,
+  isWaiting,
+  waitingIndex,
 }) {
   
   const [end, setEnd] = useState(false)
@@ -23,6 +26,8 @@ function VideoConsultotion({
   const [byDoctor, setByDoctor] = useState(false)
 
   const [appointmenttId, setAppointmentId] = useState(null)
+
+  const [isPatientClick, setIsPatientClick] = useState(false)
 
   const history = useHistory()
 
@@ -93,6 +98,7 @@ function VideoConsultotion({
             AddNextPatient={AddNextPatient}
             videoAvailability={videoAvailability}
             audioAvailability={audioAvailability}
+            isPatientClick={isPatientClick}
           />
           <SideBar
             patientList={patientList}
@@ -106,6 +112,10 @@ function VideoConsultotion({
             AddNextPatient={AddNextPatient}
             byDoctor={byDoctor}
             clickByDoctor={clickByDoctor}
+            setIsPatientClick={setIsPatientClick}
+            waitingPatient={waitingPatient}
+            isWaiting={isWaiting}
+            waitingIndex={waitingIndex}
           />
         </Box>
       )}

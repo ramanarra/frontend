@@ -14,8 +14,14 @@ import PatientSignup from './pages/PatientSignup'
 import DoctorSignUp from './pages/DoctorSignUp'
 import DoctorLogin from './pages/Login/DoctorLogin'
 import VideoConsultation from './pages/VideoConsultation'
+import { Provider } from 'react-redux'
+import combineReducers from './reducers'
+import { createStore } from 'redux'
+
+const store = createStore(combineReducers)
 
 ReactDOM.render(
+  <Provider store={store}>
     <ThemeProvider theme={theme}>
       <BrowserRouter basename="/app">
         <Switch>
@@ -27,7 +33,8 @@ ReactDOM.render(
           <Route path={'/'} component={Layouts} />
         </Switch>
       </BrowserRouter>
-    </ThemeProvider>,
+    </ThemeProvider>
+    </Provider>,
   document.getElementById('root')
 )
 

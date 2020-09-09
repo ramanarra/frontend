@@ -151,6 +151,7 @@ function UpcomingAndPastView({
   past,
   onCancel,
   onReschedule,
+  socket,
 }) {
   const classes = useStyle()
 
@@ -202,11 +203,19 @@ function UpcomingAndPastView({
   }
 
   function handleOnStartConsulation() {
+    socket.emit('getPatientTokenForDoctor', appointmentDetail.appointmentId)
+    socket.on('videoTokenForPatient', (data) => {
+      socket.emit('updateLiveStatusOfUser', { status: 'videoSessionReady' })
+      if (data.isToken) {
+        socket.emit('updateLiveStatusOfUser', { status: 'videoSessionReady' })
+      }
+    })
     history.push({
       pathname: '/video-consultation',
       state: appointmentDetail.appointmentId,
       doctorName: doctorName,
       liveStatus: appointmentDetail.liveStatus,
+      socket: socket,
     })
   }
 

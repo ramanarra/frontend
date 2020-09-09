@@ -5,6 +5,7 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord'
 
 import getTimeFormatWithNoon, { getTimeFormat } from '../../lib/dateLib'
+import { useEffect } from 'react'
 
 const useStyle = makeStyles((theme) => ({
   dialog: {
@@ -97,6 +98,9 @@ function PatientList({
   AddNextPatient,
   nextPatientDetails,
   clickByDoctor,
+  waitingPatient,
+  isWaiting,
+  waitingIndex,
 }) {
   const classes = useStyle()
 
@@ -106,13 +110,29 @@ function PatientList({
 
   const handleOnPatientJoining = (appointmentId, firstName, lastName, index) => {
     if (presentAppointmentId) {
-      nextPatientDetails({appointmentId: appointmentId, firstName: firstName, lastName: lastName, index: index})
+      nextPatientDetails({
+        appointmentId: appointmentId,
+        firstName: firstName,
+        lastName: lastName,
+        index: index,
+      })
       clickByDoctor()
       AddNextPatient()
     } else {
       onJoiningPatient(appointmentId, firstName, lastName, index)
     }
   }
+
+  useEffect(() => {
+    if (isWaiting) {
+      onJoiningPatient(
+        waitingPatient.appointmentId,
+        waitingPatient.firstName,
+        waitingPatient.lastName,
+        waitingIndex
+      )
+    }
+  }, [isWaiting])
 
   return (
     <Box>
@@ -142,12 +162,12 @@ function PatientList({
                     }
                   >
                     <Box>
-                    <Avatar src={patientDetails.photo} className={classes.photo} />
-                    {
-                      patientDetails.patientLiveStatus === 'online' ?
-                      <FiberManualRecordIcon className={classes.onlineStatus} /> :
-                      <FiberManualRecordIcon className={classes.offlineStatus} />  
-                    }
+                      <Avatar src={patientDetails.photo} className={classes.photo} />
+                      {patientDetails.patientLiveStatus === 'online' ? (
+                        <FiberManualRecordIcon className={classes.onlineStatus} />
+                      ) : (
+                        <FiberManualRecordIcon className={classes.offlineStatus} />
+                      )}
                     </Box>
                     <Box className={classes.detail}>
                       <Box display="flex">

@@ -1,14 +1,15 @@
 const intialState = {
-  key: null,
+  isPatientClicked: false,
 }
 
 const doctor = (state = intialState, action) => {
   switch (action.type) {
-    case 'UPDATE_DOC_KEY': {
-      return { ...state, key: action.key }
+    case 'SET_PATIENT_CLICK': {
+      return { ...state, isPatientClicked: action.data }
     }
 
-    default: return state
+    default:
+      return state
   }
 }
 

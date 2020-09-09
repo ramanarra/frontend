@@ -91,6 +91,8 @@ function PatientAppointmentSlot({
 
   const [openReschedule, setOpenReschedule] = useState(false)
 
+  const [socket, setSocket] = useState(null)
+
   const location = useLocation()
 
   const month = moment(appointmentDetail.appointmentDate).format('MMMM')
@@ -127,6 +129,7 @@ function PatientAppointmentSlot({
     history.push({
       pathname: '/video-consultation',
       state: appointmentId,
+      socket: socket,
     })
   }
 
@@ -146,12 +149,14 @@ function PatientAppointmentSlot({
         socket.emit('createTokenForDoctor')
       } else {
         if (!past) {
+          socket.emit('updateLiveStatusOfUser', { status: 'online' })
           socket.emit('getPatientTokenForDoctor', appointmentDetail.appointmentId)
         }
       }
 
       socket.on('videoTokenForPatient', (data) => {
         if (data.isToken) {
+          socket.emit('updateLiveStatusOfUser', { status: 'videoSessionReady' })
           if (data.appointmentId !== location.state) {
             handleOnOpen(data.appointmentId)
           }
@@ -160,9 +165,7 @@ function PatientAppointmentSlot({
 
     })
 
-    return () => {
-      socket.disconnect()
-    }
+    setSocket(socket)
   }, [])
 
   function handleOnClick() {
@@ -238,6 +241,7 @@ function PatientAppointmentSlot({
           past={past}
           onCancel={handleOnCancel}
           onReschedule={handleOnReschedule}
+          socket={socket}
         />
       )}
       {openCancel && (

@@ -23,6 +23,8 @@ function VideoConsulation() {
 
   const [socket, setSocket] = useState('')
 
+  const [index, setIndex] = useState(null)
+
   const [patientList, setPatientList] = useState('')
 
   const [openDialog, setOpenDialog] = useState(false)
@@ -36,21 +38,18 @@ function VideoConsulation() {
   useEffect(() => {
     setOpen(true)
 
-    const socket = socketIOClient(ENDPOINT,  {
+    const socket = socketIOClient(ENDPOINT, {
       transports: ['websocket'],
       jsonp: false,
       query: {
         token: localStorage.getItem('virujhToken'),
       },
-      path: '/socket.io'
+      path: '/socket.io',
     })
 
     socket.on('connect', function () {
       if (localStorage.getItem('loginUser') === 'doctor') {
         socket.emit('createTokenForDoctor')
-        socket.emit('updateLiveStatusOfUser', { status: 'online' })
-      } else {
-        socket.emit('getPatientTokenForDoctor', location.state)
         socket.emit('updateLiveStatusOfUser', { status: 'online' })
       }
 
@@ -64,8 +63,7 @@ function VideoConsulation() {
           setIsJoinDisabled(false)
           setSessionID(data.sessionId)
           setToken(data.token)
-        }
-        else {
+        } else {
           setData(data)
           setOpenDialog(true)
         }
@@ -75,32 +73,28 @@ function VideoConsulation() {
         if (data.isToken) {
           setIsJoinDisabled(false)
           setSessionID(data.sessionId)
-          setToken(data.token) 
+          setToken(data.token)
         }
       })
     })
 
     socket.on('videoTokenRemoved', (data) => {
       if (data.isRemoved) {
-        if(localStorage.getItem('loginUser') === 'patient') {
-        history.push('/patient/appointments/upcoming')
+        if (localStorage.getItem('loginUser') === 'patient') {
+          history.push('/patient/appointments/upcoming')
         }
       }
     })
 
     socket.on('videoSessionRemoved', (data) => {
-      if(data.isRemoved) {
-        if(localStorage.getItem('loginUser') === 'patient') {
+      if (data.isRemoved) {
+        if (localStorage.getItem('loginUser') === 'patient') {
           history.push('/patient/appointments/upcoming')
         }
       }
     })
 
     setSocket(socket)
-
-    return () => {
-      socket.disconnect()
-    }
   }, [])
 
   function handleOnClose(event, reason) {
@@ -113,18 +107,31 @@ function VideoConsulation() {
     history.push('/doctors')
   }
 
+  useEffect(() => {
+    if(location.isWaiting && patientList) {
+      patientList.map((patient, index) => {
+        if(patient.appointmentId === location.state.appointmentId) {
+          setIndex(index)
+          setOpen(false)
+        }
+      })
+    }
+  }, [patientList])
+
 
   return (
     <Fragment>
-      <ConfirmationModal
-        open={open}
-        handleOnOpen={setOpen}
-        isJoinDisabled={isJoinDisabled}
-        videoAvailability={setVideoAvailability}
-        audioAvailability={setAudioAvailability}
-        socket={socket}
-        liveStatus={location.liveStatus}
-      />
+      {!location.isWaiting && (
+        <ConfirmationModal
+          open={open}
+          handleOnOpen={setOpen}
+          isJoinDisabled={isJoinDisabled}
+          videoAvailability={setVideoAvailability}
+          audioAvailability={setAudioAvailability}
+          socket={socket}
+          liveStatus={location.liveStatus}
+        />
+      )}
 
       {!isJoinDisabled && token && !open && (
         <Video
@@ -135,17 +142,19 @@ function VideoConsulation() {
           videoAvailability={videoAvailability}
           audioAvailability={audioAvailability}
           appointmentId={location.state}
+          waitingPatient={location.state}
+          isWaiting={location.isWaiting}
+          waitingIndex={index}
         />
       )}
-      {
-        openDialog && data &&
+      {openDialog && data && (
         <SnackBar
-        openDialog={openDialog}
-        message={data.message}
-        onclose={handleOnClose}
-        severity={'error'}
+          openDialog={openDialog}
+          message={data.message}
+          onclose={handleOnClose}
+          severity={'error'}
         />
-      }
+      )}
     </Fragment>
   )
 }

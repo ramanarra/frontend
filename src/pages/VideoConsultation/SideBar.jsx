@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Box, makeStyles } from '@material-ui/core'
+import { connect } from 'react-redux'
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
 
 import PatientList from './PatinetList'
@@ -9,6 +10,7 @@ import chatIcon from '../../assets/img/chat-icon.svg'
 import Chat from './Chat'
 import MedicineList from './MedicineList'
 import AddNewPatientConfirmationModel from './AddNewPatientConfirmationModel'
+import { setPatientClicked } from '../../actions/patients'
 
 
 const useStyle = makeStyles(() => ({
@@ -82,6 +84,11 @@ function SideBar({
   AddNextPatient,
   byDoctor,
   clickByDoctor,
+  setPatientClicked,
+  setIsPatientClick,
+  waitingPatient,
+  isWaiting,
+  waitingIndex,
 }) {
   const classes = useStyle()
 
@@ -125,6 +132,7 @@ function SideBar({
     const name = lastName ? firstName + lastName : firstName
     onPatientJoining(appointmentId, name)
     socket.emit('updateLiveStatusOfUser', { status: 'videoSessionReady' })
+    console.log('sideBar: videoSessionReady')
     if (selected) {
       socket.emit('removePatientTokenByDoctor', {
         appointmentId: selected,
@@ -134,6 +142,8 @@ function SideBar({
     setSelected(appointmentId)
     setIndex(index)
     setAppointmentId(appointmentId)
+    // setPatientClicked()
+    setIsPatientClick(true)
   }
 
   function NextPatient(status) {
@@ -224,6 +234,9 @@ function SideBar({
           AddNextPatient={AddNextPatient}
           nextPatientDetails={setNextPatientDetails}
           clickByDoctor={clickByDoctor}
+          waitingPatient={waitingPatient}
+          isWaiting={isWaiting}
+          waitingIndex={waitingIndex}
         />
       )}
       {openChat && <Chat onClose={handleChatClose} />}
@@ -242,4 +255,11 @@ function SideBar({
   )
 }
 
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     setPatientClicked: () => dispatch(setPatientClicked(true))
+//   }
+// }
+
+// export default connect(null, mapDispatchToProps)(SideBar);
 export default SideBar

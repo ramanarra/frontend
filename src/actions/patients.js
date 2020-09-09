@@ -1,0 +1,1 @@
+export const setPatientClicked = (value) => ({type: 'SET_PATIENT_CLICK', data: value})
