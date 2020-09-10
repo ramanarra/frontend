@@ -30,6 +30,7 @@ const useStyle = makeStyles((theme) => ({
   },
   detail: {
     paddingLeft: 13,
+    width: 160,
   },
   name: {
     fontSize: 16,
@@ -37,21 +38,20 @@ const useStyle = makeStyles((theme) => ({
   time: {
     fontSize: 13,
   },
-  button: {
-    marginLeft: 40,
-  },
   joinButton: {
     padding: 2,
     marginTop: 7,
     border: '1px solid #0bb5ff',
+    color: '#0bb5ff',
   },
 }))
 
-function WaitingPatientList({ open, patientList, setOpen, handleJoinVideo, setCount }) {
+function WaitingPatientList({ open, patientList, setOpen, handleJoinVideo, setCount, timer }) {
 
     const classes = useStyle()
 
     function handleOnClose() {
+        clearInterval(timer)
         setCount(1)
         setOpen(false)
     }

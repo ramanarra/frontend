@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import {
   Box,
   Typography,
@@ -60,11 +61,12 @@ const useStyle = makeStyles((theme) => ({
   },
 }))
 
-function PatientDetails({ patientDetails, patientId, onSave }) {
-  localStorage.setItem('patientName', `${patientDetails.name}`)
+function PatientDetails({ patientDetails, patientId, onSave, setReload, reload, name, setName }) {
   const classes = useStyle()
 
   const [fieldName, setFieldName] = useState('')
+
+  const history = useHistory()
 
   const [values, setValues] = useState({
     patientId: Number(patientId),
@@ -88,6 +90,9 @@ function PatientDetails({ patientDetails, patientId, onSave }) {
       ...values,
       [event.target.name]: event.target.value,
     })
+    if(event.target.name === 'name') {
+      setName(true)
+    }
   }
 
   function handleDisable() {
@@ -96,6 +101,13 @@ function PatientDetails({ patientDetails, patientId, onSave }) {
 
   function handleOnSave() {
     onSave(values)
+  }
+
+  if(name && reload) {
+    localStorage.setItem('patientName', patientDetails.name)
+    setName(false)
+    setReload(false)
+    history.push('/patient/setting')
   }
 
   return (

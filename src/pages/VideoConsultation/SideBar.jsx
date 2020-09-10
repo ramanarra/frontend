@@ -139,7 +139,7 @@ function SideBar({
   const handleOnPatientJoining = (appointmentId, firstName, lastName, index, status) => {
     const name = lastName ? firstName + lastName : firstName
     onPatientJoining(appointmentId, name)
-    socket.emit('updateLiveStatusOfUser', { status: 'videoSessionReady' })
+    socket.emit('updateLiveStatusOfUser', { status: 'inSession' })
     if (selected) {
       socket.emit('removePatientTokenByDoctor', {
         appointmentId: selected,

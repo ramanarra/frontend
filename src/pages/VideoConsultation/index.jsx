@@ -53,9 +53,10 @@ function VideoConsulation() {
         socket.emit('updateLiveStatusOfUser', { status: 'online' })
       } else {
         socket.emit('getPatientTokenForDoctor', location.state)
+        socket.emit('updateLiveStatusOfUser', { status: 'online' })
       }
 
-      socket.emit('getAppointmentListForDoctor')
+      setInterval(() => socket.emit('getAppointmentListForDoctor'), 10000)
 
       socket.on('getDoctorAppointments', (data) => {
         setPatientList(data)
@@ -84,6 +85,7 @@ function VideoConsulation() {
       if (data.isRemoved) {
         if (localStorage.getItem('loginUser') === 'patient') {
           history.push('/patient/appointments/upcoming')
+          socket.emit('updateLiveStatusOfUser', { status: 'online' })
         }
       }
     })
@@ -92,6 +94,7 @@ function VideoConsulation() {
       if (data.isRemoved) {
         if (localStorage.getItem('loginUser') === 'patient') {
           history.push('/patient/appointments/upcoming')
+          socket.emit('updateLiveStatusOfUser', { status: 'online' })
         }
       }
     })
@@ -132,6 +135,7 @@ function VideoConsulation() {
           audioAvailability={setAudioAvailability}
           socket={socket}
           liveStatus={location.liveStatus}
+          appointmentId={location.state}
         />
       )}
 

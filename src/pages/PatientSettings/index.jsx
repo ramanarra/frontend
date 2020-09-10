@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { Box, Typography, makeStyles } from '@material-ui/core'
 
 import PatientDetails from './PatientDetails'
@@ -29,7 +29,6 @@ const useStyle = makeStyles((theme) => ({
   },
 }))
 
-
 function PatientSettings() {
   const classes = useStyle()
 
@@ -37,13 +36,23 @@ function PatientSettings() {
 
   const [open, setOpen] = useState(false)
 
-  const [data, refetch] = useCustomFetch(METHOD.GET, `${URL.patientViewDetails}${'?patientId='}${patientId}`)
+  const [reload, setReload] = useState(false)
 
-  const [onSave, response] = usePatientDetailsUpdate(refetch)  
+  const [name, setName] = useState(false)
+
+  const [data, refetch] = useCustomFetch(
+    METHOD.GET,
+    `${URL.patientViewDetails}${'?patientId='}${patientId}`
+  )
+
+  const [onSave, response] = usePatientDetailsUpdate(refetch)
 
   useEffect(() => {
-    setOpen(true)
-  },[response])
+    if(response) {
+      setOpen(true)
+      setReload(true)
+    }
+  }, [response])
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -58,7 +67,17 @@ function PatientSettings() {
       <Box className={classes.heading}>
         <Typography className={classes.text}>Patient Settings</Typography>
       </Box>
-      {data && <PatientDetails patientDetails={data} patientId={patientId} onSave={onSave} /> }
+      {data && (
+        <PatientDetails
+          patientDetails={data}
+          patientId={patientId}
+          onSave={onSave}
+          setReload={setReload}
+          reload={reload}
+          setName={setName}
+          name={name}
+        />
+      )}
       {response && response.statusCode && response.statusCode === 200 && (
         <SnackBar
           openDialog={open}

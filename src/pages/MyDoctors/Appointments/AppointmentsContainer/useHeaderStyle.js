@@ -81,7 +81,7 @@ const useHeaderStyle = makeStyles(() => ({
   },
   txt: {
     paddingRight: 10,
-    fontSize: '45%',
+    fontSize: '51%',
     color: '#535252',
     paddingTop: 7,
   },

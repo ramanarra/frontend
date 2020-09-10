@@ -111,17 +111,19 @@ function PatientList({
   }
 
   const handleOnPatientJoining = (appointmentId, firstName, lastName, index) => {
-    if (presentAppointmentId) {
-      nextPatientDetails({
-        appointmentId: appointmentId,
-        firstName: firstName,
-        lastName: lastName,
-        index: index,
-      })
-      clickByDoctor()
-      AddNextPatient()
-    } else {
-      onJoiningPatient(appointmentId, firstName, lastName, index)
+    if (presentAppointmentId !== appointmentId) {
+      if (presentAppointmentId) {
+        nextPatientDetails({
+          appointmentId: appointmentId,
+          firstName: firstName,
+          lastName: lastName,
+          index: index,
+        })
+        clickByDoctor()
+        AddNextPatient()
+      } else {
+        onJoiningPatient(appointmentId, firstName, lastName, index)
+      }
     }
   }
 

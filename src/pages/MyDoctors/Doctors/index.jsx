@@ -28,6 +28,8 @@ function Doctors({ doctorList }) {
 
   const [count, setCount] = useState(0)
 
+  const [timer, setTimer] = useState()
+
   if (loginUser === 'doctor') {
     localStorage.setItem('doctorName', doctorList[0].doctorName)
   }
@@ -45,12 +47,14 @@ function Doctors({ doctorList }) {
     socket.on('connect', function () {
       if (localStorage.getItem('loginUser') === 'doctor') {
         socket.emit('createTokenForDoctor')
+        socket.emit('updateLiveStatusOfUser', { status: 'online' })
       }
 
-      setInterval(() => socket.emit('getAppointmentListForDoctor'), 10000)
+      const timer = setInterval(() => socket.emit('getAppointmentListForDoctor'), 10000)
 
       socket.on('getDoctorAppointments', (data) => {
         setPatientList(data)
+        setTimer(timer)
       })
     })
     setSocket(socket)
@@ -97,6 +101,7 @@ function Doctors({ doctorList }) {
           setOpen={setOpen}
           handleJoinVideo={handleJOinVideo}
           setCount={setCount}
+          timer={timer}
         />
       )}
     </Box>

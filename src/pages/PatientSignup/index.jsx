@@ -20,12 +20,17 @@ const PatientSignup = (props) => {
 
   const [detail, setDetail] = useState(null)
 
+  const [response, setResponse] = useState(null)
+
+  const [count, setCount] = useState(false)
+
   const redirectToLogin = () => props.history.push('/login')
   const onSubmit = (data) => {
     Api.post(URL.patientSignup, data)
       .then((res) => {
         const { data } = res
-        console.log(data)
+        setCount(true)
+        setResponse(data)
         if (data.patient?.accessToken) {
           localStorage.setItem('virujhToken', data.patient.accessToken)
           localStorage.setItem('patientId', data.patient.patientId)
@@ -44,11 +49,25 @@ const PatientSignup = (props) => {
         }
       })
       .catch((err) => {
-        const { data } = err
-        setError(true)
-        setMessage(data?.message)
+        setCount(true)
       })
   }
+
+  useEffect(() => {
+    if(count) {
+    if(response) {
+      setError(true)
+      setMessage(response.message)
+      setCount(false)
+    }
+    else {
+      setError(true)
+      setMessage('Something went Wrong')
+      setCount(false)
+    }
+  }
+  }, [response, count])
+
 
   const validationErr = {
     name: 'Invalid name',

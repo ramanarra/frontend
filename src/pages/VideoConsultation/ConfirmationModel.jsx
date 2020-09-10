@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import classNames from 'classnames'
 import { useHistory } from 'react-router-dom'
 import Webcam from 'react-webcam'
@@ -133,7 +133,7 @@ const useStyle = makeStyles(() => ({
   },
   cameraOff: {
     width: 35,
-  }
+  },
 }))
 
 function ConfirmationPopUp({
@@ -144,6 +144,7 @@ function ConfirmationPopUp({
   audioAvailability,
   socket,
   liveStatus,
+  appointmentId,
 }) {
   const classes = useStyle()
 
@@ -156,7 +157,10 @@ function ConfirmationPopUp({
     if (localStorage.getItem('loginUser') === 'doctor') {
       history.push('/doctors')
     } else {
-      history.push('/patient/appointments/upcoming')
+      history.push({
+        pathname: '/patient/appointments/upcoming',
+        state: appointmentId,
+      })
     }
   }
 
@@ -167,8 +171,7 @@ function ConfirmationPopUp({
 
   navigator.getUserMedia(
     { audio: true },
-    function () {
-    },
+    function () {},
     function () {
       audioAvailability(false)
     }
@@ -178,7 +181,6 @@ function ConfirmationPopUp({
     setVideoAvailable(false)
     videoAvailability(false)
   }
-
 
   return (
     <Box>
@@ -197,9 +199,7 @@ function ConfirmationPopUp({
                 audio={false}
                 width="212"
                 height="160"
-                onUserMediaError={() =>
-                  handleOnVideo()
-                }
+                onUserMediaError={() => handleOnVideo()}
               />
               {!videoAvailable && (
                 <Box className={classes.errorBox}>
@@ -214,9 +214,11 @@ function ConfirmationPopUp({
               ) : (
                 <Box>
                   <img src={Join} className={classes.join} />
-                  <Typography className={classes.message}>
-                    Take Online Doctor Consultation
-                  </Typography>
+                  {localStorage.getItem('loginUser') === 'patient' && (
+                    <Typography className={classes.message}>
+                      Take Online Doctor Consultation
+                    </Typography>
+                  )}
                 </Box>
               )}
               <Box className={classes.button}>
@@ -231,11 +233,9 @@ function ConfirmationPopUp({
                 {isJoinDisabled &&
                   localStorage.getItem('loginUser') === 'patient' && (
                     <Typography className={classes.errorMsg}>
-                      {
-                        liveStatus ?
-                        `${'Doctor is an '}${liveStatus}` :
-                        `${'Waiting for Doctor to come online'}`
-                      }
+                      {liveStatus
+                        ? `${'Doctor is '}${liveStatus}`
+                        : `${'Waiting for Doctor to come online'}`}
                     </Typography>
                   )}
               </Box>
