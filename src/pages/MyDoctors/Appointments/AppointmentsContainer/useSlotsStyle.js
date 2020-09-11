@@ -2,8 +2,8 @@ import { makeStyles } from '@material-ui/core/styles'
 
 const useSlotsStyle = makeStyles(() => ({
   container: {
-    marginLeft: 18,
-    marginBottom: 10,
+    marginLeft: '1.5%',
+    marginBottom: '0.9%',
     background: '#f9f9f9',
     backgroundColor: 'white',
   },
@@ -16,12 +16,12 @@ const useSlotsStyle = makeStyles(() => ({
     textAlign: 'center',
   },
   top: {
-    paddingLeft: 10,
-    paddingTop: 4,
+    paddingLeft: '8%',
+    paddingTop: '3%',
     height: 24,
   },
   bottom: {
-    paddingLeft: 11,
+    paddingLeft: '9%',
   },
   name: {
     fontSize: '55%',
@@ -33,19 +33,19 @@ const useSlotsStyle = makeStyles(() => ({
   schedule: {
     width: '7%',
     height: '9%',
-    marginTop: 1,
+    marginTop: '2%',
   },
   fromTime: {
     fontSize: '45%',
-    paddingLeft: 2,
+    paddingLeft: '2%',
   },
   toTime: {
     fontSize: '45%',
-    paddingLeft: 5,
+    paddingLeft: '3.1%',
   },
   total: {
     fontSize: '40%',
-    paddingRight: 7,
+    paddingRight: '5%',
   },
   radio: {
     marginTop: '-12px',

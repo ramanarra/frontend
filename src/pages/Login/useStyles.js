@@ -106,6 +106,17 @@ const useStyles = makeStyles(() => ({
       marginRight: 5,
       color: '#a0a0a0',
     },
+    
+    backdrop: {
+      zIndex: 0,
+      color: '#fff',
+    },
+
+    spinner: {
+      position: 'fixed',
+      top: '50%',
+      left: '50%',
+    }
   }))
 
 export default useStyles  

@@ -11,7 +11,6 @@ export default class OvVideoComponent extends Component {
 
   componentDidMount() {
     if (this.props && this.props.user.streamManager && !!this.videoRef) {
-      console.log('PROPS: ', this.props)
       this.props.user.getStreamManager().addVideoElement(this.videoRef.current)
     }
 
@@ -68,13 +67,3 @@ export default class OvVideoComponent extends Component {
   }
 }
 
-// const mapStateToProps = ({ doctor }, ownProps) => {
-//   return {
-//     showWaiting:
-//       doctor.isPatientClicked &&
-//       ownProps.subscribers &&
-//       ownProps.subscribers.length === 0,
-//   }
-// }
-
-// export default connect(mapStateToProps, null)(OvVideoComponent)

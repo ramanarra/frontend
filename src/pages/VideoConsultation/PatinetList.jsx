@@ -87,6 +87,27 @@ const useStyle = makeStyles((theme) => ({
     left: 35,
     bottom: 19,
   },
+  videoSessionReady: {
+    width: 13,
+    color: '#f0ff05',
+    position: 'relative',
+    left: 35,
+    bottom: 19,
+  },
+  inSession: {
+    width: 13,
+    color: '#ff0000',
+    position: 'relative',
+    left: 35,
+    bottom: 19,
+  },
+  pausedIcon: {
+    width: 13,
+    color: '#ef00ff',
+    position: 'relative',
+    left: 35,
+    bottom: 19,
+  }
 }))
 
 function PatientList({
@@ -168,10 +189,27 @@ function PatientList({
                   >
                     <Box>
                       <Avatar src={patientDetails.photo} className={classes.photo} />
-                      {patientDetails.patientLiveStatus === 'online' ? (
-                        <FiberManualRecordIcon className={classes.onlineStatus} />
+                      {patientDetails.status === 'paused' ? (
+                        <FiberManualRecordIcon className={classes.pausedIcon} />
                       ) : (
-                        <FiberManualRecordIcon className={classes.offlineStatus} />
+                        patientDetails.patientLiveStatus &&
+                        ((patientDetails.patientLiveStatus === 'online' && (
+                          <FiberManualRecordIcon className={classes.onlineStatus} />
+                        )) ||
+                          (patientDetails.patientLiveStatus === 'offline' && (
+                            <FiberManualRecordIcon
+                              className={classes.offlineStatus}
+                            />
+                          )) ||
+                          (patientDetails.patientLiveStatus ===
+                            'videoSessionReady' && (
+                            <FiberManualRecordIcon
+                              className={classes.videoSessionReady}
+                            />
+                          )) ||
+                          (patientDetails.patientLiveStatus === 'inSession' && (
+                            <FiberManualRecordIcon className={classes.inSession} />
+                          )))
                       )}
                     </Box>
                     <Box className={classes.detail}>

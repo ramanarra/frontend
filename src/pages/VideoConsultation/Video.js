@@ -53,7 +53,7 @@ function VideoConsultotion({
         })
         socket.emit('removeSessionAndTokenByDoctor')
       }
-      socket.emit('updateLiveStatusOfUser', { status: 'onlinesss' })
+      socket.emit('updateLiveStatusOfUser', { status: 'online' })
       history.push('/doctors')
     } else {
       history.push({

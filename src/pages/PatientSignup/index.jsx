@@ -8,6 +8,7 @@ import MomentUtils from '@date-io/moment'
 import Textfield from '../../components/Textfield'
 import './style.scss'
 import Api, { URL } from '../../api'
+import SnackBar from '../../components/SnackBar'
 
 const SnackbarPosition = { vertical: 'bottom', horizontal: 'center' }
 
@@ -288,14 +289,42 @@ const PatientSignup = (props) => {
           </div>
         </form>
       </Paper>
-      <Snackbar
-        anchorOrigin={SnackbarPosition}
-        open={Error}
-        autoHideDuration={3000}
+      {
+        response && response.patient?.accessToken &&
+        <SnackBar
+        openDialog={Error}
         message={message}
-        key={SnackbarPosition.horizontal + SnackbarPosition.vertical}
-        onClose={handleOnClose}
-      />
+        onclose={handleOnClose}
+        severity={'success'}
+        />
+      }
+      {
+        response && response.patient?.update &&
+        <SnackBar
+        openDialog={Error}
+        message={message}
+        onclose={handleOnClose}
+        severity={'success'}
+        />
+      }
+      {
+        response && response.statusCode &&
+        <SnackBar
+        openDialog={Error}
+        message={message}
+        onclose={handleOnClose}
+        severity={'info'}
+        />
+      }
+      {
+        !response &&
+        <SnackBar
+        openDialog={Error}
+        message={message}
+        onclose={handleOnClose}
+        severity={'error'}
+        />
+      }
     </div>
   )
 }

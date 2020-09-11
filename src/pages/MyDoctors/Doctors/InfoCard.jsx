@@ -21,14 +21,14 @@ const InfoCard = ({ doctorDetails, isRead }) => {
 
   return (
     <Box className={classes.container}>
-      <Box display="flex">
+      <Box display="flex" style={{height: 70}}>
         <Avatar
           alt="Remy Sharp"
           src={doctorDetails.photo}
           className={classes.large}
         />
 
-        <Box style={{ marginLeft: 13, marginTop: 7 }}>
+        <Box style={{ marginLeft: 13, marginTop: 7, width: 200 }}>
           <Typography
             className={classes.name}
           >{`${doctorDetails.firstName} ${doctorDetails.lastName}`}</Typography>
@@ -38,7 +38,7 @@ const InfoCard = ({ doctorDetails, isRead }) => {
         </Box>
       </Box>
 
-      <Box marginTop={3} display="flex" height={56}>
+      <Box marginTop={2} display="flex" height={56}>
         <Box width={53}>
           <Typography className={classes.text}>Fees</Typography>
           <Typography

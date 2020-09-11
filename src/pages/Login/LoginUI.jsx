@@ -5,6 +5,8 @@ import { useFormik } from 'formik'
 import { Paper, Box, Typography, TextField, Button } from '@material-ui/core'
 import VisibilityIcon from '@material-ui/icons/Visibility'
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff'
+import Backdrop from '@material-ui/core/Backdrop'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 import Centralize from '../../components/Centralize'
 import Logo from '../../assets/img/logo.png'
@@ -20,7 +22,6 @@ const Login = ({
   const history = useHistory()
   const classes = useStyles()
 
-
   const [error, setError] = useState(false)
 
   const [isEyeVisible, setIsEyeVisible] = useState(false)
@@ -28,6 +29,8 @@ const Login = ({
   const [userNameIndicate, setUserNameIndicate] = useState('')
 
   const [passwordIndicate, setPasswordIndicate] = useState('')
+
+  const [open, setOpen] = useState(false)
 
   const name =
     localStorage.getItem('loginUser') === 'patient'
@@ -43,7 +46,6 @@ const Login = ({
       history.push('/doctor/registration')
     }
   }
-
 
   function doctorLoginPage() {
     history.push('/doctor/login')
@@ -72,7 +74,6 @@ const Login = ({
   }
 
   function handleOnSubmit(values) {
-
     if (UserNameAutoComplete === 'email') {
       if (values.userName === '') {
         setUserNameIndicate('Please enter your email')
@@ -90,7 +91,8 @@ const Login = ({
         /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.userName) &&
         values.password !== ''
       ) {
-        onLogin(values.userName, values.password, setError)
+        setOpen(true)
+        onLogin(values.userName, values.password, setError, setOpen)
       }
     } else if (UserNameText === 'Phone Number') {
       if (values.userName === '') {
@@ -103,7 +105,8 @@ const Login = ({
       }
 
       if (String(values.userName).length > 9 && values.password !== '') {
-        onLogin(values.userName, values.password, setError)
+        setOpen(true)
+        onLogin(values.userName, values.password, setError, setOpen)
       }
     }
   }
@@ -261,6 +264,11 @@ const Login = ({
           )}
         </Paper>
       </Centralize>
+      {open && (
+        <Backdrop className={classes.backdrop} open={open}>
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      )}
     </Fragment>
   )
 }

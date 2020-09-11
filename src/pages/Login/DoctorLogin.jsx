@@ -6,7 +6,7 @@ import Api, { URL } from '../../api'
 function DoctorLogin({ history }) {
   localStorage.clear()
   localStorage.setItem('loginUser', 'doctor')
-  function onLogin(userName, password, setError) {
+  function onLogin(userName, password, setError, setOpen) {
     const credentials = {
       email: userName,
       password: password,
@@ -20,9 +20,11 @@ function DoctorLogin({ history }) {
         const { data } = res
         if (!data?.accessToken) {
           setError(true)
+          setOpen(false)
 
           return
         }
+        setOpen(false)
         localStorage.setItem('virujhToken', data.accessToken)
         localStorage.setItem('role', data.role)
         localStorage.setItem('docKey', data.doctorKey)
@@ -32,6 +34,7 @@ function DoctorLogin({ history }) {
         history.push('/doctors')
       })
       .catch(() => {
+        setOpen(false)
         setError(true)
       })
   }

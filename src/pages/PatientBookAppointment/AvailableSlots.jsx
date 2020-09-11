@@ -124,16 +124,16 @@ function AvailableSlots({ availableSlots, handleSlotTiming, doctorDetails, time 
                 onClick={() => handleOnClick(slot)}
                 key={index}
               >
-                {time.start === slot.start ? (
+                {time.start === slot.startTime ? (
                   <Box display="flex">
                     <Typography className={classes.selectedText}>
-                      {getTimeFormatWithNoon(slot.start)}
+                      {getTimeFormatWithNoon(slot.startTime)}
                     </Typography>
                     <CheckCircleRoundedIcon className={classes.icon} />
                   </Box>
                 ) : (
                   <Typography className={classes.timeText}>
-                    {getTimeFormatWithNoon(slot.start)}
+                    {getTimeFormatWithNoon(slot.startTime)}
                   </Typography>
                 )}
               </Button>
