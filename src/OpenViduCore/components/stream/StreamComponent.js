@@ -96,6 +96,7 @@ export default class StreamComponent extends Component {
                 AddNextPatient={this.props.AddNextPatient}
                 videoAvailability={this.props.videoAvailability}
                 audioAvailability={this.props.audioAvailability}
+                close={this.props.close}
               />
             ) : null}
             <VideocamOff id="statusCam" />

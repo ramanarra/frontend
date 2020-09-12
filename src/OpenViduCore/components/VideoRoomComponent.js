@@ -475,6 +475,7 @@ class VideoRoomComponent extends Component {
                 audioAvailability={this.props.audioAvailability}
                 subscribers={this.state.subscribers}
                 isPatientClick={this.props.isPatientClick}
+                close={this.props.close}
               />
             </div>
           )}

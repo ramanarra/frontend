@@ -49,7 +49,6 @@ class OpenViduLayout {
     if (video && video.videoHeight && video.videoWidth) {
       return video.videoHeight / video.videoWidth;
     } else if (elem.videoHeight && elem.videoWidth) {
-      console.log("sidjvbaslidjvbalsijidjbvliaisjdbvlkaksdbvlkaksdbvlaisjbdv")
       return elem.videoHeight / elem.videoWidth;
     }
     return 3 / 4;

@@ -107,7 +107,7 @@ const useStyle = makeStyles((theme) => ({
     position: 'relative',
     left: 35,
     bottom: 19,
-  }
+  },
 }))
 
 function PatientList({
@@ -124,6 +124,7 @@ function PatientList({
   waitingIndex,
   count,
   setCount,
+  id,
 }) {
   const classes = useStyle()
 
@@ -159,6 +160,7 @@ function PatientList({
       setCount(1)
     }
   }, [isWaiting])
+
 
   return (
     <Box>
@@ -222,7 +224,7 @@ function PatientList({
                             {patientDetails.lastName}
                           </Typography>
                         )}
-                        {index === 0 && (
+                        {id === patientDetails.appointmentId && (
                           <Typography className={classes.next}>NEXT</Typography>
                         )}
                       </Box>

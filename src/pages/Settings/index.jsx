@@ -36,12 +36,12 @@ const useStyle = makeStyles((theme) => ({
   },
 }))
 
-const accountKey = localStorage.getItem('accountKey')
-
 function Settings() {
   const classes = useStyle()
 
   const [open, setOpen] = useState(false)
+
+  const accountKey = localStorage.getItem('accountKey')
 
   const [hospitalDetails, refetch] = useCustomFecth(
     METHOD.GET,

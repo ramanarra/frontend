@@ -106,11 +106,23 @@ function SideBar({
 
   const [count, setCount] = useState(0)
 
+  const [id, setId] = useState(null)
+
   useEffect(() => {
     if(isWaiting) {
       setOpen(true)
     }
   }, [isWaiting])
+
+  useEffect(() => {
+    let isNext = true
+    for (let index = 0; index < patientList.length; index++) {
+      if(selected !== patientList[index].appointmentId && isNext) {
+        setId(patientList[index].appointmentId)
+        isNext = false
+      }
+    }
+  }, [patientList, selected])
 
   function handleOnPatientList() {
     setOpen(true)
@@ -245,6 +257,7 @@ function SideBar({
           waitingIndex={waitingIndex}
           count={count}
           setCount={setCount}
+          id={id}
         />
       )}
       {openChat && <Chat onClose={handleChatClose} />}

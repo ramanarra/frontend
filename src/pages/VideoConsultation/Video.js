@@ -18,6 +18,7 @@ function VideoConsultotion({
   isWaiting,
   waitingIndex,
 }) {
+
   const [end, setEnd] = useState(false)
 
   const [open, setOpen] = useState(false)

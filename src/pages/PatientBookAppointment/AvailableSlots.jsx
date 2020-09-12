@@ -119,7 +119,7 @@ function AvailableSlots({ availableSlots, handleSlotTiming, doctorDetails, time 
             return (
               <Button
                 className={classNames(classes.time, {
-                  [classes.selectedTab]: time.start === slot.start,
+                  [classes.selectedTab]: time.start === slot.startTime,
                 })}
                 onClick={() => handleOnClick(slot)}
                 key={index}

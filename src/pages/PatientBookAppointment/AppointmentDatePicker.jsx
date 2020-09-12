@@ -228,7 +228,7 @@ function AppointmentDatePicker({ doctorKey, doctorDetails }) {
   }
 
   const handleSlotTiming = (time) => {
-    setTime(time)
+    setTime({start: time.startTime, end: time.endTime})
     if (error) {
       setError(false)
     }

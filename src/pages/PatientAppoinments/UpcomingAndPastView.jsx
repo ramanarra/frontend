@@ -198,6 +198,10 @@ function UpcomingAndPastView({
     NumberToWords.toWords(differenceInDays.hours()).charAt(0).toUpperCase() +
     NumberToWords.toWords(differenceInDays.hours()).slice(1)
 
+  const minutes =
+    NumberToWords.toWords(differenceInDays.minutes()).charAt(0).toUpperCase() +
+    NumberToWords.toWords(differenceInDays.minutes()).slice(1)
+
   function handleOnClose(event) {
     onCancel(event)
   }
@@ -335,10 +339,11 @@ function UpcomingAndPastView({
                   </Box>
                 </Box>
                 <Box display="flex" className={classes.hoursToJoinText}>
-                  {
-                    (differenceInDays.days() > 0 || differenceInDays.hours >= 0)  &&
+                  {(differenceInDays.days() > 0 ||
+                    differenceInDays.hours() > 0 ||
+                    differenceInDays.minutes() > 0) && (
                     <StarIcon className={classes.starIcon} />
-                  }
+                  )}
                   {differenceInDays.days() > 0 ? (
                     differenceInDays.days() === 1 ? (
                       <Typography
@@ -349,9 +354,9 @@ function UpcomingAndPastView({
                         className={classes.text}
                       >{`${days} days and ${hours} more hours to join`}</Typography>
                     )
-                  ) : (
-                    differenceInDays.hours() >= 0 &&
-                    (differenceInDays.hours() === 1 ? (
+                  ) : differenceInDays.hours() > 0 ? (
+                    differenceInDays.hours() === 1 ||
+                    differenceInDays.hours() === 0 ? (
                       <Typography
                         className={classes.text}
                       >{`${hours} more hour to join`}</Typography>
@@ -359,6 +364,17 @@ function UpcomingAndPastView({
                       <Typography
                         className={classes.text}
                       >{`${hours} more hours to join`}</Typography>
+                    )
+                  ) : (
+                    differenceInDays.minutes() > 0 &&
+                    (differenceInDays.minutes() === 1 ? (
+                      <Typography
+                        className={classes.text}
+                      >{`${minutes} more minute to join`}</Typography>
+                    ) : (
+                      <Typography
+                        className={classes.text}
+                      >{`${minutes} more minutes to join`}</Typography>
                     ))
                   )}
                 </Box>
