@@ -47,11 +47,12 @@ const usestyle = makeStyles(() => ({
   },
 }))
 
-function chat({ onClose }) {
+function chat({ onClose, setOpenTopBar }) {
   const classes = usestyle()
 
   function handleOnClose() {
     onClose()
+    setOpenTopBar(false)
   }
 
   return (

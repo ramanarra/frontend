@@ -57,12 +57,12 @@ const Patients = (props) => {
       >
         <img src={require('../../assets/img/icons/eye.svg')} alt="View info" />
       </IconButton>
-      <IconButton className="tbl-btn add-btn">
+      {/* <IconButton className="tbl-btn add-btn">
         <img
           src={require('../../assets/img/icons/calender2.svg')}
           alt="View scheduel"
         />
-      </IconButton>
+      </IconButton> */}
     </div>
   )
 

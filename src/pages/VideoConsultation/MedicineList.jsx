@@ -31,11 +31,12 @@ const usestyle = makeStyles(() => ({
   },
 }))
 
-function MedicineList({ onClose }) {
+function MedicineList({ onClose, setOpenTopBar }) {
   const classes = usestyle()
 
   function handleOnClose() {
     onClose()
+    setOpenTopBar(false)
   }
 
   return (

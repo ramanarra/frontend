@@ -82,6 +82,7 @@ export default class StreamComponent extends Component {
               mutedSound={this.state.mutedSound}
               subscribers={this.props.subscribers}
               isPatientClick={this.props.isPatientClick}
+              patientName={this.props.patientName}
             />
 
             {this.props.user.isLocal() ? (
@@ -97,6 +98,7 @@ export default class StreamComponent extends Component {
                 videoAvailability={this.props.videoAvailability}
                 audioAvailability={this.props.audioAvailability}
                 close={this.props.close}
+                isAudioStatus={this.props.isAudioStatus}
               />
             ) : null}
             <VideocamOff id="statusCam" />

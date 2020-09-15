@@ -2,13 +2,13 @@ import { makeStyles } from '@material-ui/core/styles'
 
 const useNavigationStyles = makeStyles(() => ({
   container: {
-    width: '98%',
+    width: '98.3%',
     background: '#f9f9f9',
     display: 'flex',
     backgroundColor: 'white',
     height: 65,
     padding: '0px 14px',
-    boxShadow: '5px 0px 15px 0px #f3eeee'
+    boxShadow: '5px 0px 15px 0px #f3eeee',
   },
 
   right: {

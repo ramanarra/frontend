@@ -26,7 +26,7 @@ export default class OvVideoComponent extends Component {
           this.props.user.getStreamManager().addVideoElement(this.videoRef.current)
         }
       })
-    }
+    } 
   }
 
   componentDidUpdate(props) {
@@ -39,7 +39,8 @@ export default class OvVideoComponent extends Component {
     const { showWaiting } = this.props
     return (
       <div className="ov-video">
-        {this.props.isPatientClick && this.props.subscribers.length === 0 ? (
+        {this.props.isPatientClick &&
+        this.props.subscribers.length === 0 ? (
           <div className="ov-video-container">
             <div className="video">
               <video
@@ -50,8 +51,21 @@ export default class OvVideoComponent extends Component {
               />
             </div>
             <div className="waiting-container">
-                <CircularProgress className="spinner" style={{color: '#ffffff'}} />
-                <p className="text" style={{color: '#ffffff'}}>...waiting for patient to join</p>
+              {this.props.isPatientClick ? (
+                <div>
+                  <CircularProgress
+                    className="spinner"
+                    style={{ color: '#ffffff' }}
+                  />
+                  <p className="text" style={{ color: '#ffffff' }}>
+                    waiting for {this.props.patientName} to join...
+                  </p>
+                </div>
+              ) : (
+                <p className="text" style={{ color: '#ffffff' }}>
+                  Check the patients in waiting list
+                </p>
+              )}
             </div>
           </div>
         ) : (
@@ -66,4 +80,3 @@ export default class OvVideoComponent extends Component {
     )
   }
 }
-

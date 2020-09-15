@@ -1,5 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
+import { useLocation, useHistory } from 'react-router-dom'
 import { Box, Typography, TextField } from '@material-ui/core'
 import SearchIcon from '@material-ui/icons/Search'
 
@@ -9,8 +10,7 @@ import useNavigationStyles from './useStyle'
 import View from '../../assets/img/icons/view.svg'
 import Filter from '../../assets/img/icons/filter.svg'
 import DotMenu from '../../assets/img/icons/dot-menu.svg'
-import { useHistory } from 'react-router-dom'
-import { useLocation } from 'react-router-dom'
+
 
 const Navigation = ({ doctorList }) => {
   const classes = useNavigationStyles()

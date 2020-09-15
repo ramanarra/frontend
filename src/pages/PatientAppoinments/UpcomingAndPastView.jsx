@@ -13,6 +13,7 @@ import {
 import CloseIcon from '@material-ui/icons/Close'
 import StarIcon from '@material-ui/icons/Star'
 import VerticalAlignBottomOutlinedIcon from '@material-ui/icons/VerticalAlignBottomOutlined'
+
 import useCustomFecth from '../../hooks/useCustomFetch'
 import { METHOD, URL } from '../../api'
 
@@ -220,6 +221,7 @@ function UpcomingAndPastView({
       doctorName: doctorName,
       liveStatus: appointmentDetail.liveStatus,
       socket: socket,
+      appointmentDetail: appointmentDetail,
     })
   }
 

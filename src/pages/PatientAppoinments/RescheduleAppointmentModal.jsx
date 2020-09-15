@@ -212,7 +212,7 @@ function RescheduleAppointmentModal({
     if(show) {
       setShow(false)
     }
-    setSlotTime(slotTime)
+    setSlotTime({start: slotTime.startTime, end: slotTime.endTime})
   }
 
   function handleSubmit(event) {
@@ -301,17 +301,17 @@ function RescheduleAppointmentModal({
                     return (
                       <Button
                         className={classNames(classes.time, {
-                          [classes.selectedTab]: slotTime.start === data.start,
+                          [classes.selectedTab]: slotTime.start === data.startTime,
                         })}
                         onClick={() => handleOnClick(data)}
                         key={index}
                       >
                         <Typography
                           className={classNames(classes.timeText, {
-                            [classes.selectedText]: slotTime.start === data.start,
+                            [classes.selectedText]: slotTime.start === data.startTime,
                           })}
                         >
-                          {getTimeFormatWithNoon(data.start)}
+                          {getTimeFormatWithNoon(data.startTime)}
                         </Typography>
                       </Button>
                     )

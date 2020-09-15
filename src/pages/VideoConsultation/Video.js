@@ -17,6 +17,7 @@ function VideoConsultotion({
   waitingPatient,
   isWaiting,
   waitingIndex,
+  isAudioStatus,
 }) {
 
   const [end, setEnd] = useState(false)
@@ -103,6 +104,7 @@ function VideoConsultotion({
             videoAvailability={videoAvailability}
             audioAvailability={audioAvailability}
             isPatientClick={isPatientClick}
+            isAudioStatus={isAudioStatus}
           />
           <SideBar
             patientList={patientList}

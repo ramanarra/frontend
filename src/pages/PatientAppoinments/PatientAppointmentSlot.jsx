@@ -130,6 +130,7 @@ function PatientAppointmentSlot({
       pathname: '/video-consultation',
       state: appointmentId,
       socket: socket,
+      appointmentDetail: appointmentDetail,
     })
   }
 

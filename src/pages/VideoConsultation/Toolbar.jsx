@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import IconButton from '@material-ui/core/IconButton'
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -66,6 +66,7 @@ function Toolbar({
   AddNextPatient,
   videoAvailability,
   audioAvailability,
+  isAudioStatus,
 }) {
   const classes = useStyles()
 

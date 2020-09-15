@@ -7,11 +7,13 @@ import PatientList from './PatinetList'
 import waitingIcon from '../../assets/img/waiting.svg'
 import tabIcon from '../../assets/img/tab.svg'
 import chatIcon from '../../assets/img/chat-icon.svg'
+import SelectedWaitingIcon from '../../assets/img/selected-waiting-icon.svg'
+import SelectedChatIcon from '../../assets/img/selected-chat-icon.svg'
+import SelectedTabIcon from '../../assets/img/selected-tab-icon.svg'
 import Chat from './Chat'
 import MedicineList from './MedicineList'
 import AddNewPatientConfirmationModel from './AddNewPatientConfirmationModel'
 import { setPatientClicked } from '../../actions/patients'
-
 
 const useStyle = makeStyles(() => ({
   topBar: {
@@ -35,7 +37,7 @@ const useStyle = makeStyles(() => ({
     borderRadius: '50%',
     position: 'absolute',
     top: 10,
-    right: 338,
+    right: 0,
     backgroundColor: '#ffffff',
     cursor: 'pointer',
     boxShadow: '5px 0px 15px 0px #f3eeee',
@@ -92,11 +94,19 @@ function SideBar({
 }) {
   const classes = useStyle()
 
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(true)
 
   const [openChat, setOpenChat] = useState(false)
 
   const [openMedicine, setOPenMedicine] = useState(false)
+
+  const [isWaitingActive, setIsWaitingActive] = useState(true)
+
+  const [isChatActive, setIsChatActive] = useState(false)
+
+  const [isMedicineActive, setIsMedicineActive] = useState(false)
+
+  const [openTopBar, setOpenTopBar] = useState(true)
 
   const [selected, setSelected] = useState(null)
 
@@ -109,7 +119,7 @@ function SideBar({
   const [id, setId] = useState(null)
 
   useEffect(() => {
-    if(isWaiting) {
+    if (isWaiting) {
       setOpen(true)
     }
   }, [isWaiting])
@@ -117,7 +127,15 @@ function SideBar({
   useEffect(() => {
     let isNext = true
     for (let index = 0; index < patientList.length; index++) {
-      if(selected !== patientList[index].appointmentId && isNext) {
+      if (
+        patientList.length === 1 &&
+        selected === patientList[index].appointmentId &&
+        isNext
+      ) {
+        setId(null)
+        isNext = false
+      }
+      if (selected !== patientList[index].appointmentId && isNext) {
         setId(patientList[index].appointmentId)
         isNext = false
       }
@@ -125,9 +143,13 @@ function SideBar({
   }, [patientList, selected])
 
   function handleOnPatientList() {
+    setOpenTopBar(true)
     setOpen(true)
     setOpenChat(false)
     setOPenMedicine(false)
+    setIsChatActive(false)
+    setIsMedicineActive(false)
+    setIsWaitingActive(true)
   }
 
   function handleOnClose(event) {
@@ -138,17 +160,29 @@ function SideBar({
 
   function handleOnChat() {
     setOpenChat(true)
+    setIsChatActive(true)
     setOPenMedicine(false)
     setOpen(false)
+    setIsMedicineActive(false)
+    setIsWaitingActive(false)
   }
 
   function handleOnMedicine() {
     setOPenMedicine(true)
+    setIsMedicineActive(true)
     setOpenChat(false)
     setOpen(false)
+    setIsChatActive(false)
+    setIsWaitingActive(false)
   }
 
-  const handleOnPatientJoining = (appointmentId, firstName, lastName, index, status) => {
+  const handleOnPatientJoining = (
+    appointmentId,
+    firstName,
+    lastName,
+    index,
+    status
+  ) => {
     const name = lastName ? firstName + lastName : firstName
     onPatientJoining(appointmentId, name)
     socket.emit('updateLiveStatusOfUser', { status: 'inSession' })
@@ -171,16 +205,15 @@ function SideBar({
         patientList[index + 1].firstName,
         patientList[index + 1].lastName,
         index + 1,
-        status,
+        status
       )
-    }  
-    else if (index === null && patientList.length === 1) {
+    } else if (index === null && patientList.length === 1) {
       handleOnPatientJoining(
         patientList[0].appointmentId,
         patientList[0].firstName,
         patientList[0].lastName,
         Number(0),
-        status,
+        status
       )
     } else if (index === null && patientList.length > 1) {
       handleOnPatientJoining(
@@ -205,7 +238,7 @@ function SideBar({
     <Box>
       {localStorage.getItem('loginUser') === 'doctor' && (
         <div>
-          <div className={classes.topBar}>
+          <div>
             {!open && !openChat && !openMedicine && (
               <div className={classes.arrowIcon}>
                 <ArrowBackIosIcon
@@ -214,54 +247,85 @@ function SideBar({
                 />
               </div>
             )}
-            <div className={classes.icons}>
-              <div className={classes.groupIconHeader}>
-                <img
-                  src={waitingIcon}
-                  className={classes.groupIcon}
-                  onClick={handleOnPatientList}
-                />
+            {openTopBar && (
+              <div className={classes.topBar}>
+                <div className={classes.icons}>
+                  <div className={classes.groupIconHeader}>
+                    {isWaitingActive ? (
+                      <img
+                        src={SelectedWaitingIcon}
+                        className={classes.groupIcon}
+                        onClick={handleOnPatientList}
+                      />
+                    ) : (
+                      <img
+                        src={waitingIcon}
+                        className={classes.groupIcon}
+                        onClick={handleOnPatientList}
+                      />
+                    )}
+                  </div>
+                  <div className={classes.chatIconHeader}>
+                    {isChatActive ? (
+                      <img
+                        src={SelectedChatIcon}
+                        className={classes.chatIcon}
+                        onClick={handleOnChat}
+                      />
+                    ) : (
+                      <img
+                        src={chatIcon}
+                        className={classes.chatIcon}
+                        onClick={handleOnChat}
+                      />
+                    )}
+                  </div>
+                  <div className={classes.tabIconHeader}>
+                    {isMedicineActive ? (
+                      <img
+                        src={SelectedTabIcon}
+                        className={classes.tabIcon}
+                        onClick={handleOnMedicine}
+                      />
+                    ) : (
+                      <img
+                        src={tabIcon}
+                        className={classes.tabIcon}
+                        onClick={handleOnMedicine}
+                      />
+                    )}
+                  </div>
+                </div>
               </div>
-              <div className={classes.chatIconHeader}>
-                <img
-                  src={chatIcon}
-                  className={classes.chatIcon}
-                  onClick={handleOnChat}
-                />
-              </div>
-              <div className={classes.tabIconHeader}>
-                <img
-                  src={tabIcon}
-                  className={classes.tabIcon}
-                  onClick={handleOnMedicine}
-                />
-              </div>
-            </div>
+            )}
           </div>
+          {open && (
+            <PatientList
+              patientList={patientList}
+              open={open}
+              onClose={handleOnClose}
+              onJoiningPatient={handleOnPatientJoining}
+              endCall={endCall}
+              presentAppointmentId={selected}
+              index={index}
+              AddNextPatient={AddNextPatient}
+              nextPatientDetails={setNextPatientDetails}
+              clickByDoctor={clickByDoctor}
+              waitingPatient={waitingPatient}
+              isWaiting={isWaiting}
+              waitingIndex={waitingIndex}
+              count={count}
+              setCount={setCount}
+              id={id}
+              setOpenTopBar={setOpenTopBar}
+            />
+          )}
         </div>
       )}
-      {open && (
-        <PatientList
-          patientList={patientList}
-          open={open}
-          onClose={handleOnClose}
-          onJoiningPatient={handleOnPatientJoining}
-          endCall={endCall}
-          presentAppointmentId={selected}
-          index={index}
-          AddNextPatient={AddNextPatient}
-          nextPatientDetails={setNextPatientDetails}
-          clickByDoctor={clickByDoctor}
-          waitingPatient={waitingPatient}
-          isWaiting={isWaiting}
-          waitingIndex={waitingIndex}
-          count={count}
-          setCount={setCount}
-          id={id}
-        />
+      {openChat && <Chat onClose={handleChatClose} setOpenTopBar={setOpenTopBar} />}
+      {openMedicine && (
+        <MedicineList onClose={handleMedicineClose} setOpenTopBar={setOpenTopBar} />
       )}
-      {openChat && <Chat onClose={handleChatClose} />}
-      {openMedicine && <MedicineList onClose={handleMedicineClose} />}
       {openDialog && (
         <AddNewPatientConfirmationModel
           open={openDialog}

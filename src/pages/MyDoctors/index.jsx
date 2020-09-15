@@ -11,7 +11,7 @@ import Appointments from './Appointments'
 const useStyles = makeStyles(() => ({
   container: {
     width: '100%',
-    padding: '22px 25px 30px 16px',
+    padding: '22px 20px 30px 16px',
     height: '100%',
     background: '#f9f9f9',
     overflowY: 'auto',

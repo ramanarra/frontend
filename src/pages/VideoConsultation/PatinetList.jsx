@@ -125,11 +125,13 @@ function PatientList({
   count,
   setCount,
   id,
+  setOpenTopBar
 }) {
   const classes = useStyle()
 
   function handleOnClose(event) {
     onClose(event)
+    setOpenTopBar(false)
   }
 
   const handleOnPatientJoining = (appointmentId, firstName, lastName, index) => {
@@ -191,7 +193,7 @@ function PatientList({
                   >
                     <Box>
                       <Avatar src={patientDetails.photo} className={classes.photo} />
-                      {patientDetails.status === 'paused' ? (
+                      {(patientDetails.status === 'paused' && patientDetails.patientLiveStatus === 'online') ? (
                         <FiberManualRecordIcon className={classes.pausedIcon} />
                       ) : (
                         patientDetails.patientLiveStatus &&

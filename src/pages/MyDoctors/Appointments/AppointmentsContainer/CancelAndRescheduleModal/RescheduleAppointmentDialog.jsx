@@ -45,7 +45,7 @@ function RescheduleAppointment({
 
   const currentDate = moment(date).format('YYYY-MM-DD')
 
-  const [time, setTime] = useState({ start: '00:00:00', end: '00:00:00' })
+  const [time, setTime] = useState({ start: '', end: '' })
 
   const [show, setShow] = useState(false)
 
@@ -94,7 +94,7 @@ function RescheduleAppointment({
     if(show) {
       setShow(false)
     }
-    setTime(slotTiming)
+    setTime({start: slotTiming.startTime, end: slotTiming.endTime})
   }
 
   return (
@@ -183,17 +183,17 @@ function RescheduleAppointment({
                   return (
                     <Button
                       className={classNames(classes.time, {
-                        [classes.selectedTab]: time.start === data.start,
+                        [classes.selectedTab]: time.start === data.startTime,
                       })}
                       onClick={() => handleOnClick(data)}
                       key={index}
                     >
                       <Typography
                         className={classNames(classes.timeText, {
-                          [classes.selectedText]: time.start === data.start,
+                          [classes.selectedText]: time.start === data.startTime,
                         })}
                       >
-                        {getTimeFormatWithNoon(data.start)}
+                        {getTimeFormatWithNoon(data.startTime)}
                       </Typography>
                     </Button>
                   )
