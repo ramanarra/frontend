@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { Box } from '@material-ui/core'
+import { Box, makeStyles } from '@material-ui/core'
 import socketIOClient from 'socket.io-client'
 
 import InfoCard from './InfoCard'
@@ -11,10 +11,19 @@ const ENDPOINT = 'https://dev.virujh.com'
 
 const userReadRoles = ['SELF_USER_SETTINGS_READ', 'ACCOUNT_USERS_SETTINGS_READ']
 
+const useStyle = makeStyles(() => ({
+  container: {
+    height: 'calc(100% - 65px)',
+    overflowY: 'auto',
+  }
+}))
+
 function Doctors({ doctorList }) {
   const [isUserSettingsRead, isAccountUserSettingsRead] = usePermissions(
     userReadRoles
   )
+
+  const classes = useStyle()
 
   const loginUser = localStorage.getItem('loginUser')
 
@@ -50,7 +59,9 @@ function Doctors({ doctorList }) {
         socket.emit('updateLiveStatusOfUser', { status: 'online' })
       }
 
-      const timer = setInterval(() => socket.emit('getAppointmentListForDoctor'), 10000)
+      // const timer = setInterval(() => socket.emit('getAppointmentListForDoctor'), 10000)
+
+      socket.emit('getAppointmentListForDoctor')
 
       socket.on('getDoctorAppointments', (data) => {
         setPatientList(data)
@@ -82,7 +93,7 @@ function Doctors({ doctorList }) {
   }
 
   return (
-    <Box>
+    <Box className={classes.container}>
       <Box display="flex" flexWrap="wrap">
         {doctorList.map((details, index) => {
           return (

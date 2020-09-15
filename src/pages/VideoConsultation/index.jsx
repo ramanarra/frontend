@@ -31,6 +31,10 @@ function VideoConsulation() {
 
   const [data, setData] = useState(null)
 
+  const [isAudioStatus, setIsAudioStatus] = useState(true)
+
+  const [isVideoStatus, setIsVideoStatus] = useState(true)
+
   const location = useLocation()
 
   const history = useHistory()
@@ -56,7 +60,9 @@ function VideoConsulation() {
         socket.emit('updateLiveStatusOfUser', { status: 'online' })
       }
 
-      setInterval(() => socket.emit('getAppointmentListForDoctor'), 10000)
+      // setInterval(() => socket.emit('getAppointmentListForDoctor'), 10000)
+
+      socket.emit('getAppointmentListForDoctor')
 
       socket.on('getDoctorAppointments', (data) => {
         setPatientList(data)
@@ -136,6 +142,11 @@ function VideoConsulation() {
           socket={socket}
           liveStatus={location.liveStatus}
           appointmentId={location.state}
+          appointmentDetail={location.appointmentDetail}
+          isAudioStatus={isAudioStatus}
+          setIsAudioStatus={setIsAudioStatus}
+          isVideoStatus={isVideoStatus}
+          setIsVideoStatus={setIsVideoStatus}
         />
       )}
 
@@ -151,6 +162,8 @@ function VideoConsulation() {
           waitingPatient={location.state}
           isWaiting={location.isWaiting}
           waitingIndex={index}
+          isAudioStatus={isAudioStatus}
+          isVideoStatus={isVideoStatus}
         />
       )}
       {openDialog && data && (
