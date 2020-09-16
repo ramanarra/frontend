@@ -8,6 +8,8 @@ import SnackBar from '../../components/SnackBar'
 
 const ENDPOINT = 'https://dev.virujh.com'
 
+// const ENDPOINT = 'http://883cb6b24b8a.ngrok.io/api/' 
+
 function VideoConsulation() {
   const [open, setOpen] = useState(false)
 
@@ -22,6 +24,8 @@ function VideoConsulation() {
   const [token, setToken] = useState('')
 
   const [socket, setSocket] = useState('')
+
+  const [timer, setTimer] = useState(null)
 
   const [index, setIndex] = useState(null)
 
@@ -60,12 +64,13 @@ function VideoConsulation() {
         socket.emit('updateLiveStatusOfUser', { status: 'online' })
       }
 
-      // setInterval(() => socket.emit('getAppointmentListForDoctor'), 10000)
+      const timer = setInterval(() => socket.emit('getAppointmentListForDoctor'), 10000)
 
       socket.emit('getAppointmentListForDoctor')
 
       socket.on('getDoctorAppointments', (data) => {
         setPatientList(data)
+        setTimer(timer)
       })
       socket.on('videoTokenForDoctor', (data) => {
         if (data.isToken) {
@@ -154,6 +159,7 @@ function VideoConsulation() {
         <Video
           token={token}
           socket={socket}
+          timer={timer}
           sessionID={sessionID}
           patientList={patientList}
           videoAvailability={videoAvailability}

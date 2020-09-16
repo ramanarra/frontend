@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import classNames from 'classnames'
+import { connect } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { Box, Button, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
@@ -101,7 +102,7 @@ const useStyles = makeStyles(() => ({
   },
 }))
 
-export default function DoctorHeader() {
+function DoctorHeader({socket, timer}) {
   const classes = useStyles()
 
   const history = useHistory()
@@ -124,6 +125,8 @@ export default function DoctorHeader() {
 
   function handleOnLogout() {
     updateData(METHOD.GET, URL.logout)
+    socket.disconnect()
+    clearInterval(timer)
   }
 
   if (data) {
@@ -191,3 +194,12 @@ export default function DoctorHeader() {
     </Box>
   )
 }
+
+const mapStateToProps = (state) => {
+  return {
+    socket: state.doctor.socket,
+    timer: state.doctor.timer,
+  }
+}
+
+export default connect (mapStateToProps, null)(DoctorHeader);

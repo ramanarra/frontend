@@ -1,11 +1,16 @@
 const intialState = {
-  isPatientClicked: false,
+  socket: null,
+  timer: null,
 }
 
 const doctor = (state = intialState, action) => {
   switch (action.type) {
-    case 'SET_PATIENT_CLICK': {
-      return { ...state, isPatientClicked: action.data }
+    case 'SET_SOCKET': {
+      return { ...state, socket: action.data }
+    }
+
+    case 'SET_TIMER': {
+      return {...state, timer: action.data}
     }
 
     default:

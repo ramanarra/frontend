@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export default axios.create({
   baseURL: 'https://dev.virujh.com/api/',
-  // baseURL: 'https://cc541383bbb1.ngrok.io/api/',
+  // baseURL: 'http://883cb6b24b8a.ngrok.io/api/',
   // baseURL: 'https://virujh.com/api/',
 })
 

@@ -1,1 +1,3 @@
-export const setPatientClicked = (value) => ({type: 'SET_PATIENT_CLICK', data: value})
+export const setSocket = (value) => ({type: 'SET_SOCKET', data: value})
+
+export const setTimer = (value) => ({type: 'SET_TIMER', data: value})

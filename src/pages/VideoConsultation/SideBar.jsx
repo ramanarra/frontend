@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { Box, makeStyles } from '@material-ui/core'
-import { connect } from 'react-redux'
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
 
 import PatientList from './PatinetList'
@@ -13,7 +12,6 @@ import SelectedTabIcon from '../../assets/img/selected-tab-icon.svg'
 import Chat from './Chat'
 import MedicineList from './MedicineList'
 import AddNewPatientConfirmationModel from './AddNewPatientConfirmationModel'
-import { setPatientClicked } from '../../actions/patients'
 
 const useStyle = makeStyles(() => ({
   topBar: {
@@ -86,7 +84,6 @@ function SideBar({
   AddNextPatient,
   byDoctor,
   clickByDoctor,
-  setPatientClicked,
   setIsPatientClick,
   waitingPatient,
   isWaiting,
@@ -340,11 +337,4 @@ function SideBar({
   )
 }
 
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     setPatientClicked: () => dispatch(setPatientClicked(true))
-//   }
-// }
-
-// export default connect(null, mapDispatchToProps)(SideBar);
 export default SideBar

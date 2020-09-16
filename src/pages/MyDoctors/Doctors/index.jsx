@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react'
+import { connect } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { Box, makeStyles } from '@material-ui/core'
 import socketIOClient from 'socket.io-client'
+import { setSocket, setTimer } from '../../../actions/patients'
 
 import InfoCard from './InfoCard'
 import usePermissions from '../../../hooks/usePermissions'
 import WaitingPatientList from './WaitingPatientList'
 
 const ENDPOINT = 'https://dev.virujh.com'
+
+// const ENDPOINT = 'http://883cb6b24b8a.ngrok.io/api/'
 
 const userReadRoles = ['SELF_USER_SETTINGS_READ', 'ACCOUNT_USERS_SETTINGS_READ']
 
@@ -18,7 +22,7 @@ const useStyle = makeStyles(() => ({
   }
 }))
 
-function Doctors({ doctorList }) {
+function Doctors({ doctorList, setSocket, socket, setTimer, timer }) {
   const [isUserSettingsRead, isAccountUserSettingsRead] = usePermissions(
     userReadRoles
   )
@@ -31,13 +35,13 @@ function Doctors({ doctorList }) {
 
   const [patientList, setPatientList] = useState(null)
 
-  const [socket, setSocket] = useState(null)
+  // const [socket, setSocket] = useState(null)
 
   const [open, setOpen] = useState(false)
 
   const [count, setCount] = useState(0)
 
-  const [timer, setTimer] = useState()
+  // const [timer, setTimer] = useState()
 
   if (loginUser === 'doctor') {
     localStorage.setItem('doctorName', doctorList[0].doctorName)
@@ -59,7 +63,7 @@ function Doctors({ doctorList }) {
         socket.emit('updateLiveStatusOfUser', { status: 'online' })
       }
 
-      // const timer = setInterval(() => socket.emit('getAppointmentListForDoctor'), 10000)
+      const timer = setInterval(() => socket.emit('getAppointmentListForDoctor'), 10000)
 
       socket.emit('getAppointmentListForDoctor')
 
@@ -119,4 +123,18 @@ function Doctors({ doctorList }) {
   )
 }
 
-export default Doctors
+const mapStateToProps = (state) => {
+  return {
+    socket: state.doctor.socket,
+    timer: state.doctor.timer,
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setTimer: (data) => dispatch(setTimer(data)),
+    setSocket: (data) => dispatch(setSocket(data))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Doctors);

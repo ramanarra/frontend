@@ -11,6 +11,7 @@ function VideoConsultotion({
   sessionID,
   patientList,
   socket,
+  timer,
   videoAvailability,
   audioAvailability,
   appointmentId,
@@ -57,11 +58,14 @@ function VideoConsultotion({
       }
       socket.emit('updateLiveStatusOfUser', { status: 'online' })
       history.push('/doctors')
+      socket.disconnect()
+      clearInterval(timer)
     } else {
       history.push({
         pathname: '/patient/appointments/upcoming',
         state: appointmentId,
       })
+      socket.disconnect()
     }
   }
 

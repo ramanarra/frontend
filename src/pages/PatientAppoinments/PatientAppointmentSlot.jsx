@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import moment from 'moment'
+import { connect } from 'react-redux'
 import { Box, makeStyles, Typography } from '@material-ui/core'
 import ScheduleIcon from '@material-ui/icons/Schedule'
 import socketIOClient from 'socket.io-client'
 
+import { setSocket, setTimer } from '../../actions/patients'
 import getTimeFormatWithNoon from '../../lib/dateLib'
 import UpcomingAndPastView from './UpcomingAndPastView'
 import CancelAppointmentModal from './CancelAppointmentModal'
@@ -11,6 +13,8 @@ import RescheduleAppointmentModal from './RescheduleAppointmentModal'
 import { useHistory, useLocation } from 'react-router-dom'
 
 const ENDPOINT = 'https://dev.virujh.com'
+
+// const ENDPOINT = 'http://883cb6b24b8a.ngrok.io/api/'
 
 const useStyle = makeStyles(() => ({
   container: {
@@ -80,6 +84,8 @@ function PatientAppointmentSlot({
   borderColor,
   onSave,
   past,
+  socket,
+  setSocket,
 }) {
   const classes = useStyle()
 
@@ -91,7 +97,7 @@ function PatientAppointmentSlot({
 
   const [openReschedule, setOpenReschedule] = useState(false)
 
-  const [socket, setSocket] = useState(null)
+  // const [socket, setSocket] = useState(null)
 
   const location = useLocation()
 
@@ -269,4 +275,18 @@ function PatientAppointmentSlot({
   )
 }
 
-export default PatientAppointmentSlot
+const mapStateToProps = (state) => {
+  return {
+    socket: state.doctor.socket,
+    timer: state.doctor.timer,
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setTimer: (data) => dispatch(setTimer(data)),
+    setSocket: (data) => dispatch(setSocket(data))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PatientAppointmentSlot);

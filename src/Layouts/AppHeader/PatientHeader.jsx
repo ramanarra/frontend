@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import classNames from 'classnames'
+import { connect } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { Box, Button, Typography, Avatar } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
@@ -108,7 +109,7 @@ const useStyles = makeStyles(() => ({
   },
 }))
 
-export default function PatientHeader() {
+function PatientHeader({socket}) {
   const classes = useStyles()
 
   const history = useHistory()
@@ -131,6 +132,7 @@ export default function PatientHeader() {
 
   function handleOnLogout() {
     updateData(METHOD.GET, URL.logout)
+    socket.disconnect()
   }
 
   if (data) {
@@ -196,3 +198,12 @@ export default function PatientHeader() {
     </Box>
   )
 }
+
+const mapStateToProps = (state) => {
+  return {
+    socket: state.doctor.socket,
+    timer: state.doctor.timer,
+  }
+}
+
+export default connect(mapStateToProps, null)(PatientHeader);
