@@ -125,8 +125,11 @@ function DoctorHeader({socket, timer}) {
 
   function handleOnLogout() {
     updateData(METHOD.GET, URL.logout)
-    socket.disconnect()
     clearInterval(timer)
+    if(socket) {
+      socket.disconnect()
+      console.log('socket close during log out:', socket)
+    }
   }
 
   if (data) {

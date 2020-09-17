@@ -125,8 +125,8 @@ class VideoRoomComponent extends Component {
     let publisher = this.OV.initPublisher(undefined, {
       audioSource: undefined,
       videoSource: undefined,
-      publishAudio: true,
-      publishVideo: true,
+      publishAudio: this.props.isAudioStatus,
+      publishVideo: this.props.isVideoStatus,
       resolution: '640x480',
       frameRate: 30,
       insertMode: 'APPEND',

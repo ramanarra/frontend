@@ -25,7 +25,7 @@ const useManualFetch = () => {
       })
       .catch((err) => {
         setLoading(false)
-        const response = {name: 'Error', status: err.response.status}
+        const response = {name: 'Error', status: err.response?.status}
         setData(response)
         setError(err)
       })

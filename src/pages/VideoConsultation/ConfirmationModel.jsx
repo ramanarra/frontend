@@ -194,7 +194,6 @@ function ConfirmationPopUp({
   setIsAudioStatus,
   isVideoStatus,
   setIsVideoStatus,
-  s,
 }) {
   const classes = useStyle()
 
@@ -215,6 +214,7 @@ function ConfirmationPopUp({
   const endTime = getTimeFormatWithNoon(appointmentDetail?.endTime)
 
   function handleClose() {
+    socket.disconnect()
     handleOnOpen(false)
     if (localStorage.getItem('loginUser') === 'doctor') {
       history.push('/doctors')

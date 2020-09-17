@@ -140,39 +140,39 @@ function PatientAppointmentSlot({
     })
   }
 
-
   useEffect(() => {
-    const socket = socketIOClient(ENDPOINT, {
-      transports: ['websocket'],
-      jsonp: false,
-      query: {
-        token: localStorage.getItem('virujhToken'),
-      },
-      path: '/socket.io',
-    })
-
-    socket.on('connect', function () {
-      if (localStorage.getItem('loginUser') === 'doctor') {
-        socket.emit('createTokenForDoctor')
-      } else {
-        if (!past) {
-          socket.emit('updateLiveStatusOfUser', { status: 'online' })
-          socket.emit('getPatientTokenForDoctor', appointmentDetail.appointmentId)
-        }
-      }
-
-      socket.on('videoTokenForPatient', (data) => {
-        if (data.isToken) {
-          socket.emit('updateLiveStatusOfUser', { status: 'videoSessionReady' })
-          if (data.appointmentId !== location.state) {
-            handleOnOpen(data.appointmentId)
-          }
-        }
+    if (!past) {
+      const socket = socketIOClient(ENDPOINT, {
+        transports: ['websocket'],
+        jsonp: false,
+        query: {
+          token: localStorage.getItem('virujhToken'),
+        },
+        path: '/socket.io',
       })
 
-    })
+      socket.on('connect', function () {
+        if (localStorage.getItem('loginUser') === 'doctor') {
+          socket.emit('createTokenForDoctor')
+        } else {
+          if (!past) {
+            socket.emit('updateLiveStatusOfUser', { status: 'online' })
+            socket.emit('getPatientTokenForDoctor', appointmentDetail.appointmentId)
+          }
+        }
 
-    setSocket(socket)
+        socket.on('videoTokenForPatient', (data) => {
+          if (data.isToken) {
+            socket.emit('updateLiveStatusOfUser', { status: 'videoSessionReady' })
+            if (data.appointmentId !== location.state) {
+              handleOnOpen(data.appointmentId)
+            }
+          }
+        })
+      })
+
+      setSocket(socket)
+    }
   }, [])
 
   function handleOnClick() {
@@ -282,11 +282,11 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     setTimer: (data) => dispatch(setTimer(data)),
-    setSocket: (data) => dispatch(setSocket(data))
+    setSocket: (data) => dispatch(setSocket(data)),
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PatientAppointmentSlot);
+export default connect(mapStateToProps, mapDispatchToProps)(PatientAppointmentSlot)

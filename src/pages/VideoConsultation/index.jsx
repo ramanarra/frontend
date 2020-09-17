@@ -64,13 +64,14 @@ function VideoConsulation() {
         socket.emit('updateLiveStatusOfUser', { status: 'online' })
       }
 
-      const timer = setInterval(() => socket.emit('getAppointmentListForDoctor'), 10000)
-
-      socket.emit('getAppointmentListForDoctor')
+      if(localStorage.getItem('loginUser') === 'doctor') {
+        const timer = setInterval(() => socket.emit('getAppointmentListForDoctor'), 10000)
+        setTimer(timer)
+      }
 
       socket.on('getDoctorAppointments', (data) => {
+        // console.log('2',data)
         setPatientList(data)
-        setTimer(timer)
       })
       socket.on('videoTokenForDoctor', (data) => {
         if (data.isToken) {

@@ -132,7 +132,9 @@ function PatientHeader({socket}) {
 
   function handleOnLogout() {
     updateData(METHOD.GET, URL.logout)
-    socket.disconnect()
+    if(socket) {
+      socket.disconnect()
+    }
   }
 
   if (data) {
