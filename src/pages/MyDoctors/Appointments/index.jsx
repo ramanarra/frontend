@@ -1,4 +1,5 @@
 import React, { useMemo, useState, useEffect } from 'react'
+import { connect } from 'react-redux'
 import { makeStyles, Box } from '@material-ui/core'
 import { useParams } from 'react-router-dom'
 
@@ -30,7 +31,7 @@ const useStyles = makeStyles(() => ({
   },
 }))
 
-function Appointment({ doctorList }) {
+function Appointment({ doctorList, socket, timer }) {
   const classes = useStyles()
 
   const { id } = useParams()
@@ -38,6 +39,11 @@ function Appointment({ doctorList }) {
   const [paginationNumber, setPaginationNumber] = useState(0)
 
   const [open, setOpen] = useState(false)
+
+  useEffect(() => {
+    socket.disconnect()
+    clearInterval(timer)
+  },[])
 
   const key = useMemo(() => {
     return {
@@ -170,4 +176,11 @@ function Appointment({ doctorList }) {
   )
 }
 
-export default Appointment
+const mapStateToProps = (state) => {
+  return {
+    socket: state.doctor.socket,
+    timer: state.doctor.timer,
+  }
+}
+
+export default connect(mapStateToProps, null)(Appointment)

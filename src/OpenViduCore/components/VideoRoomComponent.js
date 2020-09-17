@@ -68,6 +68,8 @@ class VideoRoomComponent extends Component {
     window.addEventListener('resize', this.updateLayout)
     window.addEventListener('resize', this.checkSize)
     this.joinSession()
+    localUser.setVideoActive(this.props.isVideoStatus)
+    localUser.setAudioActive(this.props.isAudioStatus)
   }
 
   componentWillUnmount() {

@@ -7,6 +7,8 @@ import { makeStyles } from '@material-ui/core/styles'
 import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import AccountBoxIcon from '@material-ui/icons/AccountBox'
+import Backdrop from '@material-ui/core/Backdrop'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 import Stretch from '../../components/Stretch'
 import Logo from '../../assets/img/logo.png'
@@ -100,6 +102,15 @@ const useStyles = makeStyles(() => ({
   exitIcon: {
     width: 22,
   },
+  backdrop: {
+    zIndex: 1,
+    color: '#fff',
+  },
+  spinner: {
+    position: 'fixed',
+    top: '50%',
+    left: '50%',
+  }
 }))
 
 function DoctorHeader({socket, timer}) {
@@ -109,9 +120,13 @@ function DoctorHeader({socket, timer}) {
 
   const [open, setOpen] = useState(false)
 
+  const [openSpinner, setOpenSpinner] = useState(false)
+
   const [updateData, updateError, isUpdating, data] = useManualFetch()
 
   function handleOnVideoClick() {
+    socket.disconnect()
+    clearInterval(timer)
     history.push('/video-consultation')
   }
 
@@ -124,11 +139,11 @@ function DoctorHeader({socket, timer}) {
   }
 
   function handleOnLogout() {
+    setOpenSpinner(true)
     updateData(METHOD.GET, URL.logout)
     clearInterval(timer)
     if(socket) {
       socket.disconnect()
-      console.log('socket close during log out:', socket)
     }
   }
 
@@ -194,6 +209,11 @@ function DoctorHeader({socket, timer}) {
           )}
         </Box>
       </ClickAwayListener>
+      {openSpinner && (
+        <Backdrop className={classes.backdrop} open={openSpinner}>
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      )}
     </Box>
   )
 }

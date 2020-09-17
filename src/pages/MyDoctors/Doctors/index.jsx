@@ -19,7 +19,7 @@ const useStyle = makeStyles(() => ({
   container: {
     height: 'calc(100% - 65px)',
     overflowY: 'auto',
-  }
+  },
 }))
 
 function Doctors({ doctorList, setSocket, socket, setTimer, timer }) {
@@ -35,44 +35,44 @@ function Doctors({ doctorList, setSocket, socket, setTimer, timer }) {
 
   const [patientList, setPatientList] = useState(null)
 
-  // const [socket, setSocket] = useState(null)
-
   const [open, setOpen] = useState(false)
 
   const [count, setCount] = useState(0)
-
-  // const [timer, setTimer] = useState()
 
   if (loginUser === 'doctor') {
     localStorage.setItem('doctorName', doctorList[0].doctorName)
   }
 
   useEffect(() => {
-    const socket = socketIOClient(ENDPOINT, {
-      transports: ['websocket'],
-      jsonp: false,
-      query: {
-        token: localStorage.getItem('virujhToken'),
-      },
-      path: '/socket.io',
-    })
-
-    socket.on('connect', function () {
-      if (localStorage.getItem('loginUser') === 'doctor') {
-        socket.emit('createTokenForDoctor')
-        socket.emit('updateLiveStatusOfUser', { status: 'online' })
-      }
-
-      const timer = setInterval(() => socket.emit('getAppointmentListForDoctor'), 10000)
-
-      socket.on('getDoctorAppointments', (data) => {
-        // console.log('1', data, timer)
-        setPatientList(data)
-        setTimer(timer)
+    if (localStorage.getItem('loginUser') === 'doctor') {
+      const socket = socketIOClient(ENDPOINT, {
+        transports: ['websocket'],
+        jsonp: false,
+        query: {
+          token: localStorage.getItem('virujhToken'),
+        },
+        path: '/socket.io',
       })
-    })
-    setSocket(socket)
-    // console.log(socket)
+
+      socket.on('connect', function () {
+        if (localStorage.getItem('loginUser') === 'doctor') {
+          socket.emit('createTokenForDoctor')
+          socket.emit('updateLiveStatusOfUser', { status: 'online' })
+        }
+
+        const timer = setInterval(
+          () => socket.emit('getAppointmentListForDoctor'),
+          10000
+        )
+
+        socket.on('getDoctorAppointments', (data) => {
+          // console.log('1', data, timer)
+          setPatientList(data)
+          setTimer(timer)
+        })
+      })
+      setSocket(socket)
+    }
   }, [])
 
   const readyPatient =
@@ -130,11 +130,11 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     setTimer: (data) => dispatch(setTimer(data)),
-    setSocket: (data) => dispatch(setSocket(data))
+    setSocket: (data) => dispatch(setSocket(data)),
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Doctors);
+export default connect(mapStateToProps, mapDispatchToProps)(Doctors)

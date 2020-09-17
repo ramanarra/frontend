@@ -137,6 +137,7 @@ function PatientAppointmentSlot({
       state: appointmentId,
       socket: socket,
       appointmentDetail: appointmentDetail,
+      doctorName: `${appointmentDetail.doctorFirstName}${' '}${doctorLastName}`,
     })
   }
 

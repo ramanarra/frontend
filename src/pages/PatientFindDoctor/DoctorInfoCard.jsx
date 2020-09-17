@@ -155,9 +155,11 @@ const DoctorInfoCard = ({ doctorDetail, doctorListInHospital, isHospital }) => {
           })}
         >
           <Typography className={classes.text}>Contact Number</Typography>
-          <Typography
-            className={classes.value}
-          >{`+91 ${doctorDetail.number}`}</Typography>
+          {doctorDetail.number && (
+            <Typography
+              className={classes.value}
+            >{`+91 ${doctorDetail.number}`}</Typography>
+          )}
         </Box>
 
         <Box paddingLeft={4} className={classes.location}>

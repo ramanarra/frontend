@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import moment from 'moment'
 import { Paper, Button, Snackbar } from '@material-ui/core'
 import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers'
 import { GoCalendar } from 'react-icons/go'
@@ -13,7 +14,9 @@ import SnackBar from '../../components/SnackBar'
 const SnackbarPosition = { vertical: 'bottom', horizontal: 'center' }
 
 const PatientSignup = (props) => {
-  const { register, errors, control, handleSubmit } = useForm()
+  const { register, watch, errors, control, handleSubmit } = useForm()
+
+  const watchDateOfBirth = watch('dateOfBirth', null)
 
   const [Error, setError] = useState(false)
 
@@ -25,6 +28,10 @@ const PatientSignup = (props) => {
 
   const [count, setCount] = useState(false)
 
+  const [age, setAge] = useState(null)
+
+  const currentTime = moment().format('DD/MM/YYYY HH:mm:ss')
+
   const redirectToLogin = () => props.history.push('/login')
   const onSubmit = (data) => {
     Api.post(URL.patientSignup, data)
@@ -35,16 +42,17 @@ const PatientSignup = (props) => {
         if (data.patient?.accessToken) {
           localStorage.setItem('virujhToken', data.patient.accessToken)
           localStorage.setItem('patientId', data.patient.patientId)
-          localStorage.setItem('patientName', `${data.details.firstName} ${data.details.lastName}`)
+          localStorage.setItem(
+            'patientName',
+            `${data.details.firstName} ${data.details.lastName}`
+          )
           setMessage('Successfully Created...')
           setDetail(data)
           setError(true)
-        }
-        else if (data?.patient.update === 'updated password') {
+        } else if (data?.patient.update === 'updated password') {
           setError(true)
           setMessage('Created successfully...Please do signin')
-        }
-        else if (data?.statusCode) {
+        } else if (data?.statusCode) {
           setError(true)
           setMessage(data?.message)
         }
@@ -55,20 +63,28 @@ const PatientSignup = (props) => {
   }
 
   useEffect(() => {
-    if(count) {
-    if(response) {
-      setError(true)
-      setMessage(response.message)
-      setCount(false)
+    if (count) {
+      if (response) {
+        setError(true)
+        setMessage(response.message)
+        setCount(false)
+      } else {
+        setError(true)
+        setMessage('Something went Wrong')
+        setCount(false)
+      }
     }
-    else {
-      setError(true)
-      setMessage('Something went Wrong')
-      setCount(false)
-    }
-  }
   }, [response, count])
 
+  useEffect(() => {
+    if (watchDateOfBirth) {
+      const difference = moment(currentTime, 'DD/MM/YYYY HH:mm:ss').diff(
+        moment(watchDateOfBirth, 'DD/MM/YYYY HH:mm:ss')
+      )
+      const years = moment.duration(difference).years()
+      setAge(years)
+    }
+  }, [watchDateOfBirth])
 
   const validationErr = {
     name: 'Invalid name',
@@ -82,15 +98,14 @@ const PatientSignup = (props) => {
     if (reason === 'clickaway') {
       return
     }
-    if(message === 'Created successfully...Please do signin') {
+    if (message === 'Created successfully...Please do signin') {
       props.history.push('/login')
     }
-    if(detail?.patient?.accessToken) {
+    if (detail?.patient?.accessToken) {
       props.history.push('/patient/appointments/upcoming')
     }
     setError(false)
   }
-
 
   return (
     <div className="patient-sign-up">
@@ -224,6 +239,7 @@ const PatientSignup = (props) => {
               label="Age"
               type="number"
               placeholder="35"
+              value={age}
               inputProps={{
                 ref: register({
                   required: 'Please enter your age',
@@ -289,42 +305,38 @@ const PatientSignup = (props) => {
           </div>
         </form>
       </Paper>
-      {
-        response && response.patient?.accessToken &&
+      {response && response.patient?.accessToken && (
         <SnackBar
-        openDialog={Error}
-        message={message}
-        onclose={handleOnClose}
-        severity={'success'}
+          openDialog={Error}
+          message={message}
+          onclose={handleOnClose}
+          severity={'success'}
         />
-      }
-      {
-        response && response.patient?.update &&
+      )}
+      {response && response.patient?.update && (
         <SnackBar
-        openDialog={Error}
-        message={message}
-        onclose={handleOnClose}
-        severity={'success'}
+          openDialog={Error}
+          message={message}
+          onclose={handleOnClose}
+          severity={'success'}
         />
-      }
-      {
-        response && response.statusCode &&
+      )}
+      {response && response.statusCode && (
         <SnackBar
-        openDialog={Error}
-        message={message}
-        onclose={handleOnClose}
-        severity={'info'}
+          openDialog={Error}
+          message={message}
+          onclose={handleOnClose}
+          severity={'info'}
         />
-      }
-      {
-        !response &&
+      )}
+      {!response && (
         <SnackBar
-        openDialog={Error}
-        message={message}
-        onclose={handleOnClose}
-        severity={'error'}
+          openDialog={Error}
+          message={message}
+          onclose={handleOnClose}
+          severity={'error'}
         />
-      }
+      )}
     </div>
   )
 }

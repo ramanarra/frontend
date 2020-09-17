@@ -11,6 +11,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import Centralize from '../../components/Centralize'
 import Logo from '../../assets/img/logo.png'
 import useStyles from './useStyles'
+import SnackBar from '../../components/SnackBar'
 
 const Login = ({
   UserNameText,
@@ -29,6 +30,8 @@ const Login = ({
   const [userNameIndicate, setUserNameIndicate] = useState('')
 
   const [passwordIndicate, setPasswordIndicate] = useState('')
+
+  const [openSnackBar, setOpenSnackBar] = useState(false)
 
   const [open, setOpen] = useState(false)
 
@@ -92,7 +95,7 @@ const Login = ({
         values.password !== ''
       ) {
         setOpen(true)
-        onLogin(values.userName, values.password, setError, setOpen)
+        onLogin(values.userName, values.password, setError, setOpen, setOpenSnackBar)
       }
     } else if (UserNameText === 'Phone Number') {
       if (values.userName === '') {
@@ -106,7 +109,7 @@ const Login = ({
 
       if (String(values.userName).length > 9 && values.password !== '') {
         setOpen(true)
-        onLogin(values.userName, values.password, setError, setOpen)
+        onLogin(values.userName, values.password, setError, setOpen, setOpenSnackBar)
       }
     }
   }
@@ -122,6 +125,13 @@ const Login = ({
 
   const handlePasswordVisibility = () => {
     setIsEyeVisible(!isEyeVisible)
+  }
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return
+    }
+    setOpenSnackBar(false)
   }
 
   return (
@@ -269,6 +279,15 @@ const Login = ({
           <CircularProgress color="inherit" />
         </Backdrop>
       )}
+      {
+        openSnackBar &&
+        <SnackBar
+        open={openSnackBar}
+        message={'Something went wrong'}
+        onclose={handleClose}
+        severity={'error'}
+        />
+      }
     </Fragment>
   )
 }

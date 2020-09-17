@@ -141,7 +141,7 @@ const useStyle = makeStyles(() => ({
     fontSize: 20,
   },
   errorBox: {
-    marginTop: -240,
+    paddingTop: 160,
     textAlign: 'center',
   },
   cameraOff: {
@@ -215,6 +215,7 @@ function ConfirmationPopUp({
 
   function handleClose() {
     socket.disconnect()
+    console.log('socekt close during close', socket)
     handleOnOpen(false)
     if (localStorage.getItem('loginUser') === 'doctor') {
       history.push('/doctors')

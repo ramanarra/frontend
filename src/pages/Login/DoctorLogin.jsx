@@ -6,7 +6,7 @@ import Api, { URL } from '../../api'
 function DoctorLogin({ history }) {
   localStorage.clear()
   localStorage.setItem('loginUser', 'doctor')
-  function onLogin(userName, password, setError, setOpen) {
+  function onLogin(userName, password, setError, setOpen, setOpenSnackBar) {
     const credentials = {
       email: userName,
       password: password,
@@ -35,7 +35,7 @@ function DoctorLogin({ history }) {
       })
       .catch(() => {
         setOpen(false)
-        setError(true)
+        setOpenSnackBar(true)
       })
   }
 

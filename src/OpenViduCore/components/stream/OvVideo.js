@@ -36,10 +36,9 @@ export default class OvVideoComponent extends Component {
   }
 
   render() {
-    const { showWaiting } = this.props
     return (
       <div className="ov-video">
-        {this.props.isPatientClick &&
+        {this.props.subscribers &&
         this.props.subscribers.length === 0 ? (
           <div className="ov-video-container">
             <div className="video">
@@ -62,8 +61,8 @@ export default class OvVideoComponent extends Component {
                   </p>
                 </div>
               ) : (
-                <p className="text" style={{ color: '#ffffff' }}>
-                  Check the patients in waiting list
+                <p className="text" style={{ color: '#ffffff', marginTop: '50%' }}>
+                  Check for patients in waiting list
                 </p>
               )}
             </div>

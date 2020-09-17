@@ -80,10 +80,12 @@ function DoctorDetails({ doctorDetails }) {
         <Box className={classes.subDetail}>
           <Box>
             <Typography className={classes.name}>Session Timing</Typography>
-            <Typography
-              className={classes.value}
-              variant="h5"
-            >{`${doctorDetails.sessionTiming} Minutes`}</Typography>
+            {doctorDetails.sessionTiming && (
+              <Typography
+                className={classes.value}
+                variant="h5"
+              >{`${doctorDetails.sessionTiming} Minutes`}</Typography>
+            )}
           </Box>
           <Box className={classes.detail}>
             <Typography className={classes.name}>Fees</Typography>
@@ -94,10 +96,12 @@ function DoctorDetails({ doctorDetails }) {
           </Box>
           <Box className={classes.detail}>
             <Typography className={classes.name}>Contact Number</Typography>
-            <Typography
-              className={classes.value}
-              variant="h5"
-            >{`+91 ${doctorDetails.mobileNo}`}</Typography>
+            {doctorDetails.mobileNo && (
+              <Typography
+                className={classes.value}
+                variant="h5"
+              >{`+91 ${doctorDetails.mobileNo}`}</Typography>
+            )}
           </Box>
           <Box className={classes.location}>
             <Typography className={classes.name}>Location</Typography>

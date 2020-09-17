@@ -7,6 +7,8 @@ import { makeStyles } from '@material-ui/core/styles'
 import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import AccountBoxIcon from '@material-ui/icons/AccountBox'
+import Backdrop from '@material-ui/core/Backdrop'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 import Stretch from '../../components/Stretch'
 import Logo from '../../assets/img/logo.png'
@@ -107,6 +109,15 @@ const useStyles = makeStyles(() => ({
   exitIcon: {
     width: 22,
   },
+  backdrop: {
+    zIndex: 1,
+    color: '#fff',
+  },
+  spinner: {
+    position: 'fixed',
+    top: '50%',
+    left: '50%',
+  }
 }))
 
 function PatientHeader({socket}) {
@@ -115,6 +126,8 @@ function PatientHeader({socket}) {
   const history = useHistory()
 
   const [open, setOpen] = useState(false)
+
+  const [openSpinner, setOpenSpinner] = useState(false)
 
   const [updateData, updateError, isUpdating, data] = useManualFetch()
 
@@ -131,6 +144,7 @@ function PatientHeader({socket}) {
   }
 
   function handleOnLogout() {
+    setOpenSpinner(true)
     updateData(METHOD.GET, URL.logout)
     if(socket) {
       socket.disconnect()
@@ -197,6 +211,11 @@ function PatientHeader({socket}) {
           )}
         </Box>
       </ClickAwayListener>
+      {openSpinner && (
+        <Backdrop className={classes.backdrop} open={openSpinner}>
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      )}
     </Box>
   )
 }
