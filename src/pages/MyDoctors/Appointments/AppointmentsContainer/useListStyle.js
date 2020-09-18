@@ -2,9 +2,9 @@ import { makeStyles } from '@material-ui/core/styles'
 
 const useListStyle = makeStyles(() => ({
   container: {
-    marginLeft: 18,
+    marginLeft: '1.5%',
     marginBottom: 10,
-    marginRight: 10,
+    marginRight: '0.9%',
     background: '#f9f9f9',
     backgroundColor: 'white',
     width: '11.8%'

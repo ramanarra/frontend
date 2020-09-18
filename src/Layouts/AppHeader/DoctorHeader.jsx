@@ -110,10 +110,10 @@ const useStyles = makeStyles(() => ({
     position: 'fixed',
     top: '50%',
     left: '50%',
-  }
+  },
 }))
 
-function DoctorHeader({socket, timer}) {
+function DoctorHeader({ socket, timer }) {
   const classes = useStyles()
 
   const history = useHistory()
@@ -125,8 +125,10 @@ function DoctorHeader({socket, timer}) {
   const [updateData, updateError, isUpdating, data] = useManualFetch()
 
   function handleOnVideoClick() {
-    socket.disconnect()
-    clearInterval(timer)
+    if (socket) {
+      socket.disconnect()
+      clearInterval(timer)
+    }
     history.push('/video-consultation')
   }
 
@@ -142,7 +144,7 @@ function DoctorHeader({socket, timer}) {
     setOpenSpinner(true)
     updateData(METHOD.GET, URL.logout)
     clearInterval(timer)
-    if(socket) {
+    if (socket) {
       socket.disconnect()
     }
   }
@@ -195,9 +197,9 @@ function DoctorHeader({socket, timer}) {
             <Box className={classes.logout}>
               <Box display="flex">
                 <AccountBoxIcon className={classes.profileIcon} />
-              <Typography className={classes.edit} onClick={handleOnEdit}>
-                Edit Profile
-              </Typography>
+                <Typography className={classes.edit} onClick={handleOnEdit}>
+                  Edit Profile
+                </Typography>
               </Box>
               <Box display="flex">
                 <ExitToAppIcon className={classes.exitIcon} />
@@ -225,4 +227,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect (mapStateToProps, null)(DoctorHeader);
+export default connect(mapStateToProps, null)(DoctorHeader)

@@ -5,7 +5,7 @@ const useHeaderStyle = makeStyles(() => ({
     width: '100%',
     background: '#f9f9f9',
     backgroundColor: 'white',
-    paddingTop: 20,
+    paddingTop: '2.5%',
     height: '14%',
   },
   search: {

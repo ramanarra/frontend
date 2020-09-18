@@ -46,7 +46,7 @@ const PatientSignup = (props) => {
             'patientName',
             `${data.details.firstName} ${data.details.lastName}`
           )
-          setMessage('Successfully Created...')
+          setMessage('Thanks! Your account has been created successfully')
           setDetail(data)
           setError(true)
         } else if (data?.patient.update === 'updated password') {

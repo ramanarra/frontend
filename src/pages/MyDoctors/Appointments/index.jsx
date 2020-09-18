@@ -2,6 +2,8 @@ import React, { useMemo, useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { makeStyles, Box } from '@material-ui/core'
 import { useParams } from 'react-router-dom'
+import Backdrop from '@material-ui/core/Backdrop'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 import ScheduledDoctors from './ScheduledDoctors'
 import { METHOD, URL } from '../../../api'
@@ -29,6 +31,15 @@ const useStyles = makeStyles(() => ({
     width: '98%',
     height: '100%',
   },
+  backdrop: {
+    zIndex: 1,
+    color: '#fff',
+  },
+  spinner: {
+    position: 'fixed',
+    top: '50%',
+    left: '50%',
+  }
 }))
 
 function Appointment({ doctorList, socket, timer }) {
@@ -40,10 +51,14 @@ function Appointment({ doctorList, socket, timer }) {
 
   const [open, setOpen] = useState(false)
 
+  const [openLoader, setOpenLoader] = useState(true)
+
   useEffect(() => {
-    socket.disconnect()
-    clearInterval(timer)
-  },[])
+    if (socket) {
+      socket.disconnect()
+      clearInterval(timer)
+    }
+  }, [])
 
   const key = useMemo(() => {
     return {
@@ -97,6 +112,11 @@ function Appointment({ doctorList, socket, timer }) {
             />
           )}
         </Box>
+        {openLoader && !appointmentSlots && (
+          <Backdrop className={classes.backdrop} open={openLoader}>
+            <CircularProgress color="primary" />
+          </Backdrop>
+        )}
       </Box>
       {response && response.data?.appointment && (
         <SnackBar
