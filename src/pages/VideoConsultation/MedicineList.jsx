@@ -1,6 +1,9 @@
 import React from 'react'
 import { Box, makeStyles } from '@material-ui/core'
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
+import { connect } from 'react-redux'
+
+import { setOpenSideBar } from '../../actions/patients'
 
 const usestyle = makeStyles(() => ({
   container: {
@@ -20,7 +23,7 @@ const usestyle = makeStyles(() => ({
     borderRadius: '50%',
     position: 'absolute',
     top: 58,
-    right: 348,
+    right: '22.5%',
     backgroundColor: '#ffffff',
     cursor: 'pointer',
   },
@@ -31,12 +34,13 @@ const usestyle = makeStyles(() => ({
   },
 }))
 
-function MedicineList({ onClose, setOpenTopBar }) {
+function MedicineList({ onClose, setOpenTopBar, setOpenSideBar }) {
   const classes = usestyle()
 
   function handleOnClose() {
     onClose()
     setOpenTopBar(false)
+    setOpenSideBar(false)
   }
 
   return (
@@ -49,4 +53,10 @@ function MedicineList({ onClose, setOpenTopBar }) {
   )
 }
 
-export default MedicineList
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setOpenSideBar: (data) => dispatch(setOpenSideBar(data)),
+  }
+}
+
+export default connect(null, mapDispatchToProps)(MedicineList)

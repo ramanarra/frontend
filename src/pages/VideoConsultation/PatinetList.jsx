@@ -1,11 +1,12 @@
-import React from 'react'
+import React, {useEffect} from 'react'
+import { connect } from 'react-redux'
 import classNames from 'classnames'
 import { Box, Typography, Avatar, makeStyles } from '@material-ui/core'
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord'
 
 import getTimeFormatWithNoon, { getTimeFormat } from '../../lib/dateLib'
-import { useEffect } from 'react'
+import {setOpenSideBar} from '../../actions/patients'
 
 const useStyle = makeStyles((theme) => ({
   dialog: {
@@ -25,7 +26,7 @@ const useStyle = makeStyles((theme) => ({
     borderRadius: '50%',
     position: 'absolute',
     top: 58,
-    right: 348,
+    right: '22.5%',
     backgroundColor: '#ffffff',
     cursor: 'pointer',
   },
@@ -125,13 +126,15 @@ function PatientList({
   count,
   setCount,
   id,
-  setOpenTopBar
+  setOpenTopBar,
+  setOpenSideBar,
 }) {
   const classes = useStyle()
 
   function handleOnClose(event) {
     onClose(event)
     setOpenTopBar(false)
+    setOpenSideBar(false)
   }
 
   const handleOnPatientJoining = (appointmentId, firstName, lastName, index) => {
@@ -250,4 +253,10 @@ function PatientList({
   )
 }
 
-export default PatientList
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setOpenSideBar: (data) => dispatch(setOpenSideBar(data)),
+  }
+}
+
+export default connect(null,mapDispatchToProps)(PatientList)

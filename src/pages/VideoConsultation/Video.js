@@ -1,10 +1,12 @@
 import React, { useState, Fragment } from 'react'
+import { connect } from 'react-redux'
 import { useHistory, useLocation } from 'react-router-dom'
 import { Box } from '@material-ui/core'
 
 import OpenViduReact from '../../OpenViduCore/components/VideoRoomComponent'
 import ToolBarComponent from './Toolbar'
 import SideBar from './SideBar'
+import { setOpenSideBar } from '../../actions/patients'
 
 function VideoConsultotion({
   token,
@@ -21,6 +23,7 @@ function VideoConsultotion({
   isAudioStatus,
   isVideoStatus,
   setPatientAppointmentId,
+  setOpenSideBar,
 }) {
 
   const [end, setEnd] = useState(false)
@@ -62,6 +65,7 @@ function VideoConsultotion({
       history.push('/doctors')
       socket.disconnect()
       clearInterval(timer)
+      setOpenSideBar(true)
     } else {
       history.push({
         pathname: '/patient/appointments/upcoming',
@@ -137,4 +141,10 @@ function VideoConsultotion({
   )
 }
 
-export default VideoConsultotion
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setOpenSideBar: (data) => dispatch(setOpenSideBar(data)),
+  }
+}
+
+export default connect(null, mapDispatchToProps)(VideoConsultotion)

@@ -195,7 +195,7 @@ function ConsulationAndSignature({
       <div className={classes.signature}>
         <img
           src={doctorDetails?.signature}
-          alt="signature"
+          alt='signature'
           className={classes.sign}
         />
       </div>

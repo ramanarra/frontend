@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { connect } from 'react-redux'
 import { Box, makeStyles } from '@material-ui/core'
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
 
@@ -12,6 +13,7 @@ import SelectedTabIcon from '../../assets/img/selected-tab-icon.svg'
 import Chat from './Chat'
 import MedicineList from './MedicineList'
 import AddNewPatientConfirmationModel from './AddNewPatientConfirmationModel'
+import { setOpenSideBar } from '../../actions/patients'
 
 const useStyle = makeStyles(() => ({
   topBar: {
@@ -89,6 +91,7 @@ function SideBar({
   isWaiting,
   waitingIndex,
   setPatientAppointmentId,
+  setOpenSideBar
 }) {
   const classes = useStyle()
 
@@ -148,6 +151,7 @@ function SideBar({
     setIsChatActive(false)
     setIsMedicineActive(false)
     setIsWaitingActive(true)
+    setOpenSideBar(true)
   }
 
   function handleOnClose(event) {
@@ -339,4 +343,10 @@ function SideBar({
   )
 }
 
-export default SideBar
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setOpenSideBar: (data) => dispatch(setOpenSideBar(data)),
+  }
+}
+
+export default connect(null, mapDispatchToProps)(SideBar)

@@ -1,6 +1,8 @@
 const intialState = {
   socket: null,
   timer: null,
+  patientAppointmentId: null,
+  openSideBar: true,
 }
 
 const doctor = (state = intialState, action) => {
@@ -11,6 +13,14 @@ const doctor = (state = intialState, action) => {
 
     case 'SET_TIMER': {
       return {...state, timer: action.data}
+    }
+
+    case 'SET_APPOINTMENTID': {
+      return {...state, patientAppointmentId: action.data}
+    }
+
+    case 'SET_OPENSIDEBAR': {
+      return {...state, openSideBar: action.data}
     }
 
     default:

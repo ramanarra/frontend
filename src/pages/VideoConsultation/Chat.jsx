@@ -1,8 +1,10 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { Box, makeStyles, TextField } from '@material-ui/core'
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 
 import sentIcon from '../../assets/img/sent-icon.svg'
+import {setOpenSideBar} from '../../actions/patients'
 
 const usestyle = makeStyles(() => ({
   container: {
@@ -22,7 +24,7 @@ const usestyle = makeStyles(() => ({
     borderRadius: '50%',
     position: 'absolute',
     top: 58,
-    right: 348,
+    right: '22.5%',
     backgroundColor: '#ffffff',
     cursor: 'pointer',
   },
@@ -47,12 +49,13 @@ const usestyle = makeStyles(() => ({
   },
 }))
 
-function chat({ onClose, setOpenTopBar }) {
+function chat({ onClose, setOpenTopBar, setOpenSideBar }) {
   const classes = usestyle()
 
   function handleOnClose() {
     onClose()
     setOpenTopBar(false)
+    setOpenSideBar(false)
   }
 
   return (
@@ -77,4 +80,10 @@ function chat({ onClose, setOpenTopBar }) {
   )
 }
 
-export default chat
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setOpenSideBar: (data) => dispatch(setOpenSideBar(data)),
+  }
+}
+
+export default connect(null, mapDispatchToProps)(chat)

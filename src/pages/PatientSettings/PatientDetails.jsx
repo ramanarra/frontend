@@ -71,14 +71,14 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload, 
   const [values, setValues] = useState({
     patientId: Number(patientId),
     photo: patientDetails.photo,
-    name: patientDetails.name,
-    landmark: patientDetails.landmark,
-    country: patientDetails.country,
-    registrationNumber: patientDetails.registrationNumber,
-    address: patientDetails.address,
-    state: patientDetails.state,
-    pincode: patientDetails.pincode,
-    email: patientDetails.email,
+    name: `${patientDetails.firstName}${' '}${patientDetails?.lastName}`,
+    landmark: patientDetails.landmark ? patientDetails.landmark : '-',
+    country: patientDetails.country ? patientDetails.country : '-',
+    registrationNumber: patientDetails.registrationNumber ? patientDetails.registrationNumber : '-',
+    address: patientDetails.address ? patientDetails.address : '-',
+    state: patientDetails.state ? patientDetails.state : '-',
+    pincode: patientDetails.pincode ? patientDetails.pincode : '-',
+    email: patientDetails.email ? patientDetails.email : '-',
   })
 
   function handleOnChange(value) {

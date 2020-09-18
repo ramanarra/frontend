@@ -11,8 +11,6 @@ import WaitingPatientList from './WaitingPatientList'
 
 const ENDPOINT = 'https://dev.virujh.com'
 
-// const ENDPOINT = 'http://7fa3f203e6f9.ngrok.io/api/'
-
 const userReadRoles = ['SELF_USER_SETTINGS_READ', 'ACCOUNT_USERS_SETTINGS_READ']
 
 const useStyle = makeStyles(() => ({
@@ -66,7 +64,6 @@ function Doctors({ doctorList, setSocket, socket, setTimer, timer }) {
         )
 
         socket.on('getDoctorAppointments', (data) => {
-          // console.log('1', data, timer)
           setPatientList(data)
           setTimer(timer)
         })
