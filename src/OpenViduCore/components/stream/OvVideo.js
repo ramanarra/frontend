@@ -37,7 +37,7 @@ export default class OvVideoComponent extends Component {
 
   render() {
     return (
-      <div className="ov-video">
+      <div className= 'ov-video'>
         {this.props.subscribers &&
         this.props.subscribers.length === 0 ? (
           <div className="ov-video-container">

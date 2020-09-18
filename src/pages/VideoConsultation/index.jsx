@@ -39,6 +39,8 @@ function VideoConsulation() {
 
   const [isVideoStatus, setIsVideoStatus] = useState(true)
 
+  const [patientAppointmentId, setPatientAppointmentId] = useState(null)
+
   const location = useLocation()
 
   const history = useHistory()
@@ -153,6 +155,7 @@ function VideoConsulation() {
           setIsAudioStatus={setIsAudioStatus}
           isVideoStatus={isVideoStatus}
           setIsVideoStatus={setIsVideoStatus}
+          patientAppointmentId={patientAppointmentId}
         />
       )}
 
@@ -171,6 +174,7 @@ function VideoConsulation() {
           waitingIndex={index}
           isAudioStatus={isAudioStatus}
           isVideoStatus={isVideoStatus}
+          setPatientAppointmentId={setPatientAppointmentId}
         />
       )}
       {openDialog && data && (

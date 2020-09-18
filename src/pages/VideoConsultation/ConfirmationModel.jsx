@@ -194,6 +194,7 @@ function ConfirmationPopUp({
   setIsAudioStatus,
   isVideoStatus,
   setIsVideoStatus,
+  patientAppointmentId,
 }) {
   const classes = useStyle()
 
@@ -201,21 +202,33 @@ function ConfirmationPopUp({
 
   const [videoAvailable, setVideoAvailable] = useState(true)
 
-  const doctorName = appointmentDetail?.doctorLastName
-    ? `${appointmentDetail?.doctorFirstName}${' '}${
-        appointmentDetail?.doctorLastName
-      }`
-    : `${appointmentDetail?.doctorFirstName}`
+  const doctorName =
+    patientAppointmentId && appointmentDetail?.appointmentId === patientAppointmentId
+      ? appointmentDetail?.doctorLastName
+        ? `${appointmentDetail?.doctorFirstName}${' '}${
+            appointmentDetail?.doctorLastName
+          }`
+        : `${appointmentDetail?.doctorFirstName}`
+      : appointmentDetail?.doctorLastName
+      ? `${appointmentDetail?.doctorFirstName}${' '}${
+          appointmentDetail?.doctorLastName
+        }`
+      : `${appointmentDetail?.doctorFirstName}`
 
-  const date = moment(appointmentDetail?.appointmentDate).format('DD MMMM YYYY')
+  const date = patientAppointmentId && appointmentDetail?.appointmentId === patientAppointmentId ?
+  moment(appointmentDetail?.appointmentDate).format('DD MMMM YYYY') :
+  moment(appointmentDetail?.appointmentDate).format('DD MMMM YYYY')
 
-  const startTime = getTimeFormatWithNoon(appointmentDetail?.startTime)
+  const startTime = patientAppointmentId && appointmentDetail?.appointmentId === patientAppointmentId ?
+  getTimeFormatWithNoon(appointmentDetail?.startTime) :
+  getTimeFormatWithNoon(appointmentDetail?.startTime)
 
-  const endTime = getTimeFormatWithNoon(appointmentDetail?.endTime)
+  const endTime = patientAppointmentId && appointmentDetail?.appointmentId === patientAppointmentId ?
+  getTimeFormatWithNoon(appointmentDetail?.endTime) :
+  getTimeFormatWithNoon(appointmentDetail?.endTime)
 
   function handleClose() {
     socket.disconnect()
-    console.log('socekt close during close', socket)
     handleOnOpen(false)
     if (localStorage.getItem('loginUser') === 'doctor') {
       history.push('/doctors')
@@ -268,15 +281,14 @@ function ConfirmationPopUp({
                   [classes.videoOff]: videoAvailable && !isVideoStatus,
                 })}
               >
-                {
-                  videoAvailable && isVideoStatus &&
+                {videoAvailable && isVideoStatus && (
                   <Webcam
-                  audio={false}
-                  width="212"
-                  height="160"
-                  onUserMediaError={() => handleOnVideo()}
-                />
-                }
+                    audio={false}
+                    width="212"
+                    height="160"
+                    onUserMediaError={() => handleOnVideo()}
+                  />
+                )}
                 {!videoAvailable && (
                   <Box className={classes.errorBox}>
                     <img src={CameraOff} className={classes.cameraOff} />

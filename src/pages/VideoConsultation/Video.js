@@ -20,6 +20,7 @@ function VideoConsultotion({
   waitingIndex,
   isAudioStatus,
   isVideoStatus,
+  setPatientAppointmentId,
 }) {
 
   const [end, setEnd] = useState(false)
@@ -60,7 +61,6 @@ function VideoConsultotion({
       socket.emit('updateLiveStatusOfUser', { status: 'online' })
       history.push('/doctors')
       socket.disconnect()
-      console.log('socket close during video end', socket)
       clearInterval(timer)
     } else {
       history.push({
@@ -129,6 +129,7 @@ function VideoConsultotion({
             waitingPatient={waitingPatient}
             isWaiting={isWaiting}
             waitingIndex={waitingIndex}
+            setPatientAppointmentId={setPatientAppointmentId}
           />
         </Box>
       )}

@@ -139,6 +139,10 @@ function AvailableSlots({ availableSlots, handleSlotTiming, doctorDetails, time 
               </Button>
             )
           })}
+          {
+            availableSlots && availableSlots.length === 0 &&
+            <Typography className={classes.errorMessage}>No slots are present on that date</Typography>
+          }
       </Box>
       {
         cancellation && 

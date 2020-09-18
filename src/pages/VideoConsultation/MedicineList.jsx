@@ -9,7 +9,7 @@ const usestyle = makeStyles(() => ({
     margin: 0,
     top: 56,
     backgroundColor: '#ffffff',
-    width: 355,
+    width: '23%',
     padding: '25px 15px 10px 23px',
     height: 'calc(100% - 63px)',
     overflowY: 'auto',

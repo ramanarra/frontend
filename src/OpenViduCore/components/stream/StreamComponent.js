@@ -62,11 +62,11 @@ export default class StreamComponent extends Component {
         <div className="pointer nickname">
           <div style={{ display: 'flex' }}>
             <div>{this.props.doctorName}</div>
-            {this.props.patientName && (
+            {this.props.subscribers && this.props.subscribers.length > 0 && this.props.patientName && (
               <div>{`${', '}${this.props.patientName}`}</div>
             )}
           </div>
-          {this.props.patientName && (
+          {this.props.subscribers && this.props.subscribers.length > 0 && this.props.patientName && (
             <div>
               {' '}
               2 paticipants{' '}

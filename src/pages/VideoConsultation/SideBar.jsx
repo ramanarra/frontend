@@ -15,7 +15,7 @@ import AddNewPatientConfirmationModel from './AddNewPatientConfirmationModel'
 
 const useStyle = makeStyles(() => ({
   topBar: {
-    width: 355,
+    width: '23%',
     height: 60,
     backgroundColor: '#ffffff',
     position: 'absolute',
@@ -88,6 +88,7 @@ function SideBar({
   waitingPatient,
   isWaiting,
   waitingIndex,
+  setPatientAppointmentId,
 }) {
   const classes = useStyle()
 
@@ -193,6 +194,7 @@ function SideBar({
     setIndex(index)
     setAppointmentId(appointmentId)
     setIsPatientClick(true)
+    setPatientAppointmentId(appointmentId)
   }
 
   function NextPatient(status) {
