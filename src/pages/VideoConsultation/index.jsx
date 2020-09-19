@@ -6,7 +6,7 @@ import ConfirmationModal from './ConfirmationModel'
 import Video from './Video'
 import SnackBar from '../../components/SnackBar'
 
-const ENDPOINT = 'https://dev.virujh.com'
+const ENDPOINT = 'https://virujh.com'
 
 // const ENDPOINT = 'http://883cb6b24b8a.ngrok.io/api/' 
 

@@ -12,7 +12,7 @@ import CancelAppointmentModal from './CancelAppointmentModal'
 import RescheduleAppointmentModal from './RescheduleAppointmentModal'
 import { useHistory, useLocation } from 'react-router-dom'
 
-const ENDPOINT = 'https://dev.virujh.com'
+const ENDPOINT = 'https://virujh.com'
 
 // const ENDPOINT = 'http://883cb6b24b8a.ngrok.io/api/'
 

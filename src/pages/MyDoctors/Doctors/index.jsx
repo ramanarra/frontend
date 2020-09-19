@@ -9,7 +9,7 @@ import InfoCard from './InfoCard'
 import usePermissions from '../../../hooks/usePermissions'
 import WaitingPatientList from './WaitingPatientList'
 
-const ENDPOINT = 'https://dev.virujh.com'
+const ENDPOINT = 'https://virujh.com'
 
 const userReadRoles = ['SELF_USER_SETTINGS_READ', 'ACCOUNT_USERS_SETTINGS_READ']
 
