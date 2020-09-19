@@ -6,7 +6,7 @@ import { Box } from '@material-ui/core'
 import OpenViduReact from '../../OpenViduCore/components/VideoRoomComponent'
 import ToolBarComponent from './Toolbar'
 import SideBar from './SideBar'
-import { setOpenSideBar } from '../../actions/patients'
+import { setOpenSideBar } from '../../actions/doctor'
 
 function VideoConsultotion({
   token,

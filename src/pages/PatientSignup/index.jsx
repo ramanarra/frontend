@@ -34,32 +34,37 @@ const PatientSignup = (props) => {
 
   const redirectToLogin = () => props.history.push('/login')
   const onSubmit = (data) => {
-    Api.post(URL.patientSignup, data)
-      .then((res) => {
-        const { data } = res
-        setCount(true)
-        setResponse(data)
-        if (data.patient?.accessToken) {
-          localStorage.setItem('virujhToken', data.patient.accessToken)
-          localStorage.setItem('patientId', data.patient.patientId)
-          localStorage.setItem(
-            'patientName',
-            `${data.details.firstName} ${data.details.lastName}`
-          )
-          setMessage('Thanks! Your account has been created successfully')
-          setDetail(data)
-          setError(true)
-        } else if (data?.patient.update === 'updated password') {
-          setError(true)
-          setMessage('Created successfully...Please do signin')
-        } else if (data?.statusCode) {
-          setError(true)
-          setMessage(data?.message)
-        }
-      })
-      .catch((err) => {
-        setCount(true)
-      })
+    if (data.phone === data.alternateContact) {
+      setMessage('Both contact numbers should not be same')
+      setError(true)
+    } else {
+      Api.post(URL.patientSignup, data)
+        .then((res) => {
+          const { data } = res
+          setCount(true)
+          setResponse(data)
+          if (data.patient?.accessToken) {
+            localStorage.setItem('virujhToken', data.patient.accessToken)
+            localStorage.setItem('patientId', data.patient.patientId)
+            localStorage.setItem(
+              'patientName',
+              `${data.details.firstName} ${data.details.lastName}`
+            )
+            setMessage('Thanks! Your account has been created successfully')
+            setDetail(data)
+            setError(true)
+          } else if (data?.patient.update === 'updated password') {
+            setError(true)
+            setMessage('Created successfully...Please do signin')
+          } else if (data?.statusCode) {
+            setError(true)
+            setMessage(data?.message)
+          }
+        })
+        .catch((err) => {
+          setCount(true)
+        })
+    }
   }
 
   useEffect(() => {
@@ -216,7 +221,6 @@ const PatientSignup = (props) => {
                       size="small"
                       format="DD/MM/YYYY"
                       placeholder="07/03/1985"
-                      // onChange={handle}
                       disableFuture
                       autoOk
                       InputProps={{
@@ -296,6 +300,7 @@ const PatientSignup = (props) => {
             <Button type="submit" className="signup-btn">
               Signup
             </Button>
+            <div>All fields are required</div>
             <div className="signin-btn-wrap">
               Already have a account?
               <span className="signin-btn" onClick={redirectToLogin}>

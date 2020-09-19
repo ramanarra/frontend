@@ -11,6 +11,7 @@ import useCustomFecth from '../../hooks/useCustomFetch'
 import useDoctorConfigUpdate from '../../hooks/useDoctorConfigUpdate'
 import useDocSettingWrite from '../../hooks/useDocSettingWrite'
 import LeftArrow from '../../assets/img/left-arrow.svg'
+import Profile from '../../assets/img/profile.png'
 
 const useStyle = makeStyles((theme) => ({
   container: {
@@ -90,7 +91,7 @@ function DoctorPersonalSetting() {
               <Typography className={classes.text}>Doctors Details</Typography>
             </Box>
             {data?.doctorDetails && (
-              <Avatar src={data.doctorDetails.photo} className={classes.photo} />
+              <Avatar src={data.doctorDetails.photo ? data.doctorDetails.photo : Profile} className={classes.photo} />
             )}
           </Box>
           <Box className={classes.rightSide}>

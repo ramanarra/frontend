@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import IconButton from '@material-ui/core/IconButton'
 
 import SnackBar from '../../components/SnackBar'
+import Signature from '../../assets/img/sign.jpg'
 
 const useStyles = makeStyles(() => ({
   notchedOutline: {
@@ -194,8 +195,7 @@ function ConsulationAndSignature({
       </Box>
       <div className={classes.signature}>
         <img
-          src={doctorDetails?.signature}
-          alt='signature'
+          src={doctorDetails?.signature ? doctorDetails.signature : Signature}
           className={classes.sign}
         />
       </div>
