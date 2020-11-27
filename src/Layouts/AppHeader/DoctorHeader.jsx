@@ -183,7 +183,7 @@ function DoctorHeader({ socket, timer }) {
         <i className={classNames('icon-notify', classes.notificationImg)}></i>
       </Box>
       <Box className={classes.gap}>
-        <Typography className={classes.text}>Amrit Medicare Pvt. Ltd.</Typography>
+        <Typography className={classes.text}>{window.localStorage.getItem('hospitalName')}</Typography>
       </Box>
       <ClickAwayListener onClickAway={handleOnAwayClick}>
         <Box className={classes.hospitalLogoContainer}>
