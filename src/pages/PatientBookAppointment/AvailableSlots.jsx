@@ -3,6 +3,7 @@ import classNames from 'classnames'
 import { Box, makeStyles, Button, Typography } from '@material-ui/core'
 import CheckCircleRoundedIcon from '@material-ui/icons/CheckCircleRounded'
 import ReportProblemOutlinedIcon from '@material-ui/icons/ReportProblemOutlined'
+import moment from 'moment'
 
 import getTimeFormatWithNoon from '../../lib/dateLib'
 
@@ -79,6 +80,8 @@ function AvailableSlots({ availableSlots, handleSlotTiming, doctorDetails, time 
     handleSlotTiming(slot)
   }
 
+  let currentTime = moment().format('HH:mm:ss')
+
   const cancellationDays =
     doctorDetails.cancellationDays && doctorDetails.cancellationDays !== '0'
       ? `${doctorDetails.cancellationDays} ${'days'} `
@@ -117,6 +120,7 @@ function AvailableSlots({ availableSlots, handleSlotTiming, doctorDetails, time 
         {availableSlots &&
           availableSlots.map((slot, index) => {
             return (
+              slot.startTime > currentTime &&
               <Button
                 className={classNames(classes.time, {
                   [classes.selectedTab]: time.start === slot.startTime,
