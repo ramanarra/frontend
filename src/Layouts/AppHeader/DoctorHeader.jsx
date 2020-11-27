@@ -114,14 +114,11 @@ const useStyles = makeStyles(() => ({
 }))
 
 function DoctorHeader({ socket, timer }) {
+  const IndividualHospitalName=window.localStorage.getItem('hospitalName')
   const classes = useStyles()
-
   const history = useHistory()
-
   const [open, setOpen] = useState(false)
-
   const [openSpinner, setOpenSpinner] = useState(false)
-
   const [updateData, updateError, isUpdating, data] = useManualFetch()
 
   function handleOnVideoClick() {
@@ -183,7 +180,7 @@ function DoctorHeader({ socket, timer }) {
         <i className={classNames('icon-notify', classes.notificationImg)}></i>
       </Box>
       <Box className={classes.gap}>
-        <Typography className={classes.text}>{window.localStorage.getItem('hospitalName')}</Typography>
+        <Typography className={classes.text}>{IndividualHospitalName}</Typography>
       </Box>
       <ClickAwayListener onClickAway={handleOnAwayClick}>
         <Box className={classes.hospitalLogoContainer}>

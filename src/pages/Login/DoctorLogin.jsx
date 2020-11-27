@@ -31,7 +31,7 @@ function DoctorLogin({ history }) {
         localStorage.setItem('accountKey', data.accountKey)
         const rolesPermission = JSON.stringify(data.rolesPermission)
         localStorage.setItem('rolesPermission', rolesPermission)
-        localStorage.setItem('hospitalName',data.account_name)
+        localStorage.setItem('hospitalName',data.accountName)
         history.push('/doctors')
       })
       .catch(() => {

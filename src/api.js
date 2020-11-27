@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export default axios.create({
-  baseURL: 'https://www.virujh.com/api/',
+  baseURL: 'http://localhost:3000/api',
   // baseURL: 'https://15d5d3e23cd5.ngrok.io/api/',
   // baseURL: 'https://virujh.com/api/',
 })
