@@ -2,6 +2,7 @@ import React from 'react'
 import classNames from 'classnames'
 import { Box, Button, Typography } from '@material-ui/core'
 import CheckCircleRoundedIcon from '@material-ui/icons/CheckCircleRounded'
+import moment from 'moment'
 
 import getTimeFormatWithNoon from '../../lib/dateLib'
 import useStyle from './useAvailableSlotsStyle'
@@ -13,12 +14,15 @@ function AvailableSlots({ availableSlots, handleSlotTiming, time }) {
     handleSlotTiming(slot)
   }
 
+  let currentTime = moment().format('HH:mm:ss')
+
   return (
     <Box className={classes.container}>
       <Box className={classes.availableSlots}>
         {availableSlots &&
           availableSlots.map((slot, index) => {
             return (
+              slot.startTime > currentTime &&
               <Button
                 className={classNames(classes.time, {
                   [classes.selectedTab]: time.start === slot.startTime,

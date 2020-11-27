@@ -48,7 +48,7 @@ const InfoCard = ({ doctorDetails, isRead }) => {
         </Box>
 
         <Box paddingLeft={1.1}>
-          <Typography className={classes.text}>Today's Appoinment</Typography>
+          <Typography className={classes.text}>Today's Appointment</Typography>
           <Box className={classes.appointmentsContent}>
             {doctorDetails.todaysAppointment.map(
               (appointments, index) =>
