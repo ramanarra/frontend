@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import {
   Box,
   Dialog,
@@ -6,7 +7,9 @@ import {
   Typography,
 } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
+
 import useStyle from './useNewPatientConfirmationStyle'
+import {clearMessages} from '../../actions/doctor'
 
 function AddNewPatientConfirmationModel({
   open,
@@ -15,6 +18,7 @@ function AddNewPatientConfirmationModel({
   onPatientJoining,
   nextPatientDetails,
   byDoctor,
+  clearMessages,
 }) {
   const classes = useStyle()
 
@@ -32,9 +36,11 @@ function AddNewPatientConfirmationModel({
         status
       )
       onClose()
+      clearMessages([])
     } else {
       NextPatient(status)
       onClose()
+      clearMessages([])
     }
   }
 
@@ -48,9 +54,11 @@ function AddNewPatientConfirmationModel({
         status
       )
       onClose()
+      clearMessages([])
     } else {
       NextPatient(status)
       onClose()
+      clearMessages([])
     }
   }
 
@@ -66,8 +74,8 @@ function AddNewPatientConfirmationModel({
               Finish consultation and join the next patient consultation.
             </Typography>
             <Box className={classes.buttons} display="flex">
-              <Box className={classes.cancelButton} onClick={() => handlePause('paused')}>
-                <Typography className={classes.cancelText}>PAUSE</Typography>
+              <Box className={classes.pauseButton} onClick={() => handlePause('paused')}>
+                <Typography className={classes.pauseText}>PAUSE</Typography>
               </Box>
               <Box className={classes.cancelButton} onClick={handleClose}>
                 <Typography className={classes.cancelText}>CANCEL</Typography>
@@ -83,4 +91,10 @@ function AddNewPatientConfirmationModel({
   )
 }
 
-export default AddNewPatientConfirmationModel
+const mapDispatchToProps = (dispatch) => {
+  return {
+    clearMessages: (data) => dispatch(clearMessages(data)),
+  }
+}
+
+export default connect(null, mapDispatchToProps)(AddNewPatientConfirmationModel)

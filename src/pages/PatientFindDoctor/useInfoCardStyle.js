@@ -2,17 +2,17 @@ import { makeStyles } from '@material-ui/core/styles'
 
 const useInforCardStyle = makeStyles((theme) => ({
   container: {
-    width: 325,
-    marginTop: 20,
-    marginRight: 27.2,
+    width: '23.05%',
+    marginTop: '1.5%',
+    marginRight: '1.9%',
     backgroundColor: 'white',
-    padding: '15px 14px 10px 20px',
+    padding: '1.5% 0.9% 1% 1.4%',
     borderBottom: '2px solid #0bb5ff',
     boxShadow: '5px 0px 15px 0px #f3eeee',
   },
 
   mainDetails: {
-    height: 64,
+    height: '40%',
   },
 
   large: {
@@ -21,52 +21,52 @@ const useInforCardStyle = makeStyles((theme) => ({
   },
 
   name: {
-    fontSize: 18.5,
+    fontSize: '93%',
     color: '#645f5f',
   },
 
   desgination: {
-    fontSize: 12,
+    fontSize: '60%',
     color: '#c1b6b6',
   },
 
   hospitalName: {
-    fontSize: 10,
+    fontSize: '51%',
     color: '#c1b6b6',
   },
 
   fees: {
-    paddingLeft: 5,
-    width: 60,
+    paddingLeft: '2%',
+    width: '20%',
   },
 
   contactNumber: {
-    paddingLeft: 15,
+    paddingLeft: '5%',
   },
 
   hospital: {
-    marginLeft: 55,
+    marginLeft: '19%',
   },
 
   location: {
-    paddingLeft: 26,
+    paddingLeft: '9%',
   },
 
   text: {
-    fontSize: 11.5,
+    fontSize: '57%',
     color: '#c8c8c8',
   },
 
   value: {
-    fontSize: 11.5,
+    fontSize: '57%',
     color: '#947f7f',
     fontWeight: 600,
   },
 
   button: {
     textTransform: 'capitalize',
-    fontSize: 10,
-    padding: '1px 9px',
+    fontSize: '50%',
+    padding: '0.5% 3%',
     border: '1.5px solid #94dfff',
     color: '#0bb5ff',
     borderRadius: 3,
@@ -74,8 +74,8 @@ const useInforCardStyle = makeStyles((theme) => ({
 
   hospitalButton: {
     textTransform: 'capitalize',
-    fontSize: 13,
-    padding: '1px 15px',
+    fontSize: '65%',
+    padding: '0.5% 5%',
     border: '1.5px solid #94dfff',
     backgroundColor: '#0bb5ff',
     color: '#f7f7f7',

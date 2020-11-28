@@ -71,7 +71,6 @@ function VideoConsulation() {
       }
 
       socket.on('getDoctorAppointments', (data) => {
-        // console.log('2',data)
         setPatientList(data)
       })
       socket.on('videoTokenForDoctor', (data) => {

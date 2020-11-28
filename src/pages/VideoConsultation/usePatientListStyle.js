@@ -101,6 +101,9 @@ const usePatientListStyle = makeStyles((theme) => ({
     left: 35,
     bottom: 19,
   },
+  spinner: {
+    marginLeft: '45%',
+  },
 }))
 
 export default usePatientListStyle

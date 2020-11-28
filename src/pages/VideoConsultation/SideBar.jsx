@@ -14,7 +14,7 @@ import SelectedTabIcon from '../../assets/img/selected-tab-icon.svg'
 import Chat from './Chat'
 import MedicineList from './MedicineList'
 import AddNewPatientConfirmationModel from './AddNewPatientConfirmationModel'
-import { setOpenSideBar } from '../../actions/doctor'
+import { setOpenSideBar, setSelectedAppointmentId } from '../../actions/doctor'
 
 function SideBar({
   patientList,
@@ -32,7 +32,10 @@ function SideBar({
   isWaiting,
   waitingIndex,
   setPatientAppointmentId,
-  setOpenSideBar
+  setOpenSideBar,
+  setSelectedAppointmentId,
+  setFullScreen,
+  setInterChange,
 }) {
   const classes = useStyle()
 
@@ -140,6 +143,7 @@ function SideBar({
     setAppointmentId(appointmentId)
     setIsPatientClick(true)
     setPatientAppointmentId(appointmentId)
+    setSelectedAppointmentId(appointmentId)
   }
 
   function NextPatient(status) {
@@ -180,7 +184,8 @@ function SideBar({
 
   return (
     <Box>
-      {localStorage.getItem('loginUser') === 'doctor' && (
+      {(localStorage.getItem('loginUser') === 'doctor' ||
+        localStorage.getItem('loginUser') === 'patient') && (
         <div>
           <div>
             {!open && !openChat && !openMedicine && (
@@ -193,22 +198,24 @@ function SideBar({
             )}
             {openTopBar && (
               <div className={classes.topBar}>
-                <div className={classes.icons}>
-                  <div className={classes.groupIconHeader}>
-                    {isWaitingActive ? (
-                      <img
-                        src={SelectedWaitingIcon}
-                        className={classes.groupIcon}
-                        onClick={handleOnPatientList}
-                      />
-                    ) : (
-                      <img
-                        src={waitingIcon}
-                        className={classes.groupIcon}
-                        onClick={handleOnPatientList}
-                      />
-                    )}
-                  </div>
+                <div className={localStorage.getItem('loginUser') === 'doctor' ? classes.icons : classes.patientIcons}>
+                  {localStorage.getItem('loginUser') === 'doctor' && (
+                    <div className={classes.groupIconHeader}>
+                      {isWaitingActive ? (
+                        <img
+                          src={SelectedWaitingIcon}
+                          className={classes.groupIcon}
+                          onClick={handleOnPatientList}
+                        />
+                      ) : (
+                        <img
+                          src={waitingIcon}
+                          className={classes.groupIcon}
+                          onClick={handleOnPatientList}
+                        />
+                      )}
+                    </div>
+                  )}
                   <div className={classes.chatIconHeader}>
                     {isChatActive ? (
                       <img
@@ -243,7 +250,7 @@ function SideBar({
               </div>
             )}
           </div>
-          {open && (
+          {open && localStorage.getItem('loginUser') === 'doctor' && (
             <PatientList
               patientList={patientList}
               open={open}
@@ -262,6 +269,8 @@ function SideBar({
               setCount={setCount}
               id={id}
               setOpenTopBar={setOpenTopBar}
+              setFullScreen={setFullScreen}
+              setInterChange={setInterChange}
             />
           )}
         </div>
@@ -287,6 +296,7 @@ function SideBar({
 const mapDispatchToProps = (dispatch) => {
   return {
     setOpenSideBar: (data) => dispatch(setOpenSideBar(data)),
+    setSelectedAppointmentId: (data) => dispatch(setSelectedAppointmentId(data)),
   }
 }
 

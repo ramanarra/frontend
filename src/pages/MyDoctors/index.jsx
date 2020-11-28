@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { Box, makeStyles } from '@material-ui/core'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 import { METHOD, URL } from '../../api'
 import useCustomFetch from '../../hooks/useCustomFetch'
@@ -16,6 +17,11 @@ const useStyles = makeStyles(() => ({
     background: '#f9f9f9',
     overflowY: 'auto',
   },
+  spinner: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+  },
 }))
 
 function MyDoctors() {
@@ -25,10 +31,19 @@ function MyDoctors() {
 
   const [data] = useCustomFetch(METHOD.GET, URL.doctorList)
 
+  const [count, setCount] = useState(0)
+
   const path = location.pathname.split('/')
 
   const pathName = path.length === 2 ? path[1] : ''
 
+  const handleTimeout = () => {
+    if (!data) {
+      setCount(1)
+    }
+  }
+
+  const timer = !count && setTimeout(() => handleTimeout(), 40000)
 
   return (
     <Box className={classes.container}>
@@ -40,6 +55,7 @@ function MyDoctors() {
           <Appointments doctorList={data.doctorList} />
         )
       ) : null}
+      {!data && !count && <CircularProgress className={classes.spinner} />}
     </Box>
   )
 }

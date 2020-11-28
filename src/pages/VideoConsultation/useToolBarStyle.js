@@ -8,6 +8,13 @@ const useToolBarStyle = makeStyles(() => ({
     top: '85%',
   },
 
+  rootForFullScreen: {
+    position: 'fixed',
+    zIndex: 5,
+    left: '33.5%',
+    top: '85%',
+  },
+
   iconButton: {
     marginLeft: 30,
     background: '#ffffff',

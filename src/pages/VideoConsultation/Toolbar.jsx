@@ -7,6 +7,8 @@ import CallOnIcon from '../../assets/img/call-on.svg'
 import AddCallIcon from '../../assets/img/person.png'
 import VideoOffIcon from '../../assets/img/video-off.svg'
 import MicOffIcon from '../../assets/img/mic-off.svg'
+import InterChangeIcon from '../../assets/img/inter-change.svg'
+import FullscreenIcon from '../../assets/img/full-screen.svg'
 import NonAvailabilityModal from './NonAvailabilityModal'
 import LeaveCallModal from './LeaveCallModal'
 import useStyle from './useToolBarStyle'
@@ -20,6 +22,10 @@ function Toolbar({
   AddNextPatient,
   videoAvailability,
   audioAvailability,
+  subscribers,
+  isFullScreen,
+  handleOnFullScreen,
+  handleOnInterChange,
 }) {
   const classes = useStyle()
 
@@ -35,18 +41,21 @@ function Toolbar({
   }
 
   function handleOnLeave() {
-    if(localStorage.getItem('loginUser') === 'doctor') {
+    if (localStorage.getItem('loginUser') === 'doctor') {
       setOpenLeaveModal(true)
-    }
-    else {
+    } else {
       onLeaveSession()
     }
-    
   }
 
   return (
     <div>
-      <div className={classes.root}>
+      <div className={ isFullScreen ? classes.rootForFullScreen : classes.root}>
+        {isFullScreen && (
+          <IconButton className={classes.iconButton} onClick={handleOnInterChange}>
+            <img src={InterChangeIcon} className={classes.videoIcon} />
+          </IconButton>
+        )}
         {videoAvailability ? (
           <IconButton className={classes.iconButton} onClick={onVideoStateChange}>
             {isVideoActive ? (
@@ -56,7 +65,10 @@ function Toolbar({
             )}
           </IconButton>
         ) : (
-          <IconButton className={classes.iconButton} onClick={() => handleOnClick('Camera')}>
+          <IconButton
+            className={classes.iconButton}
+            onClick={() => handleOnClick('Camera')}
+          >
             <img src={VideoOffIcon} className={classes.videoIcon} />
           </IconButton>
         )}
@@ -70,7 +82,10 @@ function Toolbar({
             )}
           </IconButton>
         ) : (
-          <IconButton className={classes.iconButton} onClick={() => handleOnClick('Audio')}>
+          <IconButton
+            className={classes.iconButton}
+            onClick={() => handleOnClick('Audio')}
+          >
             <img src={MicOffIcon} className={classes.videoIcon} />
           </IconButton>
         )}
@@ -81,6 +96,11 @@ function Toolbar({
         {localStorage.getItem('loginUser') === 'doctor' && (
           <IconButton className={classes.iconButton} onClick={AddNextPatient}>
             <img src={AddCallIcon} className={classes.addIcon} />
+          </IconButton>
+        )}
+        {subscribers.length > 0 && (
+          <IconButton className={classes.iconButton} onClick={handleOnFullScreen}>
+            <img src={FullscreenIcon} className={classes.videoIcon} />
           </IconButton>
         )}
       </div>

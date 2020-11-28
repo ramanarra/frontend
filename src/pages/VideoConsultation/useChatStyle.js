@@ -30,16 +30,52 @@ const useChatStyle = makeStyles(() => ({
   messageBox: {
     position: 'absolute',
     bottom: 20,
+    borderBottom: '1px solid',
+    boxShadow: '0px 0px 3px 0px',
   },
   text: {
-    width: 300,
+    width: 285,
     height: 30,
+    border: 'none',
+    resize: 'none',
+    outline: 'none',
+    marginLeft: 10,
   },
   sentIcon: {
     width: 15,
     cursor: 'pointer',
-    marginRight: 2,
+    marginRight: 10,
     marginTop: 5,
+  },
+  messageContainer: {
+    overflowY: 'auto',
+    height: '100%',
+  },
+  senderHeader: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
+  sender: {
+    color: '#ffffff',
+    display: 'flex',
+    justifyContent: 'flex-end',
+    margin: '10px 0px',
+    width: 'fit-content',
+    boxShadow: '5px 0px 15px 0px #f3eeee',
+    background: '#00b5ff',
+    borderRadius: 5,
+  },
+  receiver: {
+    color: '#ffffff',
+    display: 'flex',
+    margin: '20px 0px',
+    width: 'fit-content',
+    boxShadow: '5px 0px 15px 0px #f3eeee',
+    background: '#000000',
+    borderRadius: 5,
+  },
+  textMessage: {
+    padding: 6,
   },
 }))
 

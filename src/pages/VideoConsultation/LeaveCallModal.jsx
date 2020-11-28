@@ -1,14 +1,18 @@
 import React from 'react'
-import {
-  Box,
-  Dialog,
-  DialogContent,
-  Typography,
-} from '@material-ui/core'
+import { connect } from 'react-redux'
+import { Box, Dialog, DialogContent, Typography } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
-import useStyle from './useLeaveCallStyle'
 
-function LeaveCallModal({ open, setOpenLeaveModal, onLeaveSession }) {
+import useStyle from './useLeaveCallStyle'
+import { setSelectedAppointmentId } from '../../actions/doctor'
+
+function LeaveCallModal({
+  open,
+  setOpenLeaveModal,
+  onLeaveSession,
+  patientAppointmentId,
+  setSelectedAppointmentId,
+}) {
   const classes = useStyle()
 
   function handleClose() {
@@ -18,11 +22,13 @@ function LeaveCallModal({ open, setOpenLeaveModal, onLeaveSession }) {
   function handleSUbmit(status) {
     onLeaveSession(status)
     setOpenLeaveModal(false)
+    setSelectedAppointmentId(null)
   }
 
   function handlePause(status) {
     onLeaveSession(status)
     setOpenLeaveModal(false)
+    setSelectedAppointmentId(null)
   }
 
   return (
@@ -33,18 +39,20 @@ function LeaveCallModal({ open, setOpenLeaveModal, onLeaveSession }) {
             <CloseIcon className={classes.closeIcon} onClick={handleClose} />
           </Box>
           <Box>
-            <Typography className={classes.text} variant="h5">
-              Finish Consultation and leave the call
-            </Typography>
+            {patientAppointmentId && (
+              <Typography className={classes.text} variant="h5">
+                Finish Consultation and leave the call
+              </Typography>
+            )}
             <Typography className={classes.text} variant="h5">
               Are you sure want to leave the call?
             </Typography>
             <Box className={classes.buttons} display="flex">
               <Box
-                className={classes.cancelButton}
+                className={classes.pauseButton}
                 onClick={() => handlePause('paused')}
               >
-                <Typography className={classes.cancelText}>PAUSE</Typography>
+                <Typography className={classes.pauseText}>PAUSE</Typography>
               </Box>
               <Box className={classes.cancelButton} onClick={handleClose}>
                 <Typography className={classes.cancelText}>CANCEL</Typography>
@@ -63,4 +71,16 @@ function LeaveCallModal({ open, setOpenLeaveModal, onLeaveSession }) {
   )
 }
 
-export default LeaveCallModal
+const mapStateToProps = (state) => {
+  return {
+    patientAppointmentId: state.doctor.patientAppointmentId,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setSelectedAppointmentId: (data) => dispatch(setSelectedAppointmentId(data)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LeaveCallModal)

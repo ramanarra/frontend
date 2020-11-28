@@ -109,15 +109,32 @@ const useUpcomingAndPastViewStyle = makeStyles(() => ({
     border: '1.5px solid #0bb5ff',
     cursor: 'pointer',
   },
+  disableReschduleButton: {
+    marginRight: 15,
+    padding: '5px 40px',
+    borderRadius: 17,
+    border: '1.5px solid #e4e3e3',
+    backgroundColor: '#efefef',
+  },
   rescheduleText: {
     fontSize: 10.5,
-    color: '0bb5ff',
+    color: '#0bb5ff',
+  },
+  disableRescheduleText: {
+    fontSize: 10.5,
+    color: '#8a8a8a',
   },
   cancelButton: {
     padding: '6px 47px',
     borderRadius: 17,
     backgroundColor: '#e4e3e3',
     cursor: 'pointer',
+  },
+  disableCancelButton: {
+    padding: '6px 47px',
+    borderRadius: 17,
+    border: '1.5px solid #e4e3e3',
+    backgroundColor: '#efefef',
   },
   cancelText: {
     fontSize: 10.5,

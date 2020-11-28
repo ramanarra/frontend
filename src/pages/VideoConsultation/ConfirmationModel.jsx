@@ -8,7 +8,6 @@ import {
   Dialog,
   DialogContent,
   Button,
-  makeStyles,
   Typography,
 } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
@@ -186,7 +185,7 @@ function ConfirmationPopUp({
                 </Box>
               )}
               {localStorage.getItem('loginUser') === 'patient' && (
-                <Box>
+                <Box className={classes.details}>
                   <Box display="flex">
                     <Typography className={classes.fieldName}>
                       Doctor Name:
@@ -216,7 +215,7 @@ function ConfirmationPopUp({
                   className={classes.joinButton}
                   onClick={handleOnClick}
                   disabled={isJoinDisabled}
-                  style={{ backgroundColor: '#0bb5ff' }}
+                  style={ isJoinDisabled ? { backgroundColor: '#edeff2' } : { backgroundColor: '#00b5ff'}}
                 >
                   JOIN
                 </Button>

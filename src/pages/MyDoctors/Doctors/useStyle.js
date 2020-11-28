@@ -70,13 +70,14 @@ export default useNavigationStyles
 export const useInfocardStyles = makeStyles((theme) => ({
 
     container: {
-      marginTop: 20,
-      marginRight: 25,
+      width: '23.1%',
+      marginTop: '1.5%',
+      marginRight: '1.9%',
       backgroundColor: 'white',
-      padding: '15px 13px 10px 20px',
+      padding: '1.5% 0.9% 1% 1.4%',
       borderBottom: '2px solid #0bb5ff',
       boxShadow: '5px 0px 15px 0px #f3eeee',
-      height: 208,
+      height: '40%',
     },
   
     large: {
@@ -85,22 +86,27 @@ export const useInfocardStyles = makeStyles((theme) => ({
     },
   
     name: {
-      fontSize: 18.5,
+      fontSize: '93%',
       color: '#645f5f',
     },
   
     desgination: {
-      fontSize: 12,
+      fontSize: '60%',
       color: '#c1b6b6',
     },
   
     text: {
-      fontSize: 11.5,
+      fontSize: '57%',
+      color: '#c8c8c8',
+    },
+
+    slotText: {
+      fontSize: '56%',
       color: '#c8c8c8',
     },
   
     value: {
-      fontSize: 11.5,
+      fontSize: '57%',
       color: '#947f7f',
       fontWeight: 600
     },
@@ -114,18 +120,18 @@ export const useInfocardStyles = makeStyles((theme) => ({
     appointments: {
       textAlign: 'center',
       background: '#efefef',
-      fontSize: 11,
+      fontSize: '54%',
       color: '#c1b6b6',
-      borderRadius: 50,
-      marginTop: 3,
-      marginRight: 1,
-      width: 58,
+      borderRadius: '30%',
+      marginTop: '2.5%',
+      marginRight: '1%',
+      width: '49%',
     },
   
     button: {
       textTransform: 'capitalize',
-      fontSize: 13,
-      padding: '1px 9px',
+      fontSize: '65%',
+      padding: '1% 4%',
       border: '1.5px solid #94dfff',
       color: '#0bb5ff',
       borderRadius: 3,
@@ -133,8 +139,8 @@ export const useInfocardStyles = makeStyles((theme) => ({
     },
     appointmentButton: {
       textTransform: 'capitalize',
-      fontSize: 13,
-      padding: '1px 9px',
+      fontSize: '65%',
+      padding: '1% 4%',
       border: '1.5px solid #94dfff',
       color: '#ffffff',
       backgroundColor: '#0bb5ff',

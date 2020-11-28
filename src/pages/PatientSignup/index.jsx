@@ -5,6 +5,7 @@ import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers'
 import { GoCalendar } from 'react-icons/go'
 import { useForm, Controller } from 'react-hook-form'
 import MomentUtils from '@date-io/moment'
+import StarIcon from '@material-ui/icons/Star'
 
 import Textfield from '../../components/Textfield'
 import './style.scss'
@@ -209,7 +210,9 @@ const PatientSignup = (props) => {
           <div className="field-wrap field-partition">
             <div className="dob-field">
               <MuiPickersUtilsProvider utils={MomentUtils}>
-                <div className="field-label">Date of Birth</div>
+                <div className="field-label">Date of Birth
+                <StarIcon className="star-icon" />
+                </div>
                 <Controller
                   name="dateOfBirth"
                   control={control}
@@ -300,7 +303,6 @@ const PatientSignup = (props) => {
             <Button type="submit" className="signup-btn">
               Signup
             </Button>
-            <div>All fields are required</div>
             <div className="signin-btn-wrap">
               Already have a account?
               <span className="signin-btn" onClick={redirectToLogin}>

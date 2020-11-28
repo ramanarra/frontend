@@ -62,14 +62,14 @@ const InfoCard = ({ doctorDetails, isRead }) => {
         </Box>
 
         <Box paddingLeft={2.4}>
-          <Typography className={classes.text}>Total Available slots</Typography>
+          <Typography className={classes.slotText}>Total Available slots</Typography>
           <Typography className={classes.value}>
             {doctorDetails.todaysAvailabilitySeats}
           </Typography>
         </Box>
       </Box>
 
-      <Box marginTop={1.5} display="flex" justifyContent="flex-end">
+      <Box marginTop={1.5} textAlign="end" justifyContent="flex-end">
         {isRead && (
           <Box>
             <Button

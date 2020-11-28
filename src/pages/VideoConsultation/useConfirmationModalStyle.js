@@ -155,6 +155,9 @@ const useConfirmationModalStyle = makeStyles(() => ({
   videoOff: {
     background: '#000000',
   },
+  details: {
+    paddingLeft: 10,
+  }
 }))
 
 export default useConfirmationModalStyle

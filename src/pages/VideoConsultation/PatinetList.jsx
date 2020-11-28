@@ -1,9 +1,10 @@
 import React, {useEffect} from 'react'
 import { connect } from 'react-redux'
 import classNames from 'classnames'
-import { Box, Typography, Avatar, makeStyles } from '@material-ui/core'
+import { Box, Typography, Avatar } from '@material-ui/core'
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 import getTimeFormatWithNoon, { getTimeFormat } from '../../lib/dateLib'
 import {setOpenSideBar} from '../../actions/doctor'
@@ -26,6 +27,8 @@ function PatientList({
   id,
   setOpenTopBar,
   setOpenSideBar,
+  setFullScreen,
+  setInterChange,
 }) {
   const classes = useStyle()
 
@@ -46,6 +49,8 @@ function PatientList({
         })
         clickByDoctor()
         AddNextPatient()
+        setInterChange(false)
+        setFullScreen(false)
       } else {
         onJoiningPatient(appointmentId, firstName, lastName, index)
       }
@@ -61,6 +66,8 @@ function PatientList({
         waitingIndex
       )
       setCount(1)
+      setFullScreen(false)
+      setInterChange(false)
     }
   }, [isWaiting])
 
@@ -144,6 +151,10 @@ function PatientList({
                   </Box>
                 )
               })}
+              {
+                !patientList && 
+                <CircularProgress color="primary" className={classes.spinner} />
+              }
           </Box>
         </Box>
       )}

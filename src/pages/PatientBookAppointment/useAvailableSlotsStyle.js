@@ -40,6 +40,12 @@ const useAvailableSlotsStyle = makeStyles(() => ({
     color: '#ffffff',
     marginLeft: 6,
   },
+  errorMessage: {
+    color:  '#ff0023',
+    position: 'absolute',
+    top: '45%',
+    right: '11%',
+  },
 }))
 
 export default useAvailableSlotsStyle

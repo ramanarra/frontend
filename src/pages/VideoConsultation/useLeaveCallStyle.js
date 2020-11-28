@@ -31,6 +31,17 @@ const useLeaveCallStyle = makeStyles(() => ({
     fontSize: 12,
     color: '#a8a8a8',
   },
+  pauseButton: {
+    padding: '8.5px 26px',
+    borderRadius: 20,
+    border: '1px solid #0bb5ff',
+    marginRight: 15,
+    cursor: 'pointer',
+  },
+  pauseText: {
+    fontSize: 12,
+    color: '#0bb5ff',
+  },
   confirmButton: {
     padding: '8.5px 38px',
     borderRadius: 20,

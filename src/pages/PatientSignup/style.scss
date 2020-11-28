@@ -79,6 +79,12 @@
 
       .field-label {
         margin-bottom: 8px;
+        .star-icon {
+          width: 8px;
+          color: #ff0023;
+          position: absolute;
+          top: -10px;
+        }
       }
 
       .MuiOutlinedInput-notchedOutline {

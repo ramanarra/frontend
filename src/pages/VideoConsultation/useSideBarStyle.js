@@ -48,6 +48,10 @@ const useSideBarStyle = makeStyles(() => ({
   icons: {
     display: 'flex',
   },
+  patientIcons: {
+    display: 'flex',
+    marginLeft: '20%',
+  },
   groupIconHeader: {
     width: 125,
     borderRight: '1px solid #d9d6d6',

@@ -1,51 +1,54 @@
 import { makeStyles } from '@material-ui/core/styles'
 
 const usePatientAppointmentSlotStyle = makeStyles(() => ({
+  topContainer: {
+    width: '50%'
+  },
   container: {
-    width: 675,
+    width: '98%',
     background: '#f9f9f9',
     backgroundColor: 'white',
-    padding: '11px 8px 30px 30px',
+    padding: '1.5% 1% 4.3% 4.5%',
     boxShadow: '5px 0px 15px 0px #f3eeee',
-    marginBottom: 20,
-    marginRight: 12,
+    marginBottom: '3%',
+    // marginRight: 12,
     cursor: 'pointer',
   },
   timing: {
     justifyContent: 'flex-end',
-    paddingRight: 10,
+    paddingRight: '2%',
     color: '#a8a8a8',
   },
   scheduleIcon: {
-    width: 18,
-    marginRight: 5,
+    width: '2.8%',
+    marginRight: '1%',
     marginTop: -1,
   },
   time: {
-    fontSize: 15,
+    fontSize: '75%',
   },
   date: {
-    fontSize: 53,
+    fontSize: '262%',
     letterSpacing: 2,
   },
   month: {
-    fontSize: 20,
-    paddingLeft: 8,
+    fontSize: '100%',
+    paddingLeft: '12%',
     letterSpacing: 0.5,
     variant: 'h5',
   },
   doctorDetails: {
-    paddingLeft: 42,
-    paddingTop: 9,
+    paddingLeft: '6.5%',
+    paddingTop: '1.5%',
   },
   name: {
     variant: 'h5',
-    fontSize: 16,
+    fontSize: '80%',
     letterSpacing: 0.5,
   },
   hospitalName: {
-    paddingTop: 6,
-    fontSize: 15,
+    paddingTop: '5%',
+    fontSize: '75%',
     color: '#8c8a8a',
     letterSpacing: 0.5,
   },

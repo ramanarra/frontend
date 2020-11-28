@@ -47,7 +47,7 @@ function AvailableSlots({ availableSlots, handleSlotTiming, time }) {
           })}
           {
             availableSlots && availableSlots.length === 0 &&
-            <Typography className={classes.errorMessage}>No slots are present on that date</Typography>
+            <Typography className={classes.errorMessage}>No slots are available on that date</Typography>
           }
       </Box>
     </Box>

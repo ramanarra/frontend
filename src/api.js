@@ -29,6 +29,7 @@ export const URL = {
     upcomingApp: '/calendar/doctor/patientUpcomingAppList',
     pastApp: '/calendar/doctor/patientPastAppList',
     search: '/calendar/doctor/patientGeneralSearch',
+    listForDoctor: '/calendar/doctor/patientList',
   },
   appointmentSlotsView: '/calendar/doctor/appointmentSlotsView',
   appointmentView: '/calendar/appointmentView',

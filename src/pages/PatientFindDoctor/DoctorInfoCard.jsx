@@ -1,7 +1,7 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 import classNames from 'classnames'
-import { Avatar, Box, Typography, Button, makeStyles } from '@material-ui/core'
+import { Avatar, Box, Typography, Button } from '@material-ui/core'
 import useStyle from './useInfoCardStyle'
 
 const DoctorInfoCard = ({ doctorDetail, doctorListInHospital, isHospital }) => {
@@ -31,7 +31,7 @@ const DoctorInfoCard = ({ doctorDetail, doctorListInHospital, isHospital }) => {
           className={classes.large}
         />
 
-        <Box style={{ marginLeft: 13 }}>
+        <Box style={{ marginLeft: '4.5%' }}>
           <Box display="flex">
             {!doctorDetail.doctorKey && (
               <Typography className={classes.name}>
@@ -57,7 +57,7 @@ const DoctorInfoCard = ({ doctorDetail, doctorListInHospital, isHospital }) => {
         </Box>
       </Box>
 
-      <Box style={{ marginTop: 30 }} display="flex">
+      <Box style={{ marginTop: '10.3%' }} display="flex">
         {doctorDetail.doctorKey && (
           <Box className={classes.fees}>
             <Typography className={classes.text}>Fees</Typography>

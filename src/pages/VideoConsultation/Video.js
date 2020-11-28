@@ -36,6 +36,10 @@ function VideoConsultotion({
 
   const [isPatientClick, setIsPatientClick] = useState(false)
 
+  const [fullScreen, setFullScreen] = useState(false)
+
+  const [interChange, setInterChange] = useState(false)
+
   const history = useHistory()
 
   const location = useLocation()
@@ -92,6 +96,17 @@ function VideoConsultotion({
     setByDoctor(true)
   }
 
+  function handleOnFullScreen() {
+    if(fullScreen) {
+      setInterChange(false)
+    }
+    setFullScreen(!fullScreen)
+  }
+
+  function handleOnInterChange() {
+    setInterChange(!interChange)
+  }
+
   return (
     <Fragment>
       {token && (
@@ -116,6 +131,10 @@ function VideoConsultotion({
             isPatientClick={isPatientClick}
             isAudioStatus={isAudioStatus}
             isVideoStatus={isVideoStatus}
+            handleOnFullScreen={handleOnFullScreen}
+            isFullScreen={fullScreen}
+            isInterChange={interChange}
+            handleOnInterChange={handleOnInterChange}
           />
           <SideBar
             patientList={patientList}
@@ -134,6 +153,8 @@ function VideoConsultotion({
             isWaiting={isWaiting}
             waitingIndex={waitingIndex}
             setPatientAppointmentId={setPatientAppointmentId}
+            setFullScreen={setFullScreen}
+            setInterChange={setInterChange}
           />
         </Box>
       )}

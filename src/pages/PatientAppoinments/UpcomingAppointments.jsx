@@ -1,23 +1,40 @@
 import React, { useState, useEffect } from 'react'
 import { Box, makeStyles, Button } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
+import InfiniteScroll from 'react-infinite-scroll-component'
 
 import PatientAppointmentSlot from './PatientAppointmentSlot'
-import useCustomFecth from '../../hooks/useCustomFetch'
+import useManualFetch from '../../hooks/useManualFetch'
 import { METHOD, URL } from '../../api'
 import borderColors from './constants'
 import useAppointmentUpdate from '../../hooks/useAppointmentUpdate'
 import SnackBar from '../../components/SnackBar'
 import ScheduleImg from '../../assets/img/Schedule.svg'
 
-
 const useStyle = makeStyles(() => ({
   container: {
     width: '100%',
-    paddingTop: 20,
-    paddingLeft: 14,
-    paddingRight: 12,
+    height: '100%',
+    paddingTop: '1.5%',
+    paddingLeft: '1%',
+    paddingRight: '1%',
     overflowY: 'auto',
+    '& .infinite-scroll-component__outerdiv': {
+      width: '100%',
+      height: '100%',
+    },
+  },
+  scrollContainter: {
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  appointmentSlots: {
+    width: '100%',
+    display: 'flex',
+    flexWrap: 'wrap',
+    height: 'fit-content',
   },
   noappointmentsBox: {
     width: '100%',
@@ -33,11 +50,6 @@ const useStyle = makeStyles(() => ({
   },
 }))
 
-const key = {
-  limit: String(30),
-  paginationNumber: 0,
-}
-
 function UpcomingAppointments() {
   const classes = useStyle()
 
@@ -45,13 +57,37 @@ function UpcomingAppointments() {
 
   const history = useHistory()
 
-  const [appointmentsList, refetch] = useCustomFecth(
-    METHOD.GET,
-    URL.patientUpcomingAppointments,
-    key
-  )
+  const [isRefetch, setRefetch] = useState(false)
+
+  const [paginationNumber, setPaginationNumber] = useState(0)
+
+  const [appointmentsList, setAppointmentsList] = useState([])
+
+  const [updateDate, error, loading, data] = useManualFetch()
+
+  const refetch = () => {
+    setPaginationNumber(0)
+    setAppointmentsList([])
+    setRefetch(!isRefetch)
+  }
 
   const [onSave, response] = useAppointmentUpdate(refetch)
+
+  useEffect(() => {
+    if (data?.appointments) {
+      setAppointmentsList(appointmentsList.concat(data.appointments))
+    }
+  }, [data])
+
+  useEffect(() => {
+    const limit = '15'
+    updateDate(
+      METHOD.GET,
+      `${
+        URL.patientUpcomingAppointments
+      }${'?limit='}${limit}${'&paginationNumber='}${paginationNumber}`
+    )
+  }, [paginationNumber, isRefetch])
 
   useEffect(() => {
     if (response) {
@@ -70,39 +106,53 @@ function UpcomingAppointments() {
     history.push('/patient/find-doctor')
   }
 
+  const fetchData = () => {
+    setPaginationNumber(paginationNumber + 1)
+  }
+
   return (
     <Box className={classes.container} display="flex" flexWrap="wrap">
-      {appointmentsList &&
-        appointmentsList?.appointments &&
-        appointmentsList.appointments.map((appointmentDetail, index) => {
-          return (
-            <PatientAppointmentSlot
-              appointmentDetail={appointmentDetail}
-              borderColor={borderColors[index % 4]}
-              key={index}
-              onSave={onSave}
-              past={false}
-            />
-          )
-        })}
-      {appointmentsList && (appointmentsList.length === 0 || appointmentsList.statusCode === 204) && (
-        <Box className={classes.noappointmentsBox}>
-          <img src={ScheduleImg} className={classes.noappointmentsImage} />
-          <Box>
-            <Button
-              className={classes.button}
-              style={{ backgroundColor: '#0bb5ff' }}
-              onClick={handleOnClick}
-            >
-              Book Now
-            </Button>
-          </Box>
+      <InfiniteScroll
+        dataLength={appointmentsList.length}
+        next={fetchData}
+        hasMore={true}
+        height={'100%'}
+        className={classes.scrollContainter}
+      >
+        <Box className={classes.appointmentSlots}>
+          {appointmentsList &&
+            appointmentsList.map((appointmentDetail, index) => {
+              return (
+                <PatientAppointmentSlot
+                  appointmentDetail={appointmentDetail}
+                  borderColor={borderColors[index % 4]}
+                  key={index}
+                  onSave={onSave}
+                  past={false}
+                />
+              )
+            })}
         </Box>
-      )}
+        {appointmentsList &&
+          (appointmentsList.length === 0 || appointmentsList.statusCode === 204) && (
+            <Box className={classes.noappointmentsBox}>
+              <img src={ScheduleImg} className={classes.noappointmentsImage} />
+              <Box>
+                <Button
+                  className={classes.button}
+                  style={{ backgroundColor: '#0bb5ff' }}
+                  onClick={handleOnClick}
+                >
+                  Book Now
+                </Button>
+              </Box>
+            </Box>
+          )}
+      </InfiniteScroll>
       {response && response.data?.appointment && (
         <SnackBar
           openDialog={open}
-          message={'Created Sucessfully'}
+          message={'Appointment Rescheduled Sucessfully'}
           onclose={handleClose}
           severity={'success'}
         />

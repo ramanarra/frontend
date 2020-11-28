@@ -8,6 +8,7 @@ import {
   Typography,
   Box,
   DialogContent,
+  Button,
 } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 import StarIcon from '@material-ui/icons/Star'
@@ -77,6 +78,24 @@ function UpcomingAndPastView({
   const minutes =
     NumberToWords.toWords(differenceInDays.minutes()).charAt(0).toUpperCase() +
     NumberToWords.toWords(differenceInDays.minutes()).slice(1)
+
+  const cancelDisable =
+    doctorDetails?.cancellationDays !== null
+      ? differenceInDays.days() >= Number(doctorDetails?.cancellationDays) &&
+        differenceInDays.hours() >= Number(doctorDetails?.cancellatioHours) &&
+        differenceInDays.minutes() >= Number(doctorDetails?.cancellationMins)
+        ? false
+        : true
+      : false
+
+  const rescheduleDisable =
+    doctorDetails?.rescheduleDays !== null
+    ? differenceInDays.days() >= Number(doctorDetails?.rescheduleDays) &&
+      differenceInDays.hours() >= Number(doctorDetails?.rescheduleHours) &&
+      differenceInDays.minutes() >= Number(doctorDetails?.rescheduleMins)
+      ? false
+      : true
+    : false
 
   function handleOnClose(event) {
     onCancel(event)
@@ -195,14 +214,15 @@ function UpcomingAndPastView({
                   </Typography>
                 </Box> */}
                 <Box className={classes.button} display="flex">
-                  <Box
-                    className={classes.rescheduleButton}
+                  <Button
+                    className={rescheduleDisable ? classes.disableReschduleButton : classes.rescheduleButton}
                     onClick={handleOnReschedule}
+                    disabled={rescheduleDisable}
                   >
-                    <Typography className={classes.rescheduleText}>
+                    <Typography className={rescheduleDisable ? classes.disableRescheduleText : classes.rescheduleText}>
                       RESCHEDULE
                     </Typography>
-                  </Box>
+                  </Button>
                   <Box className={classes.startConsultationButton}>
                     <Typography
                       onClick={handleOnStartConsulation}
@@ -211,9 +231,13 @@ function UpcomingAndPastView({
                       START CONSULTATION
                     </Typography>
                   </Box>
-                  <Box className={classes.cancelButton} onClick={handleOnCancel}>
+                  <Button
+                    className={cancelDisable ? classes.disableCancelButton : classes.cancelButton}
+                    onClick={handleOnCancel}
+                    disabled={cancelDisable}
+                  >
                     <Typography className={classes.cancelText}>CANCEL</Typography>
-                  </Box>
+                  </Button>
                 </Box>
                 <Box display="flex" className={classes.hoursToJoinText}>
                   {(differenceInDays.days() > 0 ||
