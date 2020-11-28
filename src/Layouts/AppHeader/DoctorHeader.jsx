@@ -124,6 +124,8 @@ function DoctorHeader({ socket, timer }) {
 
   const [updateData, updateError, isUpdating, data] = useManualFetch()
 
+  const IndividualHospitalName = window.localStorage.getItem('hospitalName')
+
   function handleOnVideoClick() {
     if (socket) {
       socket.disconnect()
@@ -183,7 +185,7 @@ function DoctorHeader({ socket, timer }) {
         <i className={classNames('icon-notify', classes.notificationImg)}></i>
       </Box>
       <Box className={classes.gap}>
-        <Typography className={classes.text}>Amrit Medicare Pvt. Ltd.</Typography>
+        <Typography className={classes.text}>{IndividualHospitalName}</Typography>
       </Box>
       <ClickAwayListener onClickAway={handleOnAwayClick}>
         <Box className={classes.hospitalLogoContainer}>
