@@ -6,7 +6,7 @@ import { Box } from '@material-ui/core'
 import OpenViduReact from '../../OpenViduCore/components/VideoRoomComponent'
 import ToolBarComponent from './Toolbar'
 import SideBar from './SideBar'
-import { setOpenSideBar } from '../../actions/patients'
+import { setOpenSideBar } from '../../actions/doctor'
 
 function VideoConsultotion({
   token,
@@ -35,6 +35,10 @@ function VideoConsultotion({
   const [appointmenttId, setAppointmentId] = useState(null)
 
   const [isPatientClick, setIsPatientClick] = useState(false)
+
+  const [fullScreen, setFullScreen] = useState(false)
+
+  const [interChange, setInterChange] = useState(false)
 
   const history = useHistory()
 
@@ -92,6 +96,17 @@ function VideoConsultotion({
     setByDoctor(true)
   }
 
+  function handleOnFullScreen() {
+    if(fullScreen) {
+      setInterChange(false)
+    }
+    setFullScreen(!fullScreen)
+  }
+
+  function handleOnInterChange() {
+    setInterChange(!interChange)
+  }
+
   return (
     <Fragment>
       {token && (
@@ -116,6 +131,10 @@ function VideoConsultotion({
             isPatientClick={isPatientClick}
             isAudioStatus={isAudioStatus}
             isVideoStatus={isVideoStatus}
+            handleOnFullScreen={handleOnFullScreen}
+            isFullScreen={fullScreen}
+            isInterChange={interChange}
+            handleOnInterChange={handleOnInterChange}
           />
           <SideBar
             patientList={patientList}
@@ -134,6 +153,8 @@ function VideoConsultotion({
             isWaiting={isWaiting}
             waitingIndex={waitingIndex}
             setPatientAppointmentId={setPatientAppointmentId}
+            setFullScreen={setFullScreen}
+            setInterChange={setInterChange}
           />
         </Box>
       )}

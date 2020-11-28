@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles'
 
 const useNavigationStyles = makeStyles(() => ({
   container: {
-    width: '98%',
+    width: '97.7%',
     background: '#f9f9f9',
     display: 'flex',
     backgroundColor: 'white',

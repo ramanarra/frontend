@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import IconButton from '@material-ui/core/IconButton'
-import { makeStyles } from '@material-ui/core/styles'
 
 import VideoOnIcon from '../../assets/img/video-on.svg'
 import MicOnIcon from '../../assets/img/mic-on.svg'
@@ -8,54 +7,11 @@ import CallOnIcon from '../../assets/img/call-on.svg'
 import AddCallIcon from '../../assets/img/person.png'
 import VideoOffIcon from '../../assets/img/video-off.svg'
 import MicOffIcon from '../../assets/img/mic-off.svg'
+import InterChangeIcon from '../../assets/img/inter-change.svg'
+import FullscreenIcon from '../../assets/img/full-screen.svg'
 import NonAvailabilityModal from './NonAvailabilityModal'
 import LeaveCallModal from './LeaveCallModal'
-
-const useStyles = makeStyles(() => ({
-  root: {
-    position: 'fixed',
-    zIndex: 5,
-    left: '36.5%',
-    top: '85%',
-  },
-
-  iconButton: {
-    marginLeft: 30,
-    background: '#ffffff',
-    width: 60,
-    height: 60,
-    '&:hover': {
-      background: '#ffffff',
-    },
-  },
-
-  videoIcon: {
-    width: 27,
-    height: 27,
-  },
-
-  addIcon: {
-    width: 32,
-    height: 32,
-    marginLeft: 3,
-  },
-
-  topBar: {
-    width: 355,
-    height: 60,
-    backgroundColor: '#ffffff',
-    position: 'absolute',
-    top: '3px',
-    right: '0px',
-  },
-  groupIcon: {
-    fontSize: 44,
-    marginLeft: 30,
-    cursor: 'pointer',
-    marginTop: 5,
-    color: '#908e8e',
-  },
-}))
+import useStyle from './useToolBarStyle'
 
 function Toolbar({
   isVideoActive,
@@ -66,8 +22,12 @@ function Toolbar({
   AddNextPatient,
   videoAvailability,
   audioAvailability,
+  subscribers,
+  isFullScreen,
+  handleOnFullScreen,
+  handleOnInterChange,
 }) {
-  const classes = useStyles()
+  const classes = useStyle()
 
   const [open, setOpen] = useState(false)
 
@@ -81,18 +41,21 @@ function Toolbar({
   }
 
   function handleOnLeave() {
-    if(localStorage.getItem('loginUser') === 'doctor') {
+    if (localStorage.getItem('loginUser') === 'doctor') {
       setOpenLeaveModal(true)
-    }
-    else {
+    } else {
       onLeaveSession()
     }
-    
   }
 
   return (
     <div>
-      <div className={classes.root}>
+      <div className={ isFullScreen ? classes.rootForFullScreen : classes.root}>
+        {isFullScreen && (
+          <IconButton className={classes.iconButton} onClick={handleOnInterChange}>
+            <img src={InterChangeIcon} className={classes.videoIcon} />
+          </IconButton>
+        )}
         {videoAvailability ? (
           <IconButton className={classes.iconButton} onClick={onVideoStateChange}>
             {isVideoActive ? (
@@ -102,7 +65,10 @@ function Toolbar({
             )}
           </IconButton>
         ) : (
-          <IconButton className={classes.iconButton} onClick={() => handleOnClick('Camera')}>
+          <IconButton
+            className={classes.iconButton}
+            onClick={() => handleOnClick('Camera')}
+          >
             <img src={VideoOffIcon} className={classes.videoIcon} />
           </IconButton>
         )}
@@ -116,7 +82,10 @@ function Toolbar({
             )}
           </IconButton>
         ) : (
-          <IconButton className={classes.iconButton} onClick={() => handleOnClick('Audio')}>
+          <IconButton
+            className={classes.iconButton}
+            onClick={() => handleOnClick('Audio')}
+          >
             <img src={MicOffIcon} className={classes.videoIcon} />
           </IconButton>
         )}
@@ -127,6 +96,11 @@ function Toolbar({
         {localStorage.getItem('loginUser') === 'doctor' && (
           <IconButton className={classes.iconButton} onClick={AddNextPatient}>
             <img src={AddCallIcon} className={classes.addIcon} />
+          </IconButton>
+        )}
+        {subscribers.length > 0 && (
+          <IconButton className={classes.iconButton} onClick={handleOnFullScreen}>
+            <img src={FullscreenIcon} className={classes.videoIcon} />
           </IconButton>
         )}
       </div>

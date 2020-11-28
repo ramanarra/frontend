@@ -5,10 +5,9 @@ import socketIOClient from 'socket.io-client'
 import ConfirmationModal from './ConfirmationModel'
 import Video from './Video'
 import SnackBar from '../../components/SnackBar'
+import { baseURL } from '../../baseURL'
 
-const ENDPOINT = 'https://www.virujh.com'
-
-// const ENDPOINT = 'http://883cb6b24b8a.ngrok.io/api/' 
+const ENDPOINT = baseURL
 
 function VideoConsulation() {
   const [open, setOpen] = useState(false)
@@ -72,7 +71,6 @@ function VideoConsulation() {
       }
 
       socket.on('getDoctorAppointments', (data) => {
-        // console.log('2',data)
         setPatientList(data)
       })
       socket.on('videoTokenForDoctor', (data) => {

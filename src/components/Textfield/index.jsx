@@ -3,9 +3,9 @@ import {
   FormControl,
   OutlinedInput,
   InputAdornment,
-  IconButton
+  IconButton,
 } from '@material-ui/core'
-import { Cancel, Visibility, VisibilityOff } from '@material-ui/icons'
+import { Cancel, Visibility, VisibilityOff, Star } from '@material-ui/icons'
 import './style.scss'
 
 const Textfield = ({
@@ -32,8 +32,8 @@ const Textfield = ({
     onChange({
       target: {
         name,
-        value: ''
-      }
+        value: '',
+      },
     })
   }
 
@@ -72,7 +72,12 @@ const Textfield = ({
         variant="outlined"
         size="small"
       >
-        {!!label && <label className="txt-field-label">{label}</label>}
+        {!!label && (
+          <div>
+            <label className="txt-field-label">{label}</label>
+            <Star className="star-icon" />
+          </div>
+        )}
         <OutlinedInput
           className="txt-field-inp"
           placeholder={placeholder}
@@ -82,9 +87,7 @@ const Textfield = ({
           onChange={onChange}
           inputProps={inputProps}
           startAdornment={
-            !!prefix && (
-              <InputAdornment position="start">{prefix}</InputAdornment>
-            )
+            !!prefix && <InputAdornment position="start">{prefix}</InputAdornment>
           }
           endAdornment={suffixElement()}
           {...rest}

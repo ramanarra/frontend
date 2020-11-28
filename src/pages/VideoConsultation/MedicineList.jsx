@@ -3,36 +3,8 @@ import { Box, makeStyles } from '@material-ui/core'
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 import { connect } from 'react-redux'
 
-import { setOpenSideBar } from '../../actions/patients'
-
-const usestyle = makeStyles(() => ({
-  container: {
-    position: 'absolute',
-    right: 0,
-    margin: 0,
-    top: 56,
-    backgroundColor: '#ffffff',
-    width: '23%',
-    padding: '25px 15px 10px 23px',
-    height: 'calc(100% - 63px)',
-    overflowY: 'auto',
-  },
-  backButton: {
-    width: 40,
-    height: 40,
-    borderRadius: '50%',
-    position: 'absolute',
-    top: 58,
-    right: '22.5%',
-    backgroundColor: '#ffffff',
-    cursor: 'pointer',
-  },
-  icon: {
-    marginTop: 7.5,
-    marginLeft: 8,
-    color: '#a8a8a8',
-  },
-}))
+import { setOpenSideBar } from '../../actions/doctor'
+import usestyle from './useMedicineListStyle'
 
 function MedicineList({ onClose, setOpenTopBar, setOpenSideBar }) {
   const classes = usestyle()

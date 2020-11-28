@@ -3,24 +3,39 @@ const intialState = {
   timer: null,
   patientAppointmentId: null,
   openSideBar: true,
+  session: undefined,
+  messages: [],
 }
 
 const doctor = (state = intialState, action) => {
   switch (action.type) {
     case 'SET_SOCKET': {
-      return { ...state, socket: action.data }
+      return {...state, socket: action.data }
     }
 
     case 'SET_TIMER': {
       return {...state, timer: action.data}
     }
 
-    case 'SET_APPOINTMENTID': {
+    case 'SET_OPENSIDEBAR': {
+      return {...state, openSideBar: action.data }
+    }
+
+
+    case 'SET_PATIENTAPPOINTMENTID': {
       return {...state, patientAppointmentId: action.data}
     }
 
-    case 'SET_OPENSIDEBAR': {
-      return {...state, openSideBar: action.data}
+    case 'SET_SESSION': {
+      return {...state, session: action.data}
+    }
+
+    case 'SET_MESSAGES': {
+      return {...state, messages: [...state.messages, action.data]}
+    }
+
+    case 'CLEAR_MESSAGES': {
+      return {...state, messages: action.data}
     }
 
     default:

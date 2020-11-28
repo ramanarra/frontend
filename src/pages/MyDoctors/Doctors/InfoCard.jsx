@@ -4,6 +4,7 @@ import { Avatar, Box, Typography, Button } from '@material-ui/core'
 
 import { useInfocardStyles } from './useStyle'
 import getTimeFormatWithNoon from '../../../lib/dateLib'
+import Profile from '../../../assets/img/profile.png'
 
 const InfoCard = ({ doctorDetails, isRead }) => {
   const classes = useInfocardStyles()
@@ -24,7 +25,7 @@ const InfoCard = ({ doctorDetails, isRead }) => {
       <Box display="flex" style={{height: 70}}>
         <Avatar
           alt="Remy Sharp"
-          src={doctorDetails.photo}
+          src={doctorDetails.photo ? doctorDetails.photo : Profile}
           className={classes.large}
         />
 
@@ -61,14 +62,14 @@ const InfoCard = ({ doctorDetails, isRead }) => {
         </Box>
 
         <Box paddingLeft={2.4}>
-          <Typography className={classes.text}>Total Available slots</Typography>
+          <Typography className={classes.slotText}>Total Available slots</Typography>
           <Typography className={classes.value}>
             {doctorDetails.todaysAvailabilitySeats}
           </Typography>
         </Box>
       </Box>
 
-      <Box marginTop={1.5} display="flex" justifyContent="flex-end">
+      <Box marginTop={1.5} textAlign="end" justifyContent="flex-end">
         {isRead && (
           <Box>
             <Button
