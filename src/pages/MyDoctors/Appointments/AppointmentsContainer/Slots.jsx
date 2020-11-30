@@ -3,6 +3,7 @@ import { Box, Typography } from '@material-ui/core'
 import ScheduleIcon from '@material-ui/icons/Schedule'
 import StarIcon from '@material-ui/icons/Star'
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord'
+import moment from 'moment'
 
 import useStyle from './useSlotsStyle'
 import Stretch from '../../../../components/Stretch'
@@ -46,7 +47,15 @@ function Slots({
 
   const DialogComponent = ModalComponent
 
+  let currentTime = moment().format('HH:mm:ss')
+
+  let currentDate = moment().format('DD/MM/YYYY')
+
+  let show = date === currentDate ? 
+              slot.startTime > currentTime ? true : false
+              : true
   return (
+    show &&
     <Box className={classes.singleSlot}>
       <Box
         className={classes.box}
