@@ -82,7 +82,7 @@ function UpcomingAndPastView({
   const cancelDisable =
     doctorDetails?.cancellationDays !== null
       ? differenceInDays.days() >= Number(doctorDetails?.cancellationDays) &&
-        differenceInDays.hours() >= Number(doctorDetails?.cancellatioHours) &&
+        differenceInDays.hours() >= Number(doctorDetails?.cancellationHours) &&
         differenceInDays.minutes() >= Number(doctorDetails?.cancellationMins)
         ? false
         : true
