@@ -129,6 +129,7 @@ function UpcomingAppointments() {
                   key={index}
                   onSave={onSave}
                   past={false}
+                  list={appointmentsList}
                 />
               )
             })}

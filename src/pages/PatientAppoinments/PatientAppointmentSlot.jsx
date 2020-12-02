@@ -23,6 +23,7 @@ function PatientAppointmentSlot({
   past,
   socket,
   setSocket,
+  list,
 }) {
   const classes = useStyle()
 
@@ -75,6 +76,7 @@ function PatientAppointmentSlot({
       socket: socket,
       appointmentDetail: appointmentDetail,
       doctorName: `${appointmentDetail.doctorFirstName}${' '}${doctorLastName}`,
+      list: list,
     })
   }
 
@@ -187,6 +189,7 @@ function PatientAppointmentSlot({
           onCancel={handleOnCancel}
           onReschedule={handleOnReschedule}
           socket={socket}
+          list={list}
         />
       )}
       {openCancel && (

@@ -29,6 +29,7 @@ function UpcomingAndPastView({
   onCancel,
   onReschedule,
   socket,
+  list,
 }) {
   const classes = useStyle()
 
@@ -87,6 +88,7 @@ function UpcomingAndPastView({
         ? false
         : true
       : false
+ 
 
   const rescheduleDisable =
     doctorDetails?.rescheduleDays !== null
@@ -116,6 +118,7 @@ function UpcomingAndPastView({
       liveStatus: appointmentDetail.liveStatus,
       socket: socket,
       appointmentDetail: appointmentDetail,
+      list: list,
     })
   }
 
