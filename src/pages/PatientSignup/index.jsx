@@ -5,6 +5,7 @@ import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers'
 import { GoCalendar } from 'react-icons/go'
 import { useForm, Controller } from 'react-hook-form'
 import MomentUtils from '@date-io/moment'
+import StarIcon from '@material-ui/icons/Star'
 
 import Textfield from '../../components/Textfield'
 import './style.scss'
@@ -34,32 +35,37 @@ const PatientSignup = (props) => {
 
   const redirectToLogin = () => props.history.push('/login')
   const onSubmit = (data) => {
-    Api.post(URL.patientSignup, data)
-      .then((res) => {
-        const { data } = res
-        setCount(true)
-        setResponse(data)
-        if (data.patient?.accessToken) {
-          localStorage.setItem('virujhToken', data.patient.accessToken)
-          localStorage.setItem('patientId', data.patient.patientId)
-          localStorage.setItem(
-            'patientName',
-            `${data.details.firstName} ${data.details.lastName}`
-          )
-          setMessage('Thanks! Your account has been created successfully')
-          setDetail(data)
-          setError(true)
-        } else if (data?.patient.update === 'updated password') {
-          setError(true)
-          setMessage('Created successfully...Please do signin')
-        } else if (data?.statusCode) {
-          setError(true)
-          setMessage(data?.message)
-        }
-      })
-      .catch((err) => {
-        setCount(true)
-      })
+    if (data.phone === data.alternateContact) {
+      setMessage('Both contact numbers should not be same')
+      setError(true)
+    } else {
+      Api.post(URL.patientSignup, data)
+        .then((res) => {
+          const { data } = res
+          setCount(true)
+          setResponse(data)
+          if (data.patient?.accessToken) {
+            localStorage.setItem('virujhToken', data.patient.accessToken)
+            localStorage.setItem('patientId', data.patient.patientId)
+            localStorage.setItem(
+              'patientName',
+              `${data.details.firstName} ${data.details.lastName}`
+            )
+            setMessage('Thanks! Your account has been created successfully')
+            setDetail(data)
+            setError(true)
+          } else if (data?.patient.update === 'updated password') {
+            setError(true)
+            setMessage('Created successfully...Please do signin')
+          } else if (data?.statusCode) {
+            setError(true)
+            setMessage(data?.message)
+          }
+        })
+        .catch((err) => {
+          setCount(true)
+        })
+    }
   }
 
   useEffect(() => {
@@ -204,7 +210,9 @@ const PatientSignup = (props) => {
           <div className="field-wrap field-partition">
             <div className="dob-field">
               <MuiPickersUtilsProvider utils={MomentUtils}>
-                <div className="field-label">Date of Birth</div>
+                <div className="field-label">Date of Birth
+                <StarIcon className="star-icon" />
+                </div>
                 <Controller
                   name="dateOfBirth"
                   control={control}
@@ -216,7 +224,6 @@ const PatientSignup = (props) => {
                       size="small"
                       format="DD/MM/YYYY"
                       placeholder="07/03/1985"
-                      // onChange={handle}
                       disableFuture
                       autoOk
                       InputProps={{

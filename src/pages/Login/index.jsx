@@ -21,7 +21,6 @@ function PatientLogin({ history }) {
         if (!data?.accessToken) {
           setError(true)
           setOpen(false)
-
           return
         }
         setOpen(false)

@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { Box, Typography, makeStyles } from '@material-ui/core'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 import PatientDetails from './PatientDetails'
 import useCustomFetch from '../../hooks/useCustomFetch'
 import { METHOD, URL } from '../../api'
 import usePatientDetailsUpdate from '../../hooks/usePatientDetailsUpdate'
 import SnackBar from '../../components/SnackBar'
+// import { useHistory, useLocation } from 'react-router-dom'
 
 const useStyle = makeStyles((theme) => ({
   container: {
@@ -27,6 +29,11 @@ const useStyle = makeStyles((theme) => ({
     marginTop: 65,
     marginRight: 10,
   },
+  spinner: {
+    position: 'absolute',
+    left: '48%',
+    top: '45%',
+  },
 }))
 
 function PatientSettings() {
@@ -40,6 +47,12 @@ function PatientSettings() {
 
   const [name, setName] = useState(false)
 
+  const [loadPage, setLoadPage] = useState(true)
+
+  // const history = useHistory()
+
+  // const location = useLocation()
+
   const [data, refetch] = useCustomFetch(
     METHOD.GET,
     `${URL.patientViewDetails}${'?patientId='}${patientId}`
@@ -48,11 +61,24 @@ function PatientSettings() {
   const [onSave, response] = usePatientDetailsUpdate(refetch)
 
   useEffect(() => {
-    if(response) {
+    if (response) {
       setOpen(true)
       setReload(true)
     }
   }, [response])
+
+  // useEffect(() => {
+  //   if(location.routerName === 'Edit profile') {
+  //     history.go(0)
+  //   }
+  // })
+
+
+  const handleTimeout = () => {
+    setLoadPage(false)
+  }
+
+  setTimeout(() => handleTimeout(), 2000)
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -64,20 +90,25 @@ function PatientSettings() {
 
   return (
     <Box className={classes.container}>
-      <Box className={classes.heading}>
-        <Typography className={classes.text}>Patient Settings</Typography>
-      </Box>
-      {data && (
-        <PatientDetails
-          patientDetails={data}
-          patientId={patientId}
-          onSave={onSave}
-          setReload={setReload}
-          reload={reload}
-          setName={setName}
-          name={name}
-        />
+      {!loadPage && (
+        <Box>
+          <Box className={classes.heading}>
+            <Typography className={classes.text}>Patient Settings</Typography>
+          </Box>
+          {data && (
+            <PatientDetails
+              patientDetails={data}
+              patientId={patientId}
+              onSave={onSave}
+              setReload={setReload}
+              reload={reload}
+              setName={setName}
+              name={name}
+            />
+          )}
+        </Box>
       )}
+      {loadPage && <CircularProgress className={classes.spinner} />}
       {response && response.statusCode && response.statusCode === 200 && (
         <SnackBar
           openDialog={open}

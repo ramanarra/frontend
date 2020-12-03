@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import './OvVideo.css'
 
-class OvVideoComponent extends Component {
+export default class OvVideoComponent extends Component {
   constructor(props) {
     super(props)
     this.videoRef = React.createRef()
@@ -26,7 +26,7 @@ class OvVideoComponent extends Component {
           this.props.user.getStreamManager().addVideoElement(this.videoRef.current)
         }
       })
-    } 
+    }
   }
 
   componentDidUpdate(props) {
@@ -36,11 +36,10 @@ class OvVideoComponent extends Component {
   }
 
   render() {
-    const openSideBar = this.props.openSideBar
+    // const openSideBar = this.props.openSideBar
     return (
-      <div className= {openSideBar ? 'ov-video-with-sideBar' : 'ov-video-without-sideBar'}>
-        {this.props.subscribers &&
-        this.props.subscribers.length === 0 ? (
+      <div className='ov-video'>
+        {this.props.subscribers && this.props.subscribers.length === 0 ? (
           <div className="ov-video-container">
             <div className="video">
               <video
@@ -81,10 +80,10 @@ class OvVideoComponent extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    openSideBar: state.doctor.openSideBar,
-  }
-}
+// const mapStateToProps = (state) => {
+//   return {
+//     openSideBar: state.doctor.openSideBar,
+//   }
+// }
 
-export default connect(mapStateToProps, null)(OvVideoComponent)
+// export default connect(mapStateToProps, null)(OvVideoComponent)

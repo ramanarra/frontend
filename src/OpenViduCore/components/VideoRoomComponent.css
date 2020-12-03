@@ -57,6 +57,19 @@
   width: inherit;
 }
 
+.bounds-with-full-screen {
+  background-color: #494949;
+  overflow: hidden;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  height: inherit;
+  min-width: 400px !important;
+  width: 100%;
+}
+
 
 /*!
  * Copyright (c) 2017 TokBox, Inc.
@@ -66,6 +79,32 @@
 
  .custom-class {
   min-height: 0px !important;
+}
+ .custom-class-with-full-screen {
+   width: 100% !important;
+ }
+
+ .custom-class-with-full-screen-inter-change {
+   width: 100% !important;
+   position: absolute !important;
+   left: 0 !important;
+ }
+
+ .subscriber-custom-class {
+   width: 20% !important;
+   height: 20% !important;
+   position: absolute !important;
+   top: 0 !important;
+   left: 41% !important;
+ }
+
+ .subscriber-custom-class-inter-change {
+  width: 20% !important;
+  height: 20% !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 41% !important;
+  z-index: 1 !important;
 }
 
 /**

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import api, { URL } from '../../../api'
-
-import './style.scss'
 import { Button, Grid } from '@material-ui/core'
+
+import api, { URL } from '../../../api'
+import './style.scss'
 import AppointmentCard from './Appointment/AppointmentCard'
 import { dateFmt } from '../../../components/commonFormat'
 
@@ -52,25 +52,34 @@ const PatientDetials = (props) => {
           <tbody>
             <tr>
               <td className="tbl-cell field-name">First Name</td>
-              <td className="tbl-cell field-value">{data?.firstName}</td>
+              <td className="tbl-cell field-value">
+                {data?.firstName ? data.firstName : '-'}
+              </td>
             </tr>
             <tr>
               <td className="tbl-cell field-name">Last Name</td>
-              <td className="tbl-cell field-value">{data?.lastName}</td>
+              <td className="tbl-cell field-value">
+                {data?.lastName ? data.lastName : '-'}
+              </td>
             </tr>
             <tr>
               <td className="tbl-cell field-name">Email Address</td>
-              <td className="tbl-cell field-value">{data?.email}</td>
+              <td className="tbl-cell field-value">
+                {data?.email ? data.email : '-'}
+              </td>
             </tr>
             <tr>
               <td className="tbl-cell field-name">Date of Birth</td>
               <td className="tbl-cell field-value">
-                {!!data?.dateOfBirth && dateFmt(data?.dateOfBirth)}
+                {!!data?.dateOfBirth &&
+                  dateFmt(data?.dateOfBirth ? data.dateOfBirth : '-')}
               </td>
             </tr>
             <tr>
               <td className="tbl-cell field-name">Phone Number</td>
-              <td className="tbl-cell field-value">{data?.phone}</td>
+              <td className="tbl-cell field-value">
+                {data?.phone ? `+91 ${data.phone}` : '-'}
+              </td>
             </tr>
           </tbody>
         </table>
@@ -121,7 +130,7 @@ const PatientDetials = (props) => {
           <Grid container spacing={2} className="appointment-list-wrap">
             {!!appointment?.length ? (
               appointment?.map((i, index) => (
-                <Grid item xs={6}>
+                <Grid item xs={tab === 0 ? 6 : 5.5}>
                   <AppointmentCard data={i} isPast={!!tab} index={index} />
                 </Grid>
               ))

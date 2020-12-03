@@ -83,6 +83,8 @@ export default class StreamComponent extends Component {
               subscribers={this.props.subscribers}
               isPatientClick={this.props.isPatientClick}
               patientName={this.props.patientName}
+              isFullScreen={this.props.isFullScreen}
+              doctorClick={this.props.doctorClick}
             />
 
             {this.props.user.isLocal() ? (
@@ -99,6 +101,10 @@ export default class StreamComponent extends Component {
                 audioAvailability={this.props.audioAvailability}
                 close={this.props.close}
                 isAudioStatus={this.props.isAudioStatus}
+                subscribers={this.props.subscribers}
+                isFullScreen={this.props.isFullScreen}
+                handleOnFullScreen={this.props.handleOnFullScreen}
+                handleOnInterChange={this.props.handleOnInterChange}
               />
             ) : null}
             <VideocamOff id="statusCam" />

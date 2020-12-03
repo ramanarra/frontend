@@ -18,7 +18,7 @@ const useListStyle = makeStyles(() => ({
     cursor: 'pointer',
   },
   day: {
-    textTransform:'capitalize',
+    textTransform: 'capitalize',
     textAlign: 'center',
     fontSize: '55%',
     color: '#727070',

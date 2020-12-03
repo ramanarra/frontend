@@ -159,7 +159,10 @@ function PatientHeader({socket}) {
   }
 
   function handleOnEdit() {
-    history.push('/patient/setting')
+    history.push({
+      pathname: '/patient/setting',
+      routerName: 'Edit profile',
+    })
     setOpen(false)
   }
 

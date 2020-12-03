@@ -1,9 +1,8 @@
 import axios from 'axios'
+import {baseURL} from './baseURL'
 
 export default axios.create({
-  baseURL: 'http://localhost:3000/api',
-  // baseURL: 'https://15d5d3e23cd5.ngrok.io/api/',
-  // baseURL: 'https://virujh.com/api/',
+  baseURL: `${baseURL}${'/api/'}`,
 })
 
 export const METHOD = {
@@ -30,6 +29,7 @@ export const URL = {
     upcomingApp: '/calendar/doctor/patientUpcomingAppList',
     pastApp: '/calendar/doctor/patientPastAppList',
     search: '/calendar/doctor/patientGeneralSearch',
+    listForDoctor: '/calendar/doctor/patientList',
   },
   appointmentSlotsView: '/calendar/doctor/appointmentSlotsView',
   appointmentView: '/calendar/appointmentView',

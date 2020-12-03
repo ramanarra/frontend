@@ -3,13 +3,14 @@ import { connect } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { Box, makeStyles } from '@material-ui/core'
 import socketIOClient from 'socket.io-client'
-import { setSocket, setTimer } from '../../../actions/patients'
 
+import { setSocket, setTimer } from '../../../actions/doctor'
 import InfoCard from './InfoCard'
 import usePermissions from '../../../hooks/usePermissions'
 import WaitingPatientList from './WaitingPatientList'
+import { baseURL } from '../../../baseURL'
 
-const ENDPOINT = 'https://www.virujh.com'
+const ENDPOINT = baseURL
 
 const userReadRoles = ['SELF_USER_SETTINGS_READ', 'ACCOUNT_USERS_SETTINGS_READ']
 

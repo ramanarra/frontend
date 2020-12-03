@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import moment from 'moment'
-import { Box, makeStyles, Typography } from '@material-ui/core'
+import { Box, Typography } from '@material-ui/core'
 import MomentUtils from '@date-io/moment'
 import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers'
 
@@ -11,78 +11,8 @@ import axios, { METHOD, URL } from '../../api'
 import useCustomFecth from '../../hooks/useCustomFetch'
 import SnackBar from '../../components/SnackBar'
 import OverBooking from './OverBookingDialog'
-
-const useStyle = makeStyles(() => ({
-  container: {
-    width: 'calc(100% - 320px)',
-    height: '100%',
-  },
-  datePicker: {
-    paddingTop: 85,
-    '& .MuiPickersStaticWrapper-staticWrapperRoot': {
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    '& .MuiPickersBasePicker-pickerView': {
-      minWidth: 450,
-      minHeight: 400,
-    },
-    '& .MuiPickersCalendarHeader-switchHeader': {
-      marginBottom: 10,
-    },
-    '& .MuiSvgIcon-root': {
-      fontSize: 28,
-    },
-    '& .MuiPickersCalendarHeader-transitionContainer': {
-      height: 26,
-    },
-    '& .MuiPickersCalendarHeader-dayLabel': {
-      margin: '0px 13px',
-      fontSize: 16,
-    },
-    '& .MuiPickersDay-day': {
-      margin: '2.2px 13.5px',
-    },
-    '& .MuiTypography-alignCenter': {
-      fontSize: 18,
-      color: '#656363',
-      variant: 'bold',
-    },
-    '& .MuiTypography-body2': {
-      color: '#414141',
-      fontSize: 16,
-    },
-    '& .MuiPickersDay-dayDisabled': {
-      '& p': {
-        color: '#a8a8a8',
-        fontSize: 16,
-      },
-    },
-  },
-  button: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: '42px 80px 20px 300px',
-  },
-  confirmButton: {
-    padding: '8.5px 67px',
-    backgroundColor: '#0bb5ff',
-    borderRadius: 25,
-    textAlign: 'center',
-    cursor: 'pointer',
-  },
-  confirmText: {
-    fontSize: 16,
-    color: '#f7f7f7',
-    paddingTop: 2,
-  },
-  errorMessage: {
-    fontSize: 17,
-    textAlign: 'end',
-    color: '#de1d1d',
-    paddingRight: 85,
-  },
-}))
+import CancelAndRescheduleInfo from './CancelAndRescheduleInfo'
+import useStyle from './useDatePickerStyle'
 
 function AppointmentDatePicker({ doctorKey, doctorDetails }) {
   const classes = useStyle()
@@ -266,6 +196,7 @@ function AppointmentDatePicker({ doctorKey, doctorDetails }) {
               className={classes.dateContainer}
             />
           </MuiPickersUtilsProvider>
+          <CancelAndRescheduleInfo doctorDetails={doctorDetails} />
         <Box className={classes.button}>
           <Box className={classes.confirmButton} onClick={() => handleSubmit(false)}>
             <Typography className={classes.confirmText}>CONFIRM</Typography>
@@ -283,8 +214,8 @@ function AppointmentDatePicker({ doctorKey, doctorDetails }) {
         <AvailableSlots
           availableSlots={slots.slots}
           handleSlotTiming={handleSlotTiming}
-          doctorDetails={doctorDetails}
           time={time}
+          date={slots.date}
         />
       )}
 

@@ -121,6 +121,8 @@ function DoctorHeader({ socket, timer }) {
   const [openSpinner, setOpenSpinner] = useState(false)
   const [updateData, updateError, isUpdating, data] = useManualFetch()
 
+  const IndividualHospitalName = window.localStorage.getItem('hospitalName')
+
   function handleOnVideoClick() {
     if (socket) {
       socket.disconnect()

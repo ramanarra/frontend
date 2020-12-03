@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import { connect } from 'react-redux'
 import './VideoRoomComponent.css'
-import { OpenVidu } from 'openvidu-browser'
+import { OpenVidu, LocalRecorder } from 'openvidu-browser'
 import StreamComponent from './stream/StreamComponent'
 import DialogExtensionComponent from './dialog-extension/DialogExtension'
 import ChatComponent from './chat/ChatComponent'
@@ -9,6 +10,7 @@ import ChatComponent from './chat/ChatComponent'
 import OpenViduLayout from '../layout/openvidu-layout'
 import UserModel from '../models/user-model'
 import ToolbarComponent from './toolbar/ToolbarComponent'
+import { setSession, setMessages, clearMessages } from '../../actions/doctor'
 
 var localUser = new UserModel()
 
@@ -28,6 +30,7 @@ class VideoRoomComponent extends Component {
       localUser: undefined,
       subscribers: [],
       chatDisplay: 'none',
+      messageDetail: [],
     }
 
     this.joinSession = this.joinSession.bind(this)
@@ -157,14 +160,31 @@ class VideoRoomComponent extends Component {
         publisher.videos[0].video.parentElement.classList.remove('custom-class')
       })
     })
+
+    //message
+    const mySession = this.state.session
+    this.props.setSession(mySession)
+    mySession.on('signal:my-chat', (event) => {
+      const message = event.data
+      var messageDetail = this.state.messageDetail
+      if (event.from.connectionId == event.from.session.connection.connectionId) {
+        messageDetail.push({ message: message, from: 'user' })
+        this.props.setMessages({ message: message, from: 'user' })
+      } else {
+        messageDetail.push({ message: message, from: 'sender' })
+        this.props.setMessages({ message: message, from: 'sender' })
+      }
+      this.setState({ messageDetail: messageDetail })
+      // this.props.setMessages(messageDetail)
+    })
   }
 
   leaveSession(status) {
     const mySession = this.state.session
 
     // const  history  = useHistory()
-    mySession.disconnect()
-    if (mySession) {
+    // mySession.disconnect()
+    if (this.state.session) {
       mySession.disconnect()
     }
 
@@ -176,6 +196,7 @@ class VideoRoomComponent extends Component {
       mySessionId: 'SessionA',
       myUserName: 'OpenVidu_User' + Math.floor(Math.random() * 100),
       localUser: undefined,
+      messageDetail: [],
     })
     if (this.props.leaveSession) {
       this.props.leaveSession()
@@ -184,6 +205,7 @@ class VideoRoomComponent extends Component {
     // this.props.endCall()
 
     this.props.leaveCall(status)
+    this.props.clearMessages([])
   }
   camStatusChanged() {
     localUser.setVideoActive(!localUser.isVideoActive())
@@ -454,9 +476,21 @@ class VideoRoomComponent extends Component {
     var chatDisplay = { display: this.state.chatDisplay }
 
     return (
-      <div id="layout" className="bounds">
+      <div
+        id="layout"
+        className={this.props.isFullScreen ? 'bounds-with-full-screen' : 'bounds'}
+      >
         {localUser !== undefined && localUser.getStreamManager() !== undefined && (
-          <div className="OT_root OT_publisher custom-class" id="localUser">
+          <div
+            className={
+              this.props.isFullScreen
+                ? this.props.isInterChange
+                  ? 'subscriber-custom-class-inter-change'
+                  : 'custom-class-with-full-screen'
+                : 'OT_root OT_publisher custom-class'
+            }
+            id="localUser"
+          >
             <StreamComponent
               ToolBarComponent={this.props.ToolBarComponent}
               user={localUser}
@@ -476,13 +510,22 @@ class VideoRoomComponent extends Component {
               close={this.props.close}
               isAudioStatus={this.props.isAudioStatus}
               isVideoStatus={this.props.isVideoStatus}
+              handleOnFullScreen={this.props.handleOnFullScreen}
+              isFullScreen={this.props.isFullScreen}
+              handleOnInterChange={this.props.handleOnInterChange}
             />
           </div>
         )}
         {this.state.subscribers.map((sub, i) => (
           <div
             key={i}
-            className="OT_root OT_publisher custom-class"
+            className={
+              this.props.isFullScreen
+                ? this.props.isInterChange
+                  ? 'custom-class-with-full-screen-inter-change'
+                  : 'subscriber-custom-class'
+                : 'OT_root OT_publisher custom-class'
+            }
             id="remoteUsers"
           >
             <StreamComponent
@@ -506,4 +549,13 @@ class VideoRoomComponent extends Component {
     )
   }
 }
-export default VideoRoomComponent
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setSession: (data) => dispatch(setSession(data)),
+    setMessages: (data) => dispatch(setMessages(data)),
+    clearMessages: (data) => dispatch(clearMessages(data)),
+  }
+}
+
+export default connect(null, mapDispatchToProps)(VideoRoomComponent)
