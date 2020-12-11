@@ -99,6 +99,7 @@ function RescheduleAppointmentModal({
         startTime: moment(slotTime.start, 'HH:mm:ss').format('HH:mm'),
         endTime: moment(slotTime.end, 'HH:mm:ss').format('HH:mm'),
         appointmentDate: moment(slotDate).format('YYYY-MM-DD'),
+        confirmation: true,
       }
       onSave(URL.patientAppointmentReschedule, parameter)
     }
