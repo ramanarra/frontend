@@ -315,7 +315,7 @@ const PatientSignup = (props) => {
              
             {/* Navigating to doctor registration  */}
 
-            <div className="signin-btn-wrap">
+            <div className="signin-btn-wrap signin-btn-align">
               If you are a new doctor?
               <span className="signin-btn" onClick={redirectToDoctorLogin}>
                Click here
