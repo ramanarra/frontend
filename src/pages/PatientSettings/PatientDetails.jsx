@@ -11,7 +11,6 @@ import {
 import { METHOD, URL } from '../../api'
 import EditButton from '../../components/EditButton'
 import useStyle from './usePatientDetailsStyle'
-import PatientReport from './PatientReport'
 import useManualFetch from '../../hooks/useManualFetch'
 import ReactS3 from 'react-s3'
 import { uploadFile } from 'react-s3';
