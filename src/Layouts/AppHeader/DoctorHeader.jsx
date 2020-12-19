@@ -114,7 +114,6 @@ const useStyles = makeStyles(() => ({
 }))
 
 function DoctorHeader({ socket, timer }) {
-  const IndividualHospitalName=window.localStorage.getItem('hospitalName')
   const classes = useStyles()
   const history = useHistory()
   const [open, setOpen] = useState(false)

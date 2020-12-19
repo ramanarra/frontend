@@ -58,6 +58,7 @@ const Login = ({
       history.push('/patient/registration')
     } else {
       history.push('/doctor/registration')
+      // history.push('/corporateLogin')
     }
   }
 
