@@ -115,13 +115,9 @@ const useStyles = makeStyles(() => ({
 
 function DoctorHeader({ socket, timer }) {
   const classes = useStyles()
-
   const history = useHistory()
-
   const [open, setOpen] = useState(false)
-
   const [openSpinner, setOpenSpinner] = useState(false)
-
   const [updateData, updateError, isUpdating, data] = useManualFetch()
 
   const IndividualHospitalName = window.localStorage.getItem('hospitalName')

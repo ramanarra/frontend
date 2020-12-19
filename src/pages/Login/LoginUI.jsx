@@ -58,6 +58,7 @@ const Login = ({
       history.push('/patient/registration')
     } else {
       history.push('/doctor/registration')
+      // history.push('/corporateLogin')
     }
   }
 
@@ -321,14 +322,29 @@ const Login = ({
               LOGIN
             </Button>
           </form>
+          {localStorage.getItem('loginUser') === 'doctor' && (
           <Centralize className={classes.singupContent}>
             <Typography className={classes.singupLabel} variant="h6">
-              I am new?
+              I am new doctor?
             </Typography>
             <Typography color="primary" variant="h4" onClick={handleSignup}>
               Signup
             </Typography>
           </Centralize>
+          )}
+
+          {localStorage.getItem('loginUser') === 'patient' && (
+            <Centralize className={classes.singupContent}>
+              <Typography className={classes.singupLabel} variant="h6">
+                I am new patient?
+              </Typography>
+              <Typography color="primary" variant="h4" onClick={handleSignup}>
+                Signup
+              </Typography>
+           </Centralize>
+          )}
+
+
           {localStorage.getItem('loginUser') === 'patient' && (
             <Centralize className={classes.singupContent}>
               <Typography className={classes.singupLabel} variant="h6">

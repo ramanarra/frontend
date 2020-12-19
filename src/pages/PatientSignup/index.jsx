@@ -34,6 +34,9 @@ const PatientSignup = (props) => {
   const currentTime = moment().format('DD/MM/YYYY HH:mm:ss')
 
   const redirectToLogin = () => props.history.push('/login')
+
+  const redirectToDoctorLogin = () => props.history.push('/doctor/registration')
+
   const onSubmit = (data) => {
     if (data.phone === data.alternateContact) {
       setMessage('Both contact numbers should not be same')
@@ -309,6 +312,16 @@ const PatientSignup = (props) => {
                 Signin
               </span>
             </div>
+             
+            {/* Navigating to doctor registration  */}
+
+            <div className="signin-btn-wrap">
+              If you are a new doctor?
+              <span className="signin-btn" onClick={redirectToDoctorLogin}>
+               Click here
+              </span>
+            </div>
+
           </div>
         </form>
       </Paper>
