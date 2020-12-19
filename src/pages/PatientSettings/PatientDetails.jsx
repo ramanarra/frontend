@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import {
+import FileAdding from './FileAdding'
+import File4 from './File4'
+
+import { 
   Box,
   Typography,
   TextField,
@@ -155,6 +158,14 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload, 
                 />
               </Box>
             </Box>
+        
+          <Box className={classes.box}>
+            <Typography className={classes.text}>Upload files</Typography>
+            <Box className="divDisplay"> 
+             <FileAdding />
+            </Box> 
+          </Box>
+            
           </Box>
           <Box className={classes.left}>
             <Box className={classes.box}>

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {baseURL} from './baseURL'
+import { baseURL } from './baseURL'
 
 export default axios.create({
   baseURL: `${baseURL}${'/api/'}`,
@@ -56,4 +56,5 @@ export const URL = {
   appointmentPresentOnDate: 'calendar/patient/appointmentPresentOnDate',
   paymentOrder: '/calendar/payment/order',
   verification: '/calendar/payment/verification',
+  patientFileUpload: '/calendar/patient/report/upload',
 }
