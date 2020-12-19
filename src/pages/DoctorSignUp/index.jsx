@@ -69,6 +69,8 @@ const DoctorSignUp = (props) => {
       }
     }
   }, [response, count])
+
+  const redirectPatientLoginPage = () => props.history.push('/patient/registration')
   
   const validationErr = {
     name: 'Invalid name',
@@ -359,6 +361,17 @@ const DoctorSignUp = (props) => {
                 Signin
               </span>
             </div>
+         
+            {/* Navigating to patient registration  */}
+
+            <div className="signin-btn-wrap">
+              If you are a new patient?
+              <span className="signin-btn" onClick={redirectPatientLoginPage}>
+              Click here
+              </span>
+            </div>
+
+
           </div>
         </form>
       </Paper>
