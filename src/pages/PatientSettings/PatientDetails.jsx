@@ -12,8 +12,6 @@ import { METHOD, URL } from '../../api'
 import EditButton from '../../components/EditButton'
 import useStyle from './usePatientDetailsStyle'
 import useManualFetch from '../../hooks/useManualFetch'
-import ReactS3 from 'react-s3'
-import { uploadFile } from 'react-s3';
 
 function PatientDetails({ patientDetails, patientId, onSave, setReload, reload,name, setName }) {
   const classes = useStyle()
