@@ -116,6 +116,7 @@ function MedicineList({ onClose, setOpenTopBar, setOpenSideBar }) {
   }
   function handlesubscription(){
     setOpen(true)
+    setCeperate(false)
   }
   function handlesubscriptionclose(){
     setOpen(false)
