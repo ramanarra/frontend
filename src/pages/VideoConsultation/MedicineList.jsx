@@ -155,7 +155,23 @@ function MedicineList({ onClose, setOpenTopBar, setOpenSideBar }) {
     list.push(data)
     setExistList(list)
   }
-  console.log(list, 'main list')
+  
+  
+  function addPrescription() {
+    let prescriptionArray = [];
+    let medicineList = [];
+
+    
+    list.map(item=> {
+      medicineList.push({
+        nameOfMedicine: item.medicineName,
+      })
+    });
+    prescriptionArray.push({
+      prescriptionList: [],
+    })
+    console.log(list)
+  }
 
   return (
     <Box>
@@ -192,7 +208,7 @@ function MedicineList({ onClose, setOpenTopBar, setOpenSideBar }) {
           </Box>
           <Box>
             { list.length>0&&
-        <Button className={classes.submit} >submit</Button>
+        <Button className={classes.submit} onClick={addPrescription}>submit</Button>
             }
         </Box>
       </Box>
