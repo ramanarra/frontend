@@ -32,6 +32,7 @@ export const URL = {
     search: '/calendar/doctor/patientGeneralSearch',
     listForDoctor: '/calendar/doctor/patientList',
   },
+  prescriptionAdd:'/calendar/doctor/prescription/add',
   appointmentSlotsView: '/calendar/doctor/appointmentSlotsView',
   appointmentView: '/calendar/appointmentView',
   appointmentCancel: '/calendar/doctor/appointmentCancel',

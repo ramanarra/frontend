@@ -1,8 +1,14 @@
 import { makeStyles } from '@material-ui/core/styles'
+import { light } from '@material-ui/core/styles/createPalette'
 import { FullscreenExit } from '@material-ui/icons'
 
 const useMedicineListStyle = makeStyles(() => ({
- 
+  table:{
+    marginTop:5,
+    maxWidth:'85',
+    height:'100',
+   
+  },
   submit:{
     textTransform:'lowercase',
     color:'white',
@@ -21,6 +27,41 @@ const useMedicineListStyle = makeStyles(() => ({
   date:{
     display:'flex',
     color:'#9da3ab',
+  },
+  edit:{
+      position:'relative',
+      left:160,
+      top:-8,
+      
+  },
+  head:{
+    color:'#363636',
+  },
+  txtbody:{
+    fontSize:15,
+    color:'#6b6b6b',
+    textAlign:'center',
+    wordBreak:'break-word',
+    td:{
+      textAlign:'center',
+     
+    },
+    
+   
+  },
+  feild:{
+    width:'7%',
+    height:'10px',
+    paddingBottom:'5px',
+  },
+  comment:{
+    //backgroundColor:'white',
+    padding: '10px',
+    textAlign:'center',
+    height: '40px',
+    width:'100%',
+
+    overflowY:'scroll',
   },
   header:{
       m  :4,

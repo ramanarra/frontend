@@ -48,7 +48,7 @@ const useMedicinesubscriptionstyle = makeStyles(() => ({
         textTransform:'capitalize',
         position:'relative',
         top:0,
-        left:10,
+        left:40,
       },
       container: {
         height:700,

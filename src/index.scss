@@ -36,3 +36,8 @@ input[type='number']::-webkit-outer-spin-button {
 input[type='number'] {
   -moz-appearance: textfield;
 }
+
+.consumption-countOfDays::-webkit-scrollbar {
+  width: 2px;
+  //  height: 1px;
+}

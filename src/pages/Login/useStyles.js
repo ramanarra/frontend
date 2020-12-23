@@ -83,13 +83,23 @@ const useStyles = makeStyles(() => ({
     loginButton: {
       width: 415,
     },
-  
-    text: {
+    headerfeild:{
+      display:'flex',
       marginBottom: 10,
-      color: '#645a5a',
       fontSize: 13,
     },
+    text: {
+     
+      color: '#645a5a',
+     
+   
+    },
+    textanother: {
+      position:'absolute',
+      left:'49%',
+     color: '#8a8484',
   
+    },
     emptytext: {
       color: '#f44336',
       paddingTop: 2,
