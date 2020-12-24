@@ -14,6 +14,7 @@ import PatientSignup from './pages/PatientSignup'
 import DoctorSignUp from './pages/DoctorSignUp'
 import DoctorLogin from './pages/Login/DoctorLogin'
 import CorporateLogin from './pages/Login/Corporatelogin'
+import privacyPolicy from './pages/privacyPolicy/'
 import VideoConsultation from './pages/VideoConsultation'
 import { Provider } from 'react-redux'
 import combineReducers from './reducers'
@@ -33,6 +34,7 @@ ReactDOM.render(
           <Route exact path={'/doctor/registration'} component={DoctorSignUp} />
           <Route exact path={'/video-consultation'} component={VideoConsultation} />
           <Route exact path={'/corporateLogin'} component={CorporateLogin} />
+          <Route exact path={'/privacy'} component={privacyPolicy} />
           <Route path={'/'} component={Layouts} />
         </Switch>
       </BrowserRouter>
