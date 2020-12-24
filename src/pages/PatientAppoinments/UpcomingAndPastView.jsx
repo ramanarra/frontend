@@ -192,16 +192,28 @@ function UpcomingAndPastView({
                     {date}
                   </Typography>
                 </Box>
-                {past && (
-                  <Box display="flex" className={classes.prescription}>
-                    <Typography className={classes.name}>Prescription : </Typography>
-                    <Box display="flex" className={classes.download}>
-                      <Typography className={classes.value} variant="h5">
-                        Click here
-                      </Typography>
-                      <VerticalAlignBottomOutlinedIcon
-                        className={classes.downloadIcon}
-                      />
+
+                {/* <Box display="grid" className={classes.nameAndValuePair} style={{ width: "0px" }}>
+                  <Typography className={classes.name} style={{ paddingBottom: "10px" }} > Upload files </Typography>
+                  <AddFile />
+                </Box> */}
+                {(prescriptionDisplay) ?
+                  past && (
+                    <Box display="flex" className={classes.prescription}>
+
+                      <Typography className={classes.name}>Prescription : </Typography>
+                      <Box display="flex" className={classes.download}>
+                        <a className={classes.value}  href={doctorDetails.prescriptionUrl[0]}
+                        target="_blank"
+                        style={{ color: '#37befa', textDecorationLine: 'none' }}
+                        variant="h5">
+                          Click here
+                      </a>
+                        <VerticalAlignBottomOutlinedIcon
+                          onClick={doctorDetails.prescriptionUrl[0]}
+                          className={classes.downloadIcon}
+                        />
+                      </Box>
                     </Box>
                   </Box>
                 )}
