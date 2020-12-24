@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/app/static/css/main.d2d802ae.chunk.css",
-    "main.js": "/app/static/js/main.e99a9da7.chunk.js",
-    "main.js.map": "/app/static/js/main.e99a9da7.chunk.js.map",
+    "main.js": "/app/static/js/main.72624269.chunk.js",
+    "main.js.map": "/app/static/js/main.72624269.chunk.js.map",
     "runtime-main.js": "/app/static/js/runtime-main.c9b5768c.js",
     "runtime-main.js.map": "/app/static/js/runtime-main.c9b5768c.js.map",
-    "static/js/2.08348ccb.chunk.js": "/app/static/js/2.08348ccb.chunk.js",
-    "static/js/2.08348ccb.chunk.js.map": "/app/static/js/2.08348ccb.chunk.js.map",
+    "static/js/2.9401b5d1.chunk.js": "/app/static/js/2.9401b5d1.chunk.js",
+    "static/js/2.9401b5d1.chunk.js.map": "/app/static/js/2.9401b5d1.chunk.js.map",
     "index.html": "/app/index.html",
-    "precache-manifest.a38343d02e57beb276112fd68c802319.js": "/app/precache-manifest.a38343d02e57beb276112fd68c802319.js",
+    "precache-manifest.eb3bf6bd726011eb65b20fe6218fd614.js": "/app/precache-manifest.eb3bf6bd726011eb65b20fe6218fd614.js",
     "service-worker.js": "/app/service-worker.js",
     "static/css/main.d2d802ae.chunk.css.map": "/app/static/css/main.d2d802ae.chunk.css.map",
-    "static/js/2.08348ccb.chunk.js.LICENSE.txt": "/app/static/js/2.08348ccb.chunk.js.LICENSE.txt",
+    "static/js/2.9401b5d1.chunk.js.LICENSE.txt": "/app/static/js/2.9401b5d1.chunk.js.LICENSE.txt",
     "static/media/No-Appoinments.svg": "/app/static/media/No-Appoinments.5c1c6efb.svg",
     "static/media/stylesheet.css": "/app/static/media/ProductSans-Regular.d3e70bb9.woff",
     "static/media/Schedule.svg": "/app/static/media/Schedule.a2630e5b.svg",
@@ -26,6 +26,7 @@
     "static/media/full-screen.svg": "/app/static/media/full-screen.e890961f.svg",
     "static/media/hospitalLogo.png": "/app/static/media/hospitalLogo.78be083b.png",
     "static/media/icomoon.css": "/app/static/media/icomoon.dda5bdac.ttf",
+    "static/media/image.svg": "/app/static/media/image.4707ab9d.svg",
     "static/media/inter-change.svg": "/app/static/media/inter-change.aff8a6b8.svg",
     "static/media/join.svg": "/app/static/media/join.183ca272.svg",
     "static/media/left-arrow.svg": "/app/static/media/left-arrow.1444aa68.svg",
@@ -33,6 +34,7 @@
     "static/media/mic-off.svg": "/app/static/media/mic-off.d67c4b03.svg",
     "static/media/mic-on.svg": "/app/static/media/mic-on.7ae5b403.svg",
     "static/media/past-appointments.svg": "/app/static/media/past-appointments.a084e2b4.svg",
+    "static/media/pdfIcon.svg": "/app/static/media/pdfIcon.7d7b22ee.svg",
     "static/media/profile.png": "/app/static/media/profile.785e2362.png",
     "static/media/selected-chat-icon.svg": "/app/static/media/selected-chat-icon.c5add08f.svg",
     "static/media/selected-tab-icon.svg": "/app/static/media/selected-tab-icon.9ccfaa91.svg",
@@ -47,8 +49,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.c9b5768c.js",
-    "static/js/2.08348ccb.chunk.js",
+    "static/js/2.9401b5d1.chunk.js",
     "static/css/main.d2d802ae.chunk.css",
-    "static/js/main.e99a9da7.chunk.js"
+    "static/js/main.72624269.chunk.js"
   ]
 }
