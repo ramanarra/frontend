@@ -6,7 +6,7 @@ import usestyle from './useMedicinesubscriptionstyle'
 import CloseIcon from '@material-ui/icons/Close'
 
 
-function MedicinesubscriptionList({ subIndex, data, handleOnMedicine, handleOnMedicinecountOfDays, handleOndoseOfMedicine }) {
+function MedicinesubscriptionList({ subIndex, data, handleOnMedicine, handleOnMedicinecountOfDays, handleOndoseOfMedicine, handleRemoveMedicine, list }) {
   const useStyle = makeStyles(() => ({
     holesize: {
       maxWidth: 800,
@@ -47,6 +47,7 @@ function MedicinesubscriptionList({ subIndex, data, handleOnMedicine, handleOnMe
               <Box style={{ position: 'relative' }}>Medicine Name</Box>
               <Box style={{ position: 'relative', left: '80px' }}>Quantity/Dosage</Box>
               <Box style={{ position: 'relative', left: '104px' }}>Comments</Box>
+              <Box style={{ position: 'relative', left: '20px' }}></Box>
             </Box>
           </Box>
         }
@@ -62,6 +63,12 @@ function MedicinesubscriptionList({ subIndex, data, handleOnMedicine, handleOnMe
 
           <TextField className={style.commentField} value={data.doseOfMedicine} placeholder="comment on medicine"
             onChange={(event) => { handleOndoseOfMedicine(event, subIndex) }} />
+
+          {list?.length > 1 &&
+            <Button 
+            onClick={(event) => {handleRemoveMedicine(subIndex, 'delete', event)}} value={data.minus} 
+            color="primary" >-</Button>
+        }
         </Box>
 
       </Box>
@@ -84,7 +91,7 @@ function Medicinesubscription({ open, handlesubscriptionclose, handleOnMedicine,
       setList(existList)
     }
     else {
-      let medicine = { nameOfMedicine: '', countOfDays: '', doseOfMedicine: '' }
+      let medicine = { nameOfMedicine: '', countOfDays: '', doseOfMedicine: '', minus: '' }
       let medicineList = [...list]
       medicineList.push(medicine)
       setList(medicineList)
@@ -119,10 +126,19 @@ function Medicinesubscription({ open, handlesubscriptionclose, handleOnMedicine,
   }
 
   function handleAddMedicine() {
-    let medicine = { nameOfMedicine: '', countOfDays: '', doseOfMedicine: '' }
+    let medicine = { nameOfMedicine: '', countOfDays: '', doseOfMedicine: '', minus: '' }
     let medicineList = [...list]
     medicineList.push(medicine)
     setList(medicineList)
+  }
+
+  function handleRemoveMedicine(index, type, event) {
+    console.log('handleRemoveMedicine', event);
+    let medicineList = [...list]
+    if(medicineList && medicineList.length && medicineList[index].minus !== 'minus' && type === 'delete') {
+      medicineList.splice(index, 1)
+    setList(medicineList)
+    }
   }
 
   console.log(list);
@@ -140,7 +156,9 @@ function Medicinesubscription({ open, handlesubscriptionclose, handleOnMedicine,
           <Box>
             {
               list.map((data, index) => < MedicinesubscriptionList subIndex={index} data={data}
-                handleOnMedicine={handleOnMedicine} handleOnMedicinecountOfDays={handleOnMedicinecountOfDays} handleOndoseOfMedicine={handleOndoseOfMedicine}
+                handleOnMedicine={handleOnMedicine} handleOnMedicinecountOfDays={handleOnMedicinecountOfDays}
+                 handleOndoseOfMedicine={handleOndoseOfMedicine} handleRemoveMedicine={handleRemoveMedicine}
+                 list={list}
               />)}
           </Box>
           <Box className={classes.add}>
