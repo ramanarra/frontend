@@ -2,6 +2,8 @@ import React, { useMemo } from 'react'
 import moment from 'moment'
 import NumberToWords from 'number-to-words'
 import { useHistory } from 'react-router-dom'
+import AddFile from '../PatientSettings/FileAdding'
+
 import {
   Dialog,
   DialogTitle,
@@ -171,7 +173,12 @@ function UpcomingAndPastView({
                     className={classes.value}
                     variant="h5"
                   >{`${startTime}${' - '}${endTime}`}</Typography>
-                </Box>
+                   
+                </Box> 
+                <Box display="grid" className={classes.time} style={{width:"0px"}}>
+                   <Typography className={classes.name}> Upload files </Typography>
+                    <AddFile />      
+               </Box> 
               </Box>
               <Box className={classes.rightSide}>
                 <Box display="flex" className={classes.nameAndValuePair}>
