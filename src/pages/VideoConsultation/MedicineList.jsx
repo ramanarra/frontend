@@ -109,6 +109,16 @@ function MedicineList({ onClose, setOpenTopBar, setOpenSideBar, appointmentId,se
       return i
     }))
   }
+
+  function handleRemoveMedicine(subIndex, type) {
+    console.log('handleRemoveMedicine');
+
+    setList(prev => prev.map((i, index) => {
+      if (index === subIndex) return { ...i, minus: 'value' }
+      return i
+    }))
+  }
+
   function handleOndoseOfMedicine(event, subIndex) {
     const { value } = event.target
     console.log(list);

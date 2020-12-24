@@ -2,6 +2,9 @@ import React, { useMemo } from 'react'
 import moment from 'moment'
 import NumberToWords from 'number-to-words'
 import { useHistory } from 'react-router-dom'
+import AddFile from '../PatientSettings/FileAdding'
+import { BsDownload } from 'react-icons/bs'
+
 import {
   Dialog,
   DialogTitle,
@@ -98,6 +101,9 @@ function UpcomingAndPastView({
       ? false
       : true
     : false
+  const prescriptionDisplay =
+    (doctorDetails?.prescriptionUrl && doctorDetails?.prescriptionUrl.length)
+      ? true : false
 
   function handleOnClose(event) {
     onCancel(event)
@@ -172,6 +178,16 @@ function UpcomingAndPastView({
                     variant="h5"
                   >{`${startTime}${' - '}${endTime}`}</Typography>
                 </Box>
+
+
+                {/* <Box display="flex" className={classes.nameAndValuePair}>
+                  <Typography className={classes.name}> User Credit : </Typography>
+                  <Typography className={classes.value} variant="h5">
+                    200
+                  </Typography>
+                </Box> */}
+
+
               </Box>
               <Box className={classes.rightSide}>
                 <Box display="flex" className={classes.nameAndValuePair}>
@@ -215,8 +231,10 @@ function UpcomingAndPastView({
                         />
                       </Box>
                     </Box>
-                  </Box>
-                )}
+                  )
+                  :
+                  <div></div>
+                }
               </Box>
             </Box>
             {!past && (

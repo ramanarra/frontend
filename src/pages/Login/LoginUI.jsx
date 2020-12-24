@@ -255,9 +255,9 @@ const Login = ({
                 <Typography className={classes.text} variant="h5">
                   Password
                 </Typography>
-                <Typography className={classes.textanother} variant="h5">
+                {/* <Typography className={classes.textanother} variant="h5">
                   Password must be at least 6 characters
-                </Typography>
+                </Typography> */}
                 </Box>
                 <TextField
                   id="password"
