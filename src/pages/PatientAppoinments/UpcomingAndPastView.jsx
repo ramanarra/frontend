@@ -209,39 +209,29 @@ function UpcomingAndPastView({
                   </Typography>
                 </Box>
 
-                <Box display="flex" className={classes.nameAndValuePair}>
-                  {(prescriptionDisplay) ?
-                      <Typography className={classes.name}>Prescription :
-                  <span style={{ color: "#0bb5ff", display: "inline-flex", alignItems: "center" }}>&nbsp; Click here
-                  &nbsp;&nbsp;<BsDownload style={{ fontSize: "x-large" }} />
-                        </span>
-                      </Typography>
-                    :
-                    <div></div>
-                  }
-                </Box>
-
-
                 {/* <Box display="grid" className={classes.nameAndValuePair} style={{ width: "0px" }}>
                   <Typography className={classes.name} style={{ paddingBottom: "10px" }} > Upload files </Typography>
                   <AddFile />
                 </Box> */}
+                {(prescriptionDisplay) ?
+                  past && (
+                    <Box display="flex" className={classes.prescription}>
 
-
-                {past && (
-                  <Box display="flex" className={classes.prescription}>
-
-                    <Typography className={classes.name}>Prescription : </Typography>
-                    <Box display="flex" className={classes.download}>
-                      <Typography className={classes.value} variant="h5">
-                        Click here
+                      <Typography className={classes.name}>Prescription : </Typography>
+                      <Box display="flex" className={classes.download}>
+                        <Typography className={classes.value} variant="h5">
+                          Click here
                       </Typography>
-                      <VerticalAlignBottomOutlinedIcon
-                        className={classes.downloadIcon}
-                      />
+                        <VerticalAlignBottomOutlinedIcon
+                          onClick={doctorDetails.prescriptionUrl[0]}
+                          className={classes.downloadIcon}
+                        />
+                      </Box>
                     </Box>
-                  </Box>
-                )}
+                  )
+                  :
+                  <div></div>
+                }
               </Box>
             </Box>
             {!past && (
