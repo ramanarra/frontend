@@ -6,6 +6,7 @@ const intialState = {
   session: undefined,
   messages: [],
   prescription:[],
+  icon: true,
 }
 
 const doctor = (state = intialState, action) => {
@@ -37,6 +38,10 @@ const doctor = (state = intialState, action) => {
 
     case 'SET_PRESCRIPTION':{
       return{...state,prescription:action.data}
+    }
+
+    case 'SET_ICON':{
+      return{...state,icon:action.data}
     }
 
     case 'CLEAR_MESSAGES': {

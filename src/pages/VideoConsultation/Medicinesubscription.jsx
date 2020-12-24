@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { Box, Button, makeStyles, TextField, DialogTitle, Dialog } from '@material-ui/core'
-import moment from 'moment'
-
 import usestyle from './useMedicinesubscriptionstyle'
 import CloseIcon from '@material-ui/icons/Close'
 
