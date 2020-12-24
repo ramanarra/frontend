@@ -64,7 +64,7 @@ const Textfield = ({
       return null
     }
   }
-
+  
   return (
     <div className={'txt-field-wrap' + labelStatus + errorStatus}>
       <FormControl
@@ -75,7 +75,7 @@ const Textfield = ({
         {!!label && (
           <div>
             <label className="txt-field-label">{label}</label>
-            <Star className="star-icon" />
+            {label!=="Hospital Code"&&<Star className="star-icon" />}
           </div>
         )}
         <OutlinedInput

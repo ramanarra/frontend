@@ -58,6 +58,7 @@ const Login = ({
       history.push('/patient/registration')
     } else {
       history.push('/doctor/registration')
+      // history.push('/corporateLogin')
     }
   }
 
@@ -250,9 +251,14 @@ const Login = ({
                 )}
               </Box>
               <Box>
+                <Box className={classes.headerfeild}>
                 <Typography className={classes.text} variant="h5">
                   Password
                 </Typography>
+                <Typography className={classes.textanother} variant="h5">
+                  Password must be at least 6 characters
+                </Typography>
+                </Box>
                 <TextField
                   id="password"
                   inputRef={passwordRef}

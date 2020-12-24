@@ -48,6 +48,30 @@
 
     .field-wrap {
       margin: 10px 0;
+      
+      
+      .field-line{
+        display:flex;
+        width:100% !important;
+        align-items: baseline;
+          .field-mover{
+            display:flex;
+            width: 67%;
+            .rolling-info{
+              display:flex;
+              width: 100%;
+            }
+          }
+          .star-color{
+            
+            color:red;
+          }
+      }
+      .field-Text{
+        textarea{
+          width:100%;
+        }
+      }
     }
 
     .txt-field-label,
@@ -125,6 +149,10 @@
         background: #0bb5ff;
         color: #fff;
         width: 100%;
+      }
+
+      .signin-btn-align {
+        padding-left: 20px !important;
       }
 
       .signin-btn-wrap {

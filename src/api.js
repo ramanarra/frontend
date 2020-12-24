@@ -12,6 +12,7 @@ export const METHOD = {
 
 export const URL = {
   doctorLogin: 'auth/doctorLogin',
+  doctorSignup: 'auth/doctorRegistration',
   doctorList: `/calendar/doctor/list`,
   patientLogin: 'auth/patientLogin',
   patientSignup: '/auth/patientRegistration',
@@ -31,6 +32,7 @@ export const URL = {
     search: '/calendar/doctor/patientGeneralSearch',
     listForDoctor: '/calendar/doctor/patientList',
   },
+  prescriptionAdd:'/calendar/doctor/prescription/add',
   appointmentSlotsView: '/calendar/doctor/appointmentSlotsView',
   appointmentView: '/calendar/appointmentView',
   appointmentCancel: '/calendar/doctor/appointmentCancel',
@@ -44,6 +46,7 @@ export const URL = {
   patientPastAppointments: '/calendar/patient/pastAppointmentsList',
   patientDoctorList: '/calendar/patient/doctorList',
   findDoctorByCodeOrName: '/calendar/patient/findDoctorByCodeOrName',
+  reportUploading:'/calendar/patient/reportUploading',
   listOfDoctorsInHospital: '/calendar/patient/listOfDoctorsInHospital',
   appointmentDoctorDetails: '/calendar/patient/appointmentDoctorDetails',
   viewDoctorDetails: '/calendar/patient/viewDoctorDetails',

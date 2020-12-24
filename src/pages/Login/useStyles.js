@@ -49,19 +49,18 @@ const useStyles = makeStyles(() => ({
     },
 
     emptyField: {
-      border: '1px solid #ff9007',
       '& fieldset': {
-        top: -3.8,
         right: -0.3,
-        borderColor: '#ffffff',
-      }
+        top: -3.8,
+        border: '1px solid #f44336 !important',
+      },
     },
 
     emptyPasswordField: {
-      border: '1px solid #ff9007',
       '& fieldset': {
         right: -0.3,
-        top: -3.8
+        top: -3.8,
+        border: '1px solid #f44336 !important',
       },
     },
   
@@ -84,13 +83,23 @@ const useStyles = makeStyles(() => ({
     loginButton: {
       width: 415,
     },
-  
-    text: {
+    headerfeild:{
+      display:'flex',
       marginBottom: 10,
-      color: '#645a5a',
       fontSize: 13,
     },
+    text: {
+     
+      color: '#645a5a',
+     
+   
+    },
+    textanother: {
+      position:'absolute',
+      left:'49%',
+     color: '#8a8484',
   
+    },
     emptytext: {
       color: '#f44336',
       paddingTop: 2,

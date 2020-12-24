@@ -36,6 +36,7 @@ function SideBar({
   setSelectedAppointmentId,
   setFullScreen,
   setInterChange,
+  appointmentId,
 }) {
   const classes = useStyle()
 
@@ -277,7 +278,7 @@ function SideBar({
       )}
       {openChat && <Chat onClose={handleChatClose} setOpenTopBar={setOpenTopBar} />}
       {openMedicine && (
-        <MedicineList onClose={handleMedicineClose} setOpenTopBar={setOpenTopBar} />
+        <MedicineList onClose={handleMedicineClose} setOpenTopBar={setOpenTopBar} appointmentId={selected} />
       )}
       {openDialog && (
         <AddNewPatientConfirmationModel

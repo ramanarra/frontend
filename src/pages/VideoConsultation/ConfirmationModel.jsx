@@ -38,6 +38,7 @@ function ConfirmationPopUp({
   isVideoStatus,
   setIsVideoStatus,
   patientAppointmentId,
+  list,
 }) {
   const classes = useStyle()
 
@@ -45,30 +46,33 @@ function ConfirmationPopUp({
 
   const [videoAvailable, setVideoAvailable] = useState(true)
 
-  const doctorName =
-    patientAppointmentId && appointmentDetail?.appointmentId === patientAppointmentId
-      ? appointmentDetail?.doctorLastName
-        ? `${appointmentDetail?.doctorFirstName}${' '}${
-            appointmentDetail?.doctorLastName
+  const detail = list && list.filter(appointment => appointment.appointmentId === patientAppointmentId)
+
+  const doctorName = detail
+      ? detail[0]?.doctorLastName
+        ? `${detail[0]?.doctorFirstName}${' '}${
+            detail[0]?.doctorLastName
           }`
-        : `${appointmentDetail?.doctorFirstName}`
-      : appointmentDetail?.doctorLastName
-      ? `${appointmentDetail?.doctorFirstName}${' '}${
-          appointmentDetail?.doctorLastName
-        }`
-      : `${appointmentDetail?.doctorFirstName}`
+        : `${detail[0]?.doctorFirstName}`
+        : null
+      // : 
+      // appointmentDetail?.doctorLastName
+      // ? `${appointmentDetail?.doctorFirstName}${' '}${
+      //     appointmentDetail?.doctorLastName
+      //   }`
+      // : `${appointmentDetail?.doctorFirstName}`
 
-  const date = patientAppointmentId && appointmentDetail?.appointmentId === patientAppointmentId ?
-  moment(appointmentDetail?.appointmentDate).format('DD MMMM YYYY') :
-  moment(appointmentDetail?.appointmentDate).format('DD MMMM YYYY')
+  const date = detail  ?
+  moment(detail[0]?.appointmentDate).format('DD MMMM YYYY') :
+  null
 
-  const startTime = patientAppointmentId && appointmentDetail?.appointmentId === patientAppointmentId ?
-  getTimeFormatWithNoon(appointmentDetail?.startTime) :
-  getTimeFormatWithNoon(appointmentDetail?.startTime)
+  const startTime = detail ?
+  getTimeFormatWithNoon(detail[0]?.startTime) :
+  null
 
-  const endTime = patientAppointmentId && appointmentDetail?.appointmentId === patientAppointmentId ?
-  getTimeFormatWithNoon(appointmentDetail?.endTime) :
-  getTimeFormatWithNoon(appointmentDetail?.endTime)
+  const endTime = detail ?
+  getTimeFormatWithNoon(detail[0]?.endTime) :
+  null
 
   function handleClose() {
     socket.disconnect()

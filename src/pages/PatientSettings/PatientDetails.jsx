@@ -11,16 +11,31 @@ import {
   Avatar,
   Button,
 } from '@material-ui/core'
-
+import { METHOD, URL } from '../../api'
 import EditButton from '../../components/EditButton'
 import useStyle from './usePatientDetailsStyle'
+import useManualFetch from '../../hooks/useManualFetch'
 
-function PatientDetails({ patientDetails, patientId, onSave, setReload, reload, name, setName }) {
+function PatientDetails({ patientDetails, patientId, onSave, setReload, reload,name, setName }) {
   const classes = useStyle()
 
   const [fieldName, setFieldName] = useState('')
+  // const [updateData, updateError, isUpdating, data,file] = useFormData()
+
+  const [img, setImg] = useState({ 
+    objecturl:"",
+    name:"",
+    type:"",
+    size:"",
+    date:"",
+
+  })
 
   const history = useHistory()
+  const [ open, setOpen] = useState(false)
+   const handlePopupMsg=()=>{
+     setOpen(true)
+   }
 
   const [values, setValues] = useState({
     patientId: Number(patientId),
@@ -64,6 +79,14 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload, 
     history.push('/patient/setting')
   }
 
+  // function handleClose() {
+  //   setOpen(false)
+  // }
+  // function onChange(evt){
+  //   updateData(METHOD.POST, URL.reportUploading, {
+  //   img
+  //   })
+  // }
   return (
     <Box className={classes.container}>
       <Box display="flex">
@@ -246,12 +269,38 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload, 
                   disable={handleDisable}
                   save={handleOnSave}
                 />
+                
               </Box>
+             
             </Box>
+            
           </Box>
+         
         </Box>
+         
       </Box>
+      {/* <Box>
+        <Box>
+          <input
+              type="file" accept='image/png'
+              onChange={(evt) => onChange(evt)}
+          />
+        </Box>
+     <Button
+       onClick={handlePopupMsg}
+     >
+       view more file
+     </Button>
+   </Box>
+   {
+     open &&
+     <PatientReport
+     open={open}
+     handleClose={handleClose}
+      />
+   } */}
     </Box>
+    
   )
 }
 

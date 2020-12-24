@@ -153,7 +153,9 @@ function VideoConsulation() {
           setIsAudioStatus={setIsAudioStatus}
           isVideoStatus={isVideoStatus}
           setIsVideoStatus={setIsVideoStatus}
-          patientAppointmentId={patientAppointmentId}
+          // patientAppointmentId={patientAppointmentId}
+          patientAppointmentId={location.state}
+          list={location.list}
         />
       )}
 
