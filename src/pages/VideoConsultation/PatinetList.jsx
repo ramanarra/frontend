@@ -9,6 +9,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import getTimeFormatWithNoon, { getTimeFormat } from '../../lib/dateLib'
 import {setOpenSideBar} from '../../actions/doctor'
 import useStyle from './usePatientListStyle'
+import { useState } from 'react'
 
 function PatientList({
   patientList,
@@ -31,12 +32,13 @@ function PatientList({
   setInterChange,
 }) {
   const classes = useStyle()
-
+  
   function handleOnClose(event) {
     onClose(event)
     setOpenTopBar(false)
     setOpenSideBar(false)
   }
+
 
   const handleOnPatientJoining = (appointmentId, firstName, lastName, index) => {
     if (presentAppointmentId !== appointmentId) {
@@ -133,7 +135,9 @@ function PatientList({
                           <Typography className={classes.lastName} variant="h5">
                             {patientDetails.lastName}
                           </Typography>
+                          
                         )}
+                      
                         {id === patientDetails.appointmentId && (
                           <Typography className={classes.next}>NEXT</Typography>
                         )}

@@ -6,7 +6,7 @@ import usestyle from './useMedicinesubscriptionstyle'
 import CloseIcon from '@material-ui/icons/Close'
 
 
-function MedicinesubscriptionList({ subIndex, data, handleOnMedicine, handleOnMedicinedoseOfMedicine, handleOncountOfDays }) {
+function MedicinesubscriptionList({ subIndex, data, handleOnMedicine, handleOnMedicinecountOfDays, handleOndoseOfMedicine }) {
   const useStyle = makeStyles(() => ({
     holesize: {
       maxWidth: 800,
@@ -53,13 +53,15 @@ function MedicinesubscriptionList({ subIndex, data, handleOnMedicine, handleOnMe
 
         <Box style={{ display: 'flex' }} className={style.textfield}>
           <TextField className={style.medicineField} value={data.nameOfMedicine} placeholder="Paracetamal"
-            onChange={(event) => { handleOnMedicine(event, subIndex) }} />
+            onChange={(event) => { handleOnMedicine(event, subIndex) 
+            }}
+             />
 
-          <TextField className={style.quantityField} value={data.doseOfMedicine} placeholder="10ml/mg"
-            onChange={(event) => { handleOnMedicinedoseOfMedicine(event, subIndex) }} />
+          <TextField className={style.quantityField} value={data.countOfDays} placeholder="3"
+            onChange={(event) => { handleOnMedicinecountOfDays(event, subIndex) }} />
 
-          <TextField className={style.commentField} value={data.countOfDays} placeholder="comment on medicine"
-            onChange={(event) => { handleOncountOfDays(event, subIndex) }} />
+          <TextField className={style.commentField} value={data.doseOfMedicine} placeholder="comment on medicine"
+            onChange={(event) => { handleOndoseOfMedicine(event, subIndex) }} />
         </Box>
 
       </Box>
@@ -82,7 +84,7 @@ function Medicinesubscription({ open, handlesubscriptionclose, handleOnMedicine,
       setList(existList)
     }
     else {
-      let medicine = { nameOfMedicine: '', doseOfMedicine: '', countOfDays: '' }
+      let medicine = { nameOfMedicine: '', countOfDays: '', doseOfMedicine: '' }
       let medicineList = [...list]
       medicineList.push(medicine)
       setList(medicineList)
@@ -98,16 +100,7 @@ function Medicinesubscription({ open, handlesubscriptionclose, handleOnMedicine,
     }))
   }
 
-  function handleOnMedicinedoseOfMedicine(event, subIndex) {
-    const { value } = event.target
-    console.log(list);
-    setList(prev => prev.map((i, index) => {
-      if (index === subIndex) return { ...i, doseOfMedicine: value }
-      return i
-    }))
-  }
-
-  function handleOncountOfDays(event, subIndex) {
+  function handleOnMedicinecountOfDays(event, subIndex) {
     const { value } = event.target
     console.log(list);
     setList(prev => prev.map((i, index) => {
@@ -116,8 +109,17 @@ function Medicinesubscription({ open, handlesubscriptionclose, handleOnMedicine,
     }))
   }
 
+  function handleOndoseOfMedicine(event, subIndex) {
+    const { value } = event.target
+    console.log(list);
+    setList(prev => prev.map((i, index) => {
+      if (index === subIndex) return { ...i, doseOfMedicine: value }
+      return i
+    }))
+  }
+
   function handleAddMedicine() {
-    let medicine = { nameOfMedicine: '', doseOfMedicine: '', countOfDays: '' }
+    let medicine = { nameOfMedicine: '', countOfDays: '', doseOfMedicine: '' }
     let medicineList = [...list]
     medicineList.push(medicine)
     setList(medicineList)
@@ -138,12 +140,12 @@ function Medicinesubscription({ open, handlesubscriptionclose, handleOnMedicine,
           <Box>
             {
               list.map((data, index) => < MedicinesubscriptionList subIndex={index} data={data}
-                handleOnMedicine={handleOnMedicine} handleOnMedicinedoseOfMedicine={handleOnMedicinedoseOfMedicine} handleOncountOfDays={handleOncountOfDays}
+                handleOnMedicine={handleOnMedicine} handleOnMedicinecountOfDays={handleOnMedicinecountOfDays} handleOndoseOfMedicine={handleOndoseOfMedicine}
               />)}
           </Box>
           <Box className={classes.add}>
             {
-              !seperate &&
+
 
               <Button onClick={handleAddMedicine} className={classes.added} color="primary" >+ Add Medicine</Button>
             }

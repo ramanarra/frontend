@@ -24,6 +24,7 @@ const store = createStore(combineReducers)
 ReactDOM.render(
   <Provider store={store}>
     <ThemeProvider theme={theme}>
+      
       <BrowserRouter basename="/app">
         <Switch>
           <Route exact path={'/login'} component={Login} />
@@ -36,8 +37,10 @@ ReactDOM.render(
         </Switch>
       </BrowserRouter>
     </ThemeProvider>
+
     </Provider>,
   document.getElementById('root')
+  
 )
 
 // If you want your app to work offline and load faster, you can change

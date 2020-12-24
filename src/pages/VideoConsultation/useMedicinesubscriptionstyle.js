@@ -18,7 +18,7 @@ const useMedicinesubscriptionstyle = makeStyles(() => ({
         color:'white',
         position:'relative',
         top:0,
-        left:120,
+        left:200,
         height:30,
         borderRadius: 8,
         backgroundColor:'#2abade',
