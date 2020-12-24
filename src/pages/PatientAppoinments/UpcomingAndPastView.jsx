@@ -219,9 +219,12 @@ function UpcomingAndPastView({
 
                       <Typography className={classes.name}>Prescription : </Typography>
                       <Box display="flex" className={classes.download}>
-                        <Typography className={classes.value} variant="h5">
+                        <a className={classes.value}  href={doctorDetails.prescriptionUrl[0]}
+                        target="_blank"
+                        style={{ color: '#37befa' }}
+                        variant="h5">
                           Click here
-                      </Typography>
+                      </a>
                         <VerticalAlignBottomOutlinedIcon
                           onClick={doctorDetails.prescriptionUrl[0]}
                           className={classes.downloadIcon}
