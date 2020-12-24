@@ -66,6 +66,9 @@ function PatientSideBar() {
             })} to="/patient/setting">
           <i className="icon-settings "></i>
         </Link>
+        <Link className={classNames(classes.appointmentIcon, {
+            [classes.selectedColor]: pathName === 'appointments',
+          })} to="/patient/reports" ><i className="icon-progress "></i></Link>
       </Box>
     </Box>
   )
