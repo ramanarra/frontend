@@ -22,13 +22,13 @@ function MedicineListEntry({ list }) {
         <thead style={{ fontSize: 14 }} className={classes.head}>
           <tr>
             <th
-              style={{ width: '25%' }}
+              style={{ width: '25%' , textAlign: 'left'}}
             >Medicine</th>
             <th
-              style={{ width: '25%' }}
+              style={{ width: '25%' , textAlign: 'left' }}
             >Quantity/Dose</th>
             <th
-              style={{ width: '25%' }}
+              style={{ width: '25%' , textAlign: 'left' }}
             >Consumption comments</th>
           </tr>
         </thead>
@@ -38,18 +38,18 @@ function MedicineListEntry({ list }) {
             list.map((data) =>
               <tr style={{ fontSize: 15, textAlign: 'center', color: '#595959' }} >
                 <td
-                  style={{ paddingBottom: '15px',wordBreak:'break-word'}}
+                  style={{ paddingBottom: '15px',wordBreak:'break-word' , textAlign: 'left'}}
 
                 >
                   {data.nameOfMedicine}
                 </td>
                 <td
-                  style={{ paddingBottom: '15px' ,wordBreak:'break-word'}}
+                  style={{ paddingBottom: '15px' ,wordBreak:'break-word' , textAlign: 'left'}}
                 >
                   {data.countOfDays}
                 </td>
                 <td className={"content"}
-                  style={{ paddingBottom: '15px' ,wordBreak:'break-word'}}
+                  style={{ paddingBottom: '15px' ,wordBreak:'break-word' , textAlign: 'left'}}
                 >
                   {data.doseOfMedicine}
                   
