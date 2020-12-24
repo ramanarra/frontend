@@ -217,12 +217,12 @@ function MedicineList({ onClose, setOpenTopBar, setOpenSideBar, appointmentId,se
               handleOndoseOfMedicine={handleOndoseOfMedicine} handleOnMedicinecountOfDays={handleOnMedicinecountOfDays}
             />}
         </Box>
-        {/* { appointmentId && close && */}
+        { appointmentId && close &&
         <Box className={classes.add}>
 
           <Button className={classes.added} onClick={handlesubscription} color="primary" >+ Add Prescription</Button>
         </Box>
-         {/* }  */}
+}
         <Box>
           {
             open &&
