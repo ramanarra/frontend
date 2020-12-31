@@ -52,6 +52,8 @@ function Settings() {
 
   const [onSave, response] = useHospitalDetailsUpdate(refetch)
 
+
+
   useEffect(() => {
     setOpen(true)
   },[response])

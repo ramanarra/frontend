@@ -36,7 +36,7 @@ const useMedicineListStyle = makeStyles(() => ({
     fontSize:15,
     color:'#6b6b6b',
     textAlign:'center',
-   // wordBreak:'break-word',
+  
     td:{
       textAlign:'center',
      
@@ -65,6 +65,8 @@ const useMedicineListStyle = makeStyles(() => ({
   },
   added:{
     textTransform:'capitalize',
+    position:'absolute',
+    left:'5%'
   },
   container: {
     position: 'absolute',

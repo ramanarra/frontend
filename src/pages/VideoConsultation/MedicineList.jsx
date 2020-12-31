@@ -237,7 +237,7 @@ function MedicineList({ onClose, setOpenTopBar, setOpenSideBar, appointmentId, s
 
             <Button className={classes.added} onClick={handlesubscription} color="primary" >+ Add Prescription</Button>
           </Box>
-        }
+        } 
         <Box>
           {
             open &&

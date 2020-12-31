@@ -6,7 +6,9 @@ import useStyle from './useHospitalDetailsStyle'
 
 function HospitalDetails({ hospitalDetails, isAbleToWrite, onSave }) {
   const classes = useStyle()
-
+  const [content, setContent] = useState({
+    
+  })
   const [fieldName, setFieldName] = useState('')
 
   const [values, setValues] = useState({
@@ -17,12 +19,10 @@ function HospitalDetails({ hospitalDetails, isAbleToWrite, onSave }) {
     country: hospitalDetails.country,
     phone: hospitalDetails.phone,
     street1: hospitalDetails.street1,
-    street2: hospitalDetails.street2,
-    city: hospitalDetails.city,
-    state: hospitalDetails.state,
-    pincode: hospitalDetails.pincode,
-    supportEmail: hospitalDetails.supportEmail,
-  })
+    cityState: hospitalDetails.cityState,
+     pincode: hospitalDetails.pincode,
+   supportEmail: hospitalDetails.supportEmail,
+})
 
   function handleOnChange(value) {
     setFieldName(value)
@@ -33,14 +33,29 @@ function HospitalDetails({ hospitalDetails, isAbleToWrite, onSave }) {
       ...values,
       [event.target.name]: event.target.value,
     })
+    setContent({
+      ...content,
+      accountKey: hospitalDetails.accountKey,
+      [event.target.name]: event.target.value,
+    })
   }
 
   function handleDisable() {
     setFieldName('')
+   
   }
 
   function handleOnSave() {
-    onSave(values)
+    
+    if(Object.keys(content).length != 0)
+    { 
+      setContent({
+        ...content,
+        accountKey: hospitalDetails.accountKey,
+      })
+      onSave(content)
+  }
+   setContent({}) 
   }
 
   return (
@@ -130,7 +145,7 @@ function HospitalDetails({ hospitalDetails, isAbleToWrite, onSave }) {
               name="street1"
               className={classes.textField}
               variant="outlined"
-              value={`${values.street1}${', '}${values.street2}`}
+              value={values.street1}
               onChange={handleOnEdit}
               disabled={'address' === fieldName ? false : true}
             />
@@ -146,10 +161,12 @@ function HospitalDetails({ hospitalDetails, isAbleToWrite, onSave }) {
           </Box>
           <Box className={classes.box} display="flex">
             <TextField
-              name="state"
+              name="cityState"
+              placeholder="Enter City, State"
               className={classes.textField}
               variant="outlined"
-              value={`${values.city}${', '}${values.state}`}
+              value={values.cityState}
+              onChange={handleOnEdit}
               disabled={'state' === fieldName ? false : true}
             />
             {isAbleToWrite && (
@@ -183,7 +200,7 @@ function HospitalDetails({ hospitalDetails, isAbleToWrite, onSave }) {
           </Box>
           <Box className={classes.box} display="flex">
             <TextField
-              name="email"
+              name="supportEmail"
               className={classes.textField}
               variant="outlined"
               value={values.supportEmail}

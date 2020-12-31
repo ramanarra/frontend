@@ -17,25 +17,15 @@ import useManualFetch from '../../hooks/useManualFetch'
 
 function PatientDetails({ patientDetails, patientId, onSave, setReload, reload,name, setName }) {
   const classes = useStyle()
-
   const [fieldName, setFieldName] = useState('')
-  // const [updateData, updateError, isUpdating, data,file] = useFormData()
-
-  const [img, setImg] = useState({ 
-    objecturl:"",
-    name:"",
-    type:"",
-    size:"",
-    date:"",
-
-  })
-
-  const history = useHistory()
+  const [content,setContent]=useState({
+    patientId: Number(patientId),
+ })
+ const history = useHistory()
   const [ open, setOpen] = useState(false)
    const handlePopupMsg=()=>{
      setOpen(true)
    }
-
   const [values, setValues] = useState({
     patientId: Number(patientId),
     photo: patientDetails.photo,
@@ -47,15 +37,22 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload,n
     state: patientDetails.state ? patientDetails.state : '-',
     pincode: patientDetails.pincode ? patientDetails.pincode : '-',
     email: patientDetails.email ? patientDetails.email : '-',
+
   })
 
   function handleOnChange(value) {
-    setFieldName(value)
-  }
+       setFieldName(value)
+      }
 
   function handleOnEdit(event) {
+    
     setValues({
       ...values,
+      [event.target.name]: event.target.value,
+    })
+    setContent({
+      ...content,
+       patientId: Number(patientId),
       [event.target.name]: event.target.value,
     })
     if(event.target.name === 'name') {
@@ -64,11 +61,22 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload,n
   }
 
   function handleDisable() {
-    setFieldName('')
+    setFieldName('')   
+  }
+  function handleModule(){
+    setContent();
   }
 
   function handleOnSave() {
-    onSave(values)
+    if(Object.keys(content).length != 0)
+    { 
+     setContent({
+       ...content,
+         patientId: Number(patientId),
+     })
+     onSave(content)
+    }
+    setContent({ });
   }
 
   if(name && reload) {
@@ -78,25 +86,12 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload,n
     history.push('/patient/setting')
   }
 
-  // function handleClose() {
-  //   setOpen(false)
-  // }
-  // function onChange(evt){
-  //   updateData(METHOD.POST, URL.reportUploading, {
-  //   img
-  //   })
-  // }
+  
   return (
     <Box className={classes.container}>
       <Box display="flex">
         <Box className={classes.photoContainer} display="flex">
           <Avatar src={values.photo} className={classes.photo} name="photo" />
-          {/* <EditButton
-            value={'110px'}
-            name="photo"
-            onChange={handleOnChange}
-            disable={handleDisable}
-          /> */}
         </Box>
         <Box display="flex" className={classes.detailsContainer}>
           <Box className={classes.right}>
@@ -129,6 +124,7 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload,n
                   variant="outlined"
                   value={values.landmark}
                   onChange={handleOnEdit}
+                  onClick={handleModule}
                   disabled={'landmark' === fieldName ? false : true}
                 />
                 <EditButton
@@ -278,26 +274,7 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload,n
         </Box>
          
       </Box>
-      {/* <Box>
-        <Box>
-          <input
-              type="file" accept='image/png'
-              onChange={(evt) => onChange(evt)}
-          />
-        </Box>
-     <Button
-       onClick={handlePopupMsg}
-     >
-       view more file
-     </Button>
-   </Box>
-   {
-     open &&
-     <PatientReport
-     open={open}
-     handleClose={handleClose}
-      />
-   } */}
+      
     </Box>
     
   )
