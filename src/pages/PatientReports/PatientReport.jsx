@@ -8,7 +8,7 @@ import pdfIcon from '../../assets/img/pdfIcon.svg'
 import SnackBar from '../../components/SnackBar'
 import useUpload from '../../hooks/useUpload'
 
-function PatientReport({ open, setOpen, setItem, handleClose, setReportList, patientReportList }) {
+function PatientReport({ open, setOpen, setItem, handleClose, setReportList, patientReportList,appointmentId }) {
   const classes = useStyle()
   const [handleUpload] = useUpload()
   const [file, setFile] = useState([])
@@ -96,6 +96,12 @@ function PatientReport({ open, setOpen, setItem, handleClose, setReportList, pat
     formdata.append("files", file[0]);
     formdata.append("patientId", patientId);
     formdata.append("comments", comments);
+
+    // Add appoitment if its added through appointment
+    if (appointmentId) {
+      formdata.append("appointmentId", appointmentId);
+    }
+
     handleUpload(formdata)
     setItem(true)
     setOpen(false)
