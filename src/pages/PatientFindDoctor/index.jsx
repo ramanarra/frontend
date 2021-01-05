@@ -20,7 +20,7 @@ function PatientFindDoctor() {
 
   const [isHospital, setIsHospital] = useState(false)
 
-  const [updateData, data] = useManualFetch()
+  const [updateData, error, isLoading, data] = useManualFetch()
 
   useEffect(() => {
     if (name === '') {
