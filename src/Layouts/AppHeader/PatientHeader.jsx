@@ -18,7 +18,7 @@ import { METHOD, URL } from '../../api'
 
 const useStyles = makeStyles(() => ({
   appBar: {
-    height: 65,
+    height: 70,
     paddingLeft: 20,
     paddingRight: 50,
     display: 'flex',
@@ -55,7 +55,7 @@ const useStyles = makeStyles(() => ({
   },
 
   logoImg: {
-    height: 78,
+    height: 70,
   },
 
   text: {
