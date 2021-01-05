@@ -17,7 +17,7 @@ import useManualFetch from '../../hooks/useManualFetch'
 
 function PatientDetails({ patientDetails, patientId, onSave, setReload, reload,name, setName }) {
   const classes = useStyle()
-  const [fieldName, setFieldName] = useState('')
+  const [fieldName, setFieldName] = useState([])
   const [content,setContent]=useState({
     patientId: Number(patientId),
  })
@@ -41,8 +41,12 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload,n
   })
 
   function handleOnChange(value) {
-       setFieldName(value)
-      }
+    const newFieldName = [...fieldName]
+
+    newFieldName.push(value)
+
+    setFieldName(newFieldName)
+  }
 
   function handleOnEdit(event) {
     
@@ -60,9 +64,18 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload,n
     }
   }
 
-  function handleDisable() {
-    setFieldName('')   
+  function handleDisable(name) {
+    const newFieldName = fieldName.filter((field) => field !== name)
+
+    const value = patientDetails[name]
+
+    setFieldName(newFieldName)
+
+    setValues({ ...values,
+      [name]: value})
+
   }
+
   function handleModule(){
     setContent();
   }
@@ -74,6 +87,13 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload,n
        ...content,
          patientId: Number(patientId),
      })
+
+     
+     setValues({
+      ...values,
+      content
+    })
+
      onSave(content)
     }
     setContent({ });
@@ -104,13 +124,13 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload,n
                   variant="outlined"
                   value={values.name}
                   onChange={handleOnEdit}
-                  disabled={'name' === fieldName ? false : true}
+                  disabled={fieldName.length === 0 ? true : !Boolean(fieldName.filter((field) => field === 'name').length)}
                 />
                 <EditButton
                   value={'-5px'}
                   onChange={handleOnChange}
                   name={'name'}
-                  disable={handleDisable}
+                  disable={() => handleDisable("name")}
                   save={handleOnSave}
                 />
               </Box>
@@ -125,13 +145,13 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload,n
                   value={values.landmark}
                   onChange={handleOnEdit}
                   onClick={handleModule}
-                  disabled={'landmark' === fieldName ? false : true}
-                />
+                  disabled={fieldName.length === 0 ? true : !Boolean(fieldName.filter((field) => field === 'landmark').length)}
+                  />
                 <EditButton
                   value={'-5px'}
                   onChange={handleOnChange}
                   name={'landmark'}
-                  disable={handleDisable}
+                  disable={() => handleDisable("landmark")}
                   save={handleOnSave}
                 />
               </Box>
@@ -145,13 +165,13 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload,n
                   variant="outlined"
                   value={values.country}
                   onChange={handleOnEdit}
-                  disabled={'country' === fieldName ? false : true}
-                />
+                  disabled={fieldName.length === 0 ? true : !Boolean(fieldName.filter((field) => field === 'country').length)}
+                  />
                 <EditButton
                   value={'-5px'}
                   onChange={handleOnChange}
                   name={'country'}
-                  disable={handleDisable}
+                  disable={() => handleDisable("country")}
                   save={handleOnSave}
                 />
               </Box>
@@ -165,13 +185,13 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload,n
                   variant="outlined"
                   value={values.registrationNumber}
                   onChange={handleOnEdit}
-                  disabled={'registrationNumber' === fieldName ? false : true}
-                />
+                  disabled={fieldName.length === 0 ? true : !Boolean(fieldName.filter((field) => field === 'registrationNumber').length)}
+                  />
                 <EditButton
                   value={'-5px'}
                   onChange={handleOnChange}
                   name={'registrationNumber'}
-                  disable={handleDisable}
+                  disable={() => handleDisable("registrationNumber")}
                   save={handleOnSave}
                 />
               </Box>
@@ -195,13 +215,13 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload,n
                   variant="outlined"
                   value={values.address}
                   onChange={handleOnEdit}
-                  disabled={'address' === fieldName ? false : true}
-                />
+                  disabled={fieldName.length === 0 ? true : !Boolean(fieldName.filter((field) => field === 'address').length)}
+                  />
                 <EditButton
                   value={'-5px'}
                   name={'address'}
                   onChange={handleOnChange}
-                  disable={handleDisable}
+                  disable={() => handleDisable("address")}
                   save={handleOnSave}
                 />
               </Box>
@@ -215,13 +235,13 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload,n
                   variant="outlined"
                   value={values.state}
                   onChange={handleOnEdit}
-                  disabled={'state' === fieldName ? false : true}
-                />
+                  disabled={fieldName.length === 0 ? true : !Boolean(fieldName.filter((field) => field === 'state').length)}
+                  />
                 <EditButton
                   value={'-5px'}
                   name={'state'}
                   onChange={handleOnChange}
-                  disable={handleDisable}
+                  disable={() => handleDisable("state")}
                   save={handleOnSave}
                 />
               </Box>
@@ -235,13 +255,13 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload,n
                   variant="outlined"
                   value={values.pincode}
                   onChange={handleOnEdit}
-                  disabled={'pincode' === fieldName ? false : true}
-                />
+                  disabled={fieldName.length === 0 ? true : !Boolean(fieldName.filter((field) => field === 'pincode').length)}
+                  />
                 <EditButton
                   value={'-5px'}
                   name={'pincode'}
                   onChange={handleOnChange}
-                  disable={handleDisable}
+                  disable={() => handleDisable("pincode")}
                   save={handleOnSave}
                 />
               </Box>
@@ -255,13 +275,13 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload,n
                   variant="outlined"
                   value={values.email}
                   onChange={handleOnEdit}
-                  disabled={'email' === fieldName ? false : true}
-                />
+                  disabled={fieldName.length === 0 ? true : !Boolean(fieldName.filter((field) => field === 'email').length)}
+                  />
                 <EditButton
                   value={'-5px'}
                   name={'email'}
                   onChange={handleOnChange}
-                  disable={handleDisable}
+                  disable={() => handleDisable("email")}
                   save={handleOnSave}
                 />
                 
