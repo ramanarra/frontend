@@ -72,10 +72,10 @@ function MedicineList({ onClose, setOpenTopBar, setOpenSideBar, appointmentId, s
   const [close, setClose] = useState(true)
   const [updateData, error, loading, data] = useManualFetch()
   var id = appointmentId
-  console.log(appointmentId, icon)
+
   useEffect(() => {
     setPrescription(prescription)
-    console.log(prescription)
+
     setList(prescription);
     if (appointmentId === "null") {
       list([]);
@@ -100,7 +100,7 @@ function MedicineList({ onClose, setOpenTopBar, setOpenSideBar, appointmentId, s
 
   function handleOnMedicine(event, subIndex) {
     const { value } = event.target
-    console.log(list);
+    
     setList(prev => prev.map((i, index) => {
       if (index === subIndex) return { ...i, nameOfMedicine: value }
       return i
@@ -108,7 +108,7 @@ function MedicineList({ onClose, setOpenTopBar, setOpenSideBar, appointmentId, s
   }
   function handleOnMedicinecountOfDays(event, subIndex) {
     const { value } = event.target
-    console.log(list);
+    
     setList(prev => prev.map((i, index) => {
       if (index === subIndex) return { ...i, countOfDays: value }
       return i
@@ -126,7 +126,7 @@ function MedicineList({ onClose, setOpenTopBar, setOpenSideBar, appointmentId, s
 
   function handleOndoseOfMedicine(event, subIndex) {
     const { value } = event.target
-    console.log(list);
+    
     setList(prev => prev.map((i, index) => {
       if (index === subIndex) return { ...i, doseOfMedicine: value }
       return i

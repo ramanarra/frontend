@@ -115,7 +115,7 @@ function Medicinesubscription({ open, handlesubscriptionclose, handleOnMedicine,
 
   function handleOnMedicine(event, subIndex) {
     const { value } = event.target
-    console.log(list);
+    
     setList(prev => prev.map((i, index) => {
       if (index === subIndex) return { ...i, nameOfMedicine: value, isdone:'true' }
       return i
@@ -125,7 +125,7 @@ function Medicinesubscription({ open, handlesubscriptionclose, handleOnMedicine,
 
   function handleOnMedicinecountOfDays(event, subIndex) {
     const { value } = event.target
-    console.log(list);
+    
     setList(prev => prev.map((i, index) => {
       if (index === subIndex) return { ...i, countOfDays: value }
       return i
@@ -134,7 +134,7 @@ function Medicinesubscription({ open, handlesubscriptionclose, handleOnMedicine,
 
   function handleOndoseOfMedicine(event, subIndex) {
     const { value } = event.target
-    console.log(list);
+    
     setList(prev => prev.map((i, index) => {
       if (index === subIndex) return { ...i, doseOfMedicine: value }
       return i
@@ -146,7 +146,10 @@ function Medicinesubscription({ open, handlesubscriptionclose, handleOnMedicine,
     list.map((data, index) => {
 
       list[index].isdone = !!data.nameOfMedicine.trim();
-      (!data.nameOfMedicine || data.nameOfMedicine.trim() === '') ? count++ : '';
+
+      if (!data.nameOfMedicine || data.nameOfMedicine.trim() === '') {
+        count++
+      }
     })
     console.log(list)
      if(count===0){
@@ -180,8 +183,10 @@ function Medicinesubscription({ open, handlesubscriptionclose, handleOnMedicine,
     let count = 0;
     list.map((data, index) => {
       list[index].isdone = (!data.nameOfMedicine || data.nameOfMedicine.trim() === '') ? false : true;
-      (!data.nameOfMedicine || data.nameOfMedicine.trim() === '') ? count++ : '';
-      console.log('list[index].isdone ', list[index].isdone)
+      if(!data.nameOfMedicine || data.nameOfMedicine.trim() === '') {
+        count++
+      }
+        
     })
     if (count !== 0) {
       setShow(true)
@@ -192,7 +197,7 @@ function Medicinesubscription({ open, handlesubscriptionclose, handleOnMedicine,
       handleAddMedicineList(list)
     }
   }
-  console.log(list);
+  
   return (
     <Box style={classes.dialogBox}>
       <Dialog open={open} >

@@ -20,11 +20,7 @@ function PatientFindDoctor() {
 
   const [isHospital, setIsHospital] = useState(false)
 
-  const [updateData, updateError, isUpdating, data] = useManualFetch()
-  const validationErr={
-    search:'Invalid Format'
-
-  }
+  const [updateData, data] = useManualFetch()
 
   useEffect(() => {
     if (name === '') {

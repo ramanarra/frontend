@@ -1,14 +1,7 @@
 import React, { useState } from 'react'
-import { Avatar,Box, Dialog,Typography, DialogTitle, TextareaAutosize,Button } from '@material-ui/core'
+import {Box, Dialog,Typography, DialogTitle, TextareaAutosize,Button } from '@material-ui/core'
 import useStyle from './PatientReportStyle'
 import CloseIcon from '@material-ui/icons/Close'
-
-import InfiniteScroll from 'react-infinite-scroll-component'
-import PropTypes from 'prop-types'
-import pdfIcon  from  '../../assets/img/pdfIcon.svg'
-import Image  from  '../../assets/img/image.svg'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
 
 import AddCircleOutlineTwoToneIcon from '@material-ui/icons/AddCircleOutlineTwoTone';
 

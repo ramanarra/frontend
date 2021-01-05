@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from 'react'
-import { Avatar, Box, Dialog, Typography, DialogTitle, TextareaAutosize, Button } from '@material-ui/core'
+import React, { useState } from 'react'
+import {Box, Dialog, Typography, DialogTitle, TextareaAutosize, Button } from '@material-ui/core'
 import useStyle from './PatientReportStyle'
 import CloseIcon from '@material-ui/icons/Close'
 import './style.scss'
 import moment from 'moment'
 import pdfIcon from '../../assets/img/pdfIcon.svg'
-import useReports from './Reports'
 import SnackBar from '../../components/SnackBar'
 import useUpload from '../../hooks/useUpload'
-import Reports from './Reports'
 
 function PatientReport({ open, setOpen, setItem, handleClose, setReportList, patientReportList }) {
   const classes = useStyle()

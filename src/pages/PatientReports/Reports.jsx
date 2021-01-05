@@ -48,7 +48,7 @@ const Reports = (props) => {
       },
     })
       .then((res) => {
-        console.log(res);
+
         setShow((res.data.totalCount))
         setReportList(((res.data && res.data.list && res.data.list.length) ? res.data.list : []))
       })
@@ -77,7 +77,6 @@ const Reports = (props) => {
 
   function handlePageBack() {
     setCount(count - 1)
-    console.log(paginationStart)
 
     if (paginationStart >= 0) {
       setPaginationStart(paginationStart - 15)
@@ -92,7 +91,7 @@ const Reports = (props) => {
 
   function handlePageNext() {
     console.log("next");
-    console.log(paginationStart)
+    
     setCount(count + 1)
 
     if (paginationStart >= (show - 15)) {
