@@ -72,7 +72,7 @@ const Reports = (props) => {
 
     setTimeout(() => {
       patientReportList();
-    }, 5000)
+    }, 4000)
   }
 
   function handlePageBack() {
