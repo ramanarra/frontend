@@ -30,6 +30,10 @@ const useStyles = makeStyles(() => ({
     fontSize: 19,
     paddingTop: 14,
   },
+  report: {
+    fontSize: 20,
+    paddingTop: 14
+  },
   logout: {
     fontSize: 52,
     marginLeft: 13,
@@ -66,6 +70,9 @@ function PatientSideBar() {
             })} to="/patient/setting">
           <i className="icon-settings "></i>
         </Link>
+        <Link className={classNames(classes.item, classes.report, {
+            [classes.selectedColor]: pathName === 'reports',
+          })} to="/patient/reports" ><i className="icon-progress "></i></Link>
       </Box>
     </Box>
   )

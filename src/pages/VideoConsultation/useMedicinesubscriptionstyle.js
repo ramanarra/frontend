@@ -1,14 +1,14 @@
 import { makeStyles } from '@material-ui/core/styles'
 const useMedicinesubscriptionstyle = makeStyles(() => ({
-                      title:{
-                          color:'#2abade !important',
-                          textAlign:'center',
-                          fontSize:'30px !important',
-                          '& h2': {
-                            fontSize: 20,
-                            color: '#2abade'
-                          },
-                      },
+      title:{
+         color:'#2abade !important',
+         textAlign:'center',
+         fontSize:'30px !important',
+         '& h2': {
+          fontSize: 20,
+          color: '#2abade'
+          },
+        },
     holesize:{
         maxWidth: 500,
         height:500,

@@ -6,14 +6,15 @@ const useUpload = () => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const token = localStorage.getItem('virujhToken')
-  const headers = {
-    Authorization: 'Bearer '.concat(token),
-  }
+  const authStr = 'Bearer '.concat(token)
 
-  const handleFetch = (formdata) => {
+  const handleFetch = (formData) => {
     setLoading(true)
-    Api.post(URL.patientFileUpload, formdata,headers)
-      .then((res) => {
+    Api.post(URL.patientFileUpload, formData,{
+      headers: {
+      Authorization: authStr,
+    }
+  }).then((res) => {
         setLoading(false)
         setError(null)
         setData(res.data)

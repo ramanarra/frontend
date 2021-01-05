@@ -44,7 +44,7 @@ const useUpcomingAndPastViewStyle = makeStyles(() => ({
     paddingBottom: 30,
   },
   time: {
-    paddingBottom: 13,
+    paddingBottom: 30,
   },
   download: {
     color: '#37befa',
