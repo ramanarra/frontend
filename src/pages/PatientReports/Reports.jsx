@@ -1,229 +1,238 @@
 import React, { useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
-import { IconButton } from '@material-ui/core'
-import { Sort } from '@material-ui/icons'
-import CircularProgress from '@material-ui/core/CircularProgress'
 import InfiniteScroll from 'react-infinite-scroll-component'
-
-import './style.scss'
-import useCustomFetch from '../../hooks/useCustomFetch'
-import useManualFetch from '../../hooks/useManualFetch'
-import api, { URL, METHOD } from '../../api'
 import SearchBar from '../../components/SearchBar'
-import { dateFmt } from '../../components/commonFormat'
-import SnackBar from '../../components/SnackBar'
-
+import './style.scss'
+import api, { URL } from '../../api'
 import PatientReport from './PatientReport'
 import AddCircleOutlineTwoToneIcon from '@material-ui/icons/AddCircleOutlineTwoTone';
-import { Button, Typography, Box } from '@material-ui/core'
+import { Button } from '@material-ui/core'
+import SnackBar from '../../components/SnackBar'
+import moment from 'moment'
 
 const Reports = (props) => {
   const [searchText, setSearchText] = useState('')
   const [searchData, setSearchData] = useState(null)
-
   const [open, setOpen] = useState(false)
+  const [item, setItem] = useState(false)
+  const [paginationStart, setPaginationStart] = useState(0)
+  const [paginationLimit, setPaginationLimit] = useState(15)
+  const [reportList, setReportList] = useState([])
+  const [show, setShow] = useState(0)
+  const [count, setCount] = useState(0)
 
-  const history = useHistory()
-  const doctorKey = localStorage.getItem('docKey')
-  const accountKey = localStorage.getItem('accountKey')
-  const [paginationNumber, setPaginationNumber] = useState(0)
-  const [patientList, setPatientList] = useState([])
-  const url =
-    localStorage.getItem('role') === 'ADMIN'
-      ? `${URL.patient.list}?accountKey=${accountKey}`
-      : `${URL.patient.listForDoctor}?paginationNumber=${paginationNumber}`
-  // const [patientList] = useCustomFetch('GET', url)
-  const [updateData, error, loading, data] = useManualFetch()
-  const patientData = !!searchData && !!searchText ? searchData : patientList
 
-  // useEffect(() => {
-  //   searchList()
-  // }, [searchText])
+  const reportData = !!searchData && !!searchText ? searchData : reportList
 
-  // useEffect(() => {
-  //   if (data?.patientsList) {
-  //     setPatientList(patientList.concat(data.patientsList))
-  //   }
-
-    if (localStorage.getItem('role') === 'ADMIN') {
-      if (data) {
-        setPatientList(patientList.concat(data))
-      }
+  useEffect(() => {
+    if(searchText !== "") {
+      setPaginationStart(0)
+      patientReportList(0)
+      setCount(0)
     }
+    else if(searchText.trim()==="")
+    {
+      patientReportList(0)
+      setCount(0)
+    }
+    else{
+      patientReportList(paginationStart)
+    }
+  }, [searchText])
 
-  //   if(data?.name) {
-  //     setOpen(true)
-  //   }
-  // }, [data])
+  const patientReportList = (paginationStart) => {
+    const token = localStorage.getItem('virujhToken')
+    const authStr = 'Bearer '.concat(token)
+    api.get(`${URL.patientReportList}?paginationStart=${paginationStart}&&paginationLimit=${paginationLimit}&&searchText=${searchText}`, {
+      headers: {
+        Authorization: authStr,
+      },
+    })
+      .then((res) => {
+        console.log(res);
+        setShow((res.data.totalCount))
+        setReportList(((res.data && res.data.list && res.data.list.length) ? res.data.list : []))
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
-  // useEffect(() => {
-  //   updateData(METHOD.GET, url)
-  // }, [paginationNumber])
+  useEffect(() => {
+    patientReportList(paginationStart);
+    setPaginationStart(0)
+  }, []);
 
-  // const searchList = () => {
-  //   if (!!searchText) {
-  //     const token = localStorage.getItem('virujhToken')
-  //     const authStr = 'Bearer '.concat(token)
-  //     api
-  //       .get(URL.patient.search, {
-  //         params: {
-  //           patientSearch: searchText,
-  //           doctorKey,
-  //         },
-  //         headers: {
-  //           Authorization: authStr,
-  //         },
-  //       })
-  //       .then((res) => {
-  //         if (res.status === 200) {
-  //           setSearchData(res.data)
-  //         }
-  //       })
-  //   } else {
-  //     setSearchData(null)
-  //   }
-  // }
-
-  // const openDetials = (data) => history.push(`/patients/${data?.patient_id}`)
-
-  // const ctrlBtn = (data) => (
-  //   <div className="ctrl-btns">
-  //     {/* <IconButton
-  //       className="tbl-btn view-btn"
-  //       onClick={openDetials.bind(this, data)}
-  //     >
-  //       <img src={require('../../assets/img/icons/eye.svg')} alt="View info" />
-  //     </IconButton> */}
-  //     {/* <IconButton className="tbl-btn add-btn">
-  //       <img
-  //         src={require('../../assets/img/icons/calender2.svg')}
-  //         alt="View scheduel"
-  //       />
-  //     </IconButton> */}
-  //   </div>
-  // )
-
-  // const fetchData = () => {
-  //   if (localStorage.getItem('role') !== 'ADMIN') {
-  //     setPaginationNumber(paginationNumber + 1)
-  //   }
-  // }
-
-  // const handleClose = (event, reason) => {
-  //   if (reason === 'clickaway') {
-  //     return
-  //   }
-  //   setOpen(false)
-  // }
   function handlePopupMsg() {
     setOpen(true)
   }
 
   function handleClose() {
     setOpen(false)
+    setItem(false);
+
+    setTimeout(() => {
+      patientReportList();
+    }, 5000)
   }
 
+  function handlePageBack() {
+    setCount(count - 1)
+    console.log(paginationStart)
+
+    if (paginationStart >= 0) {
+      setPaginationStart(paginationStart - 15)
+      if ((paginationStart - 15) > 0)
+        setPaginationStart(paginationStart - 15)
+      setTimeout(() => {
+        patientReportList(paginationStart-15);
+
+      }, 500)
+    }
+  }
+
+  function handlePageNext() {
+    console.log("next");
+    console.log(paginationStart)
+    setCount(count + 1)
+
+    if (paginationStart >= (show - 15)) {
+      setPaginationStart(paginationStart - 15);
+    }
+    else if ((paginationStart + 15) < show) {
+      setPaginationStart(paginationStart + 15);
+    } 
+    setTimeout(() => {
+      patientReportList(paginationStart+15);
+
+    }, 500)
+  }
+
+  function handlePage() {
+    setPaginationStart(0)
+  }
+
+  console.log(reportData);
   return (
     <div className="doctor-patients-list">
-      <div className="header-bar">
-        <div className="left-partition">
+      <div className="header-bar col-md-12">
+        <div className="col-md-4 col-sm-4 col-xs-4 col-lg-4 left-report">
           <h1 className="title">Reports</h1>
         </div>
-        <div className="right-partition">
-          
-          <Button  className="title"  onClick={handlePopupMsg} >Add
+        <div className="col-md-7 col-sm-7 col-xs-7 col-lg-7 right-report right-pad">
+          <div className="search-bar">
+            <SearchBar
+              label="Search Reports"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+              onClick={handlePage}
+            />
+          </div>
+        </div>
+        <div className="col-md-1 col-sm-1 col-xs-1 col-lg-1 right-report">
+
+          <Button className="title" onClick={handlePopupMsg} style={{ textTransform: "none" }} >Add &nbsp;
             <AddCircleOutlineTwoToneIcon />
           </Button>
           {
-          open &&
-          <PatientReport
-            open={open}
-            handleClose={handleClose}
-          />
-        }
-          
-        </div>
-        
-        {/* <div className="right-partition">
-          <IconButton className="sort-icon">
-            <Sort fontSize="small" />
-          </IconButton>
-          <div className="search-bar">
-            <SearchBar
-              label="Search Patients"
-              value={searchText}
-              onChange={(e) => setSearchText(e.target.value)}
+            open &&
+            <PatientReport
+              setReportList={setReportList}
+              open={open}
+              setOpen={setOpen}
+              setItem={setItem}
+              handleClose={handleClose}
+              patientReportList={patientReportList}
+
             />
-          </div>
-        </div> */}
+          }
+        </div>
 
       </div>
       <div className="patient-table-wrap">
         <InfiniteScroll
-          dataLength={patientList.length}
-          // next={fetchData}
-          // hasMore={true}
-          // height={'100%'}
-          // className="infiniteScroll"
+          dataLength={reportList.length}
         >
           <div className="table-wrap">
-            <table className="patient-table">
-              <thead className="head">
+
+            <table className="patient-table" style={{ paddingRight: "80px" }} >
+              <thead className="head" >
                 <tr>
-                  <th className="tbl-head fname">Title</th>
-                  <th className="tbl-head lname">reportDate</th>
-                  <th className="tbl-head email">Comments</th>
-                  
+                  <th className="tbl-head fname" width="30%" >Title</th>
+                  <th className="tbl-head lname" width="30%">Report Date</th>
+                  <th className="tbl-head email" width="30%">Comments</th>
+
                 </tr>
+
               </thead>
               <tbody className="body">
-                {patientData
-                  ?.filter((f) => !!f)
-                  .map((i) => (
-                    <tr>
-                      <td className="tbl-cell fname">{i?.firstName}</td>
-                      <td className="tbl-cell lname">
-                        {!!i?.lastName ? i.lastName : '-'}
-                      </td>
-                      <td className="tbl-cell email">
-                        {!!i?.email ? i.email : '-'}
-                      </td>
-                      <td className="tbl-cell phone">
-                        {!!i?.phone ? `+91 ${i.phone}` : '-'}
-                      </td>
-                      <td className="tbl-cell dob">
-                        {!!i?.dateOfBirth ? dateFmt(i?.dateOfBirth) : '-'}
-                      </td>
-                      <td className="tbl-cell ctrl-btns-cell">{ctrlBtn(i)}</td>
-                    </tr>
-                  ))}
+                {reportData && reportData.length > 0 && reportData.map((i) => (
+                  <tr>
+                    <td className="tbl-cell fname" >{i?.fileName}</td>
+                    <td className="tbl-cell lname">{i?.reportDate ? (moment(i?.reportDate).format('YYYY-MM-DD')) : '-'}</td>
+                    <td className="tbl-cell email">{i?.comments}</td>
+                  </tr>
+                ))}
+                {
+                  reportData.length <= 0 &&
+                  <tr>
+                    <td className="tbl-cell fname" ></td>
+                    <td className="tbl-cell lname"></td>
+                    <td className="tbl-cell email"></td>
+                  </tr>
+                }
+                {
+                  reportData.length <= 0 &&
+                  <tr>
+                    <td className="tbl-cell fname" ></td>
+                    <td className="tbl-cell lname">No Data Found</td>
+                    <td className="tbl-cell email"></td>
+                  </tr>
+                }
+
               </tbody>
             </table>
+
+            {
+              reportData.length > 0 &&
+              <hr width="100%" />
+            }
+
+
           </div>
         </InfiniteScroll>
+        {reportData.length > 0 &&
+
+          <div style={{ display: 'flex', paddingTop: "20px" }}>
+            {count > 0 &&
+              <div style={{ padding: "1px", borderRadius: "20px", color: "#ffffff", backgroundColor: "rgb(11, 181, 255)" }}>
+                <Button onClick={handlePageBack} style={{ padding: "2px", color: "#ffffff", textTransform: 'capitalize' }}>Prev</Button>
+              </div>
+            }
+            {!(count > 0) &&
+              <div>
+                <Button onClick={handlePageBack} style={{ padding: "2px", color: "#ffffff", textTransform: 'capitalize', visibility: 'hidden' }}>Prev</Button>
+              </div>
+            }
+            {show > 15 && paginationStart < show - 15 &&
+              <div style={{ position: "absolute", right: "0%", borderRadius: "20px", color: "#ffffff", backgroundColor: "rgb(11, 181, 255)" }}>
+                <Button onClick={handlePageNext} style={{ padding: "2px", color: "#ffffff", textTransform: 'capitalize' }}>Next</Button>
+              </div>
+            }
+
+
+          </div>
+        }
+
+        {
+          <SnackBar
+            openDialog={item}
+            message={"Your report added successfully"}
+            onclose={handleClose}
+            severity={'success'}
+          />
+        }
+
       </div>
-
-     
-
-      {/* {!data && <CircularProgress className="spinner" />} */}
-      {/* {
-        (data && data.name === 'Error' && data.status === 500 &&
-        <SnackBar
-          openDialog={open}
-          message={'Internal server error'}
-          onclose={handleClose}
-          severity={'error'}
-        />
-        ) ||
-        (data && data.name === 'Error' && data.status !== 500 &&
-        <SnackBar
-          openDialog={open}
-          message={'something went wrong'}
-          onclose={handleClose}
-          severity={'error'}
-        />
-        )
-      } */}
     </div>
   )
 }

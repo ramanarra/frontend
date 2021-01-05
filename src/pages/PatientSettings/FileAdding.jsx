@@ -39,12 +39,12 @@ const FileAdding=()=>{
         function handlechange(e) {
         const item=e.target.files
         setFile([...file, ...item])
-        const fileName = e.target.files[0].name;
+        const fileName = e.target.files[0];
         const patientId = localStorage.getItem('patientId');
         const patientName= localStorage.getItem('patientName') 
 
 
-        formdata.append("files", file);
+        formdata.append("files",e.target.files[0]);
         formdata.append("patientName", patientName);
         formdata.append("patientId", patientId); 
 

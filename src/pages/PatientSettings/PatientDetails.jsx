@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import FileAdding from './FileAdding'
-import File4 from './File4'
 
 import { 
   Box,

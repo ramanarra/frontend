@@ -3,11 +3,9 @@ import { makeStyles } from '@material-ui/core/styles'
 const PatientReportStyle = makeStyles(() => ({
     holesize:{
         //width:'100%',
-        maxWidth: 500,
-        height:500,
     },
     header: {
-        paddingTop: '25px',
+        paddingTop: '20px',
         paddingRight: '10px',
         paddingBottom: '20px',
         maxWidth: 500,
@@ -20,10 +18,9 @@ const PatientReportStyle = makeStyles(() => ({
        // maxWidth: 500,
       },
       closeIcon: {
-
-        marginLeft: 160,
+        
+        float:'right',
        // marginRight:10,
-        marginTop: 3,
         cursor: 'pointer',
       },
       root: {
