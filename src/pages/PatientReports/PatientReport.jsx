@@ -72,7 +72,9 @@ function PatientReport({ open, setOpen, setItem, handleClose, setReportList, pat
 
   function handlechange(e) {
     const item = e.target.files;
-    setFile([...file, ...item])
+    // Commented multiple file selection
+    // setFile([...file, ...item])
+    setFile([...item])
     const fileName = item[0].name;
     const fileData = item[0]
     setReport({ ...report, title: fileName })
@@ -152,7 +154,7 @@ function PatientReport({ open, setOpen, setItem, handleClose, setReportList, pat
                   else if ((fileExtension === "svg" || fileExtension === "png") && index < 3) {
                     return (
                       <div style={{ display: "grid", marginRight: "20px" }}>
-                        <img src="https://sample-videos.com/img/Sample-jpg-image-50kb.jpg" alt='img' style={imgStyle} />
+                        <img src={URL.createObjectURL(file[index])} alt='img' style={imgStyle} />
                         <abbr style={fontStyle} title={fileName}>{fileName} </abbr>
                       </div>
                     )
@@ -160,7 +162,7 @@ function PatientReport({ open, setOpen, setItem, handleClose, setReportList, pat
                   else if (fileExtension === "jpg" && index < 3) {
                     return (
                       <div style={{ display: "grid", marginRight: "20px" }}>
-                        <img src="https://sample-videos.com/img/Sample-jpg-image-2mb.jpg" alt='img' style={imgStyle} />
+                        <img src={URL.createObjectURL(file[index])} alt='img' style={imgStyle} />
                         <abbr style={fontStyle} title={fileName}  > {fileName} </abbr>
                       </div>
                     )
