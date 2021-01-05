@@ -93,7 +93,6 @@ function PatientReport({ open, setOpen, setItem, handleClose, setReportList, pat
   }
 
   function handleSave(e) {
-    setReportList(prev => [...prev, report])
     const comments = report.comments
     const patientId = localStorage.getItem('patientId');
     formdata.append("files", file[0]);
