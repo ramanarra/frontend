@@ -10,7 +10,7 @@ import EditIcon from '@material-ui/icons/Edit'
 import useManualFetch from '../../hooks/useManualFetch'
 import { METHOD, URL } from '../../api'
 import SnackBar from '../../components/SnackBar'
-import {setPrescription} from '../../actions/doctor'
+import { setPrescription, setIcon } from '../../actions/doctor'
 function MedicineListEntry({ list }) {
   const classes = usestyle()
 
@@ -38,21 +38,20 @@ function MedicineListEntry({ list }) {
             list.map((data) =>
               <tr style={{ fontSize: 15, textAlign: 'center', color: '#595959' }} >
                 <td
-                  style={{ paddingBottom: '15px',wordBreak:'break-word' , textAlign: 'left'}}
+                  style={{ paddingBottom: '15px', wordBreak: 'break-word', textAlign: 'left' }}
 
                 >
                   {data.nameOfMedicine}
                 </td>
                 <td
-                  style={{ paddingBottom: '15px' ,wordBreak:'break-word' , textAlign: 'left'}}
+                  style={{ paddingBottom: '15px', wordBreak: 'break-word', textAlign: 'left' }}
                 >
                   {data.countOfDays}
                 </td>
                 <td className={"content"}
                   style={{ paddingBottom: '15px' ,wordBreak:'break-word' , textAlign: 'left'}}
                 >
-                  {data.doseOfMedicine}
-                  
+                   <span class="tooltiptext"> {data.doseOfMedicine}</span>
                 </td>
               </tr>
             )}
@@ -62,7 +61,7 @@ function MedicineListEntry({ list }) {
   )
 }
 
-function MedicineList({ onClose, setOpenTopBar, setOpenSideBar, appointmentId,setPrescription,prescription }) {
+function MedicineList({ onClose, setOpenTopBar, setOpenSideBar, appointmentId, setPrescription, prescription, icon, setIcon }) {
   const classes = usestyle()
   const currentDate = moment().format('DD/MM/YYYY')
   const [list, setList] = useState([])
@@ -70,12 +69,18 @@ function MedicineList({ onClose, setOpenTopBar, setOpenSideBar, appointmentId,se
   const [seperate, setCeperate] = useState(false)
   const [existList, setExistList] = useState([])
   const [index, setIndex] = useState(null)
-  const [close,setClose]=useState(true)
+  const [close, setClose] = useState(true)
   const [updateData, error, loading, data] = useManualFetch()
-
-  useEffect( ()=>{
+  var id = appointmentId
+  console.log(appointmentId, icon)
+  useEffect(() => {
     setPrescription(prescription)
-  },[])
+    console.log(prescription)
+    setList(prescription);
+    if (appointmentId === "null") {
+      list([]);
+    }
+  }, [])
 
   function handleOnClose() {
     onClose()
@@ -109,6 +114,16 @@ function MedicineList({ onClose, setOpenTopBar, setOpenSideBar, appointmentId,se
       return i
     }))
   }
+
+  function handleRemoveMedicine(subIndex, type) {
+    console.log('handleRemoveMedicine');
+
+    setList(prev => prev.map((i, index) => {
+      if (index === subIndex) return { ...i, minus: 'value' }
+      return i
+    }))
+  }
+
   function handleOndoseOfMedicine(event, subIndex) {
     const { value } = event.target
     console.log(list);
@@ -181,8 +196,8 @@ function MedicineList({ onClose, setOpenTopBar, setOpenSideBar, appointmentId,se
       param
     )
     setOpens(true)
-    setClose(false)
-
+    setClose(false);
+    setIcon(false);
 
 
 
@@ -202,7 +217,7 @@ function MedicineList({ onClose, setOpenTopBar, setOpenSideBar, appointmentId,se
           <Typography>Date: </Typography>
           <Typography style={{ color: '#363838' }}>{currentDate}</Typography>
 
-          {list.length > 0 && close &&
+          {list.length > 0 && icon &&
             <Button onClick={() => handleOnEdit()} className={classes.edit}>
               <EditIcon color="primary" />
             </Button>
@@ -217,12 +232,12 @@ function MedicineList({ onClose, setOpenTopBar, setOpenSideBar, appointmentId,se
               handleOndoseOfMedicine={handleOndoseOfMedicine} handleOnMedicinecountOfDays={handleOnMedicinecountOfDays}
             />}
         </Box>
-        { appointmentId && close &&
-        <Box className={classes.add}>
+        {appointmentId && icon &&
+          <Box className={classes.add}>
 
-          <Button className={classes.added} onClick={handlesubscription} color="primary" >+ Add Prescription</Button>
-        </Box>
-}
+            <Button className={classes.added} onClick={handlesubscription} color="primary" >+ Add Prescription</Button>
+          </Box>
+        } 
         <Box>
           {
             open &&
@@ -239,7 +254,7 @@ function MedicineList({ onClose, setOpenTopBar, setOpenSideBar, appointmentId,se
 
         </Box>
         <Box>
-          {list.length > 0 && close &&
+          {list.length > 0 && icon &&
             <Button className={classes.submit} onClick={addPrescription} >submit</Button>
           }
         </Box>
@@ -258,17 +273,19 @@ function MedicineList({ onClose, setOpenTopBar, setOpenSideBar, appointmentId,se
   )
 }
 
-const mapStateToProps=(state)=>{
-return{
-  prescription: state.doctor.prescription
-}
+const mapStateToProps = (state) => {
+  return {
+    prescription: state.doctor.prescription,
+    icon: state.doctor.icon,
+  }
 
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     setOpenSideBar: (data) => dispatch(setOpenSideBar(data)),
-    setPrescription:(data)=> dispatch(setPrescription(data))
+    setPrescription: (data) => dispatch(setPrescription(data)),
+    setIcon: (data) => dispatch(setIcon(data)),
   }
 }
 
