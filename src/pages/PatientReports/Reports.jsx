@@ -129,7 +129,7 @@ const Reports = (props) => {
         </div>
         <div className="col-md-1 col-sm-1 col-xs-1 col-lg-1 right-report">
 
-          <Button className="title" onClick={handlePopupMsg} style={{ textTransform: "none" }} >Add &nbsp;
+          <Button onClick={handlePopupMsg} style={{ textTransform: "none", fontWeight: 500, color: 'rgb(11 181 255)', borderRadius: '25px' }} >Add &nbsp;
             <AddCircleOutlineTwoToneIcon />
           </Button>
           {

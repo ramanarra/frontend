@@ -8,7 +8,7 @@ import pdfIcon from '../../assets/img/pdfIcon.svg'
 import SnackBar from '../../components/SnackBar'
 import useUpload from '../../hooks/useUpload'
 
-function PatientReport({ open, setOpen, setItem, handleClose, setReportList, patientReportList,appointmentId }) {
+function PatientReport({ open, setOpen, setItem, handleClose, setReportList, patientReportList,appointmentId,reportFile,setReportFile,setVal }) {
   const classes = useStyle()
   const [handleUpload] = useUpload()
   const [file, setFile] = useState([])
@@ -17,7 +17,6 @@ function PatientReport({ open, setOpen, setItem, handleClose, setReportList, pat
   const formdata = new FormData();
 
   // const [handleReports] = useReports()
-  const array = []
   const [report, setReport] = useState({
     title: "",
     reportDate: moment(date).format('YYYY-MM-DD'),
@@ -105,6 +104,8 @@ function PatientReport({ open, setOpen, setItem, handleClose, setReportList, pat
     }
 
     handleUpload(formdata)
+    setVal(file[0].name)
+    setReportFile( URL.createObjectURL(file[0]))
     setItem(true)
     setOpen(false)
   }
