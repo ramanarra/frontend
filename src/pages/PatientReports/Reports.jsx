@@ -8,6 +8,7 @@ import AddCircleOutlineTwoToneIcon from '@material-ui/icons/AddCircleOutlineTwoT
 import { Button } from '@material-ui/core'
 import SnackBar from '../../components/SnackBar'
 import moment from 'moment'
+import { useLocation } from "react-router-dom"
 
 const Reports = (props) => {
   const [searchText, setSearchText] = useState('')
@@ -20,6 +21,7 @@ const Reports = (props) => {
   const [show, setShow] = useState(0)
   const [count, setCount] = useState(0)
 
+  const location = useLocation();
 
   const reportData = !!searchData && !!searchText ? searchData : reportList
 
@@ -42,7 +44,7 @@ const Reports = (props) => {
   const patientReportList = (paginationStart) => {
     const token = localStorage.getItem('virujhToken')
     const authStr = 'Bearer '.concat(token)
-    api.get(`${URL.patientReportList}?paginationStart=${paginationStart}&&paginationLimit=${paginationLimit}&&searchText=${searchText}`, {
+    api.get(`${URL.patientReportList}?paginationStart=${paginationStart}&&paginationLimit=${paginationLimit}&&searchText=${searchText}&&appointmentId=${location.state}`, {
       headers: {
         Authorization: authStr,
       },

@@ -8,7 +8,7 @@ import pdfIcon from '../../assets/img/pdfIcon.svg'
 import SnackBar from '../../components/SnackBar'
 import useUpload from '../../hooks/useUpload'
 
-function PatientReport({ open, setOpen, setItem, handleClose, setReportList, patientReportList,appointmentId,reportFile,setReportFile,setVal }) {
+function PatientReport({ open, setOpen, setItem, handleClose, appointmentId, setReportFile, setVal }) {
   const classes = useStyle()
   const [handleUpload] = useUpload()
   const [file, setFile] = useState([])
@@ -104,8 +104,14 @@ function PatientReport({ open, setOpen, setItem, handleClose, setReportList, pat
     }
 
     handleUpload(formdata)
-    setVal(file[0].name)
-    setReportFile( URL.createObjectURL(file[0]))
+    const fileName = file[0].name;
+
+    //Passing  patient report fileName to the report when setVal is true
+    if (setVal) {
+      setVal(fileName);
+      setReportFile(URL.createObjectURL(file[0]))
+    }
+
     setItem(true)
     setOpen(false)
   }
@@ -139,7 +145,7 @@ function PatientReport({ open, setOpen, setItem, handleClose, setReportList, pat
             </DialogTitle>
 
 
-            <TextareaAutosize aria-label="minimum height" rowsMin={5} style={{ width: "100%", fontFamily: "sans-serif" }} placeholder="Type here..."
+            <TextareaAutosize aria-label="minimum height" rowsMin={5} style={{ width: "100%", color: "currentColor", fontFamily: "'product-sans-regular', sans-serif", fontSize: "13.5px" }} placeholder="Type here..."
               onChange={handleText}
             />
             <div >

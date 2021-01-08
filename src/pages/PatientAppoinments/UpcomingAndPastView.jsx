@@ -3,7 +3,7 @@ import moment from 'moment'
 import NumberToWords from 'number-to-words'
 import { useHistory } from 'react-router-dom'
 import AddCircleOutlineTwoToneIcon from '@material-ui/icons/AddCircleOutlineTwoTone';
-import PatientReport from '../PatientReports/PatientReport'
+import PatientReport from '../PatientReports/PatientReport.jsx'
 import SnackBar from '../../components/SnackBar'
 import {
   Dialog,
@@ -39,9 +39,11 @@ function UpcomingAndPastView({
   const [item, setItem] = useState(false)
   const [reportFile, setReportFile] = useState()
   const [report, setReport] = useState([])
-  let arry = []
+  let reportFileArray = []
   const [val, setVal] = useState()
   const history = useHistory()
+  const appointmentReportArray = useHistory()
+
 
   const key = useMemo(() => {
     return {
@@ -147,7 +149,7 @@ function UpcomingAndPastView({
       ...report,
       image
     ])
-    arry.push(reportFile)
+    reportFileArray.push(reportFile)
 
   }
   // Upload report code end here
@@ -158,6 +160,14 @@ function UpcomingAndPastView({
 
   function handleOnReschedule(event) {
     onReschedule(event)
+  }
+
+  //Passing appointmentId to patient report
+  function handleClick() {
+    appointmentReportArray.push({
+      pathname: '/patient/reports',
+      state: appointmentDetail.appointmentId
+    })
   }
 
   return (
@@ -288,11 +298,14 @@ function UpcomingAndPastView({
                       })
                     }
                   </Box>
+                  
+                  {/* To show the patient reports */}
                   <Box>
                     {
                       doctorDetails?.reportDetail?.length > 4 &&
-                      <a href='/app/patient/reports' style={{ color: "#0bb5ff", fontSize: "12px" }}>View {(doctorDetails?.reportDetail?.length - 4)} more</a>
+                      <a onClick={handleClick} style={{ color: "#0bb5ff", fontSize: "12px" }}>View {(doctorDetails?.reportDetail?.length - 4)} more</a>
                     }
+
                   </Box>
                 </Box>
                 {
