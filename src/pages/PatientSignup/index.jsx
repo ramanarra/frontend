@@ -213,8 +213,9 @@ const PatientSignup = (props) => {
           <div className="field-wrap field-partition">
             <div className="dob-field">
               <MuiPickersUtilsProvider utils={MomentUtils}>
-                <div className="field-label">Date of Birth
-                <StarIcon className="star-icon" />
+                <div className="field-label">
+                  <label>Date of Birth</label>
+                  <StarIcon className="star-icon" />
                 </div>
                 <Controller
                   name="dateOfBirth"
@@ -250,6 +251,8 @@ const PatientSignup = (props) => {
               type="number"
               placeholder="35"
               value={age}
+              className="signup-age-fld"
+              isRequired
               inputProps={{
                 ref: register({
                   required: 'Please enter your age',
