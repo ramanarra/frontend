@@ -1,29 +1,32 @@
 import React from 'react'
 import { Box, Typography, makeStyles } from '@material-ui/core'
 import ReportProblemOutlinedIcon from '@material-ui/icons/ReportProblemOutlined'
+import InfoOutlined from '@material-ui/icons/InfoOutlined'
+
 
 const useStyle = makeStyles(() => ({
   container: {
     paddingLeft: '25%',
   },
   cancellationContent: {
-    backgroundColor: '#f7fcff',
-    padding: 10,
+    display:"flex",
+    alignItems: "center",
     width: 'fit-content',
   },
   rescheduleContent: {
-    backgroundColor: '#f7fcff',
-    padding: 10,
+    display:"flex",
+    alignItems: "center",
     width: 'fit-content',
     marginTop: 15,
   },
-  reportIcon: {
-    color: '#345860',
-    width: 20,
+    infoIcon: {
+      color: '#345860',
+      width: 20,
+      fontSize:"15px"
   },
   text: {
     color: '#345860',
-    fontSize: 13,
+    fontSize: 10,
     paddingLeft: 10,
     paddingTop: 3,
   },
@@ -64,10 +67,10 @@ function CancelAndRescheduleInfo({ doctorDetails }) {
   const reschedule = `${rescheduleDays}${rescheduleHours}${rescheduleMins}`
 
   return (
-    <Box className={classes.container}>
+    <Box >
       {cancellation && (
         <Box display="flex" className={classes.cancellationContent}>
-          <ReportProblemOutlinedIcon className={classes.reportIcon} />
+          <InfoOutlined className={classes.infoIcon} />
           <Typography className={classes.text}>
             Cancellation allowed for before {cancellation}
           </Typography>
@@ -75,7 +78,7 @@ function CancelAndRescheduleInfo({ doctorDetails }) {
       )}
       {reschedule && (
         <Box display="flex" className={classes.rescheduleContent}>
-          <ReportProblemOutlinedIcon className={classes.reportIcon} />
+          <InfoOutlined className={classes.infoIcon} />
           <Typography className={classes.text}>
             Reschedule allowed for before {reschedule}
           </Typography>

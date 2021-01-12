@@ -1,5 +1,6 @@
 import React from 'react'
 import { Box, Typography, Avatar } from '@material-ui/core'
+import CancelAndRescheduleInfo from './CancelAndRescheduleInfo'
 
 import useStyle from './useDoctorDetailsStyle'
 
@@ -56,6 +57,9 @@ function DoctorDetails({ doctorDetails }) {
             <Typography className={classes.value} variant="h5">
               {doctorDetails.location}
             </Typography>
+          </Box>
+          <Box className={classes.detail}>
+            <CancelAndRescheduleInfo doctorDetails={doctorDetails} />
           </Box>
         </Box>
       </Box>
