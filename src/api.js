@@ -60,5 +60,7 @@ export const URL = {
   paymentOrder: '/calendar/payment/order',
   verification: '/calendar/payment/verification',
   patientFileUpload: '/calendar/patient/report/upload',
-  patientReportList: '/calendar/patient/report/list'
+  fileUpload: '/calendar/patient/fileupload',
+  patientReportList: '/calendar/patient/report/list',
+  doctorPersonalSettingEdit: '/calendar/doctor/personalSettingsEdit'
 }

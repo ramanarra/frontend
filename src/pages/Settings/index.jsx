@@ -1,12 +1,18 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, Typography, Avatar, makeStyles } from '@material-ui/core'
-
+import PhotoCameraRounded from '@material-ui/icons/PhotoCameraRounded'
+import useFileUpload from '../../hooks/useFileUpload'
+import { connect } from 'react-redux'
+import { setHospitalProfile } from '../../actions/hospital'
+import { setHospitalName } from '../../actions/hospital'
 import HospitalDetails from './HospitalDetails'
 import useCustomFecth from '../../hooks/useCustomFetch'
 import { METHOD, URL } from '../../api'
 import useHospitalSettingWrite from '../../hooks/useHospitalSettingWrite'
 import useHospitalDetailsUpdate from '../../hooks/useHospitalDetailsUpdate'
 import SnackBar from '../../components/SnackBar'
+import Backdrop from '@material-ui/core/Backdrop'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 const useStyle = makeStyles((theme) => ({
   container: {
@@ -34,14 +40,41 @@ const useStyle = makeStyles((theme) => ({
   text: {
     color: '#525151',
   },
+  backdrop: {
+    zIndex: 1,
+    color: 'block',
+  },
+  spinner: {
+    position: 'fixed',
+    top: '50%',
+    left: '50%',
+  },
+  photoContainer: {
+    width: 210,
+    position: 'relative',
+
+    '& .MuiBackdrop-root': {
+      zIndex: '0',
+      position: 'absolute',
+      width: '144px',
+      height: '144px',
+      borderRadius: '100px',
+      backgroundColor: 'transparent',
+    }
+  }
 }))
 
-function Settings() {
+function Settings(props) {
   const classes = useStyle()
 
   const [open, setOpen] = useState(false)
 
   const accountKey = localStorage.getItem('accountKey')
+  const formdata = new FormData()
+  const isAdmin = localStorage.getItem('role')
+  const [handleFileUpload, data] = useFileUpload();
+  const [profile, setProfile] = useState({})
+  const [openSpinner, setOpenSpinner] = useState(false)
 
   const [hospitalDetails, refetch] = useCustomFecth(
     METHOD.GET,
@@ -56,7 +89,7 @@ function Settings() {
 
   useEffect(() => {
     setOpen(true)
-  },[response])
+  }, [response])
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -66,13 +99,61 @@ function Settings() {
     setOpen(false)
   }
 
+  // uploading profile
+  function handleChange(e) {
+    const item = e.target.files;
+    formdata.append('files', item[0])
+    handleFileUpload(formdata);
+    setOpenSpinner(true)
+  }
+
+  useEffect(() => {
+    !!hospitalDetails && localStorage.setItem('hospitalPhoto', hospitalDetails.hospitalPhoto)
+    !!hospitalDetails && props.setHospitalProfile(hospitalDetails.hospitalPhoto)
+  }, [hospitalDetails])
+
+  useEffect(() => {
+    !!data && setProfile({ ...profile, accountKey: hospitalDetails.accountKey, hospitalPhoto: data.data })
+    !!data && setHospitalProfile(data.data)
+  }, [data])
+
+  useEffect(() => {
+    !!data && !!profile && onSave(profile)
+    setOpenSpinner(false)
+  }, [profile])
+
   return (
     <Box className={classes.container}>
       <Box display="flex" className={classes.content}>
         <Box className={classes.heading}>
           <Typography className={classes.text}>Hospital Settings</Typography>
           {hospitalDetails && (
-            <Avatar src={hospitalDetails.hospitalPhoto} className={classes.photo} />
+            <Box className={classes.photoContainer}>
+              <Avatar src={hospitalDetails.hospitalPhoto} className={classes.photo} />
+              {isAdmin === "ADMIN" &&
+                <div>
+                  <label for="files" name="files" >
+                    <div style={{ display: "flex" }}>
+                      <PhotoCameraRounded style={{ marginLeft: "110px" }} />
+                    </div >
+                  </label>
+                  <input
+                    type="file"
+                    name="files"
+                    onChange={handleChange}
+                    id="files"
+                    accept=".jpg,.png,.jpeg"
+                    required
+                    style={{ visibility: "hidden" }}
+                  />
+                </div>
+              }
+              { openSpinner && (
+                <Backdrop open={openSpinner} >
+                  <CircularProgress className={classes.backdrop} color="block !important" />
+                </Backdrop>
+              )}
+            </Box>
           )}
         </Box>
         {hospitalDetails && (
@@ -119,4 +200,13 @@ function Settings() {
   )
 }
 
-export default Settings
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setHospitalName: (value) => dispatch(setHospitalName(value)),
+    setHospitalProfile: (value) => dispatch(setHospitalProfile(value)),
+  }
+}
+
+export default connect(null, mapDispatchToProps)(Settings)
+
+//export default Settings

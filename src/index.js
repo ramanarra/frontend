@@ -17,10 +17,7 @@ import CorporateLogin from './pages/Login/Corporatelogin'
 import privacyPolicy from './pages/privacyPolicy/'
 import VideoConsultation from './pages/VideoConsultation'
 import { Provider } from 'react-redux'
-import combineReducers from './reducers'
-import { createStore } from 'redux'
-
-const store = createStore(combineReducers)
+import store from './store'
 
 ReactDOM.render(
   <Provider store={store}>
