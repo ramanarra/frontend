@@ -121,7 +121,7 @@ function DoctorHeader({ socket, timer }) {
   const [openSpinner, setOpenSpinner] = useState(false)
   const [updateData, updateError, isUpdating, data] = useManualFetch() 
   
-  const IndividualHospitalName = window.localStorage.getItem('hospitalName')
+  const IndividualHospitalName = useSelector(state => state.hospital.hospitalName) ||  window.localStorage.getItem('hospitalName')
   const hospitalProfile = useSelector(state => state.hospital.hospitalProfile) || localStorage.getItem('hospitalPhoto')
 
   function handleOnVideoClick() {

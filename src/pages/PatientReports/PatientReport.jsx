@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import {Box, Dialog, Typography, DialogTitle, TextareaAutosize, Button } from '@material-ui/core'
-import useStyle from './PatientReportStyle'
+import useStyle from './useStyle'
 import CloseIcon from '@material-ui/icons/Close'
 import './style.scss'
 import moment from 'moment'
@@ -16,58 +16,11 @@ function PatientReport({ open, setOpen, setItem, handleClose, appointmentId, set
   const date = new Date();
   const formdata = new FormData();
 
-  // const [handleReports] = useReports()
   const [report, setReport] = useState({
     title: "",
     reportDate: moment(date).format('YYYY-MM-DD'),
     comments: ""
   })
-
-
-  const mystyle = {
-    visibility: "hidden"
-  };
-
-  const imgStyle = {
-    height: "45px",
-    width: "45px",
-    "border-radius": "10px"
-  };
-
-  const fontStyle = {
-    margin: "0px",
-    "font-family": "sans-serif",
-    "font-size": "x-small",
-    textOverflow: "ellipsis",
-    overflow: "hidden",
-    width: "45px",
-    textDecoration: "none",
-    whiteSpace: "nowrap"
-
-  }
-
-  const mainBox = {
-    position: "relative",
-    "overflow-y": "auto",
-    padding: "20px",
-    width: "600px"
-  }
-  const add = {
-    fontSize: " 20px ",
-    color: "#2abade",
-    paddingLeft: "200px"
-  }
-
-  const saveButton = {
-    borderRadius: "10px",
-    background: "#2abade",
-    float: "right",
-    color: "white",
-    height: "30px",
-    fontSize: "16px",
-    textTransform: "lowercase"
-  }
-
 
   function handlechange(e) {
     const item = e.target.files;
@@ -75,7 +28,6 @@ function PatientReport({ open, setOpen, setItem, handleClose, appointmentId, set
     // setFile([...file, ...item])
     setFile([...item])
     const fileName = item[0].name;
-    const fileData = item[0]
     setReport({ ...report, title: fileName })
   }
 
@@ -123,7 +75,7 @@ function PatientReport({ open, setOpen, setItem, handleClose, appointmentId, set
   }
 
   var allfiles = file.map((eachfile) => {
-    return <img src={eachfile} style={imgStyle} />
+    return <img src={eachfile} className={classes.image} />
   })
 
   return (
@@ -131,26 +83,24 @@ function PatientReport({ open, setOpen, setItem, handleClose, appointmentId, set
       <Box className={classes.holesize}  >
 
         <Dialog open={open} className={classes.boxsize} >
-          <Box style={mainBox}>
+          <Box className={classes.mainBox}>
 
             <CloseIcon className={classes.closeIcon} onClick={handleClose} />
             <DialogTitle className={classes.header} style={{ paddingTop: "0px" }}>
               <Box display="flex">
                 <Box>
-                  <Typography className={classes.title} variant="h5" style={add}>
+                  <Typography className={classes.title} variant="h5" className={classes.heading}>
                     Add Report
                </Typography>
                 </Box>
               </Box>
             </DialogTitle>
 
-
-            <TextareaAutosize aria-label="minimum height" rowsMin={5} style={{ width: "100%", color: "currentColor", fontFamily: "'product-sans-regular', sans-serif", fontSize: "13.5px" }} placeholder="Type here..."
+            <TextareaAutosize aria-label="minimum height" rowsMin={5}  className={classes.reportText}  placeholder="Type here..."
               onChange={handleText}
             />
             <div >
-
-              <div style={{ display: "flex", lineHeight: "20px" }}>
+              <div className={classes.files}>
                 {file.map((value, index) => {
                   const fileName = file[index].name;
                   const filePath = value.url;
@@ -158,25 +108,25 @@ function PatientReport({ open, setOpen, setItem, handleClose, appointmentId, set
                   const fileExtension = fileName.split('.').pop();
                   if (fileExtension === "pdf" && index < 3) {
                     return (
-                      <div style={{ display: "grid", paddingLeft: "0px", marginRight: "20px" }}>
-                        <img src={pdfIcon} alt='img1' style={imgStyle} />
-                        <abbr style={fontStyle} title={fileName}>{fileName}</abbr>
+                      <div className={classes.firstReportFile}>
+                        <img src={pdfIcon} alt='img1'  className={classes.image} />
+                        <abbr className={classes.font} title={fileName}>{fileName}</abbr>
                       </div>
                     )
                   }
                   else if ((fileExtension === "svg" || fileExtension === "png") && index < 3) {
                     return (
-                      <div style={{ display: "grid", marginRight: "20px" }}>
-                        <img src={URL.createObjectURL(file[index])} alt='img' style={imgStyle} />
-                        <abbr style={fontStyle} title={fileName}>{fileName} </abbr>
+                      <div className={classes.reportFiles}>
+                        <img src={URL.createObjectURL(file[index])} alt='img' className={classes.image} />
+                        <abbr className={classes.font} title={fileName}>{fileName} </abbr>
                       </div>
                     )
                   }
                   else if (fileExtension === "jpg" && index < 3) {
                     return (
-                      <div style={{ display: "grid", marginRight: "20px" }}>
-                        <img src={URL.createObjectURL(file[index])} alt='img' style={imgStyle} />
-                        <abbr style={fontStyle} title={fileName}  > {fileName} </abbr>
+                      <div className={classes.reportFiles}>
+                        <img src={URL.createObjectURL(file[index])} alt='img' className={classes.image}/>
+                        <abbr className={classes.font} title={fileName}  > {fileName} </abbr>
                       </div>
                     )
                   }
@@ -184,27 +134,28 @@ function PatientReport({ open, setOpen, setItem, handleClose, appointmentId, set
                 })
                 }
               </div>
-              <div className="left-partition">
-                <label for="files" name="files" style={{ fontSize: " 16px ", color: "#2abade" }} > + Select File </label>
+              <div className={classes.reportLeft} >
+                <label for="files" name="files" className={classes.selectFile} > + Select File </label>
                 <input
                   type="file"
                   name="files"
                   onChange={handlechange}
                   id="files"
                   accept=".jpg,.svg,.png, .pdf"
-                  style={mystyle}
+                  className={classes.inputField}
                   required
                 />
               </div>
 
-              <div >
+              <div  >
                 {(report.title !== "") ?
-                  <Button variant="contained" style={saveButton}
+                  <Button variant="contained" className={classes.saveButton}
+                    style={{outline:"none"}}
                     onClick={handleSave}
                   >save</Button>
                   :
                   <Box>
-                    <Button variant="contained" style={saveButton} onClick={handleDisabled}
+                    <Button variant="contained" className={classes.saveButton}  style={{outline:"none"}}  onClick={handleDisabled}
                     >save</Button>
 
                   </Box>
@@ -223,6 +174,7 @@ function PatientReport({ open, setOpen, setItem, handleClose, appointmentId, set
           message={"Please Select File"}
           onclose={handleOnClose}
           severity={'error'}
+          style={{outline:"none"}}
         />
       }
     </Box>

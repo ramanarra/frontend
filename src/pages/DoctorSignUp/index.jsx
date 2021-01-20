@@ -70,7 +70,9 @@ const DoctorSignUp = (props) => {
     }
   }, [response, count])
 
-  const redirectPatientLoginPage = () => props.history.push('/patient/registration')
+  const redirectPatientRegistration = () => props.history.push('/patient/registration')
+
+  const redirectPatientLogin = () => props.history.push('/login')
   
   const validationErr = {
     name: 'Invalid name',
@@ -113,6 +115,7 @@ const DoctorSignUp = (props) => {
               name="firstName"
               label="First Name"
               placeholder="Arul"
+              isRequired
               inputProps={{
                 ref: register({
                   required: 'Required',
@@ -133,6 +136,7 @@ const DoctorSignUp = (props) => {
               name="lastName"
               placeholder="Prakash"
               label="Last Name"
+              isRequired
               inputProps={{
                 ref: register({
                   pattern: {
@@ -174,6 +178,7 @@ const DoctorSignUp = (props) => {
               name="speciality"
               label="Specialization"
               placeholder="child specialist"
+              isRequired
               inputProps={{
                 ref: register({
                   minLength: {
@@ -191,6 +196,7 @@ const DoctorSignUp = (props) => {
               name="qualification"
               label="Qualification"
               placeholder="MBBS"
+              isRequired
               inputProps={{
                 ref: register({
                   minLength: {
@@ -209,6 +215,7 @@ const DoctorSignUp = (props) => {
               label="Experience"
               placeholder="1"
               type="number"
+              isRequired
               inputProps={{
                 ref: register({
                   required: 'Required',
@@ -230,6 +237,7 @@ const DoctorSignUp = (props) => {
               placeholder="500"
               label="Consultation Cost"
               type="number"
+              isRequired
               inputProps={{
                 ref: register({
                   required: 'Required',
@@ -249,6 +257,7 @@ const DoctorSignUp = (props) => {
               label="Consultation Session Timing"
               placeholder="10"
               type="number"
+              isRequired
               inputProps={{
                 ref: register({
                   required: 'Required',
@@ -268,6 +277,7 @@ const DoctorSignUp = (props) => {
               label="Contact Number"
               placeholder="8745142572"
               type="number"
+              isRequired
               inputProps={{
                 ref: register({
                   required: 'Required',
@@ -289,6 +299,7 @@ const DoctorSignUp = (props) => {
               label="Email ID"
               placeholder="Johndoe@gmail.com"
               type="email"
+              isRequired
               inputProps={{
                 ref: register({
                   required: 'Required',
@@ -308,6 +319,7 @@ const DoctorSignUp = (props) => {
               label="Password"
               type="password"
               placeholder="********"
+              isRequired
               inputProps={{ ref: register({ required: 'Required' }) }}
               error={!!errors.password && errors.password.message}
               hasValidation
@@ -334,6 +346,7 @@ const DoctorSignUp = (props) => {
                  multiline
                  rows={2}
                  rowsMax={4}
+                 isRequired
                  inputProps={{
                   ref: register({
                     required: 'Required',
@@ -366,8 +379,15 @@ const DoctorSignUp = (props) => {
 
             <div className="signin-btn-wrap signin-btn-align">
               If you are a new patient?
-              <span className="signin-btn" onClick={redirectPatientLoginPage}>
-              Click here
+              <span className="signin-btn" onClick={redirectPatientRegistration}>
+              Patient SignUp
+              </span>
+            </div>
+
+            <div className="signin-btn-wrap ">
+              If you are a patient?
+              <span className="signin-btn" onClick={redirectPatientLogin}>
+              Patient Login
               </span>
             </div>
 

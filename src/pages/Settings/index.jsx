@@ -202,7 +202,6 @@ function Settings(props) {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setHospitalName: (value) => dispatch(setHospitalName(value)),
     setHospitalProfile: (value) => dispatch(setHospitalProfile(value)),
   }
 }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Box, Typography, makeStyles } from '@material-ui/core'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import PhotoCameraRounded from '@material-ui/icons/PhotoCameraRounded'
 
 import PatientDetails from './PatientDetails'
 import useCustomFetch from '../../hooks/useCustomFetch'

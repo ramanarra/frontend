@@ -41,3 +41,7 @@ input[type='number'] {
   width: 2px;
    height: 2px;
 }
+
+button:focus {
+  outline: none;
+}

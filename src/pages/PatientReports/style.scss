@@ -15,22 +15,19 @@
       font-weight: 500;
       color: #6a6a6a;
     }
+    // .right-partition {
+    //   @include rowCenter;
+    //   text-align: right;
+    //   .search-position{ 
+    //   .sort-icon {
+    //     height: 30px;
+    //     width: 30px;
+    //     margin-right: 10px;
+    //   }
+    // }
+    // }
 
-    .right-partition {
-      @include rowCenter;
-      text-align: right;
-      .search-position{ 
-      .sort-icon {
-        height: 30px;
-        width: 30px;
-        margin-right: 10px;
-
-
-      }
-    }
-    }
-
-    .left-report {
+    .left-report {                   
       padding-left: 0px !important;
     }
 
@@ -41,16 +38,13 @@
       padding-right: 0px !important;
     }
   }
-
-  .spinner {
-    position: absolute;
-    left: 50%;
-    bottom: 50%;
-    color: #636668;
-  }
-
-
-  .patient-table-wrap {
+  // .spinner {
+  //   position: absolute;
+  //   left: 50%;
+  //   bottom: 50%;
+  //   color: #636668;
+  // }
+  .patient-table-wrap {               
     margin-top: 5px;
     position: relative;
     overflow: auto;
@@ -97,25 +91,25 @@
         color: #818181;
       }
 
-      .ctrl-btns {
-        .tbl-btn {
-          height: 20px;
-          width: 20px;
-          margin: 0 3px;
-        }
+      // .ctrl-btns {
+      //   .tbl-btn {
+      //     height: 20px;
+      //     width: 20px;
+      //     margin: 0 3px;
+      //   }
 
-        .view-btn {
-          img {
-            height: 10px;
-          }
-        }
+      //   .view-btn {
+      //     img {
+      //       height: 10px;
+      //     }
+      //   }
 
-        .add-btn {
-          img {
-            height: 15px;
-          }
-        }
-      }
+      //   .add-btn {
+      //     img {
+      //       height: 15px;
+      //     }
+      //   }
+      //}
     }
   }
 }

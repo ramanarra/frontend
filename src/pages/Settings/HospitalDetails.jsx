@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { Box, TextField, makeStyles, Typography } from '@material-ui/core'
-
 import EditButton from '../../components/EditButton'
 import useStyle from './useHospitalDetailsStyle'
 
-function HospitalDetails({ hospitalDetails, isAbleToWrite, onSave }) {
+import { connect } from 'react-redux'
+import { setHospitalName } from '../../actions/hospital'
+
+function HospitalDetails({ hospitalDetails, isAbleToWrite, onSave, ...rest }) {
   const classes = useStyle()
   const [content, setContent] = useState({})
   const [fieldName, setFieldName] = useState([])
@@ -21,6 +23,11 @@ function HospitalDetails({ hospitalDetails, isAbleToWrite, onSave }) {
     pincode: hospitalDetails.pincode,
     supportEmail: hospitalDetails.supportEmail,
   })
+ 
+  useEffect(()=>{
+    !!hospitalDetails && localStorage.setItem('hospitalName',hospitalDetails.hospitalName)
+    !!hospitalDetails && rest.setHospitalName(hospitalDetails.hospitalName)
+  },[hospitalDetails])
 
   function handleOnChange(value) {
     const newFieldName = [...fieldName]
@@ -241,4 +248,11 @@ function HospitalDetails({ hospitalDetails, isAbleToWrite, onSave }) {
   )
 }
 
-export default HospitalDetails
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setHospitalName: (value) => dispatch(setHospitalName(value)),
+  }
+}
+
+export default connect(null, mapDispatchToProps)(HospitalDetails)
+//export default HospitalDetails

@@ -70,6 +70,14 @@ const Login = ({
     history.push('/login')
   }
 
+  function patientRegistration() {
+    history.push('/patient/registration')
+  }
+
+  function doctorRegistration() {
+    history.push('/doctor/registration')
+  }
+
   const validate = () => {
     const errors = {}
 
@@ -356,7 +364,7 @@ const Login = ({
                 If you are a doctor?
               </Typography>
               <Typography color="primary" variant="h4" onClick={doctorLoginPage}>
-                Click here
+                Doctor Login
               </Typography>
             </Centralize>
           )}
@@ -366,7 +374,29 @@ const Login = ({
                 If you are a patient?
               </Typography>
               <Typography color="primary" variant="h4" onClick={patientLoginPage}>
-                Click here
+                Patient Login
+              </Typography>
+            </Centralize>
+          )}
+
+
+          {localStorage.getItem('loginUser') === 'patient' && (
+            <Centralize className={classes.singupContent}>
+              <Typography className={classes.singupLabel} variant="h6">
+                If you are a new doctor?
+              </Typography>
+              <Typography color="primary" variant="h4" onClick={doctorRegistration}>
+                Doctor SignUp
+              </Typography>
+            </Centralize>
+          )}
+          {localStorage.getItem('loginUser') === 'doctor' && (
+            <Centralize className={classes.singupContent}>
+              <Typography className={classes.singupLabel} variant="h6">
+                If you are a new patient?
+              </Typography>
+              <Typography color="primary" variant="h4" onClick={patientRegistration}>
+                Patient SignUp
               </Typography>
             </Centralize>
           )}
