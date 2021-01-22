@@ -121,7 +121,7 @@ function DoctorHeader({ socket, timer }) {
   const [openSpinner, setOpenSpinner] = useState(false)
   const [updateData, updateError, isUpdating, data] = useManualFetch() 
   
-  const IndividualHospitalName = useSelector(state => state.hospital.hospitalName) ||  window.localStorage.getItem('hospitalName')
+  const IndividualHospitalName = useSelector(state => state.hospital.hospitalName) || localStorage.getItem('hospitalName')
   const hospitalProfile = useSelector(state => state.hospital.hospitalProfile) || localStorage.getItem('hospitalPhoto')
 
   function handleOnVideoClick() {
@@ -197,7 +197,7 @@ function DoctorHeader({ socket, timer }) {
           )} 
           {localStorage.getItem('role') === 'ADMIN' && (
           <Avatar
-            src={localStorage.getItem('hospitalPhoto')}
+            src={hospitalProfile}
             alt="hospital logo"
             className={classes.hospitalLogo}
             onClick={handleOnClick}

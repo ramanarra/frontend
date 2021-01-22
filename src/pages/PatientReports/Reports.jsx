@@ -1,22 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import SearchBar from '../../components/SearchBar'
-import './style.scss'
-import useStyle from './useStyle'
 import api, { URL } from '../../api'
 import PatientReport from './PatientReport'
 import AddCircleOutlineTwoToneIcon from '@material-ui/icons/AddCircleOutlineTwoTone';
 import { Button } from '@material-ui/core'
-import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 import SnackBar from '../../components/SnackBar'
 import moment from 'moment'
 import { useLocation } from "react-router-dom"
 
+import useStyle from './useStyle'
+import './style.scss'
+
 const Reports = (props) => {
   const classes = useStyle();
   const [searchText, setSearchText] = useState('')
-  const [searchData, setSearchData] = useState(null)
   const [open, setOpen] = useState(false)
   const [item, setItem] = useState(false)
   const [paginationStart, setPaginationStart] = useState(0)
@@ -27,7 +26,7 @@ const Reports = (props) => {
 
   const location = useLocation();
 
-  const reportData = !!searchData && !!searchText ? searchData : reportList
+  const reportData = reportList
 
   useEffect(() => {
     if(searchText !== "") {
