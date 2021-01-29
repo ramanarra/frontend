@@ -69,6 +69,10 @@ const Login = ({
     history.push('/login')
   }
 
+  function forgotPassword() {
+    history.push('/forgot-password')
+  }
+
   const validate = () => {
     const errors = {}
 
@@ -321,6 +325,12 @@ const Login = ({
               LOGIN
             </Button>
           </form>
+          <Centralize className={classes.singupContent}>
+            <Typography color="primary" variant="h4" onClick={forgotPassword}>
+              Forgot password?
+            </Typography>
+          </Centralize>
+
           <Centralize className={classes.singupContent}>
             <Typography className={classes.singupLabel} variant="h6">
               I am new?

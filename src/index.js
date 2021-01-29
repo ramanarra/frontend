@@ -17,6 +17,7 @@ import VideoConsultation from './pages/VideoConsultation'
 import { Provider } from 'react-redux'
 import combineReducers from './reducers'
 import { createStore } from 'redux'
+import ForgotPassword from './pages/ForgotPassword'
 
 const store = createStore(combineReducers)
 
@@ -30,6 +31,7 @@ ReactDOM.render(
           <Route exact path={'/patient/registration'} component={PatientSignup} />
           <Route exact path={'/doctor/registration'} component={DoctorSignUp} />
           <Route exact path={'/video-consultation'} component={VideoConsultation} />
+          <Route exact path={'/forgot-password'} component={ForgotPassword} />
           <Route path={'/'} component={Layouts} />
         </Switch>
       </BrowserRouter>

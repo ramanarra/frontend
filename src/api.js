@@ -56,4 +56,7 @@ export const URL = {
   appointmentPresentOnDate: 'calendar/patient/appointmentPresentOnDate',
   paymentOrder: '/calendar/payment/order',
   verification: '/calendar/payment/verification',
+  patientForgotPassword: '/auth/patient/forgotPassword',
+  adminForgotPassword: '/auth/doctor/forgotPassword',
+  doctorForgotPassword: '/auth/admin/forgotPassword'
 }
