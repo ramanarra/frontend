@@ -90,6 +90,7 @@ function HospitalDetails({ hospitalDetails, isAbleToWrite, onSave, ...rest }) {
               onChange={handleOnEdit}
               disabled={fieldName.length === 0 ? true : !Boolean(fieldName.filter((field) => field === 'hospitalName').length)}
             />
+            <Box>
             {isAbleToWrite && (
               <EditButton
                 value={'-5px'}
@@ -99,6 +100,7 @@ function HospitalDetails({ hospitalDetails, isAbleToWrite, onSave, ...rest }) {
                 save={handleOnSave}
               />
             )}
+            </Box>
           </Box>
           <Box className={classes.box} display="flex">
             <TextField
@@ -110,6 +112,7 @@ function HospitalDetails({ hospitalDetails, isAbleToWrite, onSave, ...rest }) {
               onChange={handleOnEdit}
               disabled={fieldName.length === 0 ? true : !Boolean(fieldName.filter((field) => field === 'landmark').length)}
             />
+            <Box>
             {isAbleToWrite && (
               <EditButton
                 value={'-5px'}
@@ -119,6 +122,7 @@ function HospitalDetails({ hospitalDetails, isAbleToWrite, onSave, ...rest }) {
                 save={handleOnSave}
               />
             )}
+            </Box>
           </Box>
           <Box className={classes.box} display="flex">
             <TextField
@@ -130,6 +134,7 @@ function HospitalDetails({ hospitalDetails, isAbleToWrite, onSave, ...rest }) {
               onChange={handleOnEdit}
               disabled={fieldName.length === 0 ? true : !Boolean(fieldName.filter((field) => field === 'country').length)}
             />
+            <Box> 
             {isAbleToWrite && (
               <EditButton
                 value={'-5px'}
@@ -139,6 +144,7 @@ function HospitalDetails({ hospitalDetails, isAbleToWrite, onSave, ...rest }) {
                 save={handleOnSave}
               />
             )}
+           </Box>
           </Box>
           <Box className={classes.box} display="flex">
             <TextField
@@ -150,6 +156,7 @@ function HospitalDetails({ hospitalDetails, isAbleToWrite, onSave, ...rest }) {
               onChange={handleOnEdit}
               disabled={fieldName.length === 0 ? true : !Boolean(fieldName.filter((field) => field === 'phone').length)}
             />
+            <Box>
             {isAbleToWrite && (
               <EditButton
                 value={'-5px'}
@@ -159,6 +166,7 @@ function HospitalDetails({ hospitalDetails, isAbleToWrite, onSave, ...rest }) {
                 save={handleOnSave}
               />
             )}
+            </Box>
           </Box>
         </Box>
         <Box className={classes.left}>
@@ -172,6 +180,7 @@ function HospitalDetails({ hospitalDetails, isAbleToWrite, onSave, ...rest }) {
               onChange={handleOnEdit}
               disabled={fieldName.length === 0 ? true : !Boolean(fieldName.filter((field) => field === 'street1').length)}
             />
+            <Box>
             {isAbleToWrite && (
               <EditButton
                 value={'-5px'}
@@ -181,6 +190,7 @@ function HospitalDetails({ hospitalDetails, isAbleToWrite, onSave, ...rest }) {
                 save={handleOnSave}
               />
             )}
+            </Box>
           </Box>
           <Box className={classes.box} display="flex">
             <TextField
@@ -192,6 +202,7 @@ function HospitalDetails({ hospitalDetails, isAbleToWrite, onSave, ...rest }) {
               onChange={handleOnEdit}
               disabled={fieldName.length === 0 ? true : !Boolean(fieldName.filter((field) => field === 'cityState').length)}
             />
+            <Box>
             {isAbleToWrite && (
               <EditButton
                 value={'-5px'}
@@ -201,6 +212,7 @@ function HospitalDetails({ hospitalDetails, isAbleToWrite, onSave, ...rest }) {
                 save={handleOnSave}
               />
             )}
+            </Box>
           </Box>
           <Box className={classes.box} display="flex">
             <TextField
@@ -212,6 +224,7 @@ function HospitalDetails({ hospitalDetails, isAbleToWrite, onSave, ...rest }) {
               onChange={handleOnEdit}
               disabled={fieldName.length === 0 ? true : !Boolean(fieldName.filter((field) => field === 'pincode').length)}
             />
+            <Box>
             {isAbleToWrite && (
               <EditButton
                 value={'-5px'}
@@ -221,6 +234,7 @@ function HospitalDetails({ hospitalDetails, isAbleToWrite, onSave, ...rest }) {
                 save={handleOnSave}
               />
             )}
+            </Box>
           </Box>
           <Box className={classes.box} display="flex">
             <TextField
@@ -232,6 +246,7 @@ function HospitalDetails({ hospitalDetails, isAbleToWrite, onSave, ...rest }) {
               onChange={handleOnEdit}
               disabled={fieldName.length === 0 ? true : !Boolean(fieldName.filter((field) => field === 'supportEmail').length)}
             />
+            <Box>
             {isAbleToWrite && (
               <EditButton
                 value={'-5px'}
@@ -241,6 +256,7 @@ function HospitalDetails({ hospitalDetails, isAbleToWrite, onSave, ...rest }) {
                 save={handleOnSave}
               />
             )}
+            </Box>
           </Box>
         </Box>
       </Box>

@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { Dialog, IconButton, Typography, Button, TextField } from '@material-ui/core'
-import { Close, DeleteOutline } from '@material-ui/icons'
+import { DeleteOutline } from '@material-ui/icons'
 import { KeyboardTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import moment from 'moment'
 import MomentUtils from '@date-io/moment'
 
 import { timeFmt } from '../../components/commonFormat'
+import messages from '../../lib/iconMsg'
+import { CloseTip, DeleteTip } from '../../components/Tooltip'
 
 const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
   const [slotList, setSlotList] = useState([])
@@ -136,7 +138,7 @@ const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
         />
       </MuiPickersUtilsProvider>
       <IconButton className="del-btn" onClick={handleDelete.bind(this, data)}>
-        <DeleteOutline fontSize="small" />
+          <DeleteTip title={"Delete the Time Interval"} placement='right-start' />
       </IconButton>
     </div>
   )
@@ -150,7 +152,7 @@ const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
           </Typography>
           <div className="close-btn-wrap">
             <IconButton onClick={onClose} className="close-btn">
-              <Close />
+            <CloseTip title={messages.cancel} placement="right" />
             </IconButton>
           </div>
         </div>

@@ -16,6 +16,8 @@ import Logo from '../../assets/img/logo.png'
 import appointmentIcon from '../../assets/img/appointmentIcon.svg'
 import useManualFetch from '../../hooks/useManualFetch'
 import { METHOD, URL } from '../../api'
+import message from './../../lib/iconMsg'
+import { NotificationTip } from '../../components/Tooltip'
 
 const useStyles = makeStyles(() => ({
   appBar: {
@@ -186,7 +188,7 @@ function PatientHeader({socket}) {
         </Button>
       </Box>
       <Box className={classes.gap}>
-        <i className={classNames('icon-notify', classes.notificationImg)}></i>
+      <NotificationTip title={message.notification} placement="bottom" />
       </Box>
       <Box className={classes.gap}>
         <Typography className={classes.text}>

@@ -9,6 +9,9 @@ import DoctorList from './DoctorList'
 import DoctorListwithHospital from './DoctorListWithHospital'
 import LeftArrow from '../../assets/img/left-arrow.svg'
 import useStyle from './useStyle'
+import { LeftCircleArrow } from '../../components/Tooltip'
+import messages from '../../lib/iconMsg'
+
 function PatientFindDoctor() {
   const classes = useStyle()
   
@@ -50,12 +53,7 @@ function PatientFindDoctor() {
     <Box className={classes.container}>
       <Box className={classes.header}>
         <Box display="flex">
-          <img
-            src={LeftArrow}
-            alt="Left Arrow"
-            className={classes.leftArrow}
-            onClick={handleOnClick}
-          />
+          <LeftCircleArrow  onClick={handleOnClick} title={messages.dashboard} placement='top' />
           <Typography className={classes.heading} variant="h5">
             {heading}
           </Typography>

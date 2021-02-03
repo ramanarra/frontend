@@ -6,9 +6,11 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 import EventIcon from '@material-ui/icons/Event'
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord'
 
+import messages from '../../../../lib/iconMsg'
 import Stretch from '../../../../components/Stretch'
 import useStyle from './useHeaderStyle'
 import Select from '../../../../components/Select'
+import { ArrowBackTip, ArrowForwardTip } from '../../../../components/Tooltip'
 
 const currentDay = Moment()
 
@@ -56,6 +58,10 @@ function Header({ forwardPagination, backwardPagination, slots, paginationNumber
           onClick={() => handleOnNext()}
         />
       </Box>
+      </Box>
+        <ArrowBackTip  onClick={() => handleOnBack()} title={messages.leftarrow} placement='top' />
+        <ArrowForwardTip  onClick={() => handleOnNext()} title={messages.rightarrow} placement='top' />
+     </Box>
       <Stretch />
       <Box display="flex">
         <FiberManualRecordIcon className={classes.freeSlot} />

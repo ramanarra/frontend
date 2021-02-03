@@ -7,6 +7,8 @@ import { METHOD, URL } from '../../api'
 import DoctorDetails from './DoctorDetails'
 import AppointmentDatePicker from './AppointmentDatePicker'
 import LeftArrow from '../../assets/img/left-arrow.svg'
+import messages from '../../lib/iconMsg'
+import { LeftCircleArrow } from '../../components/Tooltip'
 
 const useStyle = makeStyles(() => ({
   container: {
@@ -44,7 +46,7 @@ function PatientBookAppointment() {
 
   return (
     <Box className={classes.container} display="flex">
-      <img src={LeftArrow} alt="Left Arrow" className={classes.leftArrow} onClick={handleOnClick} />
+       <LeftCircleArrow onClick={handleOnClick} title={"Back"} placement='top' />
       {doctorDetails && <DoctorDetails doctorDetails={doctorDetails} />}
       {doctorDetails && <AppointmentDatePicker doctorKey={id} doctorDetails={doctorDetails} />}
     </Box>

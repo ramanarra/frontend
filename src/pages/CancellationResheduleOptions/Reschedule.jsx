@@ -7,6 +7,8 @@ import IconButton from '@material-ui/core/IconButton'
 import Switch from '../../components/Switch'
 import NumberTextField from '../../components/NumberTextField'
 import UnpaidBooking from './UnpaidBooking'
+import message from '../../lib/iconMsg'
+import { EditTip,Tooltip } from '../../components/Tooltip'
 
 const useStyles = makeStyles(() => ({
   text: {
@@ -51,6 +53,7 @@ const Cancellation = ({
   const [rescheduleHours, setRescheduleHours] = useState(0)
   const [rescheduleMins, setRescheduleMins] = useState(0)
   const [disable, setDisable] = useState(false)
+  const [messages, setMessages] = useState("off")
 
   useEffect(() => {
     if (configDetails) {
@@ -68,6 +71,10 @@ const Cancellation = ({
       isPatientRescheduleAllowed: event.target.checked,
     }
     onSave(params)
+    if(isPatientRescheduleAllowed)
+      setMessages("on")
+    else
+      setMessages("off")
   }
 
   function handleOnCancel() {
@@ -113,10 +120,12 @@ const Cancellation = ({
       <Box display="flex" marginBottom={4} alignItems="center">
         <Typography className={classes.text}>Patient Reschedule</Typography>
         {isAbleToWrite && (
+          <Tooltip title={messages} placement='top'>
           <Switch
             checked={isPatientRescheduleAllowed}
             onChange={handleOnRescheduleChange}
           />
+          </Tooltip>
         )}
       </Box>
       {isPatientRescheduleAllowed && (
@@ -151,6 +160,7 @@ const Cancellation = ({
                     onClick={() => setDisable(true)}
                   >
                     <Edit className={classes.editIcon} />
+                    <EditTip title={message.edit} placement="right" />
                   </IconButton>
                 ) : (
                   <div>

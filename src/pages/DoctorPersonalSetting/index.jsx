@@ -9,6 +9,7 @@ import ConsulationAndSignature from './ConsulationAndSignature'
 import useCustomFecth from '../../hooks/useCustomFetch'
 import useDoctorConfigUpdate from '../../hooks/useDoctorConfigUpdate'
 import useDoctorDetailsUpdate from '../../hooks/useDoctorDetailsUpdate'
+import useSignatureUpload from '../../hooks/useSignatureUpload'
 
 import useDocSettingWrite from '../../hooks/useDocSettingWrite'
 import LeftArrow from '../../assets/img/left-arrow.svg'
@@ -19,6 +20,8 @@ import PhotoCameraRounded from '@material-ui/icons/PhotoCameraRounded'
 import SnackBar from '../../components/SnackBar'
 import Backdrop from '@material-ui/core/Backdrop'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import messages from '../../lib/iconMsg'
+import { UploadImageTip,LeftCircleArrow } from '../../components/Tooltip'
 
 const useStyle = makeStyles((theme) => ({
   container: {
@@ -106,6 +109,7 @@ function DoctorPersonalSetting() {
   const [image, setImage] = useState([])
   const [onSave, response] = useDoctorConfigUpdate(refetch)
   const [onUpdate, returnData] = useDoctorDetailsUpdate(refetch)
+  const [handleSignatureUpload, contents] = useSignatureUpload()
   const [open, setOpen] = useState(false)
   const [openSpinner, setOpenSpinner] = useState(false)
 
@@ -118,7 +122,7 @@ function DoctorPersonalSetting() {
     setImage(item);
     formdata.append('files', item[0])
 
-    handleFileUpload(formdata);
+    handleFileUpload(formdata)
     setOpenSpinner(true)
   }
 
@@ -139,6 +143,11 @@ function DoctorPersonalSetting() {
     setOpen(true)
   },[response])
 
+ {/* update doctor signature image and content refresh */}
+  useEffect(() => {
+    !!contents && refetch() && setOpen(true)
+  },[contents])
+
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return
@@ -153,12 +162,7 @@ function DoctorPersonalSetting() {
         <Box display="flex">
           <Box className={classes.leftSide}>
             <Box display="flex">
-              <img
-                src={LeftArrow}
-                alt="leftArrow"
-                className={classes.leftArrow}
-                onClick={handleOnBack}
-              />
+              <LeftCircleArrow onClick={handleOnBack} title={messages.dashboard} placement='left'/>
               <Typography className={classes.text}>Doctors Details</Typography>
             </Box>
             <Box style={{width:"150px"}} className={classes.photoContainer}>
@@ -201,19 +205,31 @@ function DoctorPersonalSetting() {
               onSave={onSave}
               isAbleToWrite={isAbleToWrite}
               response={response}
+              handleSignatureUpload={handleSignatureUpload}
+              contents={contents}  
             />
-            {/* <Preconsultancy
-            refetch={refetch}
-            docKey={id}
-            configDetails={data?.configDetails}
-            onSave={onSave}
-            isAbleToWrite={isAbleToWrite}
-          /> */}
           </Box>
         </Box>
       )}
 
       {/* response messages */}
+      {contents && contents.statusCode && contents.statusCode === 200 && (
+        <SnackBar
+          openDialog={open}
+          message={"Updated Successfully"}
+          onclose={handleClose}
+          severity={'success'}
+        />
+      )}
+      {contents && contents.statusCode && contents.statusCode !== 200 && (
+        <SnackBar
+          openDialog={open}
+          message={"Updated Failed"}
+          onclose={handleClose}
+          severity={'error'}
+        />
+      )}
+      
       {returnData && returnData.statusCode && returnData.statusCode === 200 && (
         <SnackBar
           openDialog={open}
@@ -225,7 +241,7 @@ function DoctorPersonalSetting() {
       {(returnData && returnData.name === 'Error' && returnData.status === 500 && (
         <SnackBar
           openDialog={open}
-          message={'Internal server error'}
+          message={contents.message}
           onclose={handleClose}
           severity={'error'}
         />

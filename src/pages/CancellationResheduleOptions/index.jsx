@@ -11,6 +11,8 @@ import useDoctorConfigUpdate from '../../hooks/useDoctorConfigUpdate'
 import useDocSettingWrite from '../../hooks/useDocSettingWrite'
 import LeftArrow from '../../assets/img/left-arrow.svg'
 import SnackBar from '../../components/SnackBar'
+import { Tooltip, LeftCircleArrow } from '../../components/Tooltip'
+import messages from '../../lib/iconMsg'
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -84,12 +86,7 @@ function CancellationResheduleOptions() {
         <Box>
           <Box>
             <Box display="flex">
-              <img
-                src={LeftArrow}
-                slt="leftArrow"
-                className={classes.leftArrow}
-                onClick={handleBackButton}
-              />
+              <LeftCircleArrow  onClick={handleBackButton} title={messages.dashboard} placement='left'/>
               {data?.doctorDetails && (
                 <Typography className={classes.name}>{`${'Dr. '}${
                   data.doctorDetails.doctorName

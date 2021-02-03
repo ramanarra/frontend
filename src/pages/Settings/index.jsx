@@ -13,6 +13,8 @@ import useHospitalDetailsUpdate from '../../hooks/useHospitalDetailsUpdate'
 import SnackBar from '../../components/SnackBar'
 import Backdrop from '@material-ui/core/Backdrop'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import messages from '../../lib/iconMsg'
+import { UploadImageTip } from '../../components/Tooltip'
 
 const useStyle = makeStyles((theme) => ({
   container: {
@@ -61,6 +63,10 @@ const useStyle = makeStyles((theme) => ({
       borderRadius: '100px',
       backgroundColor: 'transparent',
     }
+  },
+  image: {
+    dispaly: 'flex',
+    marginLeft: 50,
   }
 }))
 
@@ -133,9 +139,7 @@ function Settings(props) {
               {isAdmin === "ADMIN" &&
                 <div>
                   <label for="files" name="files" >
-                    <div style={{ display: "flex" }}>
-                      <PhotoCameraRounded style={{ marginLeft: "110px" }} />
-                    </div >
+                    <UploadImageTip title={messages.image} placement='right-end'  className={classes.image} />
                   </label>
                   <input
                     type="file"

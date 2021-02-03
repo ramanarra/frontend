@@ -9,12 +9,14 @@ import {
 } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 import StarIcon from '@material-ui/icons/Star'
-
+import messages from '../../../../../lib/iconMsg'
 import CreateAppointmentForExistingPatient from './CreateAppointmentForExistingPatient'
 import CreateAppointmentForNewPatient from './CreateAppointmentForNewPatient'
 import useStyle from './useStyle'
 import { METHOD, URL } from '../../../../../api'
 import useManualFetch from '../../../../../hooks/useManualFetch'
+import { ClosedTip } from '../../../../../components/Tooltip'
+
 
 function FreeSlotModal({ slot, open, onClose, onSave, slotTime, doctorKey }) {
   const classes = useStyle()
@@ -100,7 +102,7 @@ function FreeSlotModal({ slot, open, onClose, onSave, slotTime, doctorKey }) {
         >
           <Box display="flex">
             <Typography variant="h5" className={classes.title}>Create Appointment</Typography>
-            <CloseIcon className={classes.closeIcon} onClick={handleClose} />
+            <ClosedTip  onClick={handleClose} title={messages.cancel} arrow placement="right" />
           </Box>
         </DialogTitle>
         <DialogContent className={classes.dialogContent}>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { IconButton } from '@material-ui/core'
-import { Sort } from '@material-ui/icons'
+import { MessageSharp, Sort } from '@material-ui/icons'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import InfiniteScroll from 'react-infinite-scroll-component'
 
@@ -12,6 +12,8 @@ import api, { URL, METHOD } from '../../api'
 import SearchBar from '../../components/SearchBar'
 import { dateFmt } from '../../components/commonFormat'
 import SnackBar from '../../components/SnackBar'
+import { ImageShow } from '../../components/Tooltip'
+import messages from '../../lib/iconMsg'
 
 const Patients = (props) => {
   const [searchText, setSearchText] = useState('')
@@ -86,14 +88,10 @@ const Patients = (props) => {
         className="tbl-btn view-btn"
         onClick={openDetials.bind(this, data)}
       >
-        <img src={require('../../assets/img/icons/eye.svg')} alt="View info" />
+        <ImageShow title={messages.viewdetails} placement='right' />
+        
       </IconButton>
-      {/* <IconButton className="tbl-btn add-btn">
-        <img
-          src={require('../../assets/img/icons/calender2.svg')}
-          alt="View scheduel"
-        />
-      </IconButton> */}
+    
     </div>
   )
 

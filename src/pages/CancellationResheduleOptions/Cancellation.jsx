@@ -6,6 +6,8 @@ import IconButton from '@material-ui/core/IconButton'
 
 import Switch from '../../components/Switch'
 import NumberTextField from '../../components/NumberTextField'
+import messages from '../../lib/iconMsg'
+import { EditTip, Tooltip } from '../../components/Tooltip'
 
 const useStyles = makeStyles(() => ({
   text: {
@@ -84,6 +86,7 @@ const Cancellation = ({
   const [cancellationDays, setCancellationDays] = useState(0)
   const [cancellationMins, setCancellationMins] = useState(0)
   const [disable, setDisable] = useState(false)
+  const [message, setMessage] = useState("off")
 
   useEffect(() => {
     if (configDetails) {
@@ -101,6 +104,10 @@ const Cancellation = ({
       isPatientCancellationAllowed: event.target.checked,
     }
     onSave(params)
+    if(isCancellationAllowed)
+    setMessage("on")
+    else
+    setMessage("off")
   }
 
   function handleOnCancel() {
@@ -149,10 +156,12 @@ const Cancellation = ({
           Patient Cancellation Allowed
         </Typography>
         {isAbleToWrite && (
+          <Tooltip title={message} placmenet='right'>
           <Switch
             checked={isCancellationAllowed}
             onChange={handleOnCancellationChange}
           />
+          </Tooltip>
         )}
       </Box>
       {isCancellationAllowed && (
@@ -187,6 +196,7 @@ const Cancellation = ({
                     onClick={() => setDisable(true)}
                   >
                     <Edit className={classes.editIcon} />
+                    <EditTip title={messages.edit} placement="right" />
                   </IconButton>
                 ) : (
                   <div>
