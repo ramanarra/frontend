@@ -7,7 +7,7 @@ import DocBody from './DocBody'
 
 import PatientAppoinments from '../pages/PatientAppoinments'
 import PatientSettings from '../pages/PatientSettings'
-import PatientReports from '../pages/PatientReports/Reports'
+import PatientReports from '../pages/PatientReports'
 import PatientDetials from '../pages/Patients/PatientDetials'
 import PatientFindDoctor from '../pages/PatientFindDoctor'
 import PatientBookAppointment from '../pages/PatientBookAppointment'

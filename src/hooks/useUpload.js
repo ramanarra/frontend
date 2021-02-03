@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import Api, { URL } from '../api'
 
-const useUpload = () => {
+const useUpload = ({
+  onSuccess, onFail
+}) => {
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
@@ -18,12 +20,14 @@ const useUpload = () => {
         setLoading(false)
         setError(null)
         setData(res.data)
+        onSuccess && onSuccess()
       })
       .catch((err) => {
         setLoading(false)
         const response = { name: 'Error', status: err.response?.status }
         setData(response)
         setError(err)
+        onFail && onFail()
       })
   }
 

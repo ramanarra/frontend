@@ -6,44 +6,40 @@ import './style.scss'
 import moment from 'moment'
 import pdfIcon from '../../assets/img/pdfIcon.svg'
 import SnackBar from '../../components/SnackBar'
-import useUpload from '../../hooks/useUpload'
 
-function PatientReport({ open, setOpen, setItem, handleClose, appointmentId, setReportFile, setVal }) {
+
+function PatientReport({ open, setOpen, setItem, handleClose, appointmentId, setReportFile, setVal,handleUpload }) {
   const classes = useStyle()
-  const [handleUpload] = useUpload()
   const [file, setFile] = useState([])
   const [opens, setOpens] = useState(false)
   const date = new Date();
-  const formdata = new FormData();
-
   const [report, setReport] = useState({
     title: "",
     reportDate: moment(date).format('YYYY-MM-DD'),
     comments: ""
   })
+  const formdata = new FormData();
 
-  function handlechange(e) {
+  const handlechange = (e) => {
     const item = e.target.files;
-    // Commented multiple file selection
-    // setFile([...file, ...item])
     setFile([...item])
     const fileName = item[0].name;
     setReport({ ...report, title: fileName })
   }
 
-  function handleText(e) {
+  const handleText = (e) => {
     const comments = e.target.value
     setReport({ ...report, comments: comments })
   };
 
-  function handleOnClose(reason) {
+  const handleOnClose = (reason) => {
     if (reason === 'clickaway') {
       return
     }
     setOpens(false);
   }
 
-  function handleSave(e) {
+  const handleSave = (e) => {
     const comments = report.comments
     const patientId = localStorage.getItem('patientId');
     formdata.append("files", file[0]);
@@ -68,9 +64,7 @@ function PatientReport({ open, setOpen, setItem, handleClose, appointmentId, set
     setOpen(false)
   }
 
-  
-
-  function handleDisabled() {
+  const handleDisabled = () => {
     setOpens(true)
   }
 
@@ -81,17 +75,16 @@ function PatientReport({ open, setOpen, setItem, handleClose, appointmentId, set
   return (
     <Box  >
       <Box className={classes.holesize}  >
-
         <Dialog open={open} className={classes.boxsize} >
           <Box className={classes.mainBox}>
-
             <CloseIcon className={classes.closeIcon} onClick={handleClose} />
+
             <DialogTitle className={classes.header} style={{ paddingTop: "0px" }}>
               <Box display="flex">
                 <Box>
                   <Typography className={classes.title} variant="h5" className={classes.heading}>
                     Add Report
-               </Typography>
+                  </Typography>
                 </Box>
               </Box>
             </DialogTitle>
@@ -99,14 +92,15 @@ function PatientReport({ open, setOpen, setItem, handleClose, appointmentId, set
             <TextareaAutosize aria-label="minimum height" rowsMin={5}  className={classes.reportText}  placeholder="Type here..."
               onChange={handleText}
             />
+
             <div >
               <div className={classes.files}>
                 {file.map((value, index) => {
                   const fileName = file[index].name;
-                  const filePath = value.url;
 
                   const fileExtension = fileName.split('.').pop();
-                  if (fileExtension === "pdf" && index < 3) {
+                  if (fileExtension === "pdf" && index < 3)
+                   {
                     return (
                       <div className={classes.firstReportFile}>
                         <img src={pdfIcon} alt='img1'  className={classes.image} />
@@ -134,6 +128,7 @@ function PatientReport({ open, setOpen, setItem, handleClose, appointmentId, set
                 })
                 }
               </div>
+
               <div className={classes.reportLeft} >
                 <label for="files" name="files" className={classes.selectFile} > + Select File </label>
                 <input
@@ -155,7 +150,9 @@ function PatientReport({ open, setOpen, setItem, handleClose, appointmentId, set
                   >save</Button>
                   :
                   <Box>
-                    <Button variant="contained" className={classes.saveButton}  style={{outline:"none"}}  onClick={handleDisabled}
+                    <Button variant="contained" className={classes.saveButton}  
+                    style={{outline:"none"}}  
+                    onClick={handleDisabled}
                     >save</Button>
 
                   </Box>
@@ -168,15 +165,15 @@ function PatientReport({ open, setOpen, setItem, handleClose, appointmentId, set
         </Dialog>
 
       </Box>
-      {
-        <SnackBar
-          openDialog={opens}
-          message={"Please Select File"}
-          onclose={handleOnClose}
-          severity={'error'}
-          style={{outline:"none"}}
-        />
-      }
+      
+      <SnackBar
+        openDialog={opens}
+        message={"Please Select File"}
+        onclose={handleOnClose}
+        severity={'error'}
+        style={{outline:"none"}}
+      />
+
     </Box>
 
 

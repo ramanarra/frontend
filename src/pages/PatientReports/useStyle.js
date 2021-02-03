@@ -139,20 +139,16 @@ const ReportStyle = makeStyles(() => ({
         fontWeight: 500, 
         color: 'rgb(11 181 255)', 
         borderRadius: '25px',
+        alignItem:'right',
+        marginTop: '10px',
+       
         
       },
 
       prevbtnShow:{
         padding: "2px", 
         color: "#ffffff", 
-        textTransform: 'capitalize'
-      },
-
-      prevbtnHide:{
-        padding: "2px", 
-        color: "#ffffff", 
-        textTransform: 'capitalize', 
-        visibility: 'hidden' 
+        textTransform: 'capitalize',
       },
 
       nextbtn:{ 
@@ -173,13 +169,23 @@ const ReportStyle = makeStyles(() => ({
         padding: "1px", 
         borderRadius: "20px", 
         color: "#ffffff", 
-        backgroundColor: "rgb(11, 181, 255)" 
+        backgroundColor: "rgb(11, 181, 255)" ,
+        marginRight:"20px"
       },
 
       pagination:{ 
         display: 'flex', 
         paddingTop: "20px" 
       },
+
+      searchReport:{
+        display:"flex",
+        float:"right"
+      },
+
+      addButton:{
+      display:"flex"
+      }
 
     
     
