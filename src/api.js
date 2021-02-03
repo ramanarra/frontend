@@ -58,5 +58,7 @@ export const URL = {
   verification: '/calendar/payment/verification',
   patientForgotPassword: '/auth/patient/forgotPassword',
   adminForgotPassword: '/auth/doctor/forgotPassword',
-  doctorForgotPassword: '/auth/admin/forgotPassword'
+  doctorForgotPassword: '/auth/admin/forgotPassword',
+  patientLoginForPhone: '/auth/patient/login',
+  otpVerification: '/auth/OTPVerification'
 }

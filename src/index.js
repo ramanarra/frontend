@@ -18,6 +18,7 @@ import { Provider } from 'react-redux'
 import combineReducers from './reducers'
 import { createStore } from 'redux'
 import ForgotPassword from './pages/ForgotPassword'
+import OtpVerifiaction from './pages/OtpVerification'
 
 const store = createStore(combineReducers)
 
@@ -32,6 +33,7 @@ ReactDOM.render(
           <Route exact path={'/doctor/registration'} component={DoctorSignUp} />
           <Route exact path={'/video-consultation'} component={VideoConsultation} />
           <Route exact path={'/forgot-password'} component={ForgotPassword} />
+          <Route exact path={'/otp-verification'} component={OtpVerifiaction} />
           <Route path={'/'} component={Layouts} />
         </Switch>
       </BrowserRouter>
