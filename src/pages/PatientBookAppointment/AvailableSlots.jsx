@@ -15,15 +15,18 @@ function AvailableSlots({ availableSlots, handleSlotTiming, time, date }) {
   }
 
   let currentTime = moment().format('HH:mm:ss')
-  let currentDate = moment().format('YYYY-MM-DD')
+  let todayDate = moment().format('DD/MM/YYYY')
 
   return (
     <Box className={classes.container}>
       <Box className={classes.availableSlots}>
         {(availableSlots && availableSlots.length) ? 
           availableSlots.map((slot, index) => {
+            let show = moment(date).format('DD/MM/YYYY') === todayDate ?
+                        slot.startTime > currentTime ? true : false
+                        : true
             return (
-              slot.startTime > currentTime || moment(date).format('YYYY-MM-DD') !== currentDate &&
+              show &&
               <Button
                 className={classNames(classes.time, {
                   [classes.selectedTab]: time.start === slot.startTime,

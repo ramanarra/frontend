@@ -1,6 +1,7 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 import { Avatar, Box, Typography, Button } from '@material-ui/core'
+import moment from 'moment'
 
 import { useInfocardStyles } from './useStyle'
 import getTimeFormatWithNoon from '../../../lib/dateLib'
@@ -19,6 +20,8 @@ const InfoCard = ({ doctorDetails, isRead }) => {
     const { doctorKey } = doctorDetails
     hisrory.push(`/appointments/${doctorKey}`)
   }
+
+  let currentTime = moment().format('HH:mm:ss')
 
   return (
     <Box className={classes.container}>
@@ -52,7 +55,7 @@ const InfoCard = ({ doctorDetails, isRead }) => {
           <Box className={classes.appointmentsContent}>
             {doctorDetails.todaysAppointment.map(
               (appointments, index) =>
-                appointments && (
+                appointments && appointments > currentTime && (
                   <Typography key={index} className={classes.appointments}>
                     {getTimeFormatWithNoon(appointments)}
                   </Typography>

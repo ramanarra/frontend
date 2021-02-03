@@ -45,6 +45,10 @@ function RescheduleAppointment({
 
   const currentDate = moment(date).format('YYYY-MM-DD')
 
+  let currentTime = moment().format('HH:mm:ss')
+
+  let todayDate = moment().format('YYYY-MM-DD')
+
   const [time, setTime] = useState({ start: '', end: '' })
 
   const [show, setShow] = useState(false)
@@ -180,7 +184,11 @@ function RescheduleAppointment({
             <Box display="flex" flexWrap="wrap" className={classes.availableSlots}>
               {availableSlots?.slots &&
                 availableSlots.slots.map((data, index) => {
+                  let show = currentDate === todayDate ?
+                              data.startTime > currentTime ? true : false
+                              : true
                   return (
+                    show &&
                     <Button
                       className={classNames(classes.time, {
                         [classes.selectedTab]: time.start === data.startTime,

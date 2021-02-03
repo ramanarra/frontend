@@ -10,6 +10,7 @@ import { timeFmt } from '../../components/commonFormat'
 const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
   const [slotList, setSlotList] = useState([])
   const [tempId, setTempId] = useState(1)
+  const [newInterval, setNewInterval]=useState(false)
   const scheduledayid = data && data[0]?.scheduledayid
 
   useEffect(() => {
@@ -40,6 +41,7 @@ const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
       ])
       setTempId((prev) => prev + 1)
     }
+    setNewInterval(true);
   }
 
   const handleChange = (data, e) => {
@@ -71,6 +73,7 @@ const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
       setSlotList((prev) => {
         return prev?.filter((i) => i.tempId !== data.tempId)
       })
+    setTempId(tempId-1);
     } else {
       handleChange(data, {
         target: {
@@ -152,7 +155,14 @@ const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
           </div>
         </div>
         <div className="slots-wrap">
-          {slotList?.filter((f) => !f.isDelete).map((i) => i?.startTime && slot(i))}
+        
+          {slotList?.filter((f) => (!f?.tempId)&&!f.isDelete).map((i) => i?.startTime && slot(i))}
+          { newInterval&&tempId>1&&
+          <div className="list-newline">
+            <p><span>New Interval </span></p>
+            {slotList?.filter((f) => (f?.tempId)&&!f.isDelete).map((i) => i?.startTime && slot(i))}
+          </div>
+}
         </div>
         <div className="list-btns">
           <div className="btn-wrap">

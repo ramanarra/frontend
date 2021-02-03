@@ -58,6 +58,7 @@ const Login = ({
       history.push('/patient/registration')
     } else {
       history.push('/doctor/registration')
+      // history.push('/corporateLogin')
     }
   }
 
@@ -67,6 +68,14 @@ const Login = ({
 
   function patientLoginPage() {
     history.push('/login')
+  }
+
+  function patientRegistration() {
+    history.push('/patient/registration')
+  }
+
+  function doctorRegistration() {
+    history.push('/doctor/registration')
   }
 
   const validate = () => {
@@ -250,9 +259,14 @@ const Login = ({
                 )}
               </Box>
               <Box>
+                <Box className={classes.headerfeild}>
                 <Typography className={classes.text} variant="h5">
                   Password
                 </Typography>
+                {/* <Typography className={classes.textanother} variant="h5">
+                  Password must be at least 6 characters
+                </Typography> */}
+                </Box>
                 <TextField
                   id="password"
                   inputRef={passwordRef}
@@ -321,21 +335,36 @@ const Login = ({
               LOGIN
             </Button>
           </form>
+          {localStorage.getItem('loginUser') === 'doctor' && (
           <Centralize className={classes.singupContent}>
             <Typography className={classes.singupLabel} variant="h6">
-              I am new?
+              I am new doctor?
             </Typography>
             <Typography color="primary" variant="h4" onClick={handleSignup}>
               Signup
             </Typography>
           </Centralize>
+          )}
+
+          {localStorage.getItem('loginUser') === 'patient' && (
+            <Centralize className={classes.singupContent}>
+              <Typography className={classes.singupLabel} variant="h6">
+                I am new patient?
+              </Typography>
+              <Typography color="primary" variant="h4" onClick={handleSignup}>
+                Signup
+              </Typography>
+           </Centralize>
+          )}
+
+
           {localStorage.getItem('loginUser') === 'patient' && (
             <Centralize className={classes.singupContent}>
               <Typography className={classes.singupLabel} variant="h6">
                 If you are a doctor?
               </Typography>
               <Typography color="primary" variant="h4" onClick={doctorLoginPage}>
-                Click here
+                Doctor Login
               </Typography>
             </Centralize>
           )}
@@ -345,7 +374,29 @@ const Login = ({
                 If you are a patient?
               </Typography>
               <Typography color="primary" variant="h4" onClick={patientLoginPage}>
-                Click here
+                Patient Login
+              </Typography>
+            </Centralize>
+          )}
+
+
+          {localStorage.getItem('loginUser') === 'patient' && (
+            <Centralize className={classes.singupContent}>
+              <Typography className={classes.singupLabel} variant="h6">
+                If you are a new doctor?
+              </Typography>
+              <Typography color="primary" variant="h4" onClick={doctorRegistration}>
+                Doctor SignUp
+              </Typography>
+            </Centralize>
+          )}
+          {localStorage.getItem('loginUser') === 'doctor' && (
+            <Centralize className={classes.singupContent}>
+              <Typography className={classes.singupLabel} variant="h6">
+                If you are a new patient?
+              </Typography>
+              <Typography color="primary" variant="h4" onClick={patientRegistration}>
+                Patient SignUp
               </Typography>
             </Centralize>
           )}

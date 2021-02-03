@@ -9,7 +9,7 @@ import {
 import CloseIcon from '@material-ui/icons/Close'
 
 import useStyle from './useNewPatientConfirmationStyle'
-import {clearMessages} from '../../actions/doctor'
+import {clearMessages,setPrescription,setIcon} from '../../actions/doctor'
 
 function AddNewPatientConfirmationModel({
   open,
@@ -19,6 +19,8 @@ function AddNewPatientConfirmationModel({
   nextPatientDetails,
   byDoctor,
   clearMessages,
+  setPrescription,
+  setIcon
 }) {
   const classes = useStyle()
 
@@ -46,8 +48,11 @@ function AddNewPatientConfirmationModel({
 
   function handlePause(status) {
     if (byDoctor) {
+      let list = []
+      setPrescription(list)
+      setIcon(true)
       onPatientJoining(
-        nextPatientDetails.appointmentId,
+       nextPatientDetails.appointmentId,
         nextPatientDetails.firstName,
         nextPatientDetails.lastName,
         nextPatientDetails.index,
@@ -94,6 +99,8 @@ function AddNewPatientConfirmationModel({
 const mapDispatchToProps = (dispatch) => {
   return {
     clearMessages: (data) => dispatch(clearMessages(data)),
+    setPrescription: (data) => dispatch(setPrescription(data)),
+      setIcon:(data)=>dispatch(setIcon(data)),
   }
 }
 

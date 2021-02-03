@@ -22,6 +22,7 @@ const Textfield = ({
   error,
   hasValidation,
   inputProps,
+  isRequired,
   ...rest
 }) => {
   const [textType, setType] = React.useState(type || 'text')
@@ -64,7 +65,7 @@ const Textfield = ({
       return null
     }
   }
-
+  
   return (
     <div className={'txt-field-wrap' + labelStatus + errorStatus}>
       <FormControl
@@ -73,9 +74,9 @@ const Textfield = ({
         size="small"
       >
         {!!label && (
-          <div>
+          <div className="txt-label-wrap">
             <label className="txt-field-label">{label}</label>
-            <Star className="star-icon" />
+            {isRequired && <Star className="star-icon" />}
           </div>
         )}
         <OutlinedInput

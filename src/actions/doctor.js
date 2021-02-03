@@ -10,4 +10,8 @@ export const setSession = (value) => ({type: 'SET_SESSION', data: value})
 
 export const setMessages = (value) => ({type: 'SET_MESSAGES', data: value})
 
+export const setPrescription=(value)=>({type:'SET_PRESCRIPTION',data:value})
+
 export const clearMessages = (value) => ({type: 'CLEAR_MESSAGES', data: value})
+
+export const setIcon=(value)=>({type: 'SET_ICON', data: value})

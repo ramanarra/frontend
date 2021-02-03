@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import classNames from 'classnames'
-import { connect } from 'react-redux'
+import { connect, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { Box, Button, Typography } from '@material-ui/core'
+import { Box, Button, Typography , Avatar} from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
@@ -18,7 +18,7 @@ import { METHOD, URL } from '../../api'
 
 const useStyles = makeStyles(() => ({
   appBar: {
-    height: 65,
+    height: 70,
     paddingLeft: 20,
     paddingRight: 60,
     display: 'flex',
@@ -47,7 +47,7 @@ const useStyles = makeStyles(() => ({
   },
 
   logoImg: {
-    height: 78,
+    height: 70,
   },
 
   text: {
@@ -60,7 +60,8 @@ const useStyles = makeStyles(() => ({
   },
 
   hospitalLogo: {
-    width: 33,
+    width: 25,
+    height: 25,
     paddingTop: 5,
     cursor: 'pointer',
   },
@@ -115,16 +116,13 @@ const useStyles = makeStyles(() => ({
 
 function DoctorHeader({ socket, timer }) {
   const classes = useStyles()
-
   const history = useHistory()
-
   const [open, setOpen] = useState(false)
-
   const [openSpinner, setOpenSpinner] = useState(false)
-
-  const [updateData, updateError, isUpdating, data] = useManualFetch()
-
-  const IndividualHospitalName = window.localStorage.getItem('hospitalName')
+  const [updateData, updateError, isUpdating, data] = useManualFetch() 
+  
+  const IndividualHospitalName = useSelector(state => state.hospital.hospitalName) || window.localStorage.getItem('hospitalName')
+  const hospitalProfile = useSelector(state => state.hospital.hospitalProfile) || window.localStorage.getItem('hospitalPhoto')
 
   function handleOnVideoClick() {
     if (socket) {
@@ -189,12 +187,22 @@ function DoctorHeader({ socket, timer }) {
       </Box>
       <ClickAwayListener onClickAway={handleOnAwayClick}>
         <Box className={classes.hospitalLogoContainer}>
-          <img
-            src={HospitalLogo}
+          {localStorage.getItem('role') === 'DOCTOR' && (
+          <Avatar
+            src={hospitalProfile}
             alt="hospital logo"
             className={classes.hospitalLogo}
             onClick={handleOnClick}
           />
+          )} 
+          {localStorage.getItem('role') === 'ADMIN' && (
+          <Avatar
+            src={hospitalProfile}
+            alt="hospital logo"
+            className={classes.hospitalLogo}
+            onClick={handleOnClick}
+          />
+          )}
           {open && (
             <Box className={classes.logout}>
               <Box display="flex">

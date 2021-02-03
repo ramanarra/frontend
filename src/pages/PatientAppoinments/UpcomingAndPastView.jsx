@@ -1,7 +1,10 @@
-import React, { useMemo } from 'react'
+import React, { useState, useMemo } from 'react'
 import moment from 'moment'
 import NumberToWords from 'number-to-words'
 import { useHistory } from 'react-router-dom'
+import AddCircleOutlineTwoToneIcon from '@material-ui/icons/AddCircleOutlineTwoTone';
+import PatientReport from '../PatientReports/PatientReport.jsx'
+import SnackBar from '../../components/SnackBar'
 import {
   Dialog,
   DialogTitle,
@@ -13,7 +16,7 @@ import {
 import CloseIcon from '@material-ui/icons/Close'
 import StarIcon from '@material-ui/icons/Star'
 import VerticalAlignBottomOutlinedIcon from '@material-ui/icons/VerticalAlignBottomOutlined'
-
+import pdf from '../../assets/img/pdf.png'
 import useCustomFecth from '../../hooks/useCustomFetch'
 import { METHOD, URL } from '../../api'
 import useStyle from './useUpcomingAndPastViewStyle'
@@ -29,10 +32,18 @@ function UpcomingAndPastView({
   onCancel,
   onReschedule,
   socket,
+  list,
 }) {
   const classes = useStyle()
-
+  const [opens, setOpens] = useState(false)
+  const [item, setItem] = useState(false)
+  const [reportFile, setReportFile] = useState()
+  const [report, setReport] = useState([])
+  let reportFileArray = []
+  const [val, setVal] = useState()
   const history = useHistory()
+  const appointmentReportArray = useHistory()
+
 
   const key = useMemo(() => {
     return {
@@ -82,11 +93,12 @@ function UpcomingAndPastView({
   const cancelDisable =
     doctorDetails?.cancellationDays !== null
       ? differenceInDays.days() >= Number(doctorDetails?.cancellationDays) &&
-        differenceInDays.hours() >= Number(doctorDetails?.cancellatioHours) &&
+        differenceInDays.hours() >= Number(doctorDetails?.cancellationHours) &&
         differenceInDays.minutes() >= Number(doctorDetails?.cancellationMins)
         ? false
         : true
       : false
+
 
   const rescheduleDisable =
     doctorDetails?.rescheduleDays !== null
@@ -96,6 +108,9 @@ function UpcomingAndPastView({
       ? false
       : true
     : false
+  const prescriptionDisplay =
+    (doctorDetails?.prescriptionUrl && doctorDetails?.prescriptionUrl.length)
+      ? true : false
 
   function handleOnClose(event) {
     onCancel(event)
@@ -116,8 +131,28 @@ function UpcomingAndPastView({
       liveStatus: appointmentDetail.liveStatus,
       socket: socket,
       appointmentDetail: appointmentDetail,
+      list: list,
     })
   }
+
+  // Upload report code start here
+  function handlePopupMsg() {
+    setOpens(true)
+  }
+
+  function handleClose() {
+    setOpens(false)
+    setItem(false)
+    let image = { name: val, url: reportFile }
+    console.log(image)
+    setReport([
+      ...report,
+      image
+    ])
+    reportFileArray.push(reportFile)
+
+  }
+  // Upload report code end here
 
   function handleOnCancel(event) {
     onClose(event)
@@ -125,6 +160,14 @@ function UpcomingAndPastView({
 
   function handleOnReschedule(event) {
     onReschedule(event)
+  }
+
+  //Passing appointmentId to patient report
+  function handleClick() {
+    appointmentReportArray.push({
+      pathname: '/patient/reports',
+      state: appointmentDetail.appointmentId
+    })
   }
 
   return (
@@ -169,6 +212,16 @@ function UpcomingAndPastView({
                     variant="h5"
                   >{`${startTime}${' - '}${endTime}`}</Typography>
                 </Box>
+
+
+                {/* <Box display="flex" className={classes.nameAndValuePair}>
+                  <Typography className={classes.name}> User Credit : </Typography>
+                  <Typography className={classes.value} variant="h5">
+                    200
+                  </Typography>
+                </Box> */}
+
+
               </Box>
               <Box className={classes.rightSide}>
                 <Box display="flex" className={classes.nameAndValuePair}>
@@ -189,20 +242,88 @@ function UpcomingAndPastView({
                     {date}
                   </Typography>
                 </Box>
-                {past && (
-                  <Box display="flex" className={classes.prescription}>
-                    <Typography className={classes.name}>Prescription : </Typography>
-                    <Box display="flex" className={classes.download}>
-                      <Typography className={classes.value} variant="h5">
-                        Click here
-                      </Typography>
-                      <VerticalAlignBottomOutlinedIcon
-                        className={classes.downloadIcon}
-                      />
+
+                {/* Upload report */}
+                {(prescriptionDisplay) ?
+                  past && (
+                    <Box display="flex" className={classes.prescription}>
+
+                      <Typography className={classes.name}>Prescription : </Typography>
+                      <Box display="flex" className={classes.download}>
+                        <a className={classes.value}  href={doctorDetails.prescriptionUrl[0]}
+                        target="_blank"
+                        style={{ color: '#37befa', textDecorationLine: 'none' }}
+                        variant="h5">
+                          Click here
+                      </a>
+                        <VerticalAlignBottomOutlinedIcon
+                          onClick={doctorDetails.prescriptionUrl[0]}
+                          className={classes.downloadIcon}
+                        />
+                      </Box>
                     </Box>
+                  )
+                  :
+                  <div></div>
+                }
+                <Box>
+                  <Box style={{ display: "flex" }}>
+                    <Typography className={classes.name}>Upload Report :</Typography>
+                    <Button className="title" onClick={handlePopupMsg} style={{ textTransform: "none", position: "relative", top: "-6px", left: "-10px" }} >
+                      <AddCircleOutlineTwoToneIcon />
+                    </Button>
                   </Box>
-                )}
+                  <Box style={{ display: "flex", height: "50px", width: "50px" }}>
+
+                    {
+                      doctorDetails?.reportDetail?.map((item, index) => {
+                        if (index <= 3) {
+                          if (item?.fileType?.includes("pdf")) {
+                            return (
+                              <Box>
+                                <img style={{ width: "40px", height: "40px", marginRight: "10px", borderRadius: "8px" }} src={pdf} />
+                                <Typography style={{ fontSize: "9px", width: "40px", height: "10px", overflow: "hidden", textOverflow: "clip" }}>{item.fileName}</Typography>
+                              </Box>
+                            )
+                          }
+                          else {
+                            return (
+                              <Box>
+                                <img style={{ width: "40px", height: "40px", marginRight: "10px", borderRadius: "8px" }} src={item.reportURL} />
+                                <Typography style={{ fontSize: "9px", width: "40px", height: "10px", overflow: "hidden", textOverflow: "clip" }}>{item.fileName}</Typography>
+                              </Box>
+                            )
+                          }
+                        }
+                      })
+                    }
+                  </Box>
+                  
+                  {/* To show the patient reports */}
+                  <Box>
+                    {
+                      doctorDetails?.reportDetail?.length > 4 &&
+                      <a onClick={handleClick} style={{ color: "#0bb5ff", fontSize: "12px" }}>View {(doctorDetails?.reportDetail?.length - 4)} more</a>
+                    }
+
+                  </Box>
+                </Box>
+                {
+                  opens &&
+                  <PatientReport
+                    open={opens}
+                    setOpen={setOpens}
+                    setItem={setItem}
+                    appointmentId={appointmentDetail.appointmentId}
+                    handleClose={handleClose}
+                    setReportFile={setReportFile}
+                    setVal={setVal}
+                  />
+                }
               </Box>
+
+
+
             </Box>
             {!past && (
               <Box>
@@ -284,7 +405,18 @@ function UpcomingAndPastView({
           </DialogContent>
         </Dialog>
       )}
+
+      {
+        <SnackBar
+          openDialog={item}
+          message={"Your report added successfully"}
+          onclose={handleClose}
+          severity={'success'}
+        />
+      }
+
     </Box>
+
   )
 }
 

@@ -48,9 +48,9 @@ const useDatePickerStyle = makeStyles(() => ({
     },
   },
   button: {
+    display:"flex",
     alignItems: 'center',
     justifyContent: 'center',
-    padding: '10px 80px 10px 300px',
   },
   confirmButton: {
     padding: '8.5px 67px',

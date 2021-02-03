@@ -10,7 +10,7 @@ function usePatientDetailsUpdate(refetch) {
     setLoading(true)
     const token = localStorage.getItem('virujhToken')
     const authStr = 'Bearer '.concat(token)
-
+    
     API.post(URL.patientDetailsEdit, params, {
       headers: {
         Authorization: authStr,

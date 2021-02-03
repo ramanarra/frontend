@@ -11,7 +11,6 @@ import axios, { METHOD, URL } from '../../api'
 import useCustomFecth from '../../hooks/useCustomFetch'
 import SnackBar from '../../components/SnackBar'
 import OverBooking from './OverBookingDialog'
-import CancelAndRescheduleInfo from './CancelAndRescheduleInfo'
 import useStyle from './useDatePickerStyle'
 
 function AppointmentDatePicker({ doctorKey, doctorDetails }) {
@@ -196,7 +195,7 @@ function AppointmentDatePicker({ doctorKey, doctorDetails }) {
               className={classes.dateContainer}
             />
           </MuiPickersUtilsProvider>
-          <CancelAndRescheduleInfo doctorDetails={doctorDetails} />
+                  
         <Box className={classes.button}>
           <Box className={classes.confirmButton} onClick={() => handleSubmit(false)}>
             <Typography className={classes.confirmText}>CONFIRM</Typography>

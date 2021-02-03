@@ -31,9 +31,16 @@ const PatientSignup = (props) => {
 
   const [age, setAge] = useState(null)
 
+  const [password, setPassword] = useState();
+
   const currentTime = moment().format('DD/MM/YYYY HH:mm:ss')
 
   const redirectToLogin = () => props.history.push('/login')
+
+  const redirectToDoctorRegistration = () => props.history.push('/doctor/registration')
+
+  const redirectToDoctorLogin = () => props.history.push('/doctor/login')
+
   const onSubmit = (data) => {
     if (data.phone === data.alternateContact) {
       setMessage('Both contact numbers should not be same')
@@ -100,6 +107,10 @@ const PatientSignup = (props) => {
     passwordLength: 'Password must has minimum length of 6 and maximum length of 12',
   }
 
+  function handleChange(e) {
+    setPassword(e.target.value)
+  }
+
   function handleOnClose(reason) {
     if (reason === 'clickaway') {
       return
@@ -130,6 +141,7 @@ const PatientSignup = (props) => {
               name="firstName"
               label="First Name"
               placeholder="Arul"
+              isRequired
               inputProps={{
                 ref: register({
                   required: 'Please enter your first name',
@@ -150,6 +162,7 @@ const PatientSignup = (props) => {
               name="lastName"
               placeholder="Prakash"
               label="Last Name"
+              isRequired
               inputProps={{
                 ref: register({
                   required: 'Please enter your last name',
@@ -159,6 +172,7 @@ const PatientSignup = (props) => {
                   },
                 }),
               }}
+
               error={!!errors.lastName && errors.lastName.message}
               hasValidation
             />
@@ -169,6 +183,7 @@ const PatientSignup = (props) => {
               label="Contact Number"
               placeholder="8745142572"
               type="number"
+              isRequired
               inputProps={{
                 ref: register({
                   required: 'Please enter your phone number',
@@ -192,7 +207,8 @@ const PatientSignup = (props) => {
               type="number"
               inputProps={{
                 ref: register({
-                  required: 'Please enter your alternate number',
+                  //required: 'Please enter your alternate number',
+                  required: false,
                   maxLength: {
                     value: 10,
                     message: validationErr.phone,
@@ -210,8 +226,9 @@ const PatientSignup = (props) => {
           <div className="field-wrap field-partition">
             <div className="dob-field">
               <MuiPickersUtilsProvider utils={MomentUtils}>
-                <div className="field-label">Date of Birth
-                <StarIcon className="star-icon" />
+                <div className="field-label">
+                  <label>Date of Birth</label>
+                  <StarIcon className="star-icon" />
                 </div>
                 <Controller
                   name="dateOfBirth"
@@ -247,6 +264,8 @@ const PatientSignup = (props) => {
               type="number"
               placeholder="35"
               value={age}
+              className="signup-age-fld"
+              isRequired
               inputProps={{
                 ref: register({
                   required: 'Please enter your age',
@@ -265,6 +284,7 @@ const PatientSignup = (props) => {
               name="address"
               label="Address"
               placeholder="#123, xyz st"
+              isRequired
               inputProps={{
                 ref: register({ required: 'Please enter your address' }),
               }}
@@ -272,12 +292,82 @@ const PatientSignup = (props) => {
               hasValidation
             />
           </div>
+
+          {/* adding city, state, country and pincode*/}
+          <div className="field-wrap field-partition">
+            <Textfield
+              name="city"
+              label="City"
+              placeholder="chennai"
+              isRequired
+              inputProps={{
+                ref: register({
+                  required: 'Please enter your city'
+                }),
+              }}
+
+              error={!!errors.city && errors.city.message}
+              hasValidation
+            />
+
+             <Textfield
+              name="state"
+              label="State"
+              placeholder="Tamilnadu"
+              isRequired
+              inputProps={{
+                ref: register({
+                  required: 'Please enter your state'
+                }),
+              }}
+
+              error={!!errors.state && errors.state.message}
+              hasValidation
+            />
+
+            <Textfield
+              name="country"
+              label="Country"
+              placeholder="india"
+              isRequired
+              inputProps={{
+                ref: register({
+                  required: 'Please enter your country'
+                }),
+              }}
+
+              error={!!errors.country && errors.country.message}
+              hasValidation
+            /> 
+
+            <Textfield
+              name="pincode"
+              label="Pincode"
+              type="number"
+              placeholder="600116"
+              isRequired
+              inputProps={{
+                ref: register({
+                  required: 'Please enter your pincode',
+                  maxLength: {
+                    value: 6,
+                    message: validationErr.pincode,
+                  },
+                }),
+              }}
+              error={!!errors.pincode && errors.pincode.message}
+              hasValidation
+            />
+          </div>
+
           <div className="field-wrap">
             <Textfield
               name="password"
               label="Password"
               type="password"
               placeholder="********"
+              onChange={handleChange}
+              isRequired
               inputProps={{
                 ref: register({
                   required: 'Please enter your password',
@@ -299,6 +389,28 @@ const PatientSignup = (props) => {
               hasValidation
             />
           </div>
+
+          {/* reconfirmatin of password */}
+          <div className="field-wrap">
+            <Textfield
+              name="confirmpassword"
+              label="Confirm Password"
+              type="password"
+              placeholder="********"
+              isRequired
+              inputProps={{
+                ref: register({
+                  required: 'Please enter your ConfirmPassword',
+                  validate: (value) => value === password,
+                  message: "password",
+
+                }),
+              }}
+              error={!!errors.confirmpassword && "password not matches"}
+              hasValidation
+            />
+          </div>
+
           <div className="submt-btn-wrap">
             <Button type="submit" className="signup-btn">
               Signup
@@ -309,6 +421,22 @@ const PatientSignup = (props) => {
                 Signin
               </span>
             </div>
+             
+            {/* Navigating to doctor registration  */}
+
+            <div className="signin-btn-wrap signin-btn-align">
+              If you are a new doctor?
+              <span className="signin-btn" onClick={redirectToDoctorRegistration}>
+                Doctor SignUp
+              </span>
+            </div>
+            <div className="signin-btn-wrap ">
+              If you are a doctor?
+              <span className="signin-btn" onClick={redirectToDoctorLogin}>
+                Doctor Login
+              </span>
+            </div>
+
           </div>
         </form>
       </Paper>

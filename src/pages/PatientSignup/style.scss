@@ -71,6 +71,18 @@
       padding-bottom: 17px;
     }
 
+    .signup-age-fld {
+      .txt-label-wrap {
+        display: inline-flex;
+        position: relative;
+
+        .star-icon {
+          top: -10px;
+          left: 20px;
+        }
+      }
+    }
+
     .dob-field {
       font-size: 14px;
       font-weight: normal;
@@ -78,7 +90,10 @@
       padding-bottom: 17px;
 
       .field-label {
-        margin-bottom: 8px;
+        label {
+          margin: 0;
+        }
+
         .star-icon {
           width: 8px;
           color: #ff0023;
@@ -119,6 +134,10 @@
         background: #0bb5ff;
         color: #fff;
         width: 100%;
+      }
+
+      .signin-btn-align {
+        padding-left: 20px !important;
       }
 
       .signin-btn-wrap {

@@ -37,6 +37,10 @@ function RescheduleAppointmentModal({
 
   const [show, setShow] = useState(false)
 
+  let todayDate = moment().format('YYYY-MM-DD')
+
+  let currentTime = moment().format('HH:mm:ss')
+
   const key = useMemo(() => {
     return {
       doctorKey: appointmentDetail.doctorKey,
@@ -95,6 +99,7 @@ function RescheduleAppointmentModal({
         startTime: moment(slotTime.start, 'HH:mm:ss').format('HH:mm'),
         endTime: moment(slotTime.end, 'HH:mm:ss').format('HH:mm'),
         appointmentDate: moment(slotDate).format('YYYY-MM-DD'),
+        confirmation: true,
       }
       onSave(URL.patientAppointmentReschedule, parameter)
     }
@@ -167,7 +172,11 @@ function RescheduleAppointmentModal({
               <Box display="flex" flexWrap="wrap" className={classes.availableSlots}>
                 {availableSlots?.slots &&
                   availableSlots.slots.map((data, index) => {
+                    let show = todayDate === currentDate ?
+                                  data.startTime > currentTime ? true : false
+                                  : true
                     return (
+                      show &&
                       <Button
                         className={classNames(classes.time, {
                           [classes.selectedTab]: slotTime.start === data.startTime,

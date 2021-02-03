@@ -1,13 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { Box, TextField, makeStyles, Typography } from '@material-ui/core'
-
 import EditButton from '../../components/EditButton'
 import useStyle from './useHospitalDetailsStyle'
 
-function HospitalDetails({ hospitalDetails, isAbleToWrite, onSave }) {
-  const classes = useStyle()
+import { connect } from 'react-redux'
+import { setHospitalName } from '../../actions/hospital'
 
-  const [fieldName, setFieldName] = useState('')
+function HospitalDetails({ hospitalDetails, isAbleToWrite, onSave, ...rest }) {
+  const classes = useStyle()
+  const [content, setContent] = useState({})
+  const [fieldName, setFieldName] = useState([])
 
   const [values, setValues] = useState({
     accountKey: hospitalDetails.accountKey,
@@ -17,15 +19,22 @@ function HospitalDetails({ hospitalDetails, isAbleToWrite, onSave }) {
     country: hospitalDetails.country,
     phone: hospitalDetails.phone,
     street1: hospitalDetails.street1,
-    street2: hospitalDetails.street2,
-    city: hospitalDetails.city,
-    state: hospitalDetails.state,
+    cityState: hospitalDetails.cityState,
     pincode: hospitalDetails.pincode,
     supportEmail: hospitalDetails.supportEmail,
   })
+ 
+  useEffect(()=>{
+    !!hospitalDetails && localStorage.setItem('hospitalName',hospitalDetails.hospitalName)
+    !!hospitalDetails && rest.setHospitalName(hospitalDetails.hospitalName)
+  },[hospitalDetails])
 
   function handleOnChange(value) {
-    setFieldName(value)
+    const newFieldName = [...fieldName]
+
+    newFieldName.push(value)
+
+    setFieldName(newFieldName)
   }
 
   function handleOnEdit(event) {
@@ -33,15 +42,39 @@ function HospitalDetails({ hospitalDetails, isAbleToWrite, onSave }) {
       ...values,
       [event.target.name]: event.target.value,
     })
+    setContent({
+      ...content,
+      accountKey: hospitalDetails.accountKey,
+      [event.target.name]: event.target.value,
+    })
   }
 
-  function handleDisable() {
-    setFieldName('')
+  function handleDisable(name) {
+    const newFieldName = fieldName.filter((field) => field !== name)
+    const value = hospitalDetails[name]
+    setFieldName(newFieldName)
+    setValues({ ...values,
+      [name]: value})
   }
 
   function handleOnSave() {
-    onSave(values)
+
+    if (Object.keys(content).length != 0) {
+      setContent({
+        ...content,
+        accountKey: hospitalDetails.accountKey,
+      })
+
+      setValues({
+        ...values,
+        content
+      })
+      onSave(content)
+    }
+    setContent({})
   }
+
+
 
   return (
     <Box className={classes.container}>
@@ -50,18 +83,19 @@ function HospitalDetails({ hospitalDetails, isAbleToWrite, onSave }) {
           <Box className={classes.box} display="flex">
             <TextField
               name="hospitalName"
+              placeholder="Hospital Name"
               className={classes.textField}
               variant="outlined"
               value={values.hospitalName}
               onChange={handleOnEdit}
-              disabled={'hospitalName' === fieldName ? false : true}
+              disabled={fieldName.length === 0 ? true : !Boolean(fieldName.filter((field) => field === 'hospitalName').length)}
             />
             {isAbleToWrite && (
               <EditButton
                 value={'-5px'}
                 name={'hospitalName'}
                 onChange={handleOnChange}
-                disable={handleDisable}
+                disable={() => handleDisable("hospitalName")}
                 save={handleOnSave}
               />
             )}
@@ -69,18 +103,19 @@ function HospitalDetails({ hospitalDetails, isAbleToWrite, onSave }) {
           <Box className={classes.box} display="flex">
             <TextField
               name="landmark"
+              placeholder="Land_Mark"
               className={classes.textField}
               variant="outlined"
               value={values.landmark}
               onChange={handleOnEdit}
-              disabled={'landmark' === fieldName ? false : true}
+              disabled={fieldName.length === 0 ? true : !Boolean(fieldName.filter((field) => field === 'landmark').length)}
             />
             {isAbleToWrite && (
               <EditButton
                 value={'-5px'}
                 name={'landmark'}
                 onChange={handleOnChange}
-                disable={handleDisable}
+                disable={() => handleDisable("landmark")}
                 save={handleOnSave}
               />
             )}
@@ -88,18 +123,19 @@ function HospitalDetails({ hospitalDetails, isAbleToWrite, onSave }) {
           <Box className={classes.box} display="flex">
             <TextField
               name="country"
+              placeholder="Country"
               className={classes.textField}
               variant="outlined"
               value={values.country}
               onChange={handleOnEdit}
-              disabled={'country' === fieldName ? false : true}
+              disabled={fieldName.length === 0 ? true : !Boolean(fieldName.filter((field) => field === 'country').length)}
             />
             {isAbleToWrite && (
               <EditButton
                 value={'-5px'}
                 name={'country'}
                 onChange={handleOnChange}
-                disable={handleDisable}
+                disable={() => handleDisable("country")}
                 save={handleOnSave}
               />
             )}
@@ -107,18 +143,19 @@ function HospitalDetails({ hospitalDetails, isAbleToWrite, onSave }) {
           <Box className={classes.box} display="flex">
             <TextField
               name="phone"
+              placeholder="Phone Number"
               className={classes.textField}
               variant="outlined"
               value={values.phone}
               onChange={handleOnEdit}
-              disabled={'phone' === fieldName ? false : true}
+              disabled={fieldName.length === 0 ? true : !Boolean(fieldName.filter((field) => field === 'phone').length)}
             />
             {isAbleToWrite && (
               <EditButton
                 value={'-5px'}
                 name={'phone'}
                 onChange={handleOnChange}
-                disable={handleDisable}
+                disable={() => handleDisable("phone")}
                 save={handleOnSave}
               />
             )}
@@ -128,36 +165,39 @@ function HospitalDetails({ hospitalDetails, isAbleToWrite, onSave }) {
           <Box className={classes.box} display="flex">
             <TextField
               name="street1"
+              placeholder="Street"
               className={classes.textField}
               variant="outlined"
-              value={`${values.street1}${', '}${values.street2}`}
+              value={values.street1}
               onChange={handleOnEdit}
-              disabled={'address' === fieldName ? false : true}
+              disabled={fieldName.length === 0 ? true : !Boolean(fieldName.filter((field) => field === 'street1').length)}
             />
             {isAbleToWrite && (
               <EditButton
                 value={'-5px'}
-                name={'address'}
+                name={'street1'}
                 onChange={handleOnChange}
-                disable={handleDisable}
+                disable={() => handleDisable("street1")}
                 save={handleOnSave}
               />
             )}
           </Box>
           <Box className={classes.box} display="flex">
             <TextField
-              name="state"
+              name="cityState"
+              placeholder="Enter City, State"
               className={classes.textField}
               variant="outlined"
-              value={`${values.city}${', '}${values.state}`}
-              disabled={'state' === fieldName ? false : true}
+              value={values.cityState}
+              onChange={handleOnEdit}
+              disabled={fieldName.length === 0 ? true : !Boolean(fieldName.filter((field) => field === 'cityState').length)}
             />
             {isAbleToWrite && (
               <EditButton
                 value={'-5px'}
-                name={'state'}
+                name={'cityState'}
                 onChange={handleOnChange}
-                disable={handleDisable}
+                disable={() => handleDisable("cityState")}
                 save={handleOnSave}
               />
             )}
@@ -165,65 +205,54 @@ function HospitalDetails({ hospitalDetails, isAbleToWrite, onSave }) {
           <Box className={classes.box} display="flex">
             <TextField
               name="pincode"
+              placeholder="PIN Code"
               className={classes.textField}
               variant="outlined"
               value={values.pincode}
               onChange={handleOnEdit}
-              disabled={'pincode' === fieldName ? false : true}
+              disabled={fieldName.length === 0 ? true : !Boolean(fieldName.filter((field) => field === 'pincode').length)}
             />
             {isAbleToWrite && (
               <EditButton
                 value={'-5px'}
                 name={'pincode'}
                 onChange={handleOnChange}
-                disable={handleDisable}
+                disable={() => handleDisable("pincode")}
                 save={handleOnSave}
               />
             )}
           </Box>
           <Box className={classes.box} display="flex">
             <TextField
-              name="email"
+              name="supportEmail"
+              placeholder="Email-abc@gmail.com"
               className={classes.textField}
               variant="outlined"
               value={values.supportEmail}
               onChange={handleOnEdit}
-              disabled={'email' === fieldName ? false : true}
+              disabled={fieldName.length === 0 ? true : !Boolean(fieldName.filter((field) => field === 'supportEmail').length)}
             />
             {isAbleToWrite && (
               <EditButton
                 value={'-5px'}
-                name={'email'}
+                name={'supportEmail'}
                 onChange={handleOnChange}
-                disable={handleDisable}
+                disable={() => handleDisable("supportEmail")}
                 save={handleOnSave}
               />
             )}
           </Box>
         </Box>
       </Box>
-      {/* <Box display="flex" className={classes.discountField}>
-        <Typography className={classes.text}>
-          Discount for new Patient First Consultancy
-        </Typography>
-        <TextField
-          variant="outlined"
-          className={classes.discountBox}
-          value="0"
-          disabled={'discount' === fieldName ? false : true}
-        />
-        {isAbleToWrite && (
-          <EditButton
-            value={'-5px'}
-            name={'discount'}
-            onChange={handleOnChange}
-            disable={handleDisable}
-            save={handleOnSave}
-          />
-        )}
-      </Box> */}
     </Box>
   )
 }
 
-export default HospitalDetails
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setHospitalName: (value) => dispatch(setHospitalName(value)),
+  }
+}
+
+export default connect(null, mapDispatchToProps)(HospitalDetails)
+//export default HospitalDetails

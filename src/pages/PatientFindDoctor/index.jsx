@@ -9,10 +9,9 @@ import DoctorList from './DoctorList'
 import DoctorListwithHospital from './DoctorListWithHospital'
 import LeftArrow from '../../assets/img/left-arrow.svg'
 import useStyle from './useStyle'
-
 function PatientFindDoctor() {
   const classes = useStyle()
-
+  
   const history = useHistory()
 
   const [heading, setHeading] = useState('')
@@ -21,7 +20,7 @@ function PatientFindDoctor() {
 
   const [isHospital, setIsHospital] = useState(false)
 
-  const [updateData, updateError, isUpdating, data] = useManualFetch()
+  const [updateData, error, isLoading, data] = useManualFetch()
 
   useEffect(() => {
     if (name === '') {
@@ -65,9 +64,13 @@ function PatientFindDoctor() {
         <TextField
           placeholder="search by code or name"
           variant="outlined"
+          name="search"
           className={classes.searchField}
           onChange={handleOnChange}
-          InputProps={{ endAdornment: <SearchIcon /> }}
+          InputProps={{
+            endAdornment: <SearchIcon /> 
+            
+          }}
         />
       </Box>
       <Box className={classes.doctorList}>

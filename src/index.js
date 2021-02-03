@@ -13,16 +13,16 @@ import * as serviceWorker from './serviceWorker'
 import PatientSignup from './pages/PatientSignup'
 import DoctorSignUp from './pages/DoctorSignUp'
 import DoctorLogin from './pages/Login/DoctorLogin'
+import CorporateLogin from './pages/Login/Corporatelogin'
+import privacyPolicy from './pages/privacyPolicy/'
 import VideoConsultation from './pages/VideoConsultation'
 import { Provider } from 'react-redux'
-import combineReducers from './reducers'
-import { createStore } from 'redux'
-
-const store = createStore(combineReducers)
+import store from './store'
 
 ReactDOM.render(
   <Provider store={store}>
     <ThemeProvider theme={theme}>
+      
       <BrowserRouter basename="/app">
         <Switch>
           <Route exact path={'/login'} component={Login} />
@@ -30,12 +30,16 @@ ReactDOM.render(
           <Route exact path={'/patient/registration'} component={PatientSignup} />
           <Route exact path={'/doctor/registration'} component={DoctorSignUp} />
           <Route exact path={'/video-consultation'} component={VideoConsultation} />
+          <Route exact path={'/corporateLogin'} component={CorporateLogin} />
+          <Route exact path={'/privacy'} component={privacyPolicy} />
           <Route path={'/'} component={Layouts} />
         </Switch>
       </BrowserRouter>
     </ThemeProvider>
+
     </Provider>,
   document.getElementById('root')
+  
 )
 
 // If you want your app to work offline and load faster, you can change

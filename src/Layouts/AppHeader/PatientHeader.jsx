@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { Box, Button, Typography, Avatar } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
@@ -18,7 +19,7 @@ import { METHOD, URL } from '../../api'
 
 const useStyles = makeStyles(() => ({
   appBar: {
-    height: 65,
+    height: 70,
     paddingLeft: 20,
     paddingRight: 50,
     display: 'flex',
@@ -55,7 +56,7 @@ const useStyles = makeStyles(() => ({
   },
 
   logoImg: {
-    height: 78,
+    height: 70,
   },
 
   text: {
@@ -131,6 +132,9 @@ function PatientHeader({socket}) {
 
   const [updateData, updateError, isUpdating, data] = useManualFetch()
 
+  const patientName = useSelector(state => state.patient.patientName) || localStorage.getItem('patientName')
+  const patientProfile = useSelector(state => state.patient.patientProfile) || localStorage.getItem('photo')
+
   function handleFindDoctor() {
     history.push('/patient/find-doctor')
   }
@@ -186,13 +190,13 @@ function PatientHeader({socket}) {
       </Box>
       <Box className={classes.gap}>
         <Typography className={classes.text}>
-          {localStorage.getItem('patientName')}
+        {patientName}
         </Typography>
       </Box>
       <ClickAwayListener onClickAway={handleOnAwayClick}>
         <Box className={classes.hospitalLogoContainer}>
           <Avatar
-            src={localStorage.getItem('photo')}
+            src={patientProfile}
             className={classes.hospitalLogo}
             onClick={handleOnClick}
           />

@@ -6,6 +6,17 @@ const usePatientDetailsStyle = makeStyles((theme) => ({
   },
   photoContainer: {
     width: 210,
+    position: 'relative',
+
+    '& .MuiBackdrop-root' : {
+      zIndex: '0',
+      position: 'absolute',
+      width: '144px',
+      height: '144px',
+      marginTop: '65px',
+      borderRadius: '100px',
+      backgroundColor: 'transparent',
+  }
   },
   photo: {
     width: theme.spacing(18),
@@ -47,6 +58,15 @@ const usePatientDetailsStyle = makeStyles((theme) => ({
   },
   edit: {
     marginTop: -20,
+  },
+  backdrop: {
+    zIndex: 1,
+    color: 'block',
+  },
+  spinner: {
+    position: 'fixed',
+    top: '50%',
+    left: '50%',
   },
 }))
 

@@ -7,6 +7,7 @@ import DocBody from './DocBody'
 
 import PatientAppoinments from '../pages/PatientAppoinments'
 import PatientSettings from '../pages/PatientSettings'
+import PatientReports from '../pages/PatientReports'
 import PatientDetials from '../pages/Patients/PatientDetials'
 import PatientFindDoctor from '../pages/PatientFindDoctor'
 import PatientBookAppointment from '../pages/PatientBookAppointment'
@@ -23,6 +24,12 @@ export const PatientRoutes = [
     name: 'PatientSetting',
     exact: true,
     component: PatientSettings,
+  },
+  {
+    path: '/patient/reports',
+    name: 'PatientSetting',
+    exact: true,
+    component: PatientReports,
   },
   {
     path: '/patient/find-doctor',

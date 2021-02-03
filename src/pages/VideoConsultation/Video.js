@@ -155,6 +155,7 @@ function VideoConsultotion({
             setPatientAppointmentId={setPatientAppointmentId}
             setFullScreen={setFullScreen}
             setInterChange={setInterChange}
+            appointmentId={appointmentId}
           />
         </Box>
       )}
