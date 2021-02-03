@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 import Moment from 'moment'
 import { Box, Typography } from '@material-ui/core'
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 import EventIcon from '@material-ui/icons/Event'
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord'
 
@@ -49,16 +47,6 @@ function Header({ forwardPagination, backwardPagination, slots, paginationNumber
           <Typography>{startDay.concat(' -' + endDay)}</Typography>
           <EventIcon className={classes.eventIcon} />
         </Box>
-        <ArrowBackIosIcon
-          className={classes.arrowBackward}
-          onClick={() => handleOnBack()}
-        />
-        <ArrowForwardIosIcon
-          className={classes.arrowForward}
-          onClick={() => handleOnNext()}
-        />
-      </Box>
-      </Box>
         <ArrowBackTip  onClick={() => handleOnBack()} title={messages.leftarrow} placement='top' />
         <ArrowForwardTip  onClick={() => handleOnNext()} title={messages.rightarrow} placement='top' />
      </Box>
