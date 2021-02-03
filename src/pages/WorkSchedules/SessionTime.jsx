@@ -64,10 +64,16 @@ const SessionTime = ({ data, handleUpdate, response }) => {
 
   
 
-  const handleOnClick = (value) => {
+  const handleOnClick = (value, data) => {
     setEdit(false)
     setValue(value)
-    setOpenDialog(true)
+
+    if (data) {
+      setOpenDialog(true)
+    } else {
+      handleChange(value)
+    }
+    
   }
 
   const handleOnClose = (event) => {
@@ -87,22 +93,22 @@ const SessionTime = ({ data, handleUpdate, response }) => {
         <OptionBox
           className={'session-option' + activeBox(15)}
           value="15 minutes"
-          onClick={() => handleOnClick(15)}
+          onClick={() => handleOnClick(15, data)}
         />
         <OptionBox
           className={'session-option' + activeBox(30)}
           value="30 minutes"
-          onClick={() => handleOnClick(30)}
+          onClick={() => handleOnClick(30, data)}
         />
         <OptionBox
           className={'session-option' + activeBox(45)}
           value="45 minutes"
-          onClick={() => handleOnClick(45)}
+          onClick={() => handleOnClick(45, data)}
         />
         <OptionBox
           className={'session-option' + activeBox(60)}
           value="60 minutes"
-          onClick={() => handleOnClick(60)}
+          onClick={() => handleOnClick(60, data)}
         />
         <div className="session-option">
           <TextField

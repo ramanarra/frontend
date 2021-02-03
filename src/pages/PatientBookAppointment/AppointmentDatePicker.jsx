@@ -215,6 +215,7 @@ function AppointmentDatePicker({ doctorKey, doctorDetails }) {
           availableSlots={slots.slots}
           handleSlotTiming={handleSlotTiming}
           time={time}
+          date={slots.date}
         />
       )}
 
