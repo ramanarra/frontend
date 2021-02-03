@@ -1,18 +1,14 @@
-import React from 'react'
+import React, {  useState } from 'react'
 import classNames from 'classnames'
 import { useLocation, useHistory } from 'react-router-dom'
-import { Box, Typography, TextField } from '@material-ui/core'
-import SearchIcon from '@material-ui/icons/Search'
-
-import Centralize from '../../components/Centralize'
-import Stretch from '../../components/Stretch'
+import { Box, Typography, TextField,Button } from '@material-ui/core'
 import useNavigationStyles from './useStyle'
-import View from '../../assets/img/icons/view.svg'
-import Filter from '../../assets/img/icons/filter.svg'
-import DotMenu from '../../assets/img/icons/dot-menu.svg'
+import { setOpenSideBar } from '../../actions/doctor'
+import AddDoctor from '../MyDoctors/AddDoctor/index'
+import './style.scss'
 
+const Navigation = ({ doctorList, contentRefresh }) => {
 
-const Navigation = ({ doctorList }) => {
   const classes = useNavigationStyles()
 
   const history = useHistory()
@@ -23,6 +19,11 @@ const Navigation = ({ doctorList }) => {
 
   const pathName = path[1]
 
+  const[Open,setOpen]=useState(false)
+
+  const [change,setChange] = useState(true)
+  
+
   function handleAppointmentOnClick() {
     if (doctorList) {
       const { doctorKey } = doctorList
@@ -32,6 +33,23 @@ const Navigation = ({ doctorList }) => {
 
   function handleDoctorOnClick() {
     history.push('/doctors')
+  }
+
+  function handleOpen(){
+    setOpen(true);
+  }
+
+  function handleClose(){
+    setOpen(false);
+    
+    contentRefresh();
+  }
+ 
+
+
+  function handleAddDoctor(){
+    setChange(!change)
+    console.log(change)
   }
 
   return (
@@ -50,7 +68,7 @@ const Navigation = ({ doctorList }) => {
           {
             localStorage.getItem('role') === 'DOCTOR' ?
             <Typography className={classes.content}>My Hospital</Typography> :
-            <Typography className={classes.content}>My Doctors</Typography>
+            <Typography className={classes.content} onClick={handleAddDoctor}>My Doctors</Typography>
           }
         </Box>
         <Box
@@ -63,9 +81,26 @@ const Navigation = ({ doctorList }) => {
             style={{ color: pathName === 'appointments' ? '#0bb5ff' : '#c7c7c7' }}
             className={classNames('icon-calendar', classes.apponitments)}
           ></i>
-          <Typography className={classes.content}>Appointments</Typography>
+          <Typography className={classes.content} onClick={handleAddDoctor}>Appointments</Typography>
         </Box>
+
+        { 
+            localStorage.getItem('role') !== 'DOCTOR' && pathName==='doctors' &&
+             <Box>            
+            <Button className={classes.contentlast} style={{backgroundColor:'rgb(11, 181, 255)'}}
+               onClick={handleOpen}>Add Doctor</Button> 
+            {
+              Open &&
+              <AddDoctor
+              open={open}
+              handleClose={handleClose}
+              />
+            }
+            </Box>
+        }
+           
       </Box>
+
     </Box>
   )
 }

@@ -11,6 +11,8 @@ import Schedules from './Schedules'
 import useManualFetch from '../../hooks/useManualFetch'
 import LeftArrow from '../../assets/img/left-arrow.svg'
 import './style.scss'
+import { Tooltip, LeftCircleArrow } from '../../components/Tooltip'
+import messages from '../../lib/iconMsg'
 
 const WorkSchedule = () => {
   const { id } = useParams()
@@ -55,12 +57,8 @@ const WorkSchedule = () => {
         <Box>
           <Box>
             <Box display="flex">
-              <img
-                src={LeftArrow}
-                alt="leftArrow"
-                className="leftArrow"
-                onClick={handleBackButton}
-              />
+            
+              <LeftCircleArrow  onClick={handleBackButton} title={messages.dashboard} placement='left' />
               <Typography className="doctor-name">{`${'Dr. '}${localStorage.getItem(
                 'doctorName'
               )}`}</Typography>

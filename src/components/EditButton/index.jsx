@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { Box, makeStyles } from '@material-ui/core'
 import { Edit, Check, Clear } from '@material-ui/icons'
 import IconButton from '@material-ui/core/IconButton'
+import { EditTip } from '../../components/Tooltip'
+import messages from '../../lib/iconMsg'
 
 const useStyle = makeStyles(() => ({
   icon: {
@@ -37,7 +39,7 @@ function EditButton({value, name, onChange, disable, save}) {
     <Box style={{marginTop: value}}>
       {isDisable ? (
         <IconButton onClick={handleOnDisable} className={classes.icon}>
-          <Edit className={classes.edit} color="primary" />
+          <EditTip title={messages.edit} placement='right' color="primary" />
         </IconButton>
       ) : (
         <Box display="flex">

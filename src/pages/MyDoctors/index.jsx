@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { Box, makeStyles } from '@material-ui/core'
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -29,7 +29,7 @@ function MyDoctors() {
 
   const location = useLocation()
 
-  const [data] = useCustomFetch(METHOD.GET, URL.doctorList)
+  const [data,refetch] = useCustomFetch(METHOD.GET, URL.doctorList)
 
   const [count, setCount] = useState(0)
 
@@ -45,9 +45,14 @@ function MyDoctors() {
 
   const timer = !count && setTimeout(() => handleTimeout(), 40000)
 
+function handleRefresh(){
+  refetch()
+  }
+    
+
   return (
     <Box className={classes.container}>
-      <Navigation doctorList={data?.doctorList[0]} />
+      <Navigation doctorList={data?.doctorList[0]} contentRefresh={handleRefresh}/>
       {data?.doctorList ? (
         pathName === 'doctors' ? (
           <Doctors doctorList={data.doctorList} />

@@ -1,14 +1,32 @@
 import React, { useState, useEffect } from 'react'
 import classNames from 'classnames'
-import { Box, Typography, TextField, InputAdornment } from '@material-ui/core'
+import { Box, Typography, TextField, InputAdornment, Backdrop, CircularProgress } from '@material-ui/core'
 import { Edit, Check, Clear } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/core/styles'
 import IconButton from '@material-ui/core/IconButton'
-
+import { EditTip, UploadImageTip } from '../../components/Tooltip'
 import SnackBar from '../../components/SnackBar'
 import Signature from '../../assets/img/sign.jpg'
+import messages from '../../lib/iconMsg'
+import useDoctorDetailsUpdate from '../../hooks/useDoctorDetailsUpdate'
+import useSignatureUpload from '../../hooks/useSignatureUpload'
+import PhotoCameraRounded from '@material-ui/icons/PhotoCameraRounded'
+
 
 const useStyles = makeStyles(() => ({
+  photoContainerhead: {
+    position: 'absolute',
+    right: 80,
+  },
+  backdropbox: {
+      position: 'absolute',
+      left:100,
+      
+  },
+  backdropcircle: {
+    zIndex: 1,
+    color: 'black',
+  },
   notchedOutline: {
     '& input': {
       backgroundColor: '#f7f7f7',
@@ -35,12 +53,11 @@ const useStyles = makeStyles(() => ({
   },
 
   signature: {
-    backgroundColor: '#f7f7f7',
-    width: 620,
+    width: 433,
     height: 90,
     overflow: 'hidden',
     position: 'relative',
-
+    left: -50,
     '& before': {
       content: '',
       position: 'absolute',
@@ -53,7 +70,7 @@ const useStyles = makeStyles(() => ({
   },
 
   sign: {
-    marginLeft: 200,
+    marginLeft: 150,
     height: 90,
     fill: '#f7f7f7',
   },
@@ -97,6 +114,27 @@ const useStyles = makeStyles(() => ({
     fontSize: 14,
     color: 'red',
   },
+  positionfeild: {
+    position: 'absolute',
+    top: 30,
+  },
+
+  photoContainer: {
+    width: 433,
+    position: 'relative',
+
+    '& .MuiBackdrop-root': {
+      zIndex: '0',
+      position: 'absolute',
+      width: '144px',
+      height: '144px',
+      marginLeft: "1px",
+      borderRadius: '100px',
+      backgroundColor: 'transparent',
+
+    }
+  }
+  
 }))
 
 function ConsulationAndSignature({
@@ -106,11 +144,18 @@ function ConsulationAndSignature({
   onSave,
   isAbleToWrite,
   response,
+  handleSignatureUpload,
+  contents,
 }) {
   const [fees, setFees] = useState(0)
   const [disable, setDisable] = useState(false)
   const [open, setOpen] = useState(false)
   const classes = useStyles()
+
+  const formdata = new FormData();
+  const [image, setImage] = useState([])
+  const [openSpinner, setOpenSpinner] = useState(false)
+
 
   useEffect(() => {
     setFees(configDetails?.consultationCost)
@@ -143,12 +188,38 @@ function ConsulationAndSignature({
     }
   }
 
+
+  useEffect(() => {
+    !!doctorDetails && localStorage.setItem('signature', doctorDetails.signature)
+  }, [doctorDetails])
+
+  useEffect(() => {
+    setOpen(true)
+  }, [response])
+
+  useEffect(() => {
+    !!contents && setOpenSpinner(false)
+  }, [contents])
+
+
+
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return
     }
 
     setOpen(false)
+  }
+  
+
+  function handlePhotoChange(e) {
+    const item = e.target.files;
+    setImage(item);
+    formdata.append('file', item[0])
+    formdata.append('doctorId', doctorDetails.doctorId)
+    handleSignatureUpload(formdata)
+    setOpenSpinner(true)
+    setOpen(true)
   }
 
   return (
@@ -178,59 +249,51 @@ function ConsulationAndSignature({
                 className={classes.iconbutton}
                 onClick={() => handleOndisabled()}
               >
-                <Edit className={classes.editIcon} />
+                <EditTip title={messages.edit} placement="right" />
               </IconButton>
             ) : (
-              <div>
-                <IconButton className={classes.iconbutton} onClick={handleOnCancel}>
-                  <Clear className={classes.cancelation} />
-                </IconButton>
-                <IconButton className={classes.iconbutton} onClick={hanleOnSave}>
-                  <Check className={classes.checkIcon} />
-                </IconButton>
-              </div>
-            )}
+                <div>
+                  <IconButton className={classes.iconbutton} onClick={handleOnCancel}>
+                    <Clear className={classes.cancelation} />
+                  </IconButton>
+                  <IconButton className={classes.iconbutton} onClick={hanleOnSave}>
+                    <Check className={classes.checkIcon} />
+                  </IconButton>
+                </div>
+              )}
           </div>
         )}
       </Box>
-      <div className={classes.signature}>
-        <img
-          src={doctorDetails?.signature ? doctorDetails.signature : Signature}
-          className={classes.sign}
-        />
-      </div>
-      {(response && response.statusCode && response.statusCode === 200 && (
-        <SnackBar
-          openDialog={open}
-          message={response.message}
-          onclose={handleClose}
-          severity={'success'}
-        />
-      )) ||
-      (response && response.statusCode && response.statusCode !== 200 && (
-        <SnackBar
-          openDialog={open}
-          message={response.message}
-          onclose={handleClose}
-          severity={'error'}
-        />
-      ))}
-      {(response && response.name === 'Error' && response.status === 500 && (
-        <SnackBar
-          openDialog={open}
-          message={'Internal server error'}
-          onclose={handleClose}
-          severity={'error'}
-        />
-      )) ||
-        (response && response.name === 'Error' && response.status !== 500 && (
-          <SnackBar
-            openDialog={open}
-            message={'Something went wrong'}
-            onclose={handleClose}
-            severity={'error'}
+      <Box className={classes.photoContainer} style={{ display: 'flex' }}>
+        <div className={classes.signature}>
+          <img
+            src={doctorDetails?.signature ? doctorDetails.signature : image}
+            className={classes.sign}
           />
-        ))}
+        </div>
+        <div>
+          {openSpinner && (
+            <Backdrop className={classes.backdropbox} open={openSpinner} >
+              <CircularProgress className={classes.backdropcircle} color="block !important" />
+            </Backdrop>
+          )}</div>
+
+        <div className={classes.photoContainerhead}>
+          <label style={{ width: '10px', height: '10px' }}>
+            <UploadImageTip title={messages.image} placement="right" className={classes.positionfeild} />
+            <input
+              type="file"
+              name="files"
+              id="files"
+              accept=".jpg,.png,.jpeg"
+              required
+              style={{ visibility: "hidden", }}
+              onChange={handlePhotoChange} />
+
+          </label>
+
+        </div>
+      </Box>
     </Box>
   )
 }

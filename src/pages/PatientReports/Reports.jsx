@@ -12,6 +12,8 @@ import Grid from '@material-ui/core/Grid'
 import SnackBar from '../../components/SnackBar'
 import moment from 'moment'
 import { useLocation } from "react-router-dom"
+import messages from '../../lib/iconMsg'
+import { AddIcon } from '../../components/Tooltip'
 
 const Reports = (props) => {
   const classes = useStyle();
@@ -136,7 +138,7 @@ const Reports = (props) => {
         <Grid item xs={1} className="right-report">
 
           <Button onClick={handlePopupMsg} className={classes.addbtn}>Add &nbsp;
-            <AddCircleOutlineTwoToneIcon />
+            <AddIcon title={messages.reportadd} placement='top' />
           </Button>
           {
             open &&

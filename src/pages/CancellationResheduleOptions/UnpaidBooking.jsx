@@ -5,6 +5,8 @@ import { Edit, Check, Clear } from '@material-ui/icons'
 import IconButton from '@material-ui/core/IconButton'
 
 import NumberTextField from '../../components/NumberTextField'
+import messages from '../../lib/iconMsg'
+import { EditTip } from '../../components/Tooltip'
 
 const useStyles = makeStyles(() => ({
   text: {
@@ -122,7 +124,7 @@ const Cancellation = ({
                   className={classes.iconButton}
                   onClick={() => setDisable(true)}
                 >
-                  <Edit className={classes.editIcon} />
+                  <EditTip title={messages.edit} placement="right" />
                 </IconButton>
               ) : (
                 <div>

@@ -21,6 +21,9 @@ import EditButton from '../../components/EditButton'
 import useStyle from './usePatientDetailsStyle'
 import useManualFetch from '../../hooks/useManualFetch'
 
+import { Tooltip, UploadImageTip } from '../../components/Tooltip'
+import messages from '../../lib/iconMsg'
+
 function PatientDetails({ patientDetails, patientId, onSave, setReload, reload, name, setName, ...rest }) {
   const classes = useStyle()
   const [openSpinner, setOpenSpinner] = useState(false)
@@ -172,7 +175,7 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload, 
           />
           <label for="files" name="files" >
             <div style={{ display: "flex" }}>
-              <PhotoCameraRounded style={{ marginTop: "190px", marginLeft: "-40px" }} />
+              <UploadImageTip title={messages.image} placement='right' style={{ marginTop: "190px", marginLeft: "-40px" }} />
             </div>
           </label>
           <input
