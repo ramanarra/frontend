@@ -7,6 +7,7 @@ import VisibilityIcon from '@material-ui/icons/Visibility'
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff'
 import Backdrop from '@material-ui/core/Backdrop'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import Api, { URL } from '../../api'
 
 import Centralize from '../../components/Centralize'
 import Logo from '../../assets/img/logo.png'
@@ -76,6 +77,10 @@ const Login = ({
 
   function doctorRegistration() {
     history.push('/doctor/registration')
+  }
+
+  function forgotPassword() {
+    history.push('/forgot-password')
   }
 
   const validate = () => {
@@ -173,6 +178,23 @@ const Login = ({
       setFocus(false)
     }
     setPasswordListen(!passwordListen)
+  }
+
+  const OTPVerifiaction = () => {
+    const url = localStorage.getItem('loginUser') === 'doctor' ? URL.doctorForgotPassword : URL.adminForgotPassword
+    Api.post(URL.patientLoginForPhone, {phone: formik.values.userName})
+    .then((res) => {
+      const { data } = res
+      if(res.statusCode === 200){
+        history.push({
+          pathname: '/otp-verification',
+          state: {
+            phone: formik.values.userName
+          }
+      })
+      }
+    });
+  
   }
 
   return (
@@ -336,6 +358,16 @@ const Login = ({
             </Button>
           </form>
           {localStorage.getItem('loginUser') === 'doctor' && (
+          <Centralize className={classes.singupContent}>
+            <Typography color="primary" variant="h4" onClick={forgotPassword}>
+              Forgot password?
+            </Typography>
+          </Centralize>
+          <Centralize className={classes.singupContent}>
+            <Typography color="primary" variant="h4" onClick={OTPVerifiaction}>
+              OTP?
+            </Typography>
+          </Centralize>
           <Centralize className={classes.singupContent}>
             <Typography className={classes.singupLabel} variant="h6">
               I am new doctor?

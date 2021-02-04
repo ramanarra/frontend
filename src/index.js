@@ -18,6 +18,12 @@ import privacyPolicy from './pages/privacyPolicy/'
 import VideoConsultation from './pages/VideoConsultation'
 import { Provider } from 'react-redux'
 import store from './store'
+import combineReducers from './reducers'
+import { createStore } from 'redux'
+import ForgotPassword from './pages/ForgotPassword'
+import OtpVerifiaction from './pages/OtpVerification'
+
+const store = createStore(combineReducers)
 
 ReactDOM.render(
   <Provider store={store}>
@@ -32,6 +38,8 @@ ReactDOM.render(
           <Route exact path={'/video-consultation'} component={VideoConsultation} />
           <Route exact path={'/corporateLogin'} component={CorporateLogin} />
           <Route exact path={'/privacy'} component={privacyPolicy} />
+          <Route exact path={'/forgot-password'} component={ForgotPassword} />
+          <Route exact path={'/otp-verification'} component={OtpVerifiaction} />
           <Route path={'/'} component={Layouts} />
         </Switch>
       </BrowserRouter>
