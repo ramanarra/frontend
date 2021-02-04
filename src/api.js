@@ -67,5 +67,6 @@ export const URL = {
   adminForgotPassword: '/auth/doctor/forgotPassword',
   doctorForgotPassword: '/auth/admin/forgotPassword',
   patientLoginForPhone: '/auth/patient/login',
-  otpVerification: '/auth/OTPVerification'
+  otpVerification: '/auth/OTPVerification',
+  doctorSignatureUpload: '/calendar/dotor/signature/upload',
 }
