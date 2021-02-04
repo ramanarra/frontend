@@ -15,28 +15,24 @@ import useStyle from './useDatePickerStyle'
 
 function AppointmentDatePicker({ doctorKey, doctorDetails }) {
   const classes = useStyle()
-
   const history = useHistory()
 
   const patientId = localStorage.getItem('patientId')
 
   const [date, setDate] = useState(new Date())
-
   const [open, setOpen] = useState(false)
-
   const [openConfirmation, setOpenConfirmation] = useState()
-
   const [error, setError] = useState(false)
-
   const [time, setTime] = useState({ start: '', end: '' })
-
   const [confirmation, setConfirmation] = useState(true)
-
   const [overBookingConfirmation, setOverBookingConfirmation] = useState(false)
 
   const selectedDate = moment(date).format('YYYY-MM-DD')
 
-  const [patientDetails] = useCustomFecth(METHOD.GET, `${URL.patientViewDetails}${'?patientId='}${patientId}`)
+  const [patientDetails] = useCustomFecth(
+    METHOD.GET,
+    `${URL.patientViewDetails}${'?patientId='}${patientId}`
+  )
 
   const key = useMemo(() => {
     return {
@@ -125,12 +121,14 @@ function AppointmentDatePicker({ doctorKey, doctorDetails }) {
             razorpay_order_id: response.razorpay_order_id,
             razorpay_payment_id: response.razorpay_payment_id,
             razorpay_signature: response.razorpay_signature,
+            email: patientDetails.email,
+            patientId,
           }
           updateRazerPay(METHOD.POST, URL.verification, params)
         } catch (err) {}
       },
       prefill: {
-        name: patientDetails?.firstName + " " + patientDetails?.lastName,
+        name: patientDetails?.firstName + ' ' + patientDetails?.lastName,
         email: patientDetails?.email,
         contact: patientDetails?.phone,
       },
@@ -157,7 +155,7 @@ function AppointmentDatePicker({ doctorKey, doctorDetails }) {
   }
 
   const handleSlotTiming = (time) => {
-    setTime({start: time.startTime, end: time.endTime})
+    setTime({ start: time.startTime, end: time.endTime })
     if (error) {
       setError(false)
     }
@@ -173,7 +171,7 @@ function AppointmentDatePicker({ doctorKey, doctorDetails }) {
     }
   }
 
-  const handleCloseConfirmation =() => {
+  const handleCloseConfirmation = () => {
     setOpenConfirmation(false)
   }
 
@@ -182,26 +180,29 @@ function AppointmentDatePicker({ doctorKey, doctorDetails }) {
       <Box className={classes.datePicker}>
         {slots?.date && (
           <Box>
-          <MuiPickersUtilsProvider utils={MomentUtils}>
-            <DatePicker
-              autoOk
-              disablePast
-              disableToolbar
-              orientation="landscape"
-              variant="static"
-              openTo="date"
-              value={new Date(slots.date)}
-              onChange={handleDateChange}
-              className={classes.dateContainer}
-            />
-          </MuiPickersUtilsProvider>
-                  
-        <Box className={classes.button}>
-          <Box className={classes.confirmButton} onClick={() => handleSubmit(false)}>
-            <Typography className={classes.confirmText}>CONFIRM</Typography>
+            <MuiPickersUtilsProvider utils={MomentUtils}>
+              <DatePicker
+                autoOk
+                disablePast
+                disableToolbar
+                orientation="landscape"
+                variant="static"
+                openTo="date"
+                value={new Date(slots.date)}
+                onChange={handleDateChange}
+                className={classes.dateContainer}
+              />
+            </MuiPickersUtilsProvider>
+            <CancelAndRescheduleInfo doctorDetails={doctorDetails} />
+            <Box className={classes.button}>
+              <Box
+                className={classes.confirmButton}
+                onClick={() => handleSubmit(false)}
+              >
+                <Typography className={classes.confirmText}>CONFIRM</Typography>
+              </Box>
+            </Box>
           </Box>
-        </Box>
-        </Box>
         )}
         {error && (
           <Typography className={classes.errorMessage}>
@@ -282,16 +283,14 @@ function AppointmentDatePicker({ doctorKey, doctorDetails }) {
             severity={'error'}
           />
         ))}
-        {
-          slots && slots.statusCode && slots.statusCode !== 200 && (
-            <SnackBar
-            openDialog={open}
-            message={slots.message}
-            onclose={handleClose}
-            severity={'error'}
-            />
-          )
-        }
+      {slots && slots.statusCode && slots.statusCode !== 200 && (
+        <SnackBar
+          openDialog={open}
+          message={slots.message}
+          onclose={handleClose}
+          severity={'error'}
+        />
+      )}
     </Box>
   )
 }
