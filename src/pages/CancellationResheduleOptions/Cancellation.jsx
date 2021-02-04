@@ -195,7 +195,6 @@ const Cancellation = ({
                     className={classes.iconButton}
                     onClick={() => setDisable(true)}
                   >
-                    <Edit className={classes.editIcon} />
                     <EditTip title={messages.edit} placement="right" />
                   </IconButton>
                 ) : (

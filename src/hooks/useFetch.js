@@ -78,7 +78,7 @@ const useFetch = (props, updateProps = []) => {
             if (!config?.noGlobalCallback) {
               !!onFail && onFail()
             }
-            !!config?.onFail && config?.onFail()
+            !!config.onFail && config.onFail()
 
             //notification on failure
             const notification =
@@ -124,7 +124,7 @@ const useFetch = (props, updateProps = []) => {
             if (!config?.noGlobalCallback) {
               !!onFail && onFail()
             }
-            !!config?.onFail && config?.onFail()
+            !!config.onFail && config.onFail()
 
             //notification on failure
             const notification =
