@@ -363,12 +363,24 @@ const Login = ({
               Forgot password?
             </Typography>
           </Centralize>
-          <Centralize className={classes.singupContent}>
-            <Typography color="primary" variant="h4" onClick={OTPVerifiaction}>
-              OTP?
-            </Typography>
-          </Centralize>
-          <Centralize className={classes.singupContent}>
+          // <Centralize className={classes.singupContent}>
+          //   <Typography color="primary" variant="h4" onClick={OTPVerifiaction}>
+          //     OTP?
+          //   </Typography>
+          // </Centralize>
+          // <Centralize className={classes.singupContent}>
+          //   <Typography className={classes.singupLabel} variant="h6">
+          //     I am new doctor?
+          //   </Typography>
+          //   <Typography color="primary" variant="h4" onClick={handleSignup}>
+          //     Signup
+          //   </Typography>
+          // </Centralize>
+          )}
+
+
+        {localStorage.getItem('loginUser') === 'doctor' && (
+         <Centralize className={classes.singupContent}>
             <Typography className={classes.singupLabel} variant="h6">
               I am new doctor?
             </Typography>
@@ -376,7 +388,7 @@ const Login = ({
               Signup
             </Typography>
           </Centralize>
-          )}
+        )}
 
           {localStorage.getItem('loginUser') === 'patient' && (
             <Centralize className={classes.singupContent}>
