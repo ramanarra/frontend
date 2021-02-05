@@ -25,7 +25,6 @@ function VideoConsultotion({
   setPatientAppointmentId,
   setOpenSideBar,
 }) {
-
   const [end, setEnd] = useState(false)
 
   const [open, setOpen] = useState(false)
@@ -97,7 +96,7 @@ function VideoConsultotion({
   }
 
   function handleOnFullScreen() {
-    if(fullScreen) {
+    if (fullScreen) {
       setInterChange(false)
     }
     setFullScreen(!fullScreen)
@@ -156,6 +155,12 @@ function VideoConsultotion({
             setFullScreen={setFullScreen}
             setInterChange={setInterChange}
             appointmentId={appointmentId}
+            patientName={
+              localStorage.getItem('loginUser') === 'doctor'
+                ? patientName
+                : localStorage.getItem('patientName')
+            }
+            doctorName={doctorName}
           />
         </Box>
       )}

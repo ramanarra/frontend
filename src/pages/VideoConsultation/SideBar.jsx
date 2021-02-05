@@ -37,6 +37,8 @@ function SideBar({
   setFullScreen,
   setInterChange,
   appointmentId,
+  patientName,
+  doctorName,
 }) {
   const classes = useStyle()
 
@@ -130,7 +132,7 @@ function SideBar({
     index,
     status
   ) => {
-    const name = lastName ? firstName + lastName : firstName
+    const name = lastName ? `${firstName} ${lastName}` : firstName
     onPatientJoining(appointmentId, name)
     socket.emit('updateLiveStatusOfUser', { status: 'inSession' })
     if (selected) {
@@ -199,7 +201,13 @@ function SideBar({
             )}
             {openTopBar && (
               <div className={classes.topBar}>
-                <div className={localStorage.getItem('loginUser') === 'doctor' ? classes.icons : classes.patientIcons}>
+                <div
+                  className={
+                    localStorage.getItem('loginUser') === 'doctor'
+                      ? classes.icons
+                      : classes.patientIcons
+                  }
+                >
                   {localStorage.getItem('loginUser') === 'doctor' && (
                     <div className={classes.groupIconHeader}>
                       {isWaitingActive ? (
@@ -276,9 +284,20 @@ function SideBar({
           )}
         </div>
       )}
-      {openChat && <Chat onClose={handleChatClose} setOpenTopBar={setOpenTopBar} />}
+      {openChat && (
+        <Chat
+          onClose={handleChatClose}
+          setOpenTopBar={setOpenTopBar}
+          patientName={patientName}
+          doctorName={doctorName}
+        />
+      )}
       {openMedicine && (
-        <MedicineList onClose={handleMedicineClose} setOpenTopBar={setOpenTopBar} appointmentId={selected} />
+        <MedicineList
+          onClose={handleMedicineClose}
+          setOpenTopBar={setOpenTopBar}
+          appointmentId={selected}
+        />
       )}
       {openDialog && (
         <AddNewPatientConfirmationModel
