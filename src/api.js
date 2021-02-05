@@ -70,6 +70,7 @@ export const URL = {
   patientLoginForPhone: '/auth/patient/login',
   otpVerification: '/auth/OTPVerification',
   docReport: {
-    list: '/api/calendar/doctor/appoinmentListReport',
+    list: '/calendar/doctor/appoinmentListReport',
+    collection: '/calendar/doctor/amountListReport',
   },
 }

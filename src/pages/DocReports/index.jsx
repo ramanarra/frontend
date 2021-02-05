@@ -25,7 +25,7 @@ const DocReports = React.memo(({ filter, handleFilter, pathType, tab }) => {
   const { searchText, fromDate, toDate, paginationStart, paginationLimit } = filter[tab]
   const isCollection = tab === 1
 
-  const url = isCollection ? 'sadflas' : URL.docReport.list
+  const url = isCollection ? URL.docReport.collection : URL.docReport.list
   const { handleFetch, data } = useFetch(
     {
       url,

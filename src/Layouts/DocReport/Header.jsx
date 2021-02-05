@@ -34,8 +34,8 @@ const Header = ({ tab, switchTab, filter, handleFilter }) => {
             value={tab}
             onChange={(e, value) => switchTab(value)}
           >
-            <Tab label="Appointment List" className="report-tab" />
-            <Tab label="Appointment Collection" className="report-tab" />
+            <Tab label="Appointments Report" className="report-tab" />
+            <Tab label="Amount Collection Report" className="report-tab" />
             <Tab label="Doctor Empty Slots" className="report-tab" />
           </Tabs>
         </div>
