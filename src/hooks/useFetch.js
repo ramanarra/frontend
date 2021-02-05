@@ -1,5 +1,5 @@
 import axios from '../api'
-import { useMemo, useState, useEffect } from 'react'
+import { useMemo, useState, useEffect, memo } from 'react'
 import { capitalize } from '../components/commonFormat'
 
 const useFetch = (props, updateProps = []) => {
@@ -9,7 +9,7 @@ const useFetch = (props, updateProps = []) => {
 
   const [headers, setHeader] = useState(
     headerProp || {
-      Authorization: `Bearer ${localStorage.getItem('virujhToken')}`
+      Authorization: `Bearer ${localStorage.getItem('virujhToken')}`,
     }
   )
 
@@ -29,6 +29,10 @@ const useFetch = (props, updateProps = []) => {
     return updateProps
   }, [...updateProps])
 
+  const refinedMonitorProps = useMemo(() => {
+    return [url, params, method, monitorProps]
+  }, [url, params, method, monitorProps])
+
   // config will gets url, params, method, dontload, noLoading, onSuccess, onFail, noGlobalCallback
   const handleFetch = (config) => {
     const shouldLoad = !config?.noLoading || !noLoading
@@ -45,7 +49,7 @@ const useFetch = (props, updateProps = []) => {
         // fetch for query params
         axios[type](fetchUrl, {
           [type === 'get' ? 'params' : 'data']: fetchParams,
-          headers
+          headers,
         })
           .then((res) => {
             setLoading(false)
@@ -78,7 +82,7 @@ const useFetch = (props, updateProps = []) => {
             if (!config?.noGlobalCallback) {
               !!onFail && onFail()
             }
-            !!config.onFail && config.onFail()
+            !!config?.onFail && config.onFail()
 
             //notification on failure
             const notification =
@@ -91,7 +95,7 @@ const useFetch = (props, updateProps = []) => {
           method: type,
           url: fetchUrl,
           data: fetchParams,
-          headers
+          headers,
         })
           .then((res) => {
             setLoading(false)
@@ -124,7 +128,7 @@ const useFetch = (props, updateProps = []) => {
             if (!config?.noGlobalCallback) {
               !!onFail && onFail()
             }
-            !!config.onFail && config.onFail()
+            !!config?.onFail && config.onFail()
 
             //notification on failure
             const notification =
@@ -145,7 +149,7 @@ const useFetch = (props, updateProps = []) => {
   //to load initially if enabled
   //Note: if monitorProps is enabled no need to enable initLoad
   useEffect(() => {
-    if (initLoad) {
+    if (initLoad && !refinedUpdateProps.length && !monitorProps) {
       handleFetch()
     }
   }, [initLoad])
@@ -156,11 +160,11 @@ const useFetch = (props, updateProps = []) => {
     if (monitorProps) {
       handleFetch()
     }
-  }, [params, url, method, monitorProps])
+  }, [...refinedMonitorProps])
 
   //to fetch when any of the dependecnies gets updated
   useEffect(() => {
-    if(!!refinedUpdateProps.length) {
+    if (!!refinedUpdateProps.length) {
       handleFetch()
     }
   }, [...refinedUpdateProps])
@@ -179,7 +183,7 @@ const useFetch = (props, updateProps = []) => {
     [!!name ? `set${capitalize(name)}` : 'setData']: setData,
     [!!name ? `${name}HadResult` : 'hadResult']: hadResult,
     [!!name ? `${name}InitResult` : 'initResult']: initResult,
-    [!!name ? `load${capitalize(name)}` : 'loadData']: reload
+    [!!name ? `load${capitalize(name)}` : 'loadData']: reload,
   }
 }
 

@@ -1,9 +1,9 @@
 import MyDoctors from '../pages/MyDoctors'
 import Patients from '../pages/Patients'
-import Reports from '../pages/Reports'
 import Settings from '../pages/Settings'
 import VideoConsultation from '../pages/VideoConsultation'
 import DocBody from './DocBody'
+import DocReport from './DocReport'
 
 import PatientAppoinments from '../pages/PatientAppoinments'
 import PatientSettings from '../pages/PatientSettings'
@@ -65,10 +65,10 @@ const DoctorRoutes = [
   },
 
   {
-    path: '/reports',
+    path: '/reports/:pathType',
     name: 'Reports',
     exact: true,
-    component: Reports,
+    component: DocReport,
   },
   {
     path: '/settings',

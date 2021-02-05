@@ -32,7 +32,7 @@ export const URL = {
     search: '/calendar/doctor/patientGeneralSearch',
     listForDoctor: '/calendar/doctor/patientList',
   },
-  prescriptionAdd:'/calendar/doctor/prescription/add',
+  prescriptionAdd: '/calendar/doctor/prescription/add',
   appointmentSlotsView: '/calendar/doctor/appointmentSlotsView',
   appointmentView: '/calendar/appointmentView',
   appointmentCancel: '/calendar/doctor/appointmentCancel',
@@ -40,13 +40,14 @@ export const URL = {
   appointmentReschedule: '/calendar/doctor/appointmentReschedule',
   patientSearch: '/calendar/doctor/patientSearch',
   createAppointment: '/calendar/doctor/createAppointment',
-  createAppointmentAlongWIthRegisteringPatient: '/calendar/doctor/creatingAppointmetAlongWithRegisteringPatient',
+  createAppointmentAlongWIthRegisteringPatient:
+    '/calendar/doctor/creatingAppointmetAlongWithRegisteringPatient',
   hospitalDetailsView: '/calendar/doctor/hospitaldetailsView',
   patientUpcomingAppointments: '/calendar/patient/upcomingAppointmentsList',
   patientPastAppointments: '/calendar/patient/pastAppointmentsList',
   patientDoctorList: '/calendar/patient/doctorList',
   findDoctorByCodeOrName: '/calendar/patient/findDoctorByCodeOrName',
-  reportUploading:'/calendar/patient/reportUploading',
+  reportUploading: '/calendar/patient/reportUploading',
   listOfDoctorsInHospital: '/calendar/patient/listOfDoctorsInHospital',
   appointmentDoctorDetails: '/calendar/patient/appointmentDoctorDetails',
   viewDoctorDetails: '/calendar/patient/viewDoctorDetails',
@@ -67,5 +68,8 @@ export const URL = {
   adminForgotPassword: '/auth/doctor/forgotPassword',
   doctorForgotPassword: '/auth/admin/forgotPassword',
   patientLoginForPhone: '/auth/patient/login',
-  otpVerification: '/auth/OTPVerification'
+  otpVerification: '/auth/OTPVerification',
+  docReport: {
+    list: '/api/calendar/doctor/appoinmentListReport',
+  },
 }
