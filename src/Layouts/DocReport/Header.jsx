@@ -48,6 +48,7 @@ const Header = ({ tab, switchTab, filter, handleFilter }) => {
               startDate: fromDate,
               endDate: toDate,
             }}
+            emptyText="Click here to select the period..."
             setChange={handleDate}
           />
         </div>

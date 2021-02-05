@@ -56,6 +56,10 @@
           margin-right: 24px;
           @include rowCenter;
 
+          .MuiOutlinedInput-input {
+            width: 164px;
+          }
+
           .date-label {
             font-size: 14px;
             color: #666;
