@@ -181,20 +181,23 @@ const Login = ({
   }
 
   const OTPVerifiaction = () => {
-    const url = localStorage.getItem('loginUser') === 'doctor' ? URL.doctorForgotPassword : URL.adminForgotPassword
-    Api.post(URL.patientLoginForPhone, {phone: formik.values.userName})
-    .then((res) => {
-      const { data } = res
-      if(res.statusCode === 200){
-        history.push({
-          pathname: '/otp-verification',
-          state: {
-            phone: formik.values.userName
-          }
-      })
+    const url =
+      localStorage.getItem('loginUser') === 'doctor'
+        ? URL.doctorForgotPassword
+        : URL.adminForgotPassword
+    Api.post(URL.patientLoginForPhone, { phone: formik.values.userName }).then(
+      (res) => {
+        const { data } = res
+        if (res.statusCode === 200) {
+          history.push({
+            pathname: '/otp-verification',
+            state: {
+              phone: formik.values.userName,
+            },
+          })
+        }
       }
-    });
-  
+    )
   }
 
   return (
@@ -282,10 +285,10 @@ const Login = ({
               </Box>
               <Box>
                 <Box className={classes.headerfeild}>
-                <Typography className={classes.text} variant="h5">
-                  Password
-                </Typography>
-                {/* <Typography className={classes.textanother} variant="h5">
+                  <Typography className={classes.text} variant="h5">
+                    Password
+                  </Typography>
+                  {/* <Typography className={classes.textanother} variant="h5">
                   Password must be at least 6 characters
                 </Typography> */}
                 </Box>
@@ -398,9 +401,8 @@ const Login = ({
               <Typography color="primary" variant="h4" onClick={handleSignup}>
                 Signup
               </Typography>
-           </Centralize>
+            </Centralize>
           )}
-
 
           {localStorage.getItem('loginUser') === 'patient' && (
             <Centralize className={classes.singupContent}>
@@ -422,7 +424,6 @@ const Login = ({
               </Typography>
             </Centralize>
           )}
-
 
           {localStorage.getItem('loginUser') === 'patient' && (
             <Centralize className={classes.singupContent}>

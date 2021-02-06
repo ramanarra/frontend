@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { useLocation } from "react-router-dom"
+import { useLocation } from 'react-router-dom'
 import SearchBar from '../../components/SearchBar'
 import useFetch from '../../hooks/useFetch'
 import useUpload from '../../hooks/useUpload'
 import api, { URL } from '../../api'
 import PatientReport from './PatientReport'
-import AddCircleOutlineTwoToneIcon from '@material-ui/icons/AddCircleOutlineTwoTone';
-import { Button } from '@material-ui/core'
+import AddCircleOutlineTwoToneIcon from '@material-ui/icons/AddCircleOutlineTwoTone'
+import { Button, IconButton } from '@material-ui/core'
+import { MdInsertDriveFile as FileIcon } from 'react-icons/md'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import Grid from '@material-ui/core/Grid'
 import SnackBar from '../../components/SnackBar'
@@ -21,29 +22,31 @@ const Reports = (props) => {
   const [paginationStart, setPaginationStart] = useState(0)
   const [count, setCount] = useState(0)
   const classes = useStyle()
-  const location = useLocation();
+  const location = useLocation()
 
-  const paginationLimit = 15;
+  const paginationLimit = 15
 
   // fetch paitent list
-  const { patientList, fetchPatientList } = useFetch({
-    name: 'patientList',
-    url: URL.patientReportList,
-    params: {
-      paginationStart: paginationStart,
-      paginationLimit: paginationLimit,
-      searchText: searchText,
-      appointmentId: location.state,
+  const { patientList, fetchPatientList } = useFetch(
+    {
+      name: 'patientList',
+      url: URL.patientReportList,
+      params: {
+        paginationStart: paginationStart,
+        paginationLimit: paginationLimit,
+        searchText: searchText,
+        appointmentId: location.state,
+      },
+      initLoad: false,
     },
-    initLoad: false
-  }, [searchText, paginationStart])
+    [searchText, paginationStart]
+  )
 
-  const [handleUpload,data, Loading] = useUpload({
+  const [handleUpload, data, Loading] = useUpload({
     onSuccess: () => {
       fetchPatientList()
-
-    }
-  });
+    },
+  })
   const show = patientList?.totalCount
 
   const handlePopupMsg = () => {
@@ -52,7 +55,7 @@ const Reports = (props) => {
 
   const handleClose = () => {
     setOpen(false)
-    setItem(false);
+    setItem(false)
   }
 
   const handlePageBack = () => {
@@ -60,19 +63,17 @@ const Reports = (props) => {
 
     if (paginationStart >= 0) {
       setPaginationStart(paginationStart - 15)
-      if ((paginationStart - 15) > 0)
-        setPaginationStart(paginationStart - 15)
+      if (paginationStart - 15 > 0) setPaginationStart(paginationStart - 15)
     }
   }
 
   const handlePageNext = () => {
-    console.log("next");
+    console.log('next')
     setCount(count + 1)
-    if (paginationStart >= (show - 15)) {
-      setPaginationStart(paginationStart - 15);
-    }
-    else if ((paginationStart + 15) < show) {
-      setPaginationStart(paginationStart + 15);
+    if (paginationStart >= show - 15) {
+      setPaginationStart(paginationStart - 15)
+    } else if (paginationStart + 15 < show) {
+      setPaginationStart(paginationStart + 15)
     }
   }
 
@@ -80,7 +81,7 @@ const Reports = (props) => {
     setCount(0)
   }, [searchText])
 
-  console.log(patientList?.list?.length);
+  console.log(patientList?.list?.length)
 
   return (
     <div className="doctor-patients-list">
@@ -88,8 +89,12 @@ const Reports = (props) => {
         <Grid className="left-report" item xs={6}>
           <h1 className="title">Lab Reports</h1>
         </Grid>
-        <Grid container item xs={6} style={{ display: "flex", justifyContent: "space-between" }}>
-
+        <Grid
+          container
+          item
+          xs={6}
+          style={{ display: 'flex', justifyContent: 'space-between' }}
+        >
           <Grid item xs={10} className="search-bar right-report">
             <SearchBar
               label="Search Reports"
@@ -98,12 +103,12 @@ const Reports = (props) => {
             />
           </Grid>
 
-          <Grid item xs={2} className=" right-report " >
-            <Button onClick={handlePopupMsg} className={classes.addbtn} >Add &nbsp;
-                <AddCircleOutlineTwoToneIcon />
+          <Grid item xs={2} className=" right-report ">
+            <Button onClick={handlePopupMsg} className={classes.addbtn}>
+              Add &nbsp;
+              <AddCircleOutlineTwoToneIcon />
             </Button>
-            {
-              open &&
+            {open && (
               <PatientReport
                 // setReportList={setReportList}
                 open={open}
@@ -112,79 +117,88 @@ const Reports = (props) => {
                 handleClose={handleClose}
                 handleUpload={handleUpload}
               />
-            }
+            )}
           </Grid>
         </Grid>
       </Grid>
 
       <Grid className="patient-table-wrap">
         <div dataLength={patientList?.list?.length || 0}>
-          <div className="table-wrap" >
-
-            <table className="patient-table"  >
-              <thead className="head" >
+          <div className="table-wrap">
+            <table className="patient-table">
+              <thead className="head">
                 <tr>
-                  <th className="tbl-head title"  >Title</th>
-                  <th className="tbl-head reportDate" >Report Date</th>
-                  <th className="tbl-head comments" >Comments</th>
+                  <th className="tbl-head title">Title</th>
+                  <th className="tbl-head reportDate">Report Date</th>
+                  <th className="tbl-head comments">Comments</th>
+                  <th className="tbl-head view_attchmnt"></th>
                 </tr>
               </thead>
               <tbody className="body">
-                {patientList && patientList?.list?.length > 0 && patientList?.list?.map((i) => (
-                  <tr>
-                    <td className="tbl-cell fileName" >{i?.fileName}</td>
-                    <td className="tbl-cell reportDate">{i?.reportDate ? (moment(i?.reportDate).format('YYYY-MM-DD')) : '-'}</td>
-                    <td className="tbl-cell comments">{i?.comments}</td>
-                  </tr>
-                ))}
-                {
-                  !patientList?.list?.length &&
+                {patientList &&
+                  patientList?.list?.length > 0 &&
+                  patientList?.list?.map((i) => (
+                    <tr>
+                      <td className="tbl-cell fileName">{i?.fileName}</td>
+                      <td className="tbl-cell reportDate">
+                        {i?.reportDate
+                          ? moment(i?.reportDate).format('YYYY-MM-DD')
+                          : '-'}
+                      </td>
+                      <td className="tbl-cell comments">{i?.comments}</td>
+                      <td className="tbl-cell attchmnt">
+                        <div className="view-icon-wrap">
+                          <a href={i?.attachment} target="_blank">
+                            <IconButton className="view-icon-btn">
+                              <FileIcon className="view-icon" />
+                            </IconButton>
+                          </a>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                {!patientList?.list?.length && (
                   <tr className="no-data">
-                    <td className="tbl-cell fileName" ></td>
+                    <td className="tbl-cell fileName"></td>
                     <td className="tbl-cell reportDate no-data">No Data Found</td>
                     <td className="tbl-cell comments"></td>
+                    <td className="tbl-cell attchmnt"></td>
                   </tr>
-                }
-
+                )}
               </tbody>
             </table>
 
-            {
-              patientList?.list?.length > 0 &&
-              <hr width="100%" />
-            }
-
-
+            {patientList?.list?.length > 0 && <hr width="100%" />}
           </div>
-
         </div>
 
-
-        {data &&
+        {data && (
           <SnackBar
             openDialog={item}
-            message={"Your report added successfully"}
+            message={'Your report added successfully'}
             onclose={handleClose}
             severity={'success'}
           />
-        }
-
+        )}
       </Grid>
-      {patientList?.list?.length > 0 &&
+      {patientList?.list?.length > 0 && (
         <div className={classes.pagination}>
-          {count > 0 &&
+          {count > 0 && (
             <div className={classes.prev}>
-              <Button onClick={handlePageBack} className={classes.prevbtnShow}  >Prev</Button>
+              <Button onClick={handlePageBack} className={classes.prevbtnShow}>
+                Prev
+              </Button>
             </div>
-          }
-          {show > 15 && paginationStart < show - 15 &&
+          )}
+          {show > 15 && paginationStart < show - 15 && (
             <div className={classes.next}>
-              <Button onClick={handlePageNext} className={classes.nextbtn}  >Next</Button>
+              <Button onClick={handlePageNext} className={classes.nextbtn}>
+                Next
+              </Button>
             </div>
-          }
+          )}
         </div>
-      }
-
+      )}
     </div>
   )
 }

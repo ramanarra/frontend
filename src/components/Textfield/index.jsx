@@ -4,6 +4,7 @@ import {
   OutlinedInput,
   InputAdornment,
   IconButton,
+  InputLabel,
 } from '@material-ui/core'
 import { Cancel, Visibility, VisibilityOff, Star } from '@material-ui/icons'
 import './style.scss'
@@ -23,6 +24,7 @@ const Textfield = ({
   hasValidation,
   inputProps,
   isRequired,
+  matLabel,
   ...rest
 }) => {
   const [textType, setType] = React.useState(type || 'text')
@@ -65,7 +67,7 @@ const Textfield = ({
       return null
     }
   }
-  
+
   return (
     <div className={'txt-field-wrap' + labelStatus + errorStatus}>
       <FormControl
@@ -79,6 +81,7 @@ const Textfield = ({
             {isRequired && <Star className="star-icon" />}
           </div>
         )}
+        {!!matLabel && <InputLabel>{matLabel}</InputLabel>}
         <OutlinedInput
           className="txt-field-inp"
           placeholder={placeholder}

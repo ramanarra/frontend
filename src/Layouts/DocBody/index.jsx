@@ -6,7 +6,6 @@ import makeStyles from '@material-ui/styles/makeStyles'
 import SideBar from './SideBar'
 import routes from './routes'
 
-
 const useStyles = makeStyles(() => ({
   root: {
     padding: 25,

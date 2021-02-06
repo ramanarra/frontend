@@ -7,7 +7,15 @@ import sentIcon from '../../assets/img/sent-icon.svg'
 import { setOpenSideBar } from '../../actions/doctor'
 import usestyle from './useChatStyle'
 
-function Chat({ onClose, setOpenTopBar, setOpenSideBar, session, messages }) {
+function Chat({
+  onClose,
+  setOpenTopBar,
+  setOpenSideBar,
+  session,
+  messages,
+  patientName,
+  doctorName,
+}) {
   const classes = usestyle()
 
   const [currentMessage, setCurrentMessage] = useState('')
@@ -71,16 +79,20 @@ function Chat({ onClose, setOpenTopBar, setOpenSideBar, session, messages }) {
               return (
                 <Box
                   key={index}
-                  className={
-                    text.from === 'user'
-                      && classes.senderHeader
-                  }
+                  className={text.from === 'user' && classes.senderHeader}
                 >
                   <Box
                     className={
                       text.from === 'user' ? classes.sender : classes.receiver
                     }
                   >
+                    <Box
+                      className={
+                        classes[text.from === 'user' ? 'uNamePatient' : 'uNameDoc']
+                      }
+                    >
+                      {text.from === 'user' ? patientName : doctorName}
+                    </Box>
                     <Typography className={classes.textMessage}>
                       {text.message}
                     </Typography>

@@ -12,6 +12,7 @@ import InputLabel from '@material-ui/core/InputLabel'
 import IconButton from '@material-ui/core/IconButton'
 import HighlightOff from '@material-ui/icons/HighlightOff'
 import FormHelperText from '@material-ui/core/FormHelperText'
+import NoCam from './NoCam'
 
 export default class StreamComponent extends Component {
   constructor(props) {
@@ -62,31 +63,39 @@ export default class StreamComponent extends Component {
         <div className="pointer nickname">
           <div style={{ display: 'flex' }}>
             <div>{this.props.doctorName}</div>
-            {this.props.subscribers && this.props.subscribers.length > 0 && this.props.patientName && (
-              <div>{`${', '}${this.props.patientName}`}</div>
-            )}
+            {this.props.subscribers &&
+              this.props.subscribers.length > 0 &&
+              this.props.patientName && (
+                <div>{`${', '}${this.props.patientName}`}</div>
+              )}
           </div>
-          {this.props.subscribers && this.props.subscribers.length > 0 && this.props.patientName && (
-            <div>
-              {' '}
-              2 paticipants{' '}
-            </div>
-          )}
+          {this.props.subscribers &&
+            this.props.subscribers.length > 0 &&
+            this.props.patientName && <div> 2 paticipants </div>}
         </div>
 
         {this.props.user !== undefined &&
         this.props.user.getStreamManager() !== undefined ? (
           <div className="streamComponent">
-            <OvVideoComponent
-              user={this.props.user}
-              mutedSound={this.state.mutedSound}
-              subscribers={this.props.subscribers}
-              isPatientClick={this.props.isPatientClick}
-              patientName={this.props.patientName}
-              isFullScreen={this.props.isFullScreen}
-              doctorClick={this.props.doctorClick}
-            />
-
+            {this.props.user.isVideoActive() ? (
+              <OvVideoComponent
+                user={this.props.user}
+                mutedSound={this.state.mutedSound}
+                subscribers={this.props.subscribers}
+                isPatientClick={this.props.isPatientClick}
+                patientName={this.props.patientName}
+                isFullScreen={this.props.isFullScreen}
+                doctorClick={this.props.doctorClick}
+              />
+            ) : (
+              <NoCam
+                name={
+                  !!this.props.doctorName
+                    ? this.props.doctorName
+                    : this.props.patientName
+                }
+              />
+            )}
             {this.props.user.isLocal() ? (
               <ToolBarComponent
                 isVideoActive={this.props.user.isVideoActive()}
