@@ -88,6 +88,15 @@ const useStyle = makeStyles(() => ({
     cursor: 'pointer',
     marginLeft: 10,
   },
+  patientDetails: {
+    padding: '10px 14px',
+    backgroundColor: '#0bb5ff',
+    borderRadius: 17,
+    textAlign: 'center',
+    cursor: 'pointer',
+    marginLeft:17,
+  },
+
   cancle: {
     padding: '11px 22px',
     backgroundColor: '#f4f2f2',
@@ -108,6 +117,11 @@ const useStyle = makeStyles(() => ({
     fontSize: 11,
     color: '#a8a8a8',
   },
+  patientDetailsBtn: {
+    fontSize: 11,
+    color: 'white',
+  },
+
   rescheduleBtn: {
     fontSize: 11,
     color: 'white',
