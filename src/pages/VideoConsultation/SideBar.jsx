@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import { Box } from '@material-ui/core'
+import { Box, Button, Paper } from '@material-ui/core'
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
 
 import useStyle from './useSideBarStyle'
@@ -187,95 +187,95 @@ function SideBar({
     <Box>
       {(localStorage.getItem('loginUser') === 'doctor' ||
         localStorage.getItem('loginUser') === 'patient') && (
-        <div>
           <div>
-            {!open && !openChat && !openMedicine && (
-              <div className={classes.arrowIcon}>
-                <ArrowBackIosIcon
-                  className={classes.icon}
-                  onClick={handleOnPatientList}
-                />
-              </div>
-            )}
-            {openTopBar && (
-              <div className={classes.topBar}>
-                <div className={localStorage.getItem('loginUser') === 'doctor' ? classes.icons : classes.patientIcons}>
-                  {localStorage.getItem('loginUser') === 'doctor' && (
-                    <div className={classes.groupIconHeader}>
-                      {isWaitingActive ? (
+            <div>
+              {!open && !openChat && !openMedicine && (
+                <div className={classes.arrowIcon}>
+                  <ArrowBackIosIcon
+                    className={classes.icon}
+                    onClick={handleOnPatientList}
+                  />
+                </div>
+              )}
+              {openTopBar && (
+                <div className={classes.topBar}>
+                  <div className={localStorage.getItem('loginUser') === 'doctor' ? classes.icons : classes.patientIcons}>
+                    {localStorage.getItem('loginUser') === 'doctor' && (
+                      <div className={classes.groupIconHeader}>
+                        {isWaitingActive ? (
+                          <img
+                            src={SelectedWaitingIcon}
+                            className={classes.groupIcon}
+                            onClick={handleOnPatientList}
+                          />
+                        ) : (
+                            <img
+                              src={waitingIcon}
+                              className={classes.groupIcon}
+                              onClick={handleOnPatientList}
+                            />
+                          )}
+                      </div>
+                    )}
+                    <div className={classes.chatIconHeader}>
+                      {isChatActive ? (
                         <img
-                          src={SelectedWaitingIcon}
-                          className={classes.groupIcon}
-                          onClick={handleOnPatientList}
+                          src={SelectedChatIcon}
+                          className={classes.chatIcon}
+                          onClick={handleOnChat}
                         />
                       ) : (
-                        <img
-                          src={waitingIcon}
-                          className={classes.groupIcon}
-                          onClick={handleOnPatientList}
-                        />
-                      )}
+                          <img
+                            src={chatIcon}
+                            className={classes.chatIcon}
+                            onClick={handleOnChat}
+                          />
+                        )}
                     </div>
-                  )}
-                  <div className={classes.chatIconHeader}>
-                    {isChatActive ? (
-                      <img
-                        src={SelectedChatIcon}
-                        className={classes.chatIcon}
-                        onClick={handleOnChat}
-                      />
-                    ) : (
-                      <img
-                        src={chatIcon}
-                        className={classes.chatIcon}
-                        onClick={handleOnChat}
-                      />
-                    )}
-                  </div>
-                  <div className={classes.tabIconHeader}>
-                    {isMedicineActive ? (
-                      <img
-                        src={SelectedTabIcon}
-                        className={classes.tabIcon}
-                        onClick={handleOnMedicine}
-                      />
-                    ) : (
-                      <img
-                        src={tabIcon}
-                        className={classes.tabIcon}
-                        onClick={handleOnMedicine}
-                      />
-                    )}
+                    <div className={classes.tabIconHeader}>
+                      {isMedicineActive ? (
+                        <img
+                          src={SelectedTabIcon}
+                          className={classes.tabIcon}
+                          onClick={handleOnMedicine}
+                        />
+                      ) : (
+                          <img
+                            src={tabIcon}
+                            className={classes.tabIcon}
+                            onClick={handleOnMedicine}
+                          />
+                        )}
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
+            </div>
+            {open && localStorage.getItem('loginUser') === 'doctor' && (
+              <PatientList
+                patientList={patientList}
+                open={open}
+                onClose={handleOnClose}
+                onJoiningPatient={handleOnPatientJoining}
+                endCall={endCall}
+                presentAppointmentId={selected}
+                index={index}
+                AddNextPatient={AddNextPatient}
+                nextPatientDetails={setNextPatientDetails}
+                clickByDoctor={clickByDoctor}
+                waitingPatient={waitingPatient}
+                isWaiting={isWaiting}
+                waitingIndex={waitingIndex}
+                count={count}
+                setCount={setCount}
+                id={id}
+                setOpenTopBar={setOpenTopBar}
+                setFullScreen={setFullScreen}
+                setInterChange={setInterChange}
+              />
             )}
           </div>
-          {open && localStorage.getItem('loginUser') === 'doctor' && (
-            <PatientList
-              patientList={patientList}
-              open={open}
-              onClose={handleOnClose}
-              onJoiningPatient={handleOnPatientJoining}
-              endCall={endCall}
-              presentAppointmentId={selected}
-              index={index}
-              AddNextPatient={AddNextPatient}
-              nextPatientDetails={setNextPatientDetails}
-              clickByDoctor={clickByDoctor}
-              waitingPatient={waitingPatient}
-              isWaiting={isWaiting}
-              waitingIndex={waitingIndex}
-              count={count}
-              setCount={setCount}
-              id={id}
-              setOpenTopBar={setOpenTopBar}
-              setFullScreen={setFullScreen}
-              setInterChange={setInterChange}
-            />
-          )}
-        </div>
-      )}
+        )}
       {openChat && <Chat onClose={handleChatClose} setOpenTopBar={setOpenTopBar} />}
       {openMedicine && (
         <MedicineList onClose={handleMedicineClose} setOpenTopBar={setOpenTopBar} appointmentId={selected} />

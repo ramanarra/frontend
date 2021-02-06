@@ -1,15 +1,27 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import classNames from 'classnames'
-import { Box, Typography, Avatar } from '@material-ui/core'
+import { Box, Typography, Avatar, Paper, Button } from '@material-ui/core'
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord'
 import CircularProgress from '@material-ui/core/CircularProgress'
 
 import getTimeFormatWithNoon, { getTimeFormat } from '../../lib/dateLib'
-import {setOpenSideBar} from '../../actions/doctor'
+import { setOpenSideBar } from '../../actions/doctor'
 import useStyle from './usePatientListStyle'
 import { useState } from 'react'
+import Carousel from 'react-material-ui-carousel'
+import AdvertisementImage1 from '../../assets/img/advertisementImages/low-cost-advertising-for-startups.png'
+import AdvertisementImage2 from '../../assets/img/advertisementImages/maxresdefault.jpg'
+import AdvertisementImage3 from '../../assets/img/advertisementImages/download.png'
+
+function Item({ item }) {
+  return (
+    <Paper style={{ maxHeight: 75 }}>
+      <img src={item.images} />
+    </Paper>
+  )
+}
 
 function PatientList({
   patientList,
@@ -32,7 +44,7 @@ function PatientList({
   setInterChange,
 }) {
   const classes = useStyle()
-  
+
   function handleOnClose(event) {
     onClose(event)
     setOpenTopBar(false)
@@ -73,6 +85,18 @@ function PatientList({
     }
   }, [isWaiting])
 
+  const items = [
+    {
+      images: AdvertisementImage1
+    },
+    {
+      images: AdvertisementImage2
+    },
+    {
+      images: AdvertisementImage3
+    }
+  ]
+
 
   return (
     <Box>
@@ -81,13 +105,19 @@ function PatientList({
           <Box className={classes.backButton}>
             <ArrowForwardIosIcon onClick={handleOnClose} className={classes.icon} />
           </Box>
-          <Box className={classes.dialog}>
+          <Box className={classes.dialog} style={{ paddingLeft: 0, paddingRight: 0 }}>
+            <Carousel>
+              {
+                items.map((item, i) => <Item key={i} item={item} />)
+              }
+            </Carousel>
             {patientList &&
               patientList.map((patientDetails, index) => {
                 return (
                   <Box
                     display="flex"
                     key={index}
+                    style={{ paddingLeft: "23px", paddingRight: "15px" }}
                     className={classNames(classes.patientDetails, {
                       [classes.selecedTab]:
                         presentAppointmentId === patientDetails.appointmentId,
@@ -106,25 +136,25 @@ function PatientList({
                       {(patientDetails.status === 'paused' && patientDetails.patientLiveStatus === 'online') ? (
                         <FiberManualRecordIcon className={classes.pausedIcon} />
                       ) : (
-                        patientDetails.patientLiveStatus &&
-                        ((patientDetails.patientLiveStatus === 'online' && (
-                          <FiberManualRecordIcon className={classes.onlineStatus} />
-                        )) ||
-                          (patientDetails.patientLiveStatus === 'offline' && (
-                            <FiberManualRecordIcon
-                              className={classes.offlineStatus}
-                            />
+                          patientDetails.patientLiveStatus &&
+                          ((patientDetails.patientLiveStatus === 'online' && (
+                            <FiberManualRecordIcon className={classes.onlineStatus} />
                           )) ||
-                          (patientDetails.patientLiveStatus ===
-                            'videoSessionReady' && (
-                            <FiberManualRecordIcon
-                              className={classes.videoSessionReady}
-                            />
-                          )) ||
-                          (patientDetails.patientLiveStatus === 'inSession' && (
-                            <FiberManualRecordIcon className={classes.inSession} />
-                          )))
-                      )}
+                            (patientDetails.patientLiveStatus === 'offline' && (
+                              <FiberManualRecordIcon
+                                className={classes.offlineStatus}
+                              />
+                            )) ||
+                            (patientDetails.patientLiveStatus ===
+                              'videoSessionReady' && (
+                                <FiberManualRecordIcon
+                                  className={classes.videoSessionReady}
+                                />
+                              )) ||
+                            (patientDetails.patientLiveStatus === 'inSession' && (
+                              <FiberManualRecordIcon className={classes.inSession} />
+                            )))
+                        )}
                     </Box>
                     <Box className={classes.detail}>
                       <Box display="flex">
@@ -135,9 +165,9 @@ function PatientList({
                           <Typography className={classes.lastName} variant="h5">
                             {patientDetails.lastName}
                           </Typography>
-                          
+
                         )}
-                      
+
                         {id === patientDetails.appointmentId && (
                           <Typography className={classes.next}>NEXT</Typography>
                         )}
@@ -155,10 +185,10 @@ function PatientList({
                   </Box>
                 )
               })}
-              {
-                !patientList && 
-                <CircularProgress color="primary" className={classes.spinner} />
-              }
+            {
+              !patientList &&
+              <CircularProgress color="primary" className={classes.spinner} />
+            }
           </Box>
         </Box>
       )}
@@ -172,4 +202,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(null,mapDispatchToProps)(PatientList)
+export default connect(null, mapDispatchToProps)(PatientList)
