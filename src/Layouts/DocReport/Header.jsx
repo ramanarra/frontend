@@ -36,7 +36,7 @@ const Header = ({ tab, switchTab, filter, handleFilter }) => {
           >
             <Tab label="Appointments Report" className="report-tab" />
             <Tab label="Amount Collection Report" className="report-tab" />
-            <Tab label="Doctor Empty Slots" className="report-tab" />
+            {/* <Tab label="Doctor Empty Slots" className="report-tab" /> */}
           </Tabs>
         </div>
       </div>
