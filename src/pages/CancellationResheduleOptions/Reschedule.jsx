@@ -6,7 +6,7 @@ import IconButton from '@material-ui/core/IconButton'
 
 import Switch from '../../components/Switch'
 import NumberTextField from '../../components/NumberTextField'
-import UnpaidBooking from './UnpaidBooking'
+//import UnpaidBooking from './UnpaidBooking'
 import message from '../../lib/iconMsg'
 import { EditTip,Tooltip } from '../../components/Tooltip'
 
@@ -180,14 +180,14 @@ const Cancellation = ({
               </Box>
             )}
           </Box>
-          <Box marginTop={4}>
+          {/* <Box marginTop={4}>
             <UnpaidBooking
               configDetails={configDetails}
               doctorKey={doctorKey}
               onSave={onSave}
               isAbleToWrite={isAbleToWrite}
             />
-          </Box>
+          </Box> */}
         </Box>
       )}
     </Box>

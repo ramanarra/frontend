@@ -16,6 +16,7 @@ import CancleAppointment from './CancleAppointmentDialog'
 import RescheduleAppointment from './RescheduleAppointmentDialog'
 import useStyle from './useStyle'
 import ConfirmationModal from './ConfirmationModal'
+import  { useHistory } from 'react-router-dom'
 
 function CancleAndRescheduleModal({
   appointmentId,
@@ -42,6 +43,8 @@ function CancleAndRescheduleModal({
 
   const [parameter, setParameter] = useState(null)
 
+  const history = useHistory()
+
   useEffect(() => {
     if (open) {
       const params = {
@@ -66,6 +69,8 @@ function CancleAndRescheduleModal({
   const email = patientView?.patientDetails?.email
     ? patientView.patientDetails.email
     : '-'
+    
+  const openDetials = (data) => history.push(`/patients/${patientId}`)
 
   function handleCancle(event) {
     onClose(event)
@@ -160,9 +165,9 @@ function CancleAndRescheduleModal({
             </Box>
           </DialogContent>
           <Box display="flex" className={classes.buttons}>
-            <Box className={classes.close} onClick={handleClose}>
-              <Typography variant="h5" className={classes.closeBtn}>
-                CLOSE
+            <Box className={classes.patientDetails} onClick={openDetials.bind(this, patientId)}> 
+              <Typography variant="h5" className={classes.patientDetailsBtn}>
+                PATIENT DETAILS
               </Typography>
             </Box>
             <Box className={classes.cancle} onClick={handleCancle}>

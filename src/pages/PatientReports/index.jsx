@@ -86,7 +86,7 @@ const Reports = (props) => {
     <div className="doctor-patients-list">
       <Grid container direction="row" className="header-bar">
         <Grid className="left-report" item xs={6}>
-          <h1 className="title">Reports</h1>
+          <h1 className="title">Lab Reports</h1>
         </Grid>
         <Grid container item xs={6} style={{ display: "flex", justifyContent: "space-between" }}>
 
