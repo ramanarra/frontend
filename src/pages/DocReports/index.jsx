@@ -6,10 +6,13 @@ import { dateFmt } from '../../components/commonFormat'
 import './styles.scss'
 import NoReport from './NoReport'
 
-const Entry = ({ data }) => {
+const Entry = ({ data, key, role }) => {
   return (
     <tr>
-      <td className="cell">{data?.name}</td>
+      {role === 'ADMIN' && 
+      <td className="cell">{data?.doctorName}</td>
+      }
+      <td className="cell">{data?.patientName}</td>
       <td className="cell">{dateFmt(data?.createdTime)}</td>
       <td className="cell">{dateFmt(data?.appointment_date)}</td>
       <td className="cell">{data?.phone}</td>
@@ -22,6 +25,10 @@ const Entry = ({ data }) => {
 
 const DocReports = React.memo(({ filter, handleFilter, pathType, tab }) => {
   //prettier-ignore
+  
+  // Based on role doctor name will disply
+  const role = localStorage.getItem('role')
+
   const { searchText, fromDate, toDate, paginationStart, paginationLimit } = filter[tab]
   const isCollection = tab === 1
 
@@ -40,131 +47,14 @@ const DocReports = React.memo(({ filter, handleFilter, pathType, tab }) => {
     [searchText, fromDate, toDate, paginationLimit, paginationStart, tab]
   )
 
-  // const data = [
-  //   {
-  //     appointment_date: new Date(),
-  //     patient_id: 4,
-  //     createdTime: new Date(),
-  //     name: 'asdfasdfa',
-  //     phone: 8687686,
-  //     amount: 234,
-  //     slotTiming: 60,
-  //   },
-  //   {
-  //     appointment_date: new Date(),
-  //     patient_id: 4,
-  //     createdTime: new Date(),
-  //     name: 'asdfasdfa',
-  //     phone: 8687686,
-  //     amount: 234,
-  //     slotTiming: 60,
-  //   },
-  //   {
-  //     appointment_date: new Date(),
-  //     patient_id: 4,
-  //     createdTime: new Date(),
-  //     name: 'asdfasdfa',
-  //     phone: 8687686,
-  //     amount: 234,
-  //     slotTiming: 60,
-  //   },
-  //   {
-  //     appointment_date: new Date(),
-  //     patient_id: 4,
-  //     createdTime: new Date(),
-  //     name: 'asdfasdfa',
-  //     phone: 8687686,
-  //     amount: 234,
-  //     slotTiming: 60,
-  //   },
-  //   {
-  //     appointment_date: new Date(),
-  //     patient_id: 4,
-  //     createdTime: new Date(),
-  //     name: 'asdfasdfa',
-  //     phone: 8687686,
-  //     amount: 234,
-  //     slotTiming: 60,
-  //   },
-  //   {
-  //     appointment_date: new Date(),
-  //     patient_id: 4,
-  //     createdTime: new Date(),
-  //     name: 'asdfasdfa',
-  //     phone: 8687686,
-  //     amount: 234,
-  //     slotTiming: 60,
-  //   },
-  //   {
-  //     appointment_date: new Date(),
-  //     patient_id: 4,
-  //     createdTime: new Date(),
-  //     name: 'asdfasdfa',
-  //     phone: 8687686,
-  //     amount: 234,
-  //     slotTiming: 60,
-  //   },
-  //   {
-  //     appointment_date: new Date(),
-  //     patient_id: 4,
-  //     createdTime: new Date(),
-  //     name: 'asdfasdfa',
-  //     phone: 8687686,
-  //     amount: 234,
-  //     slotTiming: 60,
-  //   },
-  //   {
-  //     appointment_date: new Date(),
-  //     patient_id: 4,
-  //     createdTime: new Date(),
-  //     name: 'asdfasdfa',
-  //     phone: 8687686,
-  //     amount: 234,
-  //     slotTiming: 60,
-  //   },
-  //   {
-  //     appointment_date: new Date(),
-  //     patient_id: 4,
-  //     createdTime: new Date(),
-  //     name: 'asdfasdfa',
-  //     phone: 8687686,
-  //     amount: 234,
-  //     slotTiming: 60,
-  //   },
-  //   {
-  //     appointment_date: new Date(),
-  //     patient_id: 4,
-  //     createdTime: new Date(),
-  //     name: 'asdfasdfa',
-  //     phone: 8687686,
-  //     amount: 234,
-  //     slotTiming: 60,
-  //   },
-  //   {
-  //     appointment_date: new Date(),
-  //     patient_id: 4,
-  //     createdTime: new Date(),
-  //     name: 'asdfasdfa',
-  //     phone: 8687686,
-  //     amount: 234,
-  //     slotTiming: 60,
-  //   },
-  //   {
-  //     appointment_date: new Date(),
-  //     patient_id: 4,
-  //     createdTime: new Date(),
-  //     name: 'asdfasdfa',
-  //     phone: 8687686,
-  //     amount: 234,
-  //     slotTiming: 60,
-  //   },
-  // ]
-
   return (
     <div className="report-list-panel">
       <table>
         <thead>
           <tr>
+            {role === 'ADMIN' && 
+            <th className="head">Doctor name</th>
+            }
             <th className="head">Patient name</th>
             <th className="head">Booked date</th>
             <th className="head">Appointment date</th>
@@ -173,10 +63,10 @@ const DocReports = React.memo(({ filter, handleFilter, pathType, tab }) => {
           </tr>
         </thead>
         <tbody>
-          {!!data?.length && data.map((i, index) => <Entry data={i} key={index} />)}
+          {!!data?.data?.list?.length && data.data?.list.map((i, index) => <Entry data={i} key={index} role={role}/>)}
         </tbody>
       </table>
-      {!data?.length && <NoReport />}
+      {!data?.data?.list?.length && <NoReport />}
     </div>
   )
 })
