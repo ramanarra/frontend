@@ -20,7 +20,7 @@ import pdf from '../../assets/img/pdf.png'
 import useCustomFecth from '../../hooks/useCustomFetch'
 import { METHOD, URL } from '../../api'
 import useStyle from './useUpcomingAndPastViewStyle'
-
+import useUpload from '../../hooks/useUpload'
 function UpcomingAndPastView({
   appointmentDetail,
   open,
@@ -43,7 +43,11 @@ function UpcomingAndPastView({
   const [val, setVal] = useState()
   const history = useHistory()
   const appointmentReportArray = useHistory()
+  const [handleUpload,data, Loading] = useUpload({
+    onSuccess: () => {
 
+    }
+  });
 
   const key = useMemo(() => {
     return {
@@ -318,6 +322,7 @@ function UpcomingAndPastView({
                     handleClose={handleClose}
                     setReportFile={setReportFile}
                     setVal={setVal}
+                    handleUpload={handleUpload}
                   />
                 }
               </Box>

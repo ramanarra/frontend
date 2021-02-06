@@ -51,7 +51,10 @@ function PatientReport({ open, setOpen, setItem, handleClose, appointmentId, set
       formdata.append("appointmentId", appointmentId);
     }
 
-    handleUpload(formdata)
+    if(handleUpload) {
+      handleUpload(formdata)
+    }
+
     const fileName = file[0].name;
 
     //Passing  patient report fileName to the report when setVal is true
