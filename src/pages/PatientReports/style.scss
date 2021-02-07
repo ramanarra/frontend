@@ -77,7 +77,14 @@
         color: #b5b4b4;
         background: #fff;
         z-index: 1;
-        width:30%;
+        width:16.5%;
+      }
+
+      .fname {
+        width: 22.5% !important;
+      }
+      .dob {
+        width: 10% !important;
       }
       .tbl-head.ctrl-btns-head,
       .tbl-cell.ctrl-btns-cell {
@@ -88,7 +95,7 @@
       .tbl-cell {
         padding: 10px 10px 10px 0;
         font-size: 13.5px;
-         width:30%;
+         width:16.5%;
       }
 
       .tbl-cell {

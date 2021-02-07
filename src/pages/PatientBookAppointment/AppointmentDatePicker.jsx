@@ -12,7 +12,6 @@ import useCustomFecth from '../../hooks/useCustomFetch'
 import SnackBar from '../../components/SnackBar'
 import OverBooking from './OverBookingDialog'
 import useStyle from './useDatePickerStyle'
-import CancelAndRescheduleInfo from './CancelAndRescheduleInfo'
 
 function AppointmentDatePicker({ doctorKey, doctorDetails }) {
   const classes = useStyle()
@@ -194,7 +193,7 @@ function AppointmentDatePicker({ doctorKey, doctorDetails }) {
                 className={classes.dateContainer}
               />
             </MuiPickersUtilsProvider>
-            <CancelAndRescheduleInfo doctorDetails={doctorDetails} />
+
             <Box className={classes.button}>
               <Box
                 className={classes.confirmButton}

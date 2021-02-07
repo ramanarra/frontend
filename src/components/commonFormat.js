@@ -20,7 +20,9 @@ export const dateFmt = (date) => {
 
 
 export const dateFmtWthOutTimeZone = (date) => {
-  return date ? moment(date).format('DD-MM-YYYY') : ''
+  let formattedDate =  date ? moment(date).format('DD-MM-YYYY') : '-'
+  formattedDate = formattedDate === 'Invalid date' ? '-' : formattedDate
+  return formattedDate
 }
 
 export const minsSuffix = (details) => {

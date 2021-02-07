@@ -10,7 +10,7 @@ import useCustomFetch from '../../hooks/useCustomFetch'
 import useManualFetch from '../../hooks/useManualFetch'
 import api, { URL, METHOD } from '../../api'
 import SearchBar from '../../components/SearchBar'
-import { dateFmt } from '../../components/commonFormat'
+import { dateFmtWthOutTimeZone } from '../../components/commonFormat'
 import SnackBar from '../../components/SnackBar'
 import { ImageShow } from '../../components/Tooltip'
 import messages from '../../lib/iconMsg'
@@ -163,7 +163,7 @@ const Patients = (props) => {
                         {!!i?.phone ? `+91 ${i.phone}` : '-'}
                       </td>
                       <td className="tbl-cell dob">
-                        {!!i?.dateOfBirth ? dateFmt(i?.dateOfBirth) : '-'}
+                        {!!i?.dateOfBirth ? dateFmtWthOutTimeZone(i?.dateOfBirth) : '-'}
                       </td>
                       <td className="tbl-cell ctrl-btns-cell">{ctrlBtn(i)}</td>
                     </tr>
