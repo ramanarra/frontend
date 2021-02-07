@@ -33,6 +33,8 @@ const useStyles = makeStyles(() => ({
 function Static({ doctorDetails }) {
   const classes = useStyles()
 
+  // need to redux
+  
   localStorage.setItem('doctorName', doctorDetails?.doctorName)
 
   return (

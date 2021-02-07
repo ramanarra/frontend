@@ -12,6 +12,7 @@ import InputLabel from '@material-ui/core/InputLabel'
 import IconButton from '@material-ui/core/IconButton'
 import HighlightOff from '@material-ui/icons/HighlightOff'
 import FormHelperText from '@material-ui/core/FormHelperText'
+import NoCam from './NoCam'
 
 export default class StreamComponent extends Component {
   constructor(props) {
@@ -45,7 +46,6 @@ export default class StreamComponent extends Component {
 
   handlePressKey(event) {
     if (event.key === 'Enter') {
-      console.log(this.state.nickname)
       if (this.state.nickname.length >= 3 && this.state.nickname.length <= 20) {
         this.props.handleNickname(this.state.nickname)
         this.toggleNicknameForm()
@@ -56,34 +56,46 @@ export default class StreamComponent extends Component {
     }
   }
 
-  
-
   render() {
     const ToolBarComponent = this.props.ToolBarComponent
     return (
       <div className="OT_widget-container">
         <div className="pointer nickname">
-          <div style={{display: 'flex'}}>
-          <div onClick={this.props.onPatientJoining}>{this.props.doctorName}</div>
-          {
-            this.props.patientName &&
-            <div>{`${', '}${this.props.patientName}`}</div>
-          }
-        </div>
-        {
-          this.props.patientName && 
-          <div> 2 paticipants</div>
-        }
+          <div style={{ display: 'flex' }}>
+            <div>{this.props.doctorName}</div>
+            {this.props.subscribers &&
+              this.props.subscribers.length > 0 &&
+              this.props.patientName && (
+                <div>{`${', '}${this.props.patientName}`}</div>
+              )}
+          </div>
+          {this.props.subscribers &&
+            this.props.subscribers.length > 0 &&
+            this.props.patientName && <div> 2 paticipants </div>}
         </div>
 
         {this.props.user !== undefined &&
         this.props.user.getStreamManager() !== undefined ? (
           <div className="streamComponent">
-            <OvVideoComponent
-              user={this.props.user}
-              mutedSound={this.state.mutedSound}
-            />
-
+            {this.props.user.isVideoActive() ? (
+              <OvVideoComponent
+                user={this.props.user}
+                mutedSound={this.state.mutedSound}
+                subscribers={this.props.subscribers}
+                isPatientClick={this.props.isPatientClick}
+                patientName={this.props.patientName}
+                isFullScreen={this.props.isFullScreen}
+                doctorClick={this.props.doctorClick}
+              />
+            ) : (
+              <NoCam
+                name={
+                  !!this.props.doctorName
+                    ? this.props.doctorName
+                    : this.props.patientName
+                }
+              />
+            )}
             {this.props.user.isLocal() ? (
               <ToolBarComponent
                 isVideoActive={this.props.user.isVideoActive()}
@@ -94,6 +106,14 @@ export default class StreamComponent extends Component {
                 onJoiningPatient={this.props.onPatientJoining}
                 patientList={this.props.patientList}
                 AddNextPatient={this.props.AddNextPatient}
+                videoAvailability={this.props.videoAvailability}
+                audioAvailability={this.props.audioAvailability}
+                close={this.props.close}
+                isAudioStatus={this.props.isAudioStatus}
+                subscribers={this.props.subscribers}
+                isFullScreen={this.props.isFullScreen}
+                handleOnFullScreen={this.props.handleOnFullScreen}
+                handleOnInterChange={this.props.handleOnInterChange}
               />
             ) : null}
             <VideocamOff id="statusCam" />
@@ -111,7 +131,7 @@ export default class StreamComponent extends Component {
               ) : null}
             </div>
             <div>
-              {!this.props.user.isLocal() && (
+              {/* {!this.props.user.isLocal() && (
                 <IconButton id="volumeButton" onClick={this.toggleSound}>
                   {this.state.mutedSound ? (
                     <VolumeOff color="secondary" />
@@ -119,7 +139,7 @@ export default class StreamComponent extends Component {
                     <VolumeUp />
                   )}
                 </IconButton>
-              )}
+              )} */}
             </div>
           </div>
         ) : null}

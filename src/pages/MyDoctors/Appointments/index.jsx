@@ -1,6 +1,9 @@
 import React, { useMemo, useState, useEffect } from 'react'
+import { connect } from 'react-redux'
 import { makeStyles, Box } from '@material-ui/core'
 import { useParams } from 'react-router-dom'
+import Backdrop from '@material-ui/core/Backdrop'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 import ScheduledDoctors from './ScheduledDoctors'
 import { METHOD, URL } from '../../../api'
@@ -28,9 +31,18 @@ const useStyles = makeStyles(() => ({
     width: '98%',
     height: '100%',
   },
+  backdrop: {
+    zIndex: 1,
+    color: '#fff',
+  },
+  spinner: {
+    position: 'fixed',
+    top: '50%',
+    left: '50%',
+  }
 }))
 
-function Appointment({ doctorList }) {
+function Appointment({ doctorList, socket, timer }) {
   const classes = useStyles()
 
   const { id } = useParams()
@@ -38,6 +50,15 @@ function Appointment({ doctorList }) {
   const [paginationNumber, setPaginationNumber] = useState(0)
 
   const [open, setOpen] = useState(false)
+
+  const [openLoader, setOpenLoader] = useState(true)
+
+  useEffect(() => {
+    if (socket) {
+      socket.disconnect()
+      clearInterval(timer)
+    }
+  }, [])
 
   const key = useMemo(() => {
     return {
@@ -80,15 +101,22 @@ function Appointment({ doctorList }) {
       <Box className={classes.body} display="flex">
         <ScheduledDoctors doctorDetails={doctorList} />
         <Box className={classes.schedule}>
-          <AppointmentContainer
-            appointmentSlots={appointmentSlots}
-            doctorKey={id}
-            forwardPagination={forwardPagination}
-            backwardPagination={backwardPagination}
-            paginationNumber={paginationNumber}
-            onSave={onSave}
-          />
+          {appointmentSlots && (
+            <AppointmentContainer
+              appointmentSlots={appointmentSlots}
+              doctorKey={id}
+              forwardPagination={forwardPagination}
+              backwardPagination={backwardPagination}
+              paginationNumber={paginationNumber}
+              onSave={onSave}
+            />
+          )}
         </Box>
+        {openLoader && !appointmentSlots && (
+          <Backdrop className={classes.backdrop} open={openLoader}>
+            <CircularProgress color="primary" />
+          </Backdrop>
+        )}
       </Box>
       {response && response.data?.appointment && (
         <SnackBar
@@ -98,56 +126,81 @@ function Appointment({ doctorList }) {
           severity={'success'}
         />
       )}
-      {response && response.data?.statusCode === 417 && (
-        <OverBooking
-          open={open}
-          onCloseDialog={handleClose}
-          data={response.config.data}
-          onSave={onSave}
-        />
-      )}
-      {response && response.data?.statusCode === 200 && (
+      {(response && response.name === 'Error' && response.status === 500 && (
         <SnackBar
           openDialog={open}
-          message={response.data.message}
-          onclose={handleClose}
-          severity={'success'}
-        />
-      )}
-      {response && response.data?.statusCode === 404 && (
-        <SnackBar
-          openDialog={open}
-          message={response.data.message}
-          onclose={handleClose}
-          severity={'info'}
-        />
-      )}
-      {response && response.data?.statusCode === 400 && (
-        <SnackBar
-          openDialog={open}
-          message={response.data.message}
-          onclose={handleClose}
-          severity={'info'}
-        />
-      )}
-      {response && response.name === 'Error' && (
-        <SnackBar
-          openDialog={open}
-          message={response.message}
+          message={'Internal server error'}
           onclose={handleClose}
           severity={'error'}
         />
-      )}
-      {response && response.data?.statusCode === 502 && (
-        <SnackBar
-          openDialog={open}
-          message={response.data.message}
-          onclose={handleClose}
-          severity={'error'}
-        />
-      )}
+      )) ||
+        (response && response.name === 'Error' && response.status !== 500 && (
+          <SnackBar
+            openDialog={open}
+            message={'Something went wrong'}
+            onclose={handleClose}
+            severity={'error'}
+          />
+        ))}
+      {(response &&
+        response.data?.statusCode &&
+        response.data?.statusCode === 200 && (
+          <SnackBar
+            openDialog={open}
+            message={response.data.message}
+            onclose={handleClose}
+            severity={'success'}
+          />
+        )) ||
+        (response && response.data?.statusCode === 404 && (
+          <SnackBar
+            openDialog={open}
+            message={response.data.message}
+            onclose={handleClose}
+            severity={'info'}
+          />
+        )) ||
+        (response && response.data?.statusCode === 400 && (
+          <SnackBar
+            openDialog={open}
+            message={response.data.message}
+            onclose={handleClose}
+            severity={'info'}
+          />
+        )) ||
+        (response && response.data?.statusCode === 502 && (
+          <SnackBar
+            openDialog={open}
+            message={response.data.message}
+            onclose={handleClose}
+            severity={'error'}
+          />
+        )) ||
+        (response && response.data?.statusCode === 417 && (
+          <OverBooking
+            open={open}
+            onCloseDialog={handleClose}
+            data={response.config.data}
+            onSave={onSave}
+          />
+        )) ||
+        (response && response.data?.statusCode && (
+          <SnackBar
+            openDialog={open}
+            message={response.data.message}
+            onClose={handleClose}
+            severity={'error'}
+          />
+        ))}
     </Box>
   )
 }
 
-export default Appointment
+const mapStateToProps = (state) => {
+  return {
+    socket: state.doctor.socket,
+    timer: state.doctor.timer,
+  }
+}
+
+export default connect(mapStateToProps, null)(Appointment)

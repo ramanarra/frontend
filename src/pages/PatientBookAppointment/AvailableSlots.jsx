@@ -1,91 +1,56 @@
-import React, { useState } from 'react'
+import React from 'react'
 import classNames from 'classnames'
-import { Box, makeStyles, Button, Typography } from '@material-ui/core'
+import { Box, Button, Typography } from '@material-ui/core'
 import CheckCircleRoundedIcon from '@material-ui/icons/CheckCircleRounded'
+import moment from 'moment'
 
 import getTimeFormatWithNoon from '../../lib/dateLib'
+import useStyle from './useAvailableSlotsStyle'
 
-const useStyle = makeStyles(() => ({
-  container: {
-    
-  },
-  availableSlots: {
-    paddingTop: 145,
-    paddingLeft: 20,
-    height: '100%',
-  },
-  time: {
-    width: 100,
-    border: '1.5px solid #dadada',
-    marginLeft: 13,
-    marginBottom: 15,
-    borderRadius: 3,
-    '&:hover': {
-      backgroundColor: '#54cbff',
-      border: '1.5px solid #54cbff',
-    },
-  },
-  timeText: {
-    fontSize: 12.3,
-    paddingTop: 2,
-    color: '#6a6969',
-    '&:hover': {
-      color: '#ffffff',
-    },
-  },
-  selectedTab: {
-    backgroundColor: '#0bb5ff',
-    border: '1.5px solid #0bb5ff',
-  },
-  selectedText: {
-    color: '#ffffff',
-    fontSize: 13,
-    paddingTop: 2,
-  },
-  icon: {
-    width: 16,
-    color: '#ffffff',
-    marginLeft: 6,
-  },
-}))
-
-function AvailableSlots({ availableSlots, handleSlotTiming }) {
+function AvailableSlots({ availableSlots, handleSlotTiming, time, date }) {
   const classes = useStyle()
 
-  const [time, setTime] = useState({ start: '00:00:00', end: '00:00:00' })
-
   const handleOnClick = (slot) => {
-    setTime(slot)
     handleSlotTiming(slot)
   }
+
+  let currentTime = moment().format('HH:mm:ss')
+  let todayDate = moment().format('DD/MM/YYYY')
 
   return (
     <Box className={classes.container}>
       <Box className={classes.availableSlots}>
-        {availableSlots &&
+        {(availableSlots && availableSlots.length) ? 
           availableSlots.map((slot, index) => {
+            let show = moment(date).format('DD/MM/YYYY') === todayDate ?
+                        slot.startTime > currentTime ? true : false
+                        : true
             return (
+              show &&
               <Button
                 className={classNames(classes.time, {
-                  [classes.selectedTab]: time.start === slot.start,
+                  [classes.selectedTab]: time.start === slot.startTime,
                 })}
-                onClick={() => handleOnClick(slot)} key={index}
+                onClick={() => handleOnClick(slot)}
+                key={index}
               >
-                {time.start === slot.start ? (
+                {time.start === slot.startTime ? (
                   <Box display="flex">
                     <Typography className={classes.selectedText}>
-                      {getTimeFormatWithNoon(slot.start)}
+                      {getTimeFormatWithNoon(slot.startTime)}
                     </Typography>
                     <CheckCircleRoundedIcon className={classes.icon} />
                   </Box>
                 ) : (
                   <Typography className={classes.timeText}>
-                    {getTimeFormatWithNoon(slot.start)}
+                    {getTimeFormatWithNoon(slot.startTime)}
                   </Typography>
                 )}
               </Button>
             )
-          })}
+          }) : 
+          <Typography className={classes.errorMessage}>No slots are available on that date</Typography>
+          }
       </Box>
     </Box>
   )

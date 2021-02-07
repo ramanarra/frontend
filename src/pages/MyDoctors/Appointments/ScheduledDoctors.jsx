@@ -5,16 +5,17 @@ import { Box, Typography, makeStyles, Avatar } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    width: '250px',
+    width: '18%',
     background: '#f9f9f9',
     backgroundColor: 'white',
     height: '100%',
     borderRight: '1px solid #ebebeb',
   },
   heading: {
-    fontSize: 18,
-    paddingTop: '20px',
-    paddingLeft: '25px',
+    fontSize: '90%',
+    paddingTop: '9.5%',
+    paddingLeft: '11.5%',
+    paddingRight: '11.5%',
     color: '#645f5f',
   },
   photo: {
@@ -22,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     height: theme.spacing(3),
   },
   doctorlist: {
-    paddingTop: '17px',
+    paddingTop: '8.5%',
   },
   doctor: {
     cursor: 'pointer',
@@ -35,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   },
   name: {
     paddingLeft: '7px',
-    fontSize: '14px',
+    fontSize: '70%',
     color: '#645f5f',
   },
   selecedTab: {

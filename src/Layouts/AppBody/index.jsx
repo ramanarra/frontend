@@ -5,7 +5,7 @@ import DoctorRoutes, { PatientRoutes } from '../routes'
 const AppBody = () => {
   if (localStorage.getItem('loginUser') === 'doctor') {
     return (
-      <div style={{ width: 'calc(100% - 79px)' }}>
+      <div style={{ width: 'calc(100% - 79px)',overflow:'hidden' }}>
         <Switch>
           {DoctorRoutes.map((route, index) => {
             const Component = route.component
@@ -30,7 +30,7 @@ const AppBody = () => {
 
   // if (localStorage.getItem('loginUser') === 'patient') {
   return (
-    <div style={{ width: 'calc(100% - 79px)' }}>
+    <div style={{ width: 'calc(100% - 79px)', overflow:'hidden' }}>
       <Switch>
         {PatientRoutes.map((route, index) => {
           const Component = route.component
@@ -50,7 +50,7 @@ const AppBody = () => {
         <Route
           extact
           path={'/'}
-          render={() => <Redirect to={'/patient/appoinments'} />}
+          render={() => <Redirect to={'/patient/appointments/upcoming'} />}
         />
       </Switch>
     </div>

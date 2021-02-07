@@ -3,10 +3,10 @@
 .doctor-patients-list {
   padding: 0px 50px;
   font-size: 14px;
+
   .header-bar {
     @include lrPartition;
     border-bottom: 1px solid #aaaaaa55;
-    padding: 20px 0 10px;
 
     .title {
       font-size: 18px;
@@ -29,14 +29,35 @@
     }
   }
 
+  .spinner {
+    position: absolute;
+    left: 50%;
+    bottom: 50%;
+    color: #636668;
+  }
+
+
   .patient-table-wrap {
     margin: 27px 0 10px;
     position: relative;
-    max-height: calc(100vh - 222px);
+    // max-height: calc(100vh - 222px);
     overflow: auto;
+
+    .table-wrap {
+      max-height: calc(100vh - 222px);
+    }
+
     .patient-table {
       width: 100%;
-
+    
+      .head {
+        height: 100%;
+        table-layout: fixed;
+      }
+      .body {
+        height: 100%;
+        overflow: auto;
+      }
       .tbl-head {
         text-align: left;
         position: sticky;
@@ -55,6 +76,7 @@
       .tbl-head,
       .tbl-cell {
         padding: 10px 10px 10px 0;
+        font-size: 13.5px;
       }
 
       .tbl-cell {
@@ -65,15 +87,19 @@
         .tbl-btn {
           height: 20px;
           width: 20px;
-          margin: 0 7px;
+          margin: 0 3px;
         }
 
         .view-btn {
-          color: #71b7e6;
+          img {
+            height: 10px;
+          }
         }
 
         .add-btn {
-          color: #f5ae3d;
+          img {
+            height: 15px;
+          }
         }
       }
     }

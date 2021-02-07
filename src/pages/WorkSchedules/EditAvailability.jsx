@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import { Dialog, IconButton, Typography, Button, TextField } from '@material-ui/core'
-import { Close, DeleteOutline } from '@material-ui/icons'
-import { KeyboardTimePicker, TimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
+import { DeleteOutline } from '@material-ui/icons'
+import { KeyboardTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import moment from 'moment'
 import MomentUtils from '@date-io/moment'
+
 import { timeFmt } from '../../components/commonFormat'
+import messages from '../../lib/iconMsg'
+import { CloseTip, DeleteTip } from '../../components/Tooltip'
 
 const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
   const [slotList, setSlotList] = useState([])
   const [tempId, setTempId] = useState(1)
+  const [newInterval, setNewInterval]=useState(false)
   const scheduledayid = data && data[0]?.scheduledayid
 
   useEffect(() => {
@@ -16,16 +20,30 @@ const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
   }, [data])
 
   const handleAdd = () => {
-    setSlotList([
-      ...slotList,
-      {
-        tempId,
-        scheduledayid,
-        startTime: timeFmt(new Date()),
-        endTime: timeFmt(new Date()),
-      },
-    ])
-    setTempId((prev) => prev + 1)
+    if(slotList.length === 1 && !slotList[0].scheduletimeid ) {
+      setSlotList([
+        {
+          tempId,
+          scheduledayid,
+          startTime: timeFmt(new Date()),
+          endTime: timeFmt(new Date()),
+        },
+      ])
+      setTempId((prev) => prev + 1)
+    }
+    else {
+      setSlotList([
+        ...slotList,
+        {
+          tempId,
+          scheduledayid,
+          startTime: timeFmt(new Date()),
+          endTime: timeFmt(new Date()),
+        },
+      ])
+      setTempId((prev) => prev + 1)
+    }
+    setNewInterval(true);
   }
 
   const handleChange = (data, e) => {
@@ -34,7 +52,10 @@ const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
     setSlotList((prev) => {
       return prev?.map((i) => {
         if ((!!id && i.scheduletimeid === id) || (!!tempId && i.tempId === tempId)) {
-          return { ...i, [name]: timeFmt(value) }
+          if( name === 'isDelete') {
+            return {...i, [name]: true}
+          }
+          return { ...i, [name]: moment(value).format('HH:mm:ss') }
         }
         return i
       })
@@ -48,11 +69,13 @@ const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
     onClose()
   }
 
+
   const handleDelete = (data) => {
     if (!!data.tempId) {
       setSlotList((prev) => {
         return prev?.filter((i) => i.tempId !== data.tempId)
       })
+    setTempId(tempId-1);
     } else {
       handleChange(data, {
         target: {
@@ -61,6 +84,15 @@ const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
         },
       })
     }
+  }
+
+  const handleUnavailable = (slotList) => {
+    const slots = slotList.map(slot => {
+      return {
+        ...slot, isDelete: true,
+      }
+    })
+    setSlotList(slots)
   }
 
   const slot = (data) => (
@@ -83,7 +115,6 @@ const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
           KeyboardButtonProps={{
             'aria-label': 'change time',
           }}
-          // format="hh:mmA"
         />
         -
         <KeyboardTimePicker
@@ -104,11 +135,10 @@ const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
               },
             })
           }
-          // format="hh:mmA"
         />
       </MuiPickersUtilsProvider>
       <IconButton className="del-btn" onClick={handleDelete.bind(this, data)}>
-        <DeleteOutline fontSize="small" />
+          <DeleteTip title={"Delete the Time Interval"} placement='right-start' />
       </IconButton>
     </div>
   )
@@ -122,12 +152,19 @@ const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
           </Typography>
           <div className="close-btn-wrap">
             <IconButton onClick={onClose} className="close-btn">
-              <Close />
+            <CloseTip title={messages.cancel} placement="right" />
             </IconButton>
           </div>
         </div>
         <div className="slots-wrap">
-          {slotList?.filter((f) => !f.isDelete).map((i) => i?.startTime && slot(i))}
+        
+          {slotList?.filter((f) => (!f?.tempId)&&!f.isDelete).map((i) => i?.startTime && slot(i))}
+          { newInterval&&tempId>1&&
+          <div className="list-newline">
+            <p><span>New Interval </span></p>
+            {slotList?.filter((f) => (f?.tempId)&&!f.isDelete).map((i) => i?.startTime && slot(i))}
+          </div>
+}
         </div>
         <div className="list-btns">
           <div className="btn-wrap">
@@ -136,7 +173,7 @@ const EditAvailability = ({ open, onClose, data, handleUpdate }) => {
             </span>
           </div>
           <div className="btn-wrap">
-            <span className="make-unavailable" onClick={setSlotList.bind(this, [])}>
+            <span className="make-unavailable" onClick={() => handleUnavailable(slotList)}>
               I'm unavailable
             </span>
           </div>

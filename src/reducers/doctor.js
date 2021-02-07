@@ -1,14 +1,55 @@
 const intialState = {
-  key: null,
+  socket: null,
+  timer: null,
+  patientAppointmentId: null,
+  openSideBar: true,
+  session: undefined,
+  messages: [],
+  prescription:[],
+  icon: true,
 }
 
 const doctor = (state = intialState, action) => {
   switch (action.type) {
-    case 'UPDATE_DOC_KEY': {
-      return { ...state, key: action.key }
+    case 'SET_SOCKET': {
+      return {...state, socket: action.data }
     }
 
-    default: return state
+    case 'SET_TIMER': {
+      return {...state, timer: action.data}
+    }
+
+    case 'SET_OPENSIDEBAR': {
+      return {...state, openSideBar: action.data }
+    }
+
+
+    case 'SET_PATIENTAPPOINTMENTID': {
+      return {...state, patientAppointmentId: action.data}
+    }
+
+    case 'SET_SESSION': {
+      return {...state, session: action.data}
+    }
+
+    case 'SET_MESSAGES': {
+      return {...state, messages: [...state.messages, action.data]}
+    }
+
+    case 'SET_PRESCRIPTION':{
+      return{...state,prescription:action.data}
+    }
+
+    case 'SET_ICON':{
+      return{...state,icon:action.data}
+    }
+
+    case 'CLEAR_MESSAGES': {
+      return {...state, messages: action.data}
+    }
+
+    default:
+      return state
   }
 }
 

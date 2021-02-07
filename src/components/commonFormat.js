@@ -14,6 +14,15 @@ export const timeFmt = (time) => {
   return moment(time, 'hh:mmA').format('hh:mmA')
 }
 
+export const dateFmt = (date) => {
+  return moment(date, 'YYYY-MM-DD').format('DD-MM-YYYY')
+}
+
+
+export const dateFmtWthOutTimeZone = (date) => {
+  return date ? moment(date).format('DD-MM-YYYY') : ''
+}
+
 export const minsSuffix = (details) => {
   const { inputRef, onChange, ...other } = details
 
@@ -34,4 +43,8 @@ export const minsSuffix = (details) => {
       suffix=" mins."
     />
   )
+}
+
+export const capitalize = (value) => {
+  return value.charAt(0).toUpperCase() + value.slice(1)
 }

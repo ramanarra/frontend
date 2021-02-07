@@ -1,40 +1,48 @@
 import MyDoctors from '../pages/MyDoctors'
 import Patients from '../pages/Patients'
-import Reports from '../pages/Reports'
 import Settings from '../pages/Settings'
 import VideoConsultation from '../pages/VideoConsultation'
 import DocBody from './DocBody'
+import DocReport from './DocReport'
 
 import PatientAppoinments from '../pages/PatientAppoinments'
 import PatientSettings from '../pages/PatientSettings'
+import PatientReports from '../pages/PatientReports'
+import PatientDetials from '../pages/Patients/PatientDetials'
 import PatientFindDoctor from '../pages/PatientFindDoctor'
 import PatientBookAppointment from '../pages/PatientBookAppointment'
 
 export const PatientRoutes = [
   {
-      path: ['/patient/appointments/upcoming', '/patient/appointments/past'],
-      name: 'patientAppoinments',
-      exact: true,
-      component: PatientAppoinments,
-    },
-    {
-      path: '/patient/setting',
-      name: 'PatientSetting',
-      exact: true,
-      component: PatientSettings,
-    },
-    {
-      path: '/patient/find-doctor',
-      name: 'PatientFindDoctor',
-      exact: true,
-      component: PatientFindDoctor,
-    },
-    {
-      path: '/patient/:id/book-appointment',
-      name: 'PatientBookAppointment',
-      exact: true,
-      component: PatientBookAppointment
-    }
+    path: ['/patient/appointments/upcoming', '/patient/appointments/past'],
+    name: 'patientAppoinments',
+    exact: true,
+    component: PatientAppoinments,
+  },
+  {
+    path: '/patient/setting',
+    name: 'PatientSetting',
+    exact: true,
+    component: PatientSettings,
+  },
+  {
+    path: '/patient/reports',
+    name: 'PatientSetting',
+    exact: true,
+    component: PatientReports,
+  },
+  {
+    path: '/patient/find-doctor',
+    name: 'PatientFindDoctor',
+    exact: true,
+    component: PatientFindDoctor,
+  },
+  {
+    path: '/patient/:id/book-appointment',
+    name: 'PatientBookAppointment',
+    exact: true,
+    component: PatientBookAppointment,
+  },
 ]
 
 const DoctorRoutes = [
@@ -50,11 +58,17 @@ const DoctorRoutes = [
     exact: true,
     component: Patients,
   },
+
   {
-    path: '/reports',
+    path: '/patients/:patientId',
+    component: PatientDetials,
+  },
+
+  {
+    path: '/reports/:pathType',
     name: 'Reports',
     exact: true,
-    component: Reports,
+    component: DocReport,
   },
   {
     path: '/settings',

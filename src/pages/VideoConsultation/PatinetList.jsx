@@ -1,99 +1,101 @@
-import React, {useState} from 'react'
+import React, { useEffect } from 'react'
+import { connect } from 'react-redux'
 import classNames from 'classnames'
-import { useHistory } from 'react-router-dom'
-import {
-  Box,
-  Typography,
-  Dialog,
-  DialogContent,
-  Avatar,
-  makeStyles,
-} from '@material-ui/core'
+import { Box, Typography, Avatar, Paper, Button } from '@material-ui/core'
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
+import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 import getTimeFormatWithNoon, { getTimeFormat } from '../../lib/dateLib'
+import { setOpenSideBar } from '../../actions/doctor'
+import useStyle from './usePatientListStyle'
+import { useState } from 'react'
+import Carousel from 'react-material-ui-carousel'
+import AdvertisementImage1 from '../../assets/img/advertisementImages/low-cost-advertising-for-startups.png'
+import AdvertisementImage2 from '../../assets/img/advertisementImages/maxresdefault.jpg'
+import AdvertisementImage3 from '../../assets/img/advertisementImages/download.png'
 
+function Item({ item }) {
+  return (
+    <Paper style={{ maxHeight: 75 }}>
+      <img src={item.images} />
+    </Paper>
+  )
+}
 
-const useStyle = makeStyles((theme) => ({
-  dialog: {
-    position: 'absolute',
-    right: 0,
-    margin: 0,
-    top: 56,
-    backgroundColor: '#ffffff',
-    width: 355,
-    padding: '25px 15px 10px 23px',
-    height: 'calc(100% - 63px)',
-    overflowY: 'auto',
-  },
-  backButton: {
-    width: 40,
-    height: 40,
-    borderRadius: '50%',
-    position: 'absolute',
-    top: 58,
-    right: 348,
-    backgroundColor: '#ffffff',
-    cursor: 'pointer',
-  },
-  patientDetails: {
-    paddingBottom: 8,
-    paddingTop: 8,
-    cursor: 'pointer',
-  },
-  icon: {
-    marginTop: 7.5,
-    marginLeft: 8,
-    color: '#a8a8a8',
-  },
-  photo: {
-    width: theme.spacing(6),
-    height: theme.spacing(6),
-  },
-  detail: {
-    paddingTop: 4.5,
-    paddingLeft: 15,
-  },
-  firstName: {
-    fontSize: 13,
-    color: '#312f2f',
-  },
-  lastName: {
-    paddingLeft: 2,
-    fontSize: 13,
-    color: '#312f2f',
-  },
-  next: {
-    fontSize: 9,
-    color: '#16c5ed',
-    paddingLeft: 5,
-    paddingTop: 2.5,
-  },
-  meetingTime: {
-    paddingTop: 5,
-    fontSize: 10,
-    color: '#a8a8a8',
-  },
-  selecedTab: {
-    backgroundColor: '#e6f7ff',
-    borderLeft: '3px solid #20cfe1',
-    paddingLeft: 10,
-  }
-}))
-
-function PatientList({ patientList, open, onClose, onJoiningPatient, endCall, appointmentId }) {
+function PatientList({
+  patientList,
+  open,
+  onClose,
+  onJoiningPatient,
+  presentAppointmentId,
+  AddNextPatient,
+  nextPatientDetails,
+  clickByDoctor,
+  waitingPatient,
+  isWaiting,
+  waitingIndex,
+  count,
+  setCount,
+  id,
+  setOpenTopBar,
+  setOpenSideBar,
+  setFullScreen,
+  setInterChange,
+}) {
   const classes = useStyle()
-
 
   function handleOnClose(event) {
     onClose(event)
+    setOpenTopBar(false)
+    setOpenSideBar(false)
   }
+
 
   const handleOnPatientJoining = (appointmentId, firstName, lastName, index) => {
-    onJoiningPatient(appointmentId, firstName, lastName, index)
+    if (presentAppointmentId !== appointmentId) {
+      if (presentAppointmentId) {
+        nextPatientDetails({
+          appointmentId: appointmentId,
+          firstName: firstName,
+          lastName: lastName,
+          index: index,
+        })
+        clickByDoctor()
+        AddNextPatient()
+        setInterChange(false)
+        setFullScreen(false)
+      } else {
+        onJoiningPatient(appointmentId, firstName, lastName, index)
+      }
+    }
   }
 
+  useEffect(() => {
+    if (isWaiting && count === 0) {
+      onJoiningPatient(
+        waitingPatient.appointmentId,
+        waitingPatient.firstName,
+        waitingPatient.lastName,
+        waitingIndex
+      )
+      setCount(1)
+      setFullScreen(false)
+      setInterChange(false)
+    }
+  }, [isWaiting])
 
+  const items = [
+    {
+      images: AdvertisementImage1
+    },
+    {
+      images: AdvertisementImage2
+    },
+    {
+      images: AdvertisementImage3
+    }
+  ]
 
 
   return (
@@ -103,15 +105,22 @@ function PatientList({ patientList, open, onClose, onJoiningPatient, endCall, ap
           <Box className={classes.backButton}>
             <ArrowForwardIosIcon onClick={handleOnClose} className={classes.icon} />
           </Box>
-          <Box className={classes.dialog}>
+          <Box className={classes.dialog} style={{ paddingLeft: 0, paddingRight: 0 }}>
+            <Carousel>
+              {
+                items.map((item, i) => <Item key={i} item={item} />)
+              }
+            </Carousel>
             {patientList &&
               patientList.map((patientDetails, index) => {
                 return (
                   <Box
                     display="flex"
                     key={index}
+                    style={{ paddingLeft: "23px", paddingRight: "15px" }}
                     className={classNames(classes.patientDetails, {
-                      [classes.selecedTab]: appointmentId === patientDetails.appointmentId,
+                      [classes.selecedTab]:
+                        presentAppointmentId === patientDetails.appointmentId,
                     })}
                     onClick={() =>
                       handleOnPatientJoining(
@@ -122,7 +131,31 @@ function PatientList({ patientList, open, onClose, onJoiningPatient, endCall, ap
                       )
                     }
                   >
-                    <Avatar src={patientDetails.photo} className={classes.photo} />
+                    <Box>
+                      <Avatar src={patientDetails.photo} className={classes.photo} />
+                      {(patientDetails.status === 'paused' && patientDetails.patientLiveStatus === 'online') ? (
+                        <FiberManualRecordIcon className={classes.pausedIcon} />
+                      ) : (
+                          patientDetails.patientLiveStatus &&
+                          ((patientDetails.patientLiveStatus === 'online' && (
+                            <FiberManualRecordIcon className={classes.onlineStatus} />
+                          )) ||
+                            (patientDetails.patientLiveStatus === 'offline' && (
+                              <FiberManualRecordIcon
+                                className={classes.offlineStatus}
+                              />
+                            )) ||
+                            (patientDetails.patientLiveStatus ===
+                              'videoSessionReady' && (
+                                <FiberManualRecordIcon
+                                  className={classes.videoSessionReady}
+                                />
+                              )) ||
+                            (patientDetails.patientLiveStatus === 'inSession' && (
+                              <FiberManualRecordIcon className={classes.inSession} />
+                            )))
+                        )}
+                    </Box>
                     <Box className={classes.detail}>
                       <Box display="flex">
                         <Typography className={classes.firstName} variant="h5">
@@ -132,8 +165,10 @@ function PatientList({ patientList, open, onClose, onJoiningPatient, endCall, ap
                           <Typography className={classes.lastName} variant="h5">
                             {patientDetails.lastName}
                           </Typography>
+
                         )}
-                        {index === 0 && (
+
+                        {id === patientDetails.appointmentId && (
                           <Typography className={classes.next}>NEXT</Typography>
                         )}
                       </Box>
@@ -150,6 +185,10 @@ function PatientList({ patientList, open, onClose, onJoiningPatient, endCall, ap
                   </Box>
                 )
               })}
+            {
+              !patientList &&
+              <CircularProgress color="primary" className={classes.spinner} />
+            }
           </Box>
         </Box>
       )}
@@ -157,4 +196,10 @@ function PatientList({ patientList, open, onClose, onJoiningPatient, endCall, ap
   )
 }
 
-export default PatientList
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setOpenSideBar: (data) => dispatch(setOpenSideBar(data)),
+  }
+}
+
+export default connect(null, mapDispatchToProps)(PatientList)

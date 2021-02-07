@@ -1,25 +1,52 @@
 import React, { useState, Fragment } from 'react'
-import { useHistory } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { useHistory, useLocation } from 'react-router-dom'
 import { Box } from '@material-ui/core'
 
 import OpenViduReact from '../../OpenViduCore/components/VideoRoomComponent'
 import ToolBarComponent from './Toolbar'
 import SideBar from './SideBar'
+import { setOpenSideBar } from '../../actions/doctor'
 
-const ENDPOINT = 'http://dev-api.virujh.com:8081/'
-
-function VideoConsultotion({ location, token, sessionID, patientList, socket }) {
-
+function VideoConsultotion({
+  token,
+  sessionID,
+  patientList,
+  socket,
+  timer,
+  videoAvailability,
+  audioAvailability,
+  appointmentId,
+  waitingPatient,
+  isWaiting,
+  waitingIndex,
+  isAudioStatus,
+  isVideoStatus,
+  setPatientAppointmentId,
+  setOpenSideBar,
+}) {
   const [end, setEnd] = useState(false)
 
   const [open, setOpen] = useState(false)
 
+  const [byDoctor, setByDoctor] = useState(false)
+
+  const [appointmenttId, setAppointmentId] = useState(null)
+
+  const [isPatientClick, setIsPatientClick] = useState(false)
+
+  const [fullScreen, setFullScreen] = useState(false)
+
+  const [interChange, setInterChange] = useState(false)
+
   const history = useHistory()
+
+  const location = useLocation()
 
   const doctorName =
     localStorage.getItem('loginUser') === 'doctor'
       ? localStorage.getItem('doctorName')
-      : 'udhaya'
+      : location.doctorName
 
   const [patientName, setPatientName] = useState('')
 
@@ -28,12 +55,26 @@ function VideoConsultotion({ location, token, sessionID, patientList, socket }) 
     setPatientName(patientName)
   }
 
-  function leaveCall() {
+  function leaveCall(status) {
     if (localStorage.getItem('loginUser') === 'doctor') {
-      socket.emit('removeSessionAndTokenByDoctor')
+      if (appointmenttId) {
+        socket.emit('removePatientTokenByDoctor', {
+          appointmentId: appointmenttId,
+          status: status,
+        })
+        socket.emit('removeSessionAndTokenByDoctor')
+      }
+      socket.emit('updateLiveStatusOfUser', { status: 'online' })
       history.push('/doctors')
+      socket.disconnect()
+      clearInterval(timer)
+      setOpenSideBar(true)
     } else {
-      history.push('/patient/appointments/upcoming')
+      history.push({
+        pathname: '/patient/appointments/upcoming',
+        state: appointmentId,
+      })
+      socket.disconnect()
     }
   }
 
@@ -42,12 +83,27 @@ function VideoConsultotion({ location, token, sessionID, patientList, socket }) 
   }
 
   function AddNextPatient() {
-    console.log('true')
     setOpen(true)
   }
 
   function onClose() {
     setOpen(false)
+    setByDoctor(false)
+  }
+
+  function clickByDoctor() {
+    setByDoctor(true)
+  }
+
+  function handleOnFullScreen() {
+    if (fullScreen) {
+      setInterChange(false)
+    }
+    setFullScreen(!fullScreen)
+  }
+
+  function handleOnInterChange() {
+    setInterChange(!interChange)
   }
 
   return (
@@ -61,10 +117,23 @@ function VideoConsultotion({ location, token, sessionID, patientList, socket }) 
             token={token}
             patientList={patientList}
             doctorName={doctorName}
-            patientName={patientName}
+            patientName={
+              localStorage.getItem('loginUser') === 'doctor'
+                ? patientName
+                : localStorage.getItem('patientName')
+            }
             leaveCall={leaveCall}
             endCall={endCall}
             AddNextPatient={AddNextPatient}
+            videoAvailability={videoAvailability}
+            audioAvailability={audioAvailability}
+            isPatientClick={isPatientClick}
+            isAudioStatus={isAudioStatus}
+            isVideoStatus={isVideoStatus}
+            handleOnFullScreen={handleOnFullScreen}
+            isFullScreen={fullScreen}
+            isInterChange={interChange}
+            handleOnInterChange={handleOnInterChange}
           />
           <SideBar
             patientList={patientList}
@@ -74,6 +143,24 @@ function VideoConsultotion({ location, token, sessionID, patientList, socket }) 
             socket={socket}
             openDialog={open}
             onClose={onClose}
+            setAppointmentId={setAppointmentId}
+            AddNextPatient={AddNextPatient}
+            byDoctor={byDoctor}
+            clickByDoctor={clickByDoctor}
+            setIsPatientClick={setIsPatientClick}
+            waitingPatient={waitingPatient}
+            isWaiting={isWaiting}
+            waitingIndex={waitingIndex}
+            setPatientAppointmentId={setPatientAppointmentId}
+            setFullScreen={setFullScreen}
+            setInterChange={setInterChange}
+            appointmentId={appointmentId}
+            patientName={
+              localStorage.getItem('loginUser') === 'doctor'
+                ? patientName
+                : localStorage.getItem('patientName')
+            }
+            doctorName={doctorName}
           />
         </Box>
       )}
@@ -81,4 +168,10 @@ function VideoConsultotion({ location, token, sessionID, patientList, socket }) 
   )
 }
 
-export default VideoConsultotion
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setOpenSideBar: (data) => dispatch(setOpenSideBar(data)),
+  }
+}
+
+export default connect(null, mapDispatchToProps)(VideoConsultotion)

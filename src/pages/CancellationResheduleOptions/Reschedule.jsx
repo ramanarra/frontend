@@ -4,12 +4,11 @@ import { makeStyles } from '@material-ui/core/styles'
 import { Edit, Check, Clear } from '@material-ui/icons'
 import IconButton from '@material-ui/core/IconButton'
 
-
 import Switch from '../../components/Switch'
 import NumberTextField from '../../components/NumberTextField'
-import UnpaidBooking from './UnpaidBooking'
-import SnackBar from '../../components/SnackBar'
-
+//import UnpaidBooking from './UnpaidBooking'
+import message from '../../lib/iconMsg'
+import { EditTip,Tooltip } from '../../components/Tooltip'
 
 const useStyles = makeStyles(() => ({
   text: {
@@ -39,17 +38,22 @@ const useStyles = makeStyles(() => ({
   message: {
     color: '#ec1144',
     fontSize: 14,
-  }
+  },
 }))
 
-const Cancellation = ({ configDetails, doctorKey, onSave, isAbleToWrite, response }) => {
+const Cancellation = ({
+  configDetails,
+  doctorKey,
+  onSave,
+  isAbleToWrite,
+}) => {
   const classes = useStyles()
   const [isPatientRescheduleAllowed, setIsPatientRescheduleAllowed] = useState(false)
   const [rescheduleDays, setRescheduleDays] = useState(0)
   const [rescheduleHours, setRescheduleHours] = useState(0)
   const [rescheduleMins, setRescheduleMins] = useState(0)
   const [disable, setDisable] = useState(false)
-  const [open, setOpen] = useState(false)
+  const [messages, setMessages] = useState("off")
 
   useEffect(() => {
     if (configDetails) {
@@ -67,6 +71,10 @@ const Cancellation = ({ configDetails, doctorKey, onSave, isAbleToWrite, respons
       isPatientRescheduleAllowed: event.target.checked,
     }
     onSave(params)
+    if(isPatientRescheduleAllowed)
+      setMessages("on")
+    else
+      setMessages("off")
   }
 
   function handleOnCancel() {
@@ -86,7 +94,6 @@ const Cancellation = ({ configDetails, doctorKey, onSave, isAbleToWrite, respons
       }
       onSave(params)
       setDisable(false)
-      setOpen(true)
     }
   }
 
@@ -108,23 +115,17 @@ const Cancellation = ({ configDetails, doctorKey, onSave, isAbleToWrite, respons
     }
   }
 
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return
-    }
-
-    setOpen(false)
-  }
-
   return (
     <Box>
       <Box display="flex" marginBottom={4} alignItems="center">
         <Typography className={classes.text}>Patient Reschedule</Typography>
         {isAbleToWrite && (
+          <Tooltip title={messages} placement='top'>
           <Switch
             checked={isPatientRescheduleAllowed}
             onChange={handleOnRescheduleChange}
           />
+          </Tooltip>
         )}
       </Box>
       {isPatientRescheduleAllowed && (
@@ -158,7 +159,7 @@ const Cancellation = ({ configDetails, doctorKey, onSave, isAbleToWrite, respons
                     className={classes.iconButton}
                     onClick={() => setDisable(true)}
                   >
-                    <Edit className={classes.editIcon} />
+                    <EditTip title={message.edit} placement="right" />
                   </IconButton>
                 ) : (
                   <div>
@@ -179,24 +180,15 @@ const Cancellation = ({ configDetails, doctorKey, onSave, isAbleToWrite, respons
               </Box>
             )}
           </Box>
-          {
-            response && response.statusCode !== 200 && 
-            <Typography className={classes.message}>{response.data.message.message}</Typography>
-          }
-          <Box marginTop={4}>
+          {/* <Box marginTop={4}>
             <UnpaidBooking
               configDetails={configDetails}
               doctorKey={doctorKey}
               onSave={onSave}
               isAbleToWrite={isAbleToWrite}
-              response={response}
             />
-          </Box>
+          </Box> */}
         </Box>
-      )}
-
-      {response && response.statusCode === 200 && (
-        <SnackBar openDialog={open} message={response.message} onclose={handleClose} severity={'success'} />
       )}
     </Box>
   )

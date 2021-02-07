@@ -4,7 +4,9 @@ import LoginUI from './LoginUI'
 import Api, { URL } from '../../api'
 
 function DoctorLogin({ history }) {
-  function onLogin(userName, password, setError) {
+  localStorage.clear()
+  localStorage.setItem('loginUser', 'doctor')
+  function onLogin(userName, password, setError, setOpen, setOpenSnackBar) {
     const credentials = {
       email: userName,
       password: password,
@@ -18,19 +20,25 @@ function DoctorLogin({ history }) {
         const { data } = res
         if (!data?.accessToken) {
           setError(true)
+          setOpen(false)
 
           return
         }
+        setOpen(false)
         localStorage.setItem('virujhToken', data.accessToken)
         localStorage.setItem('role', data.role)
         localStorage.setItem('docKey', data.doctorKey)
         localStorage.setItem('accountKey', data.accountKey)
         const rolesPermission = JSON.stringify(data.rolesPermission)
         localStorage.setItem('rolesPermission', rolesPermission)
+        localStorage.setItem('hospitalName',data.hospitalName)
+        localStorage.setItem('hospitalPhoto',data.hospitalPhoto)
+        localStorage.setItem('photo', data.photo )
         history.push('/doctors')
       })
       .catch(() => {
-        setError(true)
+        setOpen(false)
+        setOpenSnackBar(true)
       })
   }
 

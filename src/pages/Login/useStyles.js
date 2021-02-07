@@ -49,10 +49,19 @@ const useStyles = makeStyles(() => ({
     },
 
     emptyField: {
-      border: '1px solid #ff0000',
       '& fieldset': {
+        right: -0.3,
         top: -3.8,
-      }
+        border: '1px solid #f44336 !important',
+      },
+    },
+
+    emptyPasswordField: {
+      '& fieldset': {
+        right: -0.3,
+        top: -3.8,
+        border: '1px solid #f44336 !important',
+      },
     },
   
     content: {
@@ -74,13 +83,23 @@ const useStyles = makeStyles(() => ({
     loginButton: {
       width: 415,
     },
-  
-    text: {
+    headerfeild:{
+      display:'flex',
       marginBottom: 10,
-      color: '#645a5a',
       fontSize: 13,
     },
+    text: {
+     
+      color: '#645a5a',
+     
+   
+    },
+    textanother: {
+      position:'absolute',
+      left:'49%',
+     color: '#8a8484',
   
+    },
     emptytext: {
       color: '#f44336',
       paddingTop: 2,
@@ -96,6 +115,17 @@ const useStyles = makeStyles(() => ({
       marginRight: 5,
       color: '#a0a0a0',
     },
+    
+    backdrop: {
+      zIndex: 0,
+      color: '#fff',
+    },
+
+    spinner: {
+      position: 'fixed',
+      top: '50%',
+      left: '50%',
+    }
   }))
 
 export default useStyles  

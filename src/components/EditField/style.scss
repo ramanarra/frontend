@@ -1,8 +1,7 @@
 .edit-field-wrap {
   display: inline-block;
-  .edit-field {
-    outline: none;
-    border: none;
+  .edit-field,
+  .edit-field-area {
     font-size: 11.5px;
 
     &:disabled {
@@ -11,8 +10,18 @@
     }
   }
 
+  .edit-field {
+    outline: none;
+    border: none;
+  }
+
+  .edit-field-area {
+    vertical-align: top;
+    resize: none;
+  }
+
   .edit-toggle-btn,
-  .save-btn {
+  .done-toggle-btn {
     color: #0bb5ff;
     min-height: 0;
     height: 24px;
@@ -24,5 +33,9 @@
     .MuiSvgIcon-fontSizeSmall {
       font-size: 16px;
     }
+  }
+
+  .edit-toggle-btn.is-textarea {
+    margin-left: 10px;
   }
 }

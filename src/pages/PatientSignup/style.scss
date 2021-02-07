@@ -16,7 +16,7 @@
     min-width: 37vw;
 
     .title {
-      font-size: 20px;
+      font-size: 16px;
       text-align: center;
       letter-spacing: 2.5px;
       position: relative;
@@ -58,6 +58,9 @@
     .txt-field-wrap {
       .txt-field {
         width: 100%;
+        .MuiOutlinedInput-notchedOutline {
+          border-color: #dedede !important;
+        }
       }
       .err-msg {
         font-size: 11px;
@@ -68,6 +71,18 @@
       padding-bottom: 17px;
     }
 
+    .signup-age-fld {
+      .txt-label-wrap {
+        display: inline-flex;
+        position: relative;
+
+        .star-icon {
+          top: -10px;
+          left: 20px;
+        }
+      }
+    }
+
     .dob-field {
       font-size: 14px;
       font-weight: normal;
@@ -75,7 +90,20 @@
       padding-bottom: 17px;
 
       .field-label {
-        margin-bottom: 8px;
+        label {
+          margin: 0;
+        }
+
+        .star-icon {
+          width: 8px;
+          color: #ff0023;
+          position: absolute;
+          top: -10px;
+        }
+      }
+
+      .MuiOutlinedInput-notchedOutline {
+        border-color: #dedede !important;
       }
 
       .error-msg {
@@ -108,10 +136,14 @@
         width: 100%;
       }
 
+      .signin-btn-align {
+        padding-left: 20px !important;
+      }
+
       .signin-btn-wrap {
         font-size: 12px;
         padding: 7px 0;
-        color: #d5d5d5;
+        color: #9e9d9d !important;
 
         .signin-btn {
           color: #0bb5ff;

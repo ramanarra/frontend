@@ -1,0 +1,24 @@
+@import '../../mixins/common';
+
+.date-range-picker-popup {
+  .date-picker-wrap {
+    .okay-btn-wrap {
+      text-align: right;
+      padding: 20px;
+
+      .okay-btn {
+        min-width: 70px;
+        border-radius: 999999999px;
+        background: #0bb5ff;
+        color: #fff;
+        text-transform: capitalize;
+      }
+    }
+  }
+}
+
+.date-range-picker {
+  .date-range-picker-txt-field .MuiOutlinedInput-input {
+    text-align: center;
+  }
+}

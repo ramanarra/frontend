@@ -1,18 +1,14 @@
 import React, { useState } from 'react'
 import Moment from 'moment'
-import { Box, Typography, FormControl, NativeSelect } from '@material-ui/core'
-import SearchIcon from '@material-ui/icons/Search'
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
+import { Box, Typography } from '@material-ui/core'
 import EventIcon from '@material-ui/icons/Event'
-import MoreVertIcon from '@material-ui/icons/MoreVert'
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord'
 
+import messages from '../../../../lib/iconMsg'
 import Stretch from '../../../../components/Stretch'
-import View from '../../../../assets/img/icons/view.svg'
-import Filter from '../../../../assets/img/icons/filter.svg'
 import useStyle from './useHeaderStyle'
 import Select from '../../../../components/Select'
+import { ArrowBackTip, ArrowForwardTip } from '../../../../components/Tooltip'
 
 const currentDay = Moment()
 
@@ -23,14 +19,9 @@ function Header({ forwardPagination, backwardPagination, slots, paginationNumber
 
   const [date, setDate] = useState(currentDay)
 
-  const currentDate = Moment.utc(date)
+  const startDay = Moment(slots[0].day).format('DD MMM, YYYY')
 
-  const startDay =
-    paginationNumber === 0
-      ? currentDate.format('DD MMM, YYYY')
-      : Moment.utc(slots[0].day).format('DD MMM, YYYY')
-
-  const endDay = Moment.utc(slots[6].day).format('DD MMM, YYYY')
+  const endDay = Moment(slots[(slots.length) - 1].day).format('DD MMM, YYYY')
 
   const month = Moment(startDay).format('MMMM, YYYY')
 
@@ -56,15 +47,9 @@ function Header({ forwardPagination, backwardPagination, slots, paginationNumber
           <Typography>{startDay.concat(' -' + endDay)}</Typography>
           <EventIcon className={classes.eventIcon} />
         </Box>
-        <ArrowBackIosIcon
-          className={classes.arrowBackward}
-          onClick={() => handleOnBack()}
-        />
-        <ArrowForwardIosIcon
-          className={classes.arrowForward}
-          onClick={() => handleOnNext()}
-        />
-      </Box>
+        <ArrowBackTip  onClick={() => handleOnBack()} title={messages.leftarrow} placement='top' />
+        <ArrowForwardTip  onClick={() => handleOnNext()} title={messages.rightarrow} placement='top' />
+     </Box>
       <Stretch />
       <Box display="flex">
         <FiberManualRecordIcon className={classes.freeSlot} />

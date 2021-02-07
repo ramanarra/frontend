@@ -7,29 +7,41 @@ import './assets/fonts/product-sans/stylesheet.css'
 import './assets/fonts/icomoon.css'
 import './index.scss'
 import theme from './theme'
-import SelectRole from './pages/SelectRole'
 import Login from './pages/Login'
 import Layouts from './Layouts'
 import * as serviceWorker from './serviceWorker'
 import PatientSignup from './pages/PatientSignup'
 import DoctorSignUp from './pages/DoctorSignUp'
 import DoctorLogin from './pages/Login/DoctorLogin'
+import CorporateLogin from './pages/Login/Corporatelogin'
+import privacyPolicy from './pages/privacyPolicy/'
 import VideoConsultation from './pages/VideoConsultation'
+import { Provider } from 'react-redux'
+import store from './store'
+import combineReducers from './reducers'
+import { createStore } from 'redux'
+import ForgotPassword from './pages/ForgotPassword'
+import OtpVerifiaction from './pages/OtpVerification'
 
 ReactDOM.render(
+  <Provider store={store}>
     <ThemeProvider theme={theme}>
-      <BrowserRouter>
+      <BrowserRouter basename="/app">
         <Switch>
-          <Route exact path={'/select-role'} component={SelectRole} />
           <Route exact path={'/login'} component={Login} />
           <Route exact path={'/doctor/login'} component={DoctorLogin} />
           <Route exact path={'/patient/registration'} component={PatientSignup} />
           <Route exact path={'/doctor/registration'} component={DoctorSignUp} />
           <Route exact path={'/video-consultation'} component={VideoConsultation} />
+          <Route exact path={'/corporateLogin'} component={CorporateLogin} />
+          <Route exact path={'/privacy'} component={privacyPolicy} />
+          <Route exact path={'/forgot-password'} component={ForgotPassword} />
+          <Route exact path={'/otp-verification'} component={OtpVerifiaction} />
           <Route path={'/'} component={Layouts} />
         </Switch>
       </BrowserRouter>
-    </ThemeProvider>,
+    </ThemeProvider>
+  </Provider>,
   document.getElementById('root')
 )
 

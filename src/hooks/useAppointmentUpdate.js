@@ -24,8 +24,9 @@ function useAppointmentUpdate(refetch) {
       })
       .catch((err) => {
         setLoading(false)
-        const response = {name: 'Error',message: 'Something went to wrong'}
+        const response = {name: 'Error', status: err.response.status}
         setData(response)
+        refetch()
       })
   }
 

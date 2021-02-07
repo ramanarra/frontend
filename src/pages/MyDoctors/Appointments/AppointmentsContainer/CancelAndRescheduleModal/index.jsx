@@ -15,6 +15,8 @@ import useManualFetch from '../../../../../hooks/useManualFetch'
 import CancleAppointment from './CancleAppointmentDialog'
 import RescheduleAppointment from './RescheduleAppointmentDialog'
 import useStyle from './useStyle'
+import ConfirmationModal from './ConfirmationModal'
+import  { useHistory } from 'react-router-dom'
 
 function CancleAndRescheduleModal({
   appointmentId,
@@ -36,6 +38,12 @@ function CancleAndRescheduleModal({
   const [openCanclationDialog, setCanclationDialog] = useState(false)
 
   const [openReschedule, setOpenReschedule] = useState(false)
+
+  const [openConfirmation, setOpenConfirmation] = useState(false)
+
+  const [parameter, setParameter] = useState(null)
+
+  const history = useHistory()
 
   useEffect(() => {
     if (open) {
@@ -61,6 +69,8 @@ function CancleAndRescheduleModal({
   const email = patientView?.patientDetails?.email
     ? patientView.patientDetails.email
     : '-'
+    
+  const openDetials = (data) => history.push(`/patients/${patientId}`)
 
   function handleCancle(event) {
     onClose(event)
@@ -78,9 +88,17 @@ function CancleAndRescheduleModal({
     setOpenReschedule(true)
   }
 
+  function handleOnClose() {
+    setOpenConfirmation(false)
+  }
+
+  function handleConfirmation() {
+    setOpenConfirmation(true)
+  }
+
   return (
     <Box>
-      {patientView ? (
+      {patientView && (
         <Dialog open={open} className={classes.dialogBox}>
           <DialogTitle className={classes.dialogTitle}>
             <Box display="flex">
@@ -147,9 +165,9 @@ function CancleAndRescheduleModal({
             </Box>
           </DialogContent>
           <Box display="flex" className={classes.buttons}>
-          <Box className={classes.close} onClick={handleClose}>
-              <Typography variant="h5" className={classes.closeBtn}>
-                CLOSE
+            <Box className={classes.patientDetails} onClick={openDetials.bind(this, patientId)}> 
+              <Typography variant="h5" className={classes.patientDetailsBtn}>
+                PATIENT DETAILS
               </Typography>
             </Box>
             <Box className={classes.cancle} onClick={handleCancle}>
@@ -164,7 +182,7 @@ function CancleAndRescheduleModal({
             </Box>
           </Box>
         </Dialog>
-      ) : null}
+      )}
 
       {openCanclationDialog && (
         <CancleAppointment
@@ -192,6 +210,17 @@ function CancleAndRescheduleModal({
           firstName={firstName}
           lastName={lastName}
           email={email}
+          setOpenConfirmation={handleConfirmation}
+          setParameter={setParameter}
+        />
+      )}
+      {openConfirmation && (
+        <ConfirmationModal
+          open={openConfirmation}
+          slotTime={slotTime}
+          onClose={handleOnClose}
+          parameter={parameter}
+          onSave={onSave}
         />
       )}
     </Box>

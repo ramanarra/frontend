@@ -5,8 +5,8 @@ import { Edit, Check, Clear } from '@material-ui/icons'
 import IconButton from '@material-ui/core/IconButton'
 
 import NumberTextField from '../../components/NumberTextField'
-import SnackBar from '../../components/SnackBar'
-
+import messages from '../../lib/iconMsg'
+import { EditTip } from '../../components/Tooltip'
 
 const useStyles = makeStyles(() => ({
   text: {
@@ -34,13 +34,17 @@ const useStyles = makeStyles(() => ({
   },
 }))
 
-const Cancellation = ({ configDetails, doctorKey, onSave, isAbleToWrite, response}) => {
+const Cancellation = ({
+  configDetails,
+  doctorKey,
+  onSave,
+  isAbleToWrite,
+}) => {
   const classes = useStyles()
   const [autoCancelHours, setAutoCancelHours] = useState(0)
   const [autoCancelDays, setAutoCancelDays] = useState(0)
   const [autoCancelMins, setAutoCancelMins] = useState(0)
   const [disable, setDisable] = useState(false)
-  const [open, setOpen] = useState(false)
 
   useEffect(() => {
     if (configDetails) {
@@ -67,7 +71,6 @@ const Cancellation = ({ configDetails, doctorKey, onSave, isAbleToWrite, respons
       }
       onSave(params)
       setDisable(false)
-      setOpen(true)
     }
   }
 
@@ -87,14 +90,6 @@ const Cancellation = ({ configDetails, doctorKey, onSave, isAbleToWrite, respons
     if (!isNaN(event.target.value) && event.target.value < 60) {
       setAutoCancelMins(event.target.value)
     }
-  }
-
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return
-    }
-
-    setOpen(false)
   }
 
   return (
@@ -124,35 +119,30 @@ const Cancellation = ({ configDetails, doctorKey, onSave, isAbleToWrite, respons
           />
           {isAbleToWrite && (
             <Box paddingLeft={1} marginTop={0}>
-            {!disable ? (
-              <IconButton className={classes.iconButton} onClick={() => setDisable(true)}>
-                <Edit
-                  className={classes.editIcon}
-                />
-              </IconButton>
-            ) : (
-              <div>
-                <IconButton className={classes.iconButton} onClick={handleOnCancel}>
-                  <Clear
-                    className={classes.cancelation}
-                  />
+              {!disable ? (
+                <IconButton
+                  className={classes.iconButton}
+                  onClick={() => setDisable(true)}
+                >
+                  <EditTip title={messages.edit} placement="right" />
                 </IconButton>
-                <IconButton className={classes.iconButton} onClick={handleOnSave}>
-                  <Check className={classes.checkIcon} />
-                </IconButton>
-              </div>
-            )}
-          </Box>
+              ) : (
+                <div>
+                  <IconButton
+                    className={classes.iconButton}
+                    onClick={handleOnCancel}
+                  >
+                    <Clear className={classes.cancelation} />
+                  </IconButton>
+                  <IconButton className={classes.iconButton} onClick={handleOnSave}>
+                    <Check className={classes.checkIcon} />
+                  </IconButton>
+                </div>
+              )}
+            </Box>
           )}
         </Box>
-        {
-          response && response.statusCode !== 200 &&
-          <Typography>{response.message}</Typography>
-        }
       </Box>
-      {response && response.statusCode === 200 && (
-        <SnackBar open={open} message={response.message} onclose={handleClose} />
-      )}
     </Box>
   )
 }

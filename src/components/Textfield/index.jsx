@@ -3,9 +3,10 @@ import {
   FormControl,
   OutlinedInput,
   InputAdornment,
-  IconButton
+  IconButton,
+  InputLabel,
 } from '@material-ui/core'
-import { Cancel, Visibility, VisibilityOff } from '@material-ui/icons'
+import { Cancel, Visibility, VisibilityOff, Star } from '@material-ui/icons'
 import './style.scss'
 
 const Textfield = ({
@@ -22,6 +23,8 @@ const Textfield = ({
   error,
   hasValidation,
   inputProps,
+  isRequired,
+  matLabel,
   ...rest
 }) => {
   const [textType, setType] = React.useState(type || 'text')
@@ -32,8 +35,8 @@ const Textfield = ({
     onChange({
       target: {
         name,
-        value: ''
-      }
+        value: '',
+      },
     })
   }
 
@@ -72,7 +75,13 @@ const Textfield = ({
         variant="outlined"
         size="small"
       >
-        {!!label && <label className="txt-field-label">{label}</label>}
+        {!!label && (
+          <div className="txt-label-wrap">
+            <label className="txt-field-label">{label}</label>
+            {isRequired && <Star className="star-icon" />}
+          </div>
+        )}
+        {!!matLabel && <InputLabel>{matLabel}</InputLabel>}
         <OutlinedInput
           className="txt-field-inp"
           placeholder={placeholder}
@@ -82,9 +91,7 @@ const Textfield = ({
           onChange={onChange}
           inputProps={inputProps}
           startAdornment={
-            !!prefix && (
-              <InputAdornment position="start">{prefix}</InputAdornment>
-            )
+            !!prefix && <InputAdornment position="start">{prefix}</InputAdornment>
           }
           endAdornment={suffixElement()}
           {...rest}

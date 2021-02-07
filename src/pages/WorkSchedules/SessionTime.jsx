@@ -3,48 +3,50 @@ import { Typography, TextField } from '@material-ui/core'
 
 import OptionBox from './OptionBox'
 import { minsSuffix } from '../../components/commonFormat.js'
-import SnackBar from '../../components/SnackBar'
 import ConfimationDialog from './ConfirmationDialog'
-
 
 const SessionTime = ({ data, handleUpdate, response }) => {
   const [sessionTime, setSessionTime] = useState(null)
   const [customTime, setCustomTime] = useState('')
   const [isChanged, setChanged] = useState(false)
-  const [open, setOpen] = useState(false)
 
   const [openDialog, setOpenDialog] = useState(false)
 
   const [value, setValue] = useState(null)
 
+  const [isEdit, setEdit] = useState(false)
+
   useEffect(() => {
     if (!!data) {
       const defaultTimes = [15, 30, 45, 60]
       defaultTimes.includes(data) ? setSessionTime(data) : setCustomTime(data)
+      defaultTimes.includes(data) ? setCustomTime('') : setCustomTime(data) 
     }
-  }, [data])
+  }, [data, response])
+
 
   const handleSave = (saveValue) => {
     const time = saveValue || sessionTime || customTime || 0
     isChanged && setChanged(false)
     handleUpdate({
       workScheduleConfig: {
-        consultationSessionTimings: time,
+        consultationSessionTimings: Number(time),
       },
     })
-    setOpen(true)
   }
 
   const handleChange = (value, type) => {
-    if (!!type) {
-      !!sessionTime && value !== '' && setSessionTime(null)
-      setCustomTime(value)
-      !isChanged && setChanged(true)
-    } else {
-      if (!!value && value !== sessionTime) {
-        !!customTime && setCustomTime('')
-        setSessionTime(value)
-        handleSave(value)
+    if (Number(value) > 0 && Number(value) <= 60) {
+      if (!!type) {
+        !!sessionTime && value !== '' && setSessionTime(null)
+        setCustomTime(value)
+        !isChanged && setChanged(true)
+      } else {
+        if (!!value && value !== sessionTime) {
+          !!customTime && setCustomTime('')
+          setSessionTime(value)
+          handleSave(value)
+        }
       }
     }
   }
@@ -54,26 +56,30 @@ const SessionTime = ({ data, handleUpdate, response }) => {
   }
 
   const handleKey = (e) => {
+    setEdit(true)
     if (e.keyCode === 13) {
-      isChanged && handleSave()
+      isChanged && setOpenDialog(true)
     }
   }
 
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return
-    }
+  
 
-    setOpen(false)
-  }
-
-  const handleOnClick = (value) =>{
+  const handleOnClick = (value, data) => {
+    setEdit(false)
     setValue(value)
-    setOpenDialog(true)
+
+    if (data) {
+      setOpenDialog(true)
+    } else {
+      handleChange(value)
+    }
+    
   }
 
   const handleOnClose = (event) => {
     setOpenDialog(false)
+
+    setEdit(false)
 
     event.preventDefault()
   }
@@ -87,22 +93,22 @@ const SessionTime = ({ data, handleUpdate, response }) => {
         <OptionBox
           className={'session-option' + activeBox(15)}
           value="15 minutes"
-          onClick={() => handleOnClick(15)}
+          onClick={() => handleOnClick(15, data)}
         />
         <OptionBox
           className={'session-option' + activeBox(30)}
           value="30 minutes"
-          onClick={() => handleOnClick(30)}
+          onClick={() => handleOnClick(30, data)}
         />
         <OptionBox
           className={'session-option' + activeBox(45)}
           value="45 minutes"
-          onClick={() => handleOnClick(45)}
+          onClick={() => handleOnClick(45, data)}
         />
         <OptionBox
           className={'session-option' + activeBox(60)}
           value="60 minutes"
-          onClick={() => handleOnClick(60)}
+          onClick={() => handleOnClick(60, data)}
         />
         <div className="session-option">
           <TextField
@@ -111,32 +117,23 @@ const SessionTime = ({ data, handleUpdate, response }) => {
             onChange={(e) => handleChange(e.target.value, 1)}
             onKeyDown={handleKey}
             placeholder="20mins."
-            inputProps={{
-              onBlur: () => isChanged && handleSave(),
-            }}
             InputProps={{
               inputComponent: minsSuffix,
             }}
           />
         </div>
-        {
-          response && response.statusCode !== 200 &&
-          <Typography>{response.message}</Typography>
-        }
       </div>
-      {response && response.statusCode === 200 && (
-        <SnackBar openDialog={open} message={response.message} onclose={handleClose} severity={'success'} />
-      )}
-      {
-        openDialog && (
-          <ConfimationDialog
+     
+      {openDialog && (
+        <ConfimationDialog
           open={openDialog}
           onClose={handleOnClose}
           handleChange={handleChange}
           value={value}
-           />
-        )
-      }
+          handleSave={handleSave}
+          isEdit={isEdit}
+        />
+      )}
     </div>
   )
 }

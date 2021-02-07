@@ -1,19 +1,26 @@
 import React, { useState } from 'react'
 import classNames from 'classnames'
+import { connect, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { Box, Button, Typography } from '@material-ui/core'
+import { Box, Button, Typography , Avatar} from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import ClickAwayListener from '@material-ui/core/ClickAwayListener'
+import ExitToAppIcon from '@material-ui/icons/ExitToApp'
+import AccountBoxIcon from '@material-ui/icons/AccountBox'
+import Backdrop from '@material-ui/core/Backdrop'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 import Stretch from '../../components/Stretch'
 import Logo from '../../assets/img/logo.png'
 import HospitalLogo from '../../assets/img/hospitalLogo.png'
 import useManualFetch from '../../hooks/useManualFetch'
 import { METHOD, URL } from '../../api'
+import message from './../../lib/iconMsg'
+import { NotificationTip } from '../../components/Tooltip'
 
 const useStyles = makeStyles(() => ({
   appBar: {
-    height: 65,
+    height: 70,
     paddingLeft: 20,
     paddingRight: 60,
     display: 'flex',
@@ -42,7 +49,7 @@ const useStyles = makeStyles(() => ({
   },
 
   logoImg: {
-    height: 78,
+    height: 70,
   },
 
   text: {
@@ -55,7 +62,8 @@ const useStyles = makeStyles(() => ({
   },
 
   hospitalLogo: {
-    width: 30,
+    width: 25,
+    height: 25,
     paddingTop: 5,
     cursor: 'pointer',
   },
@@ -80,8 +88,10 @@ const useStyles = makeStyles(() => ({
     paddingTop: 2.5,
     color: '#5c5a5a',
     paddingLeft: 5,
+    marginLeft: 5,
   },
   edit: {
+    marginLeft: 5,
     fontSize: 14,
     cursor: 'pointer',
     color: '#5c5a5a',
@@ -89,18 +99,38 @@ const useStyles = makeStyles(() => ({
     paddingBottom: 2.5,
     borderBottom: '1px solid #f3f3f3',
   },
+  profileIcon: {
+    width: 22,
+  },
+  exitIcon: {
+    width: 22,
+  },
+  backdrop: {
+    zIndex: 1,
+    color: '#fff',
+  },
+  spinner: {
+    position: 'fixed',
+    top: '50%',
+    left: '50%',
+  },
 }))
 
-export default function DoctorHeader() {
+function DoctorHeader({ socket, timer }) {
   const classes = useStyles()
-
   const history = useHistory()
-
   const [open, setOpen] = useState(false)
-
-  const [updateData, updateError, isUpdating, data] = useManualFetch()
+  const [openSpinner, setOpenSpinner] = useState(false)
+  const [updateData, updateError, isUpdating, data] = useManualFetch() 
+  
+  const IndividualHospitalName = useSelector(state => state.hospital.hospitalName) || window.localStorage.getItem('hospitalName')
+  const hospitalProfile = useSelector(state => state.hospital.hospitalProfile) || window.localStorage.getItem('hospitalPhoto')
 
   function handleOnVideoClick() {
+    if (socket) {
+      socket.disconnect()
+      clearInterval(timer)
+    }
     history.push('/video-consultation')
   }
 
@@ -113,13 +143,18 @@ export default function DoctorHeader() {
   }
 
   function handleOnLogout() {
+    setOpenSpinner(true)
     updateData(METHOD.GET, URL.logout)
+    clearInterval(timer)
+    if (socket) {
+      socket.disconnect()
+    }
   }
 
   if (data) {
     if (data.message === 'sucessfully loggedout') {
       localStorage.clear()
-      history.push('/login')
+      history.push('/doctor/login')
     }
   }
 
@@ -128,46 +163,82 @@ export default function DoctorHeader() {
     setOpen(false)
   }
 
-  function handleOnClose() {
-    setOpenDialog(false)
-  }
-
   return (
     <Box className={classes.appBar}>
       <img className={classes.logoImg} src={Logo} alt="logo" />
       <Stretch />
+      {localStorage.getItem('role') === 'DOCTOR' && (
+        <Box className={classes.gap}>
+          <Button
+            className={classes.videoButton}
+            variant="contained"
+            color="primary"
+          >
+            <i className="icon-video "></i>
+            <span onClick={handleOnVideoClick} className={classes.videoText}>
+              VIDEO CONSULTATION
+            </span>
+          </Button>
+        </Box>
+      )}
+
+        <Box className={classes.gap}>
+          <NotificationTip  title={message.notification} placement="bottom" />
+        </Box>
+    
       <Box className={classes.gap}>
-        <Button className={classes.videoButton} variant="contained" color="primary">
-          <i className="icon-video "></i>
-          <span onClick={handleOnVideoClick} className={classes.videoText}>
-            VIDEO CONSULTATION
-          </span>
-        </Button>
-      </Box>
-      <Box className={classes.gap}>
-        <i className={classNames('icon-notify', classes.notificationImg)}></i>
-      </Box>
-      <Box className={classes.gap}>
-        <Typography className={classes.text}>Amrit Medicare Pvt. Ltd.</Typography>
+        <Typography className={classes.text}>{IndividualHospitalName}</Typography>
       </Box>
       <ClickAwayListener onClickAway={handleOnAwayClick}>
         <Box className={classes.hospitalLogoContainer}>
-          <img
-            src={HospitalLogo}
+          {localStorage.getItem('role') === 'DOCTOR' && (
+          <Avatar
+            src={hospitalProfile}
             alt="hospital logo"
             className={classes.hospitalLogo}
             onClick={handleOnClick}
           />
+          )} 
+          {localStorage.getItem('role') === 'ADMIN' && (
+          <Avatar
+            src={hospitalProfile}
+            alt="hospital logo"
+            className={classes.hospitalLogo}
+            onClick={handleOnClick}
+          />
+          )}
           {open && (
             <Box className={classes.logout}>
-              <Typography className={classes.edit} onClick={handleOnEdit}>Edit Profile</Typography>
-              <Typography className={classes.logoutText} onClick={handleOnLogout}>
-                Logout
-              </Typography>
+              <Box display="flex">
+                <AccountBoxIcon className={classes.profileIcon} />
+                <Typography className={classes.edit} onClick={handleOnEdit}>
+                  Edit Profile
+                </Typography>
+              </Box>
+              <Box display="flex">
+                <ExitToAppIcon className={classes.exitIcon} />
+                <Typography className={classes.logoutText} onClick={handleOnLogout}>
+                  Logout
+                </Typography>
+              </Box>
             </Box>
           )}
         </Box>
       </ClickAwayListener>
+      {openSpinner && (
+        <Backdrop className={classes.backdrop} open={openSpinner}>
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      )}
     </Box>
   )
 }
+
+const mapStateToProps = (state) => {
+  return {
+    socket: state.doctor.socket,
+    timer: state.doctor.timer,
+  }
+}
+
+export default connect(mapStateToProps, null)(DoctorHeader)

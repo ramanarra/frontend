@@ -46,11 +46,11 @@ function addNoteForCancle(slot) {
 function List({ appointments, onSave, doctorKey }) {
   const classes = useStyle()
 
-  const date = moment.utc(appointments.day)
+  const date = moment(appointments.day)
 
   const currentDate = date.format('DD')
 
-  const currentDay = date.format('dddd')
+  const currentDay = appointments.dayOfWeek
 
   const todayDate = date.format('DD/MM/YYYY')
 

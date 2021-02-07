@@ -12,8 +12,13 @@ const useStyle = makeStyles(() => ({
     padding: 20,
     height: '100%',
     background: '#f9f9f9',
-    overflowY: 'auto',
   },
+  appointmentList: {
+    width: '100%',
+    height: 'calc(100% - 90px)',
+    overflowY: 'auto',
+    marginTop: 5,
+  }
 }))
 
 function PatientAppoinments() {
@@ -28,7 +33,9 @@ function PatientAppoinments() {
   return (
     <Box className={classes.container}>
       <Header />
-      {pathName === 'upcoming' ? <UpcomingAppointments /> : <PastAppointments />}
+      <Box className={classes.appointmentList}>
+        {pathName === 'upcoming' ? <UpcomingAppointments /> : <PastAppointments />}
+      </Box>
     </Box>
   )
 }

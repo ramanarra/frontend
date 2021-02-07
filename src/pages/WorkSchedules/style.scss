@@ -94,6 +94,13 @@
         margin-left: 5px;
         margin-right: 15px;
 
+        .edit-field-wrap {
+          .edit-field {
+            max-width: 26px;
+            // text-align: right;
+          }
+        }
+
         .overbooking-field {
           outline: none;
           border: none;
@@ -147,6 +154,7 @@
           font-weight: 400;
           font-size: 10px;
           white-space: nowrap;
+          text-align: center;
           :hover {
             border: none;
           }
@@ -209,6 +217,22 @@
     }
 
     .slots-wrap {
+      .list-newline{
+        color:#0bb5ff;
+        p {
+          width: 100%; 
+          text-align: center; 
+          border-bottom: 1px solid #0bb5ff; 
+          line-height: 0.1em;
+          margin: 10px 0 20px; 
+       } 
+       
+       p span { 
+        font-size: 11.5px;
+           background:#fff; 
+           padding:8px 8px; 
+       }
+      }
       padding: 17px 20px 0;
 
       .slot {
@@ -239,6 +263,12 @@
               }
             }
           }
+          .MuiFormHelperText-root.Mui-error {
+            margin-left: 0px;
+            margin-right: 0px;
+            position: absolute;
+            top: 23px;
+          }
         }
         .txt-field.end-time {
           margin-left: 10px;
@@ -258,7 +288,7 @@
     }
 
     .list-btns {
-      padding: 5px 20px;
+      padding: 8px 20px;
       font-size: 12px;
       color: #0bb5ff;
       font-weight: 500;
@@ -322,37 +352,4 @@
   border-color: #0bb5ff;
   color: #0bb5ff;
   transition: 0.3s;
-}
-
-// ----------------------------------- edit field -------------------------------------
-
-.edit-field-wrap {
-  display: inline-block;
-  .edit-field {
-    outline: none;
-    border: none;
-    max-width: 26px;
-    font-size: 11.5px;
-    // text-align: right;
-
-    &:disabled {
-      background: transparent;
-      color: #000;
-    }
-  }
-
-  .edit-toggle-btn,
-  .save-btn {
-    color: #0bb5ff;
-    min-height: 0;
-    height: 24px;
-    width: 24px;
-    &:hover {
-      background: transparent;
-    }
-
-    .MuiSvgIcon-fontSizeSmall {
-      font-size: 16px;
-    }
-  }
 }

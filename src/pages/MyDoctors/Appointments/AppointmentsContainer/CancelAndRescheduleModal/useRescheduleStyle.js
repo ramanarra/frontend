@@ -10,7 +10,6 @@ const useRescheduleStyle = makeStyles(() => ({
   },
   title: {
     fontSize: 23,
-    color: 'black',
     textAlign: 'center',
     paddingLeft: 220,
     color: '#524646',

@@ -44,7 +44,7 @@ function AppointmentContainer({
         paginationNumber={paginationNumber}
       /> }
       <Box display="flex" flexWrap="wrap" className={classes.scheduleList}>
-        {appointmentSlots?.message === 'Content Not Available' ? (
+        {(appointmentSlots?.message === 'Content Not Available') || appointmentSlots.length === 0 ? (
           <Box className={classes.imgContainer}>
             <img
               src={NoAppoinmentsImg}
@@ -52,7 +52,7 @@ function AppointmentContainer({
               className={classes.noAppoinmentsImg}
             />
           </Box>
-        ) : (
+        ) : ( 
           appointmentSlots?.length > 0 &&
           appointmentSlots.map((slot, index) => {
             return (

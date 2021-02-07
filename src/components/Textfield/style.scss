@@ -1,3 +1,5 @@
+@import '../../mixins/common';
+
 .txt-field-wrap {
   .txt-field {
     .txt-field-inp {
@@ -33,10 +35,19 @@
     }
   }
 
+  .txt-label-wrap {
+
   .txt-field-label {
     font-size: 14px;
     font-weight: normal;
     margin-bottom: 8px;
+  }
+}
+
+  .star-icon {
+    width: 8px;
+    color: #ff0023;
+    position: absolute;
   }
 
   .txt-field-error {
@@ -44,6 +55,7 @@
     display: block;
     font-size: 14px;
     font-weight: normal;
+    height: 10px;
   }
 }
 

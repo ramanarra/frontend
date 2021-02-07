@@ -58,13 +58,16 @@ function CreateAppointmentForNewPatient({
 
   const [dateOfBirth, setDateOfBirth] = useState(null)
 
+  const [error, setError] = useState(false)
+
   function handleClose() {
     onClose(false)
     handleClear()
   }
 
   function handleOnSubmit() {
-    onClose(false)
+    if(firstName !=='' && email !== '' && dateOfBirth !== null) {
+      onClose(false)
     const params = {
       phone: patientData,
       firstName: firstName,
@@ -80,6 +83,10 @@ function CreateAppointmentForNewPatient({
     }
     onSave(URL.createAppointmentAlongWIthRegisteringPatient, params)
     handleClear()
+    }
+    else {
+      setError(true)
+    }
   }
 
   const handlePaymentOption = (event) => {
@@ -92,18 +99,22 @@ function CreateAppointmentForNewPatient({
 
   const handleFirstNameChange = (event) => {
     setFirstName(event.target.value)
+    setError(false)
   }
 
   const handleLastNameChange = (event) => {
     setLastName(event.target.value)
+    setError(false)
   }
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value)
+    setError(false)
   }
 
   const handleDateChange = (event) => {
     setDateOfBirth(event)
+    setError(false)
   }
 
   return (
@@ -200,7 +211,7 @@ function CreateAppointmentForNewPatient({
               </Box>
             </Box>
           </Box>
-          <Box className={classes.newPatientPreConsultation}>
+          {/* <Box className={classes.newPatientPreConsultation}>
             <Typography className={classes.optionHeader}>
               Pre-Consultation
             </Typography>
@@ -210,7 +221,11 @@ function CreateAppointmentForNewPatient({
               variant="outlined"
               disabled
             />
-          </Box>
+          </Box> */}
+          {
+            error &&
+            <Typography className={classes.errorMsg}>Please fill out the details</Typography>
+          }
           <Box className={classes.createButton}>
             <Box className={classes.submitbtn} onClick={handleOnSubmit}>
               <Typography className={classes.submitText}>

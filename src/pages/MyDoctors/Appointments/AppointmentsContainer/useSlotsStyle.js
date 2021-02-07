@@ -2,14 +2,13 @@ import { makeStyles } from '@material-ui/core/styles'
 
 const useSlotsStyle = makeStyles(() => ({
   container: {
-    marginLeft: 18,
-    marginBottom: 10,
-    height: 45,
+    marginLeft: '1.5%',
+    marginBottom: '0.9%',
     background: '#f9f9f9',
     backgroundColor: 'white',
   },
   box: {
-    width: 138,
+    width: '100%',
     height: 42,
     cursor: 'pointer',
   },
@@ -17,36 +16,36 @@ const useSlotsStyle = makeStyles(() => ({
     textAlign: 'center',
   },
   top: {
-    paddingLeft: 10,
-    paddingTop: 4,
+    paddingLeft: '8%',
+    paddingTop: '3%',
     height: 24,
   },
   bottom: {
-    paddingLeft: 11,
+    paddingLeft: '9%',
   },
   name: {
-    fontSize: 11,
+    fontSize: '55%',
     paddingTop: 3,
     paddingLeft: 2,
     alignSelf: 'flex-start',
     textTransform: 'capitalize',
   },
   schedule: {
-    width: 10,
-    height: 10,
-    marginTop: 1,
+    width: '7%',
+    height: '9%',
+    marginTop: '2%',
   },
   fromTime: {
-    fontSize: 9,
-    paddingLeft: 2,
+    fontSize: '45%',
+    paddingLeft: '2%',
   },
   toTime: {
-    fontSize: 9,
-    paddingLeft: 5,
+    fontSize: '45%',
+    paddingLeft: '3.1%',
   },
   total: {
-    fontSize: 8,
-    paddingRight: 7,
+    fontSize: '40%',
+    paddingRight: '5%',
   },
   radio: {
     marginTop: '-12px',
@@ -56,7 +55,7 @@ const useSlotsStyle = makeStyles(() => ({
     },
   },
   star: {
-    width: 12,
+    width: '9%',
     paddingBottom: 3,
   },
   singleSlot: {
@@ -64,8 +63,8 @@ const useSlotsStyle = makeStyles(() => ({
   },
 
   round: {
-    width: 12,
-    height: 12,
+    width: '8.5%',
+    height: '60%',
     borderRadius: '50%',
     backgroundColor: 'white',
     marginTop: 1,
@@ -79,7 +78,7 @@ const useSlotsStyle = makeStyles(() => ({
   },
 
   star: {
-    width: 11,
+    width: '9%',
     marginTop: -1,
   },
 }))

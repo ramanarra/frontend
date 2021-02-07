@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles'
 
 const useNavigationStyles = makeStyles(() => ({
   container: {
-    width: '98%',
+    width: '97.7%',
     background: '#f9f9f9',
     display: 'flex',
     backgroundColor: 'white',
@@ -20,6 +20,18 @@ const useNavigationStyles = makeStyles(() => ({
     fontSize: 13.6,
     color: '#c7c7c7',
     fontWeight: 'normal',
+  },
+  contentlast:{ 
+    backgroundColor: 'rgb(11, 181, 255)',
+    color:'white',
+    borderRadius:"18px",
+    position:'absolute',
+    right:"60px",
+    top:"110px",
+    border: "1.5px solid #94dfff",
+    padding:"0.2% 1.1%",
+     textTransform:"capitalize",
+     fontSize:"65"
   },
 
   imgSize: {
@@ -63,6 +75,12 @@ const useNavigationStyles = makeStyles(() => ({
        marginTop: 10,
     }
   },
+
+  boxInlineSize: {
+    display:'flex',
+    marginLeft:50,
+},
+
 }))
 
 export default useNavigationStyles

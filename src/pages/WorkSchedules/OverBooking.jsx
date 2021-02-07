@@ -3,7 +3,7 @@ import { Typography } from '@material-ui/core'
 
 import Switch from '../../components/Switch'
 import OptionBox from './OptionBox'
-import EditField from './EditField'
+import EditField from '../../components/EditField'
 
 const OverBooking = ({ data, handleUpdate }) => {
   const [bookingData, setBookingData] = useState({

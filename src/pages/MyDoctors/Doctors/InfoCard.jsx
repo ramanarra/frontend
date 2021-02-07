@@ -1,9 +1,11 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 import { Avatar, Box, Typography, Button } from '@material-ui/core'
+import moment from 'moment'
 
 import { useInfocardStyles } from './useStyle'
 import getTimeFormatWithNoon from '../../../lib/dateLib'
+import Profile from '../../../assets/img/profile.png'
 
 const InfoCard = ({ doctorDetails, isRead }) => {
   const classes = useInfocardStyles()
@@ -19,16 +21,18 @@ const InfoCard = ({ doctorDetails, isRead }) => {
     hisrory.push(`/appointments/${doctorKey}`)
   }
 
+  let currentTime = moment().format('HH:mm:ss')
+
   return (
     <Box className={classes.container}>
-      <Box display="flex">
+      <Box display="flex" style={{height: 70}}>
         <Avatar
           alt="Remy Sharp"
-          src={doctorDetails.photo}
+          src={doctorDetails.photo ? doctorDetails.photo : Profile}
           className={classes.large}
         />
 
-        <Box style={{ marginLeft: 13, marginTop: 7 }}>
+        <Box style={{ marginLeft: 13, marginTop: 7, width: 200 }}>
           <Typography
             className={classes.name}
           >{`${doctorDetails.firstName} ${doctorDetails.lastName}`}</Typography>
@@ -38,7 +42,7 @@ const InfoCard = ({ doctorDetails, isRead }) => {
         </Box>
       </Box>
 
-      <Box marginTop={3} display="flex" height={56}>
+      <Box marginTop={2} display="flex" height={56}>
         <Box width={53}>
           <Typography className={classes.text}>Fees</Typography>
           <Typography
@@ -47,11 +51,11 @@ const InfoCard = ({ doctorDetails, isRead }) => {
         </Box>
 
         <Box paddingLeft={1.1}>
-          <Typography className={classes.text}>Today's Appoinment</Typography>
+          <Typography className={classes.text}>Today's Appointment</Typography>
           <Box className={classes.appointmentsContent}>
             {doctorDetails.todaysAppointment.map(
               (appointments, index) =>
-                appointments && (
+                appointments && appointments > currentTime && (
                   <Typography key={index} className={classes.appointments}>
                     {getTimeFormatWithNoon(appointments)}
                   </Typography>
@@ -61,14 +65,14 @@ const InfoCard = ({ doctorDetails, isRead }) => {
         </Box>
 
         <Box paddingLeft={2.4}>
-          <Typography className={classes.text}>Total Available slots</Typography>
+          <Typography className={classes.slotText}>Total Available slots</Typography>
           <Typography className={classes.value}>
             {doctorDetails.todaysAvailabilitySeats}
           </Typography>
         </Box>
       </Box>
 
-      <Box marginTop={1.5} display="flex" justifyContent="flex-end">
+      <Box marginTop={1.5} textAlign="end" justifyContent="flex-end">
         {isRead && (
           <Box>
             <Button

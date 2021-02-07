@@ -1,12 +1,9 @@
 import React from 'react'
-import { Link, useLocation, useHistory } from 'react-router-dom'
-import { Box } from '@material-ui/core'
 import classNames from 'classnames'
+import { Link, useLocation } from 'react-router-dom'
+import { Box } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
 
-import useManualFetch from '../../hooks/useManualFetch'
-import { METHOD, URL } from '../../api'
 import appointmentIcon from '../../assets/img/appointments.svg'
 
 const useStyles = makeStyles(() => ({
@@ -33,6 +30,10 @@ const useStyles = makeStyles(() => ({
     fontSize: 19,
     paddingTop: 14,
   },
+  report: {
+    fontSize: 20,
+    paddingTop: 14
+  },
   logout: {
     fontSize: 52,
     marginLeft: 13,
@@ -48,24 +49,10 @@ function PatientSideBar() {
   
   const location = useLocation()
 
-  const history = useHistory()
 
   const path = location.pathname.split('/')
 
   const pathName = path[2] 
-
-  const [updateData, updateError, isUpdating, data] = useManualFetch()
-
-  function handleOnLogout() {
-    updateData(METHOD.GET, URL.logout)
-  }
-
-  if(data) {
-    if(data.message === 'sucessfully loggedout') {
-      localStorage.clear()
-      history.push('/login')
-    }
-  }
 
   
   return (
@@ -83,9 +70,9 @@ function PatientSideBar() {
             })} to="/patient/setting">
           <i className="icon-settings "></i>
         </Link>
-        <PowerSettingsNewIcon className={classNames(classes.item, classes.logout, {
-          [classes.selectedColor]: pathName === 'logout',
-        })}  onClick={handleOnLogout} />
+        <Link className={classNames(classes.item, classes.report, {
+            [classes.selectedColor]: pathName === 'reports',
+          })} to="/patient/reports" ><i className="icon-progress "></i></Link>
       </Box>
     </Box>
   )

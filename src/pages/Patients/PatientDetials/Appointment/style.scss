@@ -1,0 +1,72 @@
+@import '../../../../mixins/common';
+
+.appointment-card {
+  position: relative;
+  padding: 10px;
+  display: inline-block;
+  border-left: 5px solid #3b42ef;
+  min-width: 350px;
+  min-height: 81px;
+
+  &-timing {
+    position: absolute;
+    right: 15px;
+    font-size: 0.9em;
+    color: #707070;
+  }
+
+  &-details {
+    display: flex;
+    align-items: center;
+
+    .appointment-date {
+      @include colCenter;
+      padding: 0 10px;
+      font-weight: bold;
+      color: #6c6c6c;
+
+      .date-day {
+        font-size: 2em;
+      }
+      .date-month {
+        font-size: 1.3em;
+      }
+    }
+
+    .appointment-info {
+      @include colMiddle;
+
+      .info-field {
+        margin: 2px;
+      }
+
+      .info-doc-name {
+        color: #626262;
+        font-weight: 500;
+        font-size: 1.2em;
+      }
+
+      .info-hospital {
+        color: #707070;
+        font-size: 0.9em;
+      }
+
+      .info-consult {
+        font-size: 0.8em;
+        color: #0bb5ff;
+      }
+    }
+  }
+}
+
+.appointment-card.color-2 {
+  border-left-color: #faa40b;
+}
+
+.appointment-card.color-3 {
+  border-left-color: #000;
+}
+
+.appointment-card.color-4 {
+  border-left-color: #35d276;
+}

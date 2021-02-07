@@ -9,12 +9,14 @@ import {
 } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 import StarIcon from '@material-ui/icons/Star'
-
+import messages from '../../../../../lib/iconMsg'
 import CreateAppointmentForExistingPatient from './CreateAppointmentForExistingPatient'
 import CreateAppointmentForNewPatient from './CreateAppointmentForNewPatient'
 import useStyle from './useStyle'
 import { METHOD, URL } from '../../../../../api'
 import useManualFetch from '../../../../../hooks/useManualFetch'
+import { ClosedTip } from '../../../../../components/Tooltip'
+
 
 function FreeSlotModal({ slot, open, onClose, onSave, slotTime, doctorKey }) {
   const classes = useStyle()
@@ -29,10 +31,15 @@ function FreeSlotModal({ slot, open, onClose, onSave, slotTime, doctorKey }) {
 
   const [detail, setDetail] = useState(null)
 
+  const [error, setError] = useState(false)
+
   function handleOnClick(event) {
     if(phoneNumber !== '' && String(phoneNumber).length === 10) {
       onClose(event)
       setOpenNew(true)
+    }
+    else {
+      setError(true)
     }
     if(detail) {
       if(detail.phone !== phoneNumber) {
@@ -43,6 +50,7 @@ function FreeSlotModal({ slot, open, onClose, onSave, slotTime, doctorKey }) {
 
   function handleClear() {
     setPhoneNumber('')
+    setOpenOption(false)
   }
 
   function handleDetail() {
@@ -55,10 +63,12 @@ function FreeSlotModal({ slot, open, onClose, onSave, slotTime, doctorKey }) {
 
   function handleClose(event) {
     onClose(event)
+    setPhoneNumber('')
+    setOpenOption(false)
   }
 
   function handleOnchange(event) {
-    if (!isNaN(event.target.value)) {
+    if (!isNaN(event.target.value) && (event.target.value).length < 11) {
       setPhoneNumber(event.target.value)
       if (event.target.value !== '') {
         updateData(METHOD.POST, URL.patientSearch, {
@@ -68,6 +78,12 @@ function FreeSlotModal({ slot, open, onClose, onSave, slotTime, doctorKey }) {
     }
     if (!openOption) {
       setOpenOption(true)
+    }
+    if(error) {
+      setError(false)
+    }
+    if(event.target.value === '') {
+      setOpenOption(false)
     }
   }
 
@@ -86,7 +102,7 @@ function FreeSlotModal({ slot, open, onClose, onSave, slotTime, doctorKey }) {
         >
           <Box display="flex">
             <Typography variant="h5" className={classes.title}>Create Appointment</Typography>
-            <CloseIcon className={classes.closeIcon} onClick={handleClose} />
+            <ClosedTip  onClick={handleClose} title={messages.cancel} arrow placement="right" />
           </Box>
         </DialogTitle>
         <DialogContent className={classes.dialogContent}>
@@ -134,6 +150,10 @@ function FreeSlotModal({ slot, open, onClose, onSave, slotTime, doctorKey }) {
               </Box>
             )}
           </Box>
+          {
+            error && 
+            <Typography className={classes.errorMsg}>Please enter valid phone number</Typography>
+          }
           <Box>
             <Box display="flex" className={classes.noteOne}>
               <StarIcon className={classes.star} />

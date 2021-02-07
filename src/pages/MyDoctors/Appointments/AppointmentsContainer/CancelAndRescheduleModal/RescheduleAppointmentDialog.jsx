@@ -18,6 +18,7 @@ import { URL, METHOD } from '../../../../../api'
 import DatePicker from '../../../../../components/DatePicker'
 import useStyle from './useRescheduleStyle'
 import getTimeFormatWithNoon from '../../../../../lib/dateLib'
+import ConfirmationModal from './ConfirmationModal'
 
 function RescheduleAppointment({
   appointmentId,
@@ -32,6 +33,9 @@ function RescheduleAppointment({
   firstName,
   lastName,
   email,
+  setOpenConfirmation,
+  setParameter,
+  openConfirmation,
 }) {
   const classes = useStyle()
 
@@ -41,18 +45,25 @@ function RescheduleAppointment({
 
   const currentDate = moment(date).format('YYYY-MM-DD')
 
-  const [time, setTime] = useState({ start: '00:00:00', end: '00:00:00' })
+  let currentTime = moment().format('HH:mm:ss')
+
+  let todayDate = moment().format('YYYY-MM-DD')
+
+  const [time, setTime] = useState({ start: '', end: '' })
 
   const [show, setShow] = useState(false)
+
+  const [confirmation, setConfirmation] = useState(true)
 
   const key = useMemo(() => {
     return {
       doctorKey: id,
       appointmentDate: currentDate,
+      confirmation: confirmation
     }
-  }, [id, currentDate])
+  }, [id, currentDate, confirmation])
 
-  const [availableSlots] = useCustomFecth(METHOD.GET, URL.availableSlot, key, true)
+  const [availableSlots] = useCustomFecth(METHOD.POST, URL.availableSlot, key, true)
 
   function handleClose(event) {
     onClose(event)
@@ -71,20 +82,23 @@ function RescheduleAppointment({
         startTime: moment(time.start, 'HH:mm:ss').format('HH:mm'),
         endTime: moment(time.end, 'HH:mm:ss').format('HH:mm'),
         appointmentDate: moment(date).format('YYYY-MM-DD'),
+        confirmation: true,
       }
-      onSave(URL.appointmentReschedule, parameter)
+      setOpenConfirmation(true)
+      setParameter(parameter)
     }
   }
 
   const handleDateChange = (event) => {
     setDate(event)
+    setConfirmation(false)
   }
 
   const handleOnClick = (slotTiming) => {
-    if(show === true) {
+    if(show) {
       setShow(false)
     }
-    setTime(slotTiming)
+    setTime({start: slotTiming.startTime, end: slotTiming.endTime})
   }
 
   return (
@@ -151,36 +165,43 @@ function RescheduleAppointment({
             </Typography>
           </Box>
           <Box className={classes.date}>
-            <DatePicker
+            {
+              availableSlots?.date &&
+              <DatePicker
               name={'Select Your Date'}
               dateChange={handleDateChange}
-              value={date}
+              value={moment(availableSlots.date)}
               width={236}
               fontSize={12}
               disablePast={true}
             />
+            }
           </Box>
           <Box className={classes.available}>
             <Typography className={classes.availableText} variant="h5">
               Available Time Slots:
             </Typography>
             <Box display="flex" flexWrap="wrap" className={classes.availableSlots}>
-              {availableSlots &&
-                availableSlots.map((data, index) => {
+              {availableSlots?.slots &&
+                availableSlots.slots.map((data, index) => {
+                  let show = currentDate === todayDate ?
+                              data.startTime > currentTime ? true : false
+                              : true
                   return (
+                    show &&
                     <Button
                       className={classNames(classes.time, {
-                        [classes.selectedTab]: time.start === data.start,
+                        [classes.selectedTab]: time.start === data.startTime,
                       })}
                       onClick={() => handleOnClick(data)}
                       key={index}
                     >
                       <Typography
                         className={classNames(classes.timeText, {
-                          [classes.selectedText]: time.start === data.start,
+                          [classes.selectedText]: time.start === data.startTime,
                         })}
                       >
-                        {getTimeFormatWithNoon(data.start)}
+                        {getTimeFormatWithNoon(data.startTime)}
                       </Typography>
                     </Button>
                   )

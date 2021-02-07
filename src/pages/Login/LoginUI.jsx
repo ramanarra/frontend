@@ -5,10 +5,14 @@ import { useFormik } from 'formik'
 import { Paper, Box, Typography, TextField, Button } from '@material-ui/core'
 import VisibilityIcon from '@material-ui/icons/Visibility'
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff'
+import Backdrop from '@material-ui/core/Backdrop'
+import CircularProgress from '@material-ui/core/CircularProgress'
+import Api, { URL } from '../../api'
 
 import Centralize from '../../components/Centralize'
 import Logo from '../../assets/img/logo.png'
 import useStyles from './useStyles'
+import SnackBar from '../../components/SnackBar'
 
 const Login = ({
   UserNameText,
@@ -18,7 +22,12 @@ const Login = ({
   errorMessage,
 }) => {
   const history = useHistory()
+
   const classes = useStyles()
+
+  const userNameRef = React.useRef(null)
+
+  const passwordRef = React.useRef(null)
 
   const [error, setError] = useState(false)
 
@@ -27,6 +36,16 @@ const Login = ({
   const [userNameIndicate, setUserNameIndicate] = useState('')
 
   const [passwordIndicate, setPasswordIndicate] = useState('')
+
+  const [openSnackBar, setOpenSnackBar] = useState(false)
+
+  const [open, setOpen] = useState(false)
+
+  const [isFocus, setFocus] = useState(false)
+
+  const [userNameListen, setUserNameListen] = useState(false)
+
+  const [passwordListen, setPasswordListen] = useState(false)
 
   const name =
     localStorage.getItem('loginUser') === 'patient'
@@ -40,12 +59,28 @@ const Login = ({
       history.push('/patient/registration')
     } else {
       history.push('/doctor/registration')
+      // history.push('/corporateLogin')
     }
   }
 
   function doctorLoginPage() {
-    localStorage.setItem('loginUser', 'doctor')
     history.push('/doctor/login')
+  }
+
+  function patientLoginPage() {
+    history.push('/login')
+  }
+
+  function patientRegistration() {
+    history.push('/patient/registration')
+  }
+
+  function doctorRegistration() {
+    history.push('/doctor/registration')
+  }
+
+  function forgotPassword() {
+    history.push('/forgot-password')
   }
 
   const validate = () => {
@@ -67,37 +102,53 @@ const Login = ({
   }
 
   function handleOnSubmit(values) {
-    if (UserNameAutoComplete === 'email') {
-      if (values.userName === '') {
-        setUserNameIndicate('Please enter your email')
-      } else if (
-        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.userName)
-      ) {
-        setUserNameIndicate('Invalid email address')
-      }
+    if (!isFocus || passwordListen) {
+      if (UserNameAutoComplete === 'email') {
+        if (values.userName === '') {
+          setUserNameIndicate('Please enter your email')
+        } else if (
+          !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.userName)
+        ) {
+          setUserNameIndicate('Invalid email address')
+        }
 
-      if (values.password == '') {
-        setPasswordIndicate('Please enter your password')
-      }
+        if (values.password == '') {
+          setPasswordIndicate('Please enter your password')
+        }
 
-      if (
-        /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.userName) &&
-        values.password !== ''
-      ) {
-        onLogin(values.userName, values.password, setError)
-      }
-    } else if (UserNameText === 'Phone Number') {
-      if (values.userName === '') {
-        setUserNameIndicate('Please enter your phone Number')
-      } else if (String(values.userName).length < 10) {
-        setUserNameIndicate('Phone Number atleast have 10 Numbers')
-      }
-      if (values.password == '') {
-        setPasswordIndicate('Please enter your password')
-      }
+        if (
+          /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.userName) &&
+          values.password !== ''
+        ) {
+          setOpen(true)
+          onLogin(
+            values.userName,
+            values.password,
+            setError,
+            setOpen,
+            setOpenSnackBar
+          )
+        }
+      } else if (UserNameText === 'Phone Number') {
+        if (values.userName === '') {
+          setUserNameIndicate('Please enter your phone number')
+        } else if (String(values.userName).length < 10) {
+          setUserNameIndicate('Please enter the valid phone number')
+        }
+        if (values.password == '') {
+          setPasswordIndicate('Please enter your password')
+        }
 
-      if (String(values.userName).length > 9 && values.password !== '') {
-        onLogin(values.userName, values.password, setError)
+        if (String(values.userName).length > 9 && values.password !== '') {
+          setOpen(true)
+          onLogin(
+            values.userName,
+            values.password,
+            setError,
+            setOpen,
+            setOpenSnackBar
+          )
+        }
       }
     }
   }
@@ -113,6 +164,40 @@ const Login = ({
 
   const handlePasswordVisibility = () => {
     setIsEyeVisible(!isEyeVisible)
+  }
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return
+    }
+    setOpenSnackBar(false)
+  }
+
+  const handleOnClick = () => {
+    if (userNameListen) {
+      setFocus(false)
+    }
+    setPasswordListen(!passwordListen)
+  }
+
+  const OTPVerifiaction = () => {
+    const url =
+      localStorage.getItem('loginUser') === 'doctor'
+        ? URL.doctorForgotPassword
+        : URL.adminForgotPassword
+    Api.post(URL.patientLoginForPhone, { phone: formik.values.userName }).then(
+      (res) => {
+        const { data } = res
+        if (res.statusCode === 200) {
+          history.push({
+            pathname: '/otp-verification',
+            state: {
+              phone: formik.values.userName,
+            },
+          })
+        }
+      }
+    )
   }
 
   return (
@@ -135,6 +220,7 @@ const Login = ({
                 {UserNameAutoComplete === 'email' ? (
                   <TextField
                     id="userName"
+                    inputRef={userNameRef}
                     autoComplete={UserNameAutoComplete}
                     className={classNames(classes.textField, {
                       [classes.emptyField]: userNameIndicate !== '',
@@ -144,6 +230,22 @@ const Login = ({
                     placeholder={useNamePlaceHolder}
                     variant="outlined"
                     value={formik.values.userName}
+                    inputProps={{
+                      onKeyPress: (event) => {
+                        const { key } = event
+                        if (!isFocus) {
+                          setFocus(true)
+                        }
+                        if (!userNameListen) {
+                          setUserNameListen(true)
+                        }
+                        if (key === 'Enter') {
+                          setUserNameListen(false)
+                          passwordRef.current.focus()
+                          setPasswordListen(true)
+                        }
+                      },
+                    }}
                   />
                 ) : (
                   <TextField
@@ -157,6 +259,22 @@ const Login = ({
                     placeholder={useNamePlaceHolder}
                     variant="outlined"
                     value={formik.values.userName}
+                    inputProps={{
+                      onKeyPress: (event) => {
+                        const { key } = event
+                        if (!isFocus) {
+                          setFocus(true)
+                        }
+                        if (!userNameListen) {
+                          setUserNameListen(true)
+                        }
+                        if (key === 'Enter') {
+                          setUserNameListen(false)
+                          passwordRef.current.focus()
+                          setPasswordListen(true)
+                        }
+                      },
+                    }}
                   />
                 )}
                 {userNameIndicate !== '' && (
@@ -166,20 +284,36 @@ const Login = ({
                 )}
               </Box>
               <Box>
-                <Typography className={classes.text} variant="h5">
-                  Password
-                </Typography>
+                <Box className={classes.headerfeild}>
+                  <Typography className={classes.text} variant="h5">
+                    Password
+                  </Typography>
+                  {/* <Typography className={classes.textanother} variant="h5">
+                  Password must be at least 6 characters
+                </Typography> */}
+                </Box>
                 <TextField
                   id="password"
+                  inputRef={passwordRef}
                   autoComplete="current-password"
                   placeholder="********"
                   className={classNames(classes.textField, {
-                    [classes.emptyField]: passwordIndicate !== '',
+                    [classes.emptyPasswordField]: passwordIndicate !== '',
                   })}
                   type={type}
                   onChange={formik.handleChange}
                   variant="outlined"
                   value={formik.values.password}
+                  inputProps={{
+                    onKeyPress: () => {
+                      if (isFocus) {
+                        setFocus(false)
+                      }
+                      // if (passwordListen) {
+                      //   setPasswordListen(false)
+                      // }
+                    },
+                  }}
                   InputProps={
                     type === 'text'
                       ? {
@@ -211,9 +345,9 @@ const Login = ({
                     {errorMessage}
                   </Typography>
                 )}
-                <Typography className={classes.forgotPassword} variant="h5">
+                {/* <Typography className={classes.forgotPassword} variant="h5">
                   FORGOT PASSWORD?
-                </Typography>
+                </Typography> */}
               </Box>
             </Box>
             <Button
@@ -221,30 +355,111 @@ const Login = ({
               variant="contained"
               color="primary"
               type="submit"
+              onClick={handleOnClick}
             >
               LOGIN
             </Button>
           </form>
+          {localStorage.getItem('loginUser') === 'doctor' && (
           <Centralize className={classes.singupContent}>
+            <Typography color="primary" variant="h4" onClick={forgotPassword}>
+              Forgot password?
+            </Typography>
+          </Centralize>
+          // <Centralize className={classes.singupContent}>
+          //   <Typography color="primary" variant="h4" onClick={OTPVerifiaction}>
+          //     OTP?
+          //   </Typography>
+          // </Centralize>
+          // <Centralize className={classes.singupContent}>
+          //   <Typography className={classes.singupLabel} variant="h6">
+          //     I am new doctor?
+          //   </Typography>
+          //   <Typography color="primary" variant="h4" onClick={handleSignup}>
+          //     Signup
+          //   </Typography>
+          // </Centralize>
+          )}
+
+
+        {localStorage.getItem('loginUser') === 'doctor' && (
+         <Centralize className={classes.singupContent}>
             <Typography className={classes.singupLabel} variant="h6">
-              I am new?
+              I am new doctor?
             </Typography>
             <Typography color="primary" variant="h4" onClick={handleSignup}>
               Signup
             </Typography>
           </Centralize>
+        )}
+
+          {localStorage.getItem('loginUser') === 'patient' && (
+            <Centralize className={classes.singupContent}>
+              <Typography className={classes.singupLabel} variant="h6">
+                I am new patient?
+              </Typography>
+              <Typography color="primary" variant="h4" onClick={handleSignup}>
+                Signup
+              </Typography>
+            </Centralize>
+          )}
+
           {localStorage.getItem('loginUser') === 'patient' && (
             <Centralize className={classes.singupContent}>
               <Typography className={classes.singupLabel} variant="h6">
                 If you are a doctor?
               </Typography>
               <Typography color="primary" variant="h4" onClick={doctorLoginPage}>
-                Click here
+                Doctor Login
+              </Typography>
+            </Centralize>
+          )}
+          {localStorage.getItem('loginUser') === 'doctor' && (
+            <Centralize className={classes.singupContent}>
+              <Typography className={classes.singupLabel} variant="h6">
+                If you are a patient?
+              </Typography>
+              <Typography color="primary" variant="h4" onClick={patientLoginPage}>
+                Patient Login
+              </Typography>
+            </Centralize>
+          )}
+
+          {localStorage.getItem('loginUser') === 'patient' && (
+            <Centralize className={classes.singupContent}>
+              <Typography className={classes.singupLabel} variant="h6">
+                If you are a new doctor?
+              </Typography>
+              <Typography color="primary" variant="h4" onClick={doctorRegistration}>
+                Doctor SignUp
+              </Typography>
+            </Centralize>
+          )}
+          {localStorage.getItem('loginUser') === 'doctor' && (
+            <Centralize className={classes.singupContent}>
+              <Typography className={classes.singupLabel} variant="h6">
+                If you are a new patient?
+              </Typography>
+              <Typography color="primary" variant="h4" onClick={patientRegistration}>
+                Patient SignUp
               </Typography>
             </Centralize>
           )}
         </Paper>
       </Centralize>
+      {open && (
+        <Backdrop className={classes.backdrop} open={open}>
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      )}
+      {openSnackBar && (
+        <SnackBar
+          open={openSnackBar}
+          message={'Something went wrong'}
+          onclose={handleClose}
+          severity={'error'}
+        />
+      )}
     </Fragment>
   )
 }
