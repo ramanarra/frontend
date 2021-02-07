@@ -1,8 +1,8 @@
 import React from 'react'
 import { URL } from '../../api'
 import useFetch from '../../hooks/useFetch'
-import { dateFmt } from '../../components/commonFormat'
-
+import { dateFmtWthOutTimeZone } from '../../components/commonFormat'
+import moment from 'moment'
 import './styles.scss'
 import NoReport from './NoReport'
 
@@ -13,11 +13,11 @@ const Entry = ({ data, key, role }) => {
       <td className="cell">{data?.doctorName}</td>
       }
       <td className="cell">{data?.patientName}</td>
-      <td className="cell">{dateFmt(data?.createdTime)}</td>
-      <td className="cell">{dateFmt(data?.appointment_date)}</td>
+      <td className="cell">{dateFmtWthOutTimeZone(data?.createdTime)}</td>
+      <td className="cell">{dateFmtWthOutTimeZone(data?.appointment_date)}</td>
       <td className="cell">{data?.phone}</td>
       <td className="cell">
-        {data?.amount} <span className="currency">INR</span>
+        {data?.amount} {data?.amount && <span className="currency">INR</span>}
       </td>
     </tr>
   )
@@ -29,10 +29,15 @@ const DocReports = React.memo(({ filter, handleFilter, pathType, tab }) => {
   // Based on role doctor name will disply
   const role = localStorage.getItem('role')
 
-  const { searchText, fromDate, toDate, paginationStart, paginationLimit } = filter[tab]
+  let { searchText, fromDate, toDate, paginationStart, paginationLimit } = filter[tab]
   const isCollection = tab === 1
 
   const url = isCollection ? URL.docReport.collection : URL.docReport.list
+
+  // Formatting date
+  fromDate = (fromDate ? moment(fromDate).format('YYYY-MM-DD') : null);
+  toDate = (toDate ? moment(toDate).format('YYYY-MM-DD') : null);
+
   const { handleFetch, data } = useFetch(
     {
       url,

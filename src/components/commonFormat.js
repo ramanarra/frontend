@@ -18,6 +18,11 @@ export const dateFmt = (date) => {
   return moment(date, 'YYYY-MM-DD').format('DD-MM-YYYY')
 }
 
+
+export const dateFmtWthOutTimeZone = (date) => {
+  return date ? moment(date).format('DD-MM-YYYY') : ''
+}
+
 export const minsSuffix = (details) => {
   const { inputRef, onChange, ...other } = details
 

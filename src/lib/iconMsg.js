@@ -8,7 +8,7 @@ const iconMsg=({
     hospital: "Hospital",
     cancel: "Close",
     edit: "Edit",
-    image: "Image_Upload",
+    image: "Upload Image",
     leftarrow: "Preveious",
     rightarrow: "Next",
     delete: "Delete",
