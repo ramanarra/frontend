@@ -14,6 +14,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import useStyle from './useCreateAppointmentStyle'
 import Select from '../../../../../components/Select'
 import { URL } from '../../../../../api'
+import { dateFmtWthOutTimeZone } from '../../../../../components/commonFormat'
 
 const paymentOption = [
   { value: 'directPayment', label: 'Direct Payment' },
@@ -156,7 +157,7 @@ function CreateAppointmentForExistingPatient({
               </Typography>
               <TextField
                 variant="outlined"
-                value={moment(patientData.dateOfBirth).format('DD-MM-YYYY')}
+                value={dateFmtWthOutTimeZone(patientData.dateOfBirth)}
                 placeholder={patientData.dateOfBirth}
                 className={classes.date}
                 disabled
