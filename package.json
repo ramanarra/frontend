@@ -16,6 +16,7 @@
     "@testing-library/user-event": "^7.1.2",
     "aws-amplify": "^3.3.11",
     "axios": "^0.19.2",
+    "clsx": "^1.1.1",
     "date-fns": "^2.15.0",
     "formik": "^2.1.5",
     "jquery": "^3.5.1",

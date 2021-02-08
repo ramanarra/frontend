@@ -1,33 +1,75 @@
+@import '../../mixins/common';
+
 .doc-report-pg-wrap {
   .panel-wrap {
-    padding: 24px;
-    table {
-      width: 100%;
+    .report-list-panel {
+      padding: 24px;
 
-      th,
-      td {
-        padding: 8px;
+      .table-wrap {
+        max-height: calc(100vh - 212px);
+        overflow: auto;
+
+        &.has-pagination {
+          max-height: calc(100vh - 239px);
+        }
+
+        table {
+          width: 100%;
+
+          th,
+          td {
+            padding: 8px;
+          }
+
+          thead th {
+            font-size: 14px;
+            color: #b7b7b7;
+            font-weight: 500;
+          }
+
+          tbody td {
+            font-size: 16px;
+            font-weight: normal;
+          }
+        }
       }
 
-      thead th {
-        font-size: 14px;
-        color: #b7b7b7;
-        font-weight: 500;
+      .no-data-wrap {
+        text-align: center;
+        padding: 10vh 0;
+
+        .no-data {
+          font-size: 18px;
+          color: #666;
+        }
       }
 
-      tbody td {
-        font-size: 16px;
-        font-weight: normal;
-      }
-    }
+      .doc-report-footer {
+        position: absolute;
+        bottom: 44px;
+        left: 24px;
+        right: 24px;
 
-    .no-data-wrap {
-      text-align: center;
-      padding: 10vh 0;
+        .btn-wrap {
+          position: relative;
+          .btn {
+            padding: 2px 8px;
+            text-transform: capitalize;
+            background: #00b5fb;
+            color: #fff;
+            width: 85px;
+            border-radius: 999px;
+            position: absolute;
+          }
 
-      .no-data {
-        font-size: 18px;
-        color: #666;
+          .next-btn {
+            right: 0;
+          }
+
+          .prev-btn {
+            left: 0;
+          }
+        }
       }
     }
   }

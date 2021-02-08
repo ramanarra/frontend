@@ -31,13 +31,25 @@ const DocReport = React.memo(() => {
 
   const handleFilter = (e) => {
     const { value, name } = e.target
-    setFilter((prev) => ({
-      ...prev,
-      [tab]: {
-        ...prev[tab],
-        [name]: value,
-      },
-    }))
+
+    if (name === 'searchText') {
+      setFilter((prev) => ({
+        ...prev,
+        [tab]: {
+          ...prev[tab],
+          [name]: value,
+          paginationStart: 0,
+        },
+      }))
+    } else {
+      setFilter((prev) => ({
+        ...prev,
+        [tab]: {
+          ...prev[tab],
+          [name]: value,
+        },
+      }))
+    }
   }
 
   //  -----------------------------------------------------

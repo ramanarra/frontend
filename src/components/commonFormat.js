@@ -15,12 +15,11 @@ export const timeFmt = (time) => {
 }
 
 export const dateFmt = (date) => {
-  return moment(date, 'YYYY-MM-DD').format('DD-MM-YYYY')
+  return !!date ? moment(date, 'YYYY-MM-DD').format('DD-MM-YYYY') : ''
 }
 
-
 export const dateFmtWthOutTimeZone = (date) => {
-  let formattedDate =  date ? moment(date).format('DD-MM-YYYY') : '-'
+  let formattedDate = date ? moment(date).format('DD-MM-YYYY') : '-'
   formattedDate = formattedDate === 'Invalid date' ? '-' : formattedDate
   return formattedDate
 }

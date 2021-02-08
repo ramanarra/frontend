@@ -88,7 +88,7 @@ function Chat({
                   >
                     <Box
                       className={
-                        classes[text.from === 'user' ? 'uNamePatient' : 'uNameDoc']
+                        classes[text.from === 'user' ? 'uNameDoc' : 'uNamePatient']
                       }
                     >
                       {text.from === 'user' ? patientName : doctorName}

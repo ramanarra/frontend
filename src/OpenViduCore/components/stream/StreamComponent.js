@@ -77,7 +77,8 @@ export default class StreamComponent extends Component {
         {this.props.user !== undefined &&
         this.props.user.getStreamManager() !== undefined ? (
           <div className="streamComponent">
-            {this.props.user.isVideoActive() ? (
+            {this.props.user.isVideoActive() &&
+            !!this.props.user.getStreamManager().stream.streamId ? (
               <OvVideoComponent
                 user={this.props.user}
                 mutedSound={this.state.mutedSound}
