@@ -1,72 +1,131 @@
 @import '../../../../mixins/common';
 
-.appointment-card {
-  position: relative;
-  padding: 10px;
-  display: inline-block;
-  border-left: 5px solid #3b42ef;
-  min-width: 350px;
-  min-height: 81px;
+.pat-det-view-screen {
+  .appointment-section {
+    padding: 0 25px 20px;
+    font-size: 14px;
+    font-weight: normal;
+    max-height: calc(100vh - 65px);
+    overflow-y: auto;
+    margin-top: 8px;
 
-  &-timing {
-    position: absolute;
-    right: 15px;
-    font-size: 0.9em;
-    color: #707070;
-  }
+    .appointment-type-tab {
+      display: flex;
+      padding: 20px 0;
 
-  &-details {
-    display: flex;
-    align-items: center;
-
-    .appointment-date {
-      @include colCenter;
-      padding: 0 10px;
-      font-weight: bold;
-      color: #6c6c6c;
-
-      .date-day {
-        font-size: 2em;
-      }
-      .date-month {
-        font-size: 1.3em;
-      }
-    }
-
-    .appointment-info {
-      @include colMiddle;
-
-      .info-field {
-        margin: 2px;
+      .appointment-tab {
+        color: #6b6b6b;
+        cursor: pointer;
       }
 
-      .info-doc-name {
-        color: #626262;
-        font-weight: 500;
-        font-size: 1.2em;
-      }
-
-      .info-hospital {
-        color: #707070;
-        font-size: 0.9em;
-      }
-
-      .info-consult {
-        font-size: 0.8em;
+      .appointment-tab.active {
         color: #0bb5ff;
+        position: relative;
+
+        &::after {
+          content: ' ';
+          display: block;
+          position: absolute;
+          height: 3.5px;
+          width: 93%;
+          left: 0;
+          right: 0;
+          top: 19px;
+          margin-left: auto;
+          margin-right: auto;
+          bottom: 2px;
+          background: #0bb5ff;
+        }
+      }
+
+      .upcoming-tab-wrap {
+        margin-right: 50px;
+      }
+    }
+
+    .appointment-content-wrap {
+      height: calc(100vh - 214px);
+      overflow: auto;
+    }
+
+    .appointment-list-wrap {
+      max-width: 53vw;
+
+      .no-appointment {
+        padding-top: 10px;
+        padding-bottom: 50px;
       }
     }
   }
-}
 
-.appointment-card.color-2 {
-  border-left-color: #faa40b;
-}
+  .appointment-card {
+    position: relative;
+    padding: 10px;
+    display: inline-block;
+    border-left: 5px solid #3b42ef;
+    min-width: 350px;
+    min-height: 81px;
 
-.appointment-card.color-3 {
-  border-left-color: #000;
-}
+    &-timing {
+      position: absolute;
+      right: 15px;
+      font-size: 0.9em;
+      color: #707070;
+    }
 
-.appointment-card.color-4 {
-  border-left-color: #35d276;
+    &-details {
+      display: flex;
+      align-items: center;
+
+      .appointment-date {
+        @include colCenter;
+        padding: 0 10px;
+        font-weight: bold;
+        color: #6c6c6c;
+
+        .date-day {
+          font-size: 2em;
+        }
+        .date-month {
+          font-size: 1.3em;
+        }
+      }
+
+      .appointment-info {
+        @include colMiddle;
+
+        .info-field {
+          margin: 2px;
+        }
+
+        .info-doc-name {
+          color: #626262;
+          font-weight: 500;
+          font-size: 1.2em;
+        }
+
+        .info-hospital {
+          color: #707070;
+          font-size: 0.9em;
+        }
+
+        .info-consult {
+          font-size: 0.8em;
+          color: #0bb5ff;
+        }
+      }
+    }
+  }
+
+  .appointment-card.color-2 {
+    border-left-color: #faa40b;
+  }
+
+  .appointment-card.color-3 {
+    border-left-color: #000;
+  }
+
+  .appointment-card.color-4 {
+    border-left-color: #35d276;
+  }
 }

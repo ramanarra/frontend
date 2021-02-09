@@ -12,8 +12,10 @@ const AppointmentCard = ({ data, index, isPast }) => {
   const hospital = data?.hospitalName
 
   const consultTime = () => {
-    const stime = data?.startTime?.split(':')
-    return new Date(0, 0, 0, stime[0], stime[1] - data?.preConsultationTime, 0, 0)
+    if (!!data) {
+      const stime = data?.startTime?.split(':')
+      return new Date(0, 0, 0, stime[0], stime[1] - data?.preConsultationTime, 0, 0)
+    }
   }
 
   const preConsult = !isPast

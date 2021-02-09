@@ -29,3 +29,23 @@
   column-gap: 3%;
   align-items: center;
 }
+
+@mixin tab {
+  min-height: 0;
+
+  .MuiTab-root {
+    text-transform: capitalize;
+    color: #666666;
+    padding-top: 18px;
+    margin-bottom: 4px;
+
+    &.Mui-selected {
+      color: #00b5fb;
+      font-weight: bold;
+    }
+  }
+
+  .MuiTabs-indicator {
+    height: 3px;
+  }
+}
