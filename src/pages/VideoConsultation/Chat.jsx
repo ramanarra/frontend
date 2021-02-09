@@ -92,9 +92,7 @@ function Chat({
                         classes[text.from === 'user' ? 'uNameDoc' : 'uNamePatient']
                       }
                     >
-                      {rest?.userRole === 'DOCTOR' && !!doctorName
-                        ? doctorName
-                        : patientName}
+                      {rest?.userRole === 'DOCTOR' ? doctorName : patientName}
                     </Box>
                     <Typography className={classes.textMessage}>
                       {text.message}

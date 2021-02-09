@@ -91,7 +91,7 @@ export default class StreamComponent extends Component {
             ) : (
               <NoCam
                 name={
-                  this.props.userRole === 'DOCTOR' && !!this.props.doctorName
+                  this.props.userRole === 'DOCTOR'
                     ? this.props.doctorName
                     : this.props.patientName
                 }
