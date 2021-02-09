@@ -39,6 +39,7 @@ function SideBar({
   appointmentId,
   patientName,
   doctorName,
+  ...rest
 }) {
   const classes = useStyle()
 
@@ -290,6 +291,7 @@ function SideBar({
           setOpenTopBar={setOpenTopBar}
           doctorName={doctorName}
           patientName={patientName}
+          userRole={rest?.userRole}
         />
       )}
       {openMedicine && (

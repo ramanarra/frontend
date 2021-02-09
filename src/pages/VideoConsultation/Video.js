@@ -48,6 +48,8 @@ function VideoConsultotion({
       ? localStorage.getItem('doctorName')
       : location.doctorName
 
+  const userRole = localStorage.getItem('role')
+
   const [patientName, setPatientName] = useState('')
 
   function onPatientJoining(appointmenttId, patientName) {
@@ -134,6 +136,7 @@ function VideoConsultotion({
             isFullScreen={fullScreen}
             isInterChange={interChange}
             handleOnInterChange={handleOnInterChange}
+            userRole={userRole}
           />
           <SideBar
             patientList={patientList}
@@ -161,6 +164,7 @@ function VideoConsultotion({
                 : localStorage.getItem('patientName')
             }
             doctorName={doctorName}
+            userRole={userRole}
           />
         </Box>
       )}

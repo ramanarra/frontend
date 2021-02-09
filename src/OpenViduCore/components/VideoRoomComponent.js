@@ -513,6 +513,7 @@ class VideoRoomComponent extends Component {
               handleOnFullScreen={this.props.handleOnFullScreen}
               isFullScreen={this.props.isFullScreen}
               handleOnInterChange={this.props.handleOnInterChange}
+              userRole={this.props.userRole}
             />
           </div>
         )}
