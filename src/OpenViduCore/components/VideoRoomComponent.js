@@ -534,6 +534,8 @@ class VideoRoomComponent extends Component {
               streamId={sub.streamManager.stream.streamId}
               doctorClick={'joined'}
               patientName={this.props.patientName}
+              doctorName={this.props.doctorName}
+              userRole={this.props.userRole}
             />
           </div>
         ))}

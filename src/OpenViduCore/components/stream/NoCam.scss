@@ -1,6 +1,11 @@
 @import '../../../mixins/common';
 
 .no-cam-background {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   @include colMiddle;
   background: #333;
   width: 100%;
