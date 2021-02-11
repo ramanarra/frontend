@@ -31,6 +31,7 @@ export const URL = {
     pastApp: '/calendar/doctor/patientPastAppList',
     search: '/calendar/doctor/patientGeneralSearch',
     listForDoctor: '/calendar/doctor/patientList',
+    report: '/calendar/doctor/patientDetailLabReport',
   },
   prescriptionAdd: '/calendar/doctor/prescription/add',
   appointmentSlotsView: '/calendar/doctor/appointmentSlotsView',

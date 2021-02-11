@@ -77,25 +77,29 @@ export default class StreamComponent extends Component {
         {this.props.user !== undefined &&
         this.props.user.getStreamManager() !== undefined ? (
           <div className="streamComponent">
-            {this.props.user.isVideoActive() ? (
-              <OvVideoComponent
-                user={this.props.user}
-                mutedSound={this.state.mutedSound}
-                subscribers={this.props.subscribers}
-                isPatientClick={this.props.isPatientClick}
-                patientName={this.props.patientName}
-                isFullScreen={this.props.isFullScreen}
-                doctorClick={this.props.doctorClick}
-              />
-            ) : (
-              <NoCam
-                name={
-                  !!this.props.doctorName
-                    ? this.props.doctorName
-                    : this.props.patientName
-                }
-              />
-            )}
+            <OvVideoComponent
+              user={this.props.user}
+              mutedSound={this.state.mutedSound}
+              subscribers={this.props.subscribers}
+              isPatientClick={this.props.isPatientClick}
+              patientName={this.props.patientName}
+              isFullScreen={this.props.isFullScreen}
+              doctorClick={this.props.doctorClick}
+            />
+            {!this.props.user.isVideoActive() &&
+              !!this.props.user.getStreamManager().stream.streamId && (
+                <NoCam
+                  name={
+                    this.props.user.type === 'local'
+                      ? this.props.userRole === 'DOCTOR'
+                        ? this.props.doctorName
+                        : this.props.patientName
+                      : this.props.userRole === 'DOCTOR'
+                      ? this.props.patientName
+                      : this.props.doctorName
+                  }
+                />
+              )}
             {this.props.user.isLocal() ? (
               <ToolBarComponent
                 isVideoActive={this.props.user.isVideoActive()}

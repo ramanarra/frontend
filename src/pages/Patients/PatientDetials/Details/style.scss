@@ -1,0 +1,84 @@
+@import '../../../../mixins/common';
+
+.pat-det-view-screen {
+  .patient-detials-edit {
+    margin-top: 24px;
+    padding: 0 25px 100px;
+    font-size: 14px;
+    font-weight: normal;
+    max-height: calc(100vh - 65px);
+    overflow-y: auto;
+
+    .title {
+      font-size: 18px;
+      font-weight: 500;
+      color: #4c4c4c;
+    }
+
+    .detials-table-wrap {
+      table {
+        .tbl-cell {
+          min-width: 17vw;
+          padding: 17px 0;
+        }
+
+        .field-name {
+          color: #515151;
+        }
+
+        .field-value {
+          color: #929292;
+        }
+      }
+    }
+
+    .more-desc {
+      margin-top: 40px;
+      .sub-title {
+        font-size: 16px;
+        font-weight: 500;
+        color: #888;
+      }
+      .field-label {
+        margin: 10px 0 15px;
+        color: #515151;
+      }
+      .field-area {
+        height: 115px;
+        width: 40vw;
+        border: 1px solid #e0e0e0;
+        color: #929292;
+        padding: 10px;
+      }
+    }
+
+    .allergy-list {
+      margin-top: 20px;
+
+      .field-name {
+        vertical-align: top;
+      }
+
+      .field-value {
+        .allergies {
+          list-style: none;
+
+          .allergy {
+            margin-top: 10px;
+          }
+        }
+      }
+    }
+
+    .edit-btn {
+      background: #0bb5ff;
+      color: #fff;
+      border-radius: 20px;
+      width: 150px;
+
+      &:hover {
+        background: #0bb5ff;
+      }
+    }
+  }
+}

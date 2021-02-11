@@ -3,9 +3,12 @@ import './NoCam.scss'
 
 const NoCam = ({ name }) => {
   const nameSplit = name?.split(' ')
-  const firstLetter = name[0] || 'A'
+  const firstLetter = !!name?.length ? name[0] : 'A'
+  console.log(nameSplit)
   const lastLetter =
-    nameSplit?.length > 1 ? nameSplit[nameSplit?.length - 1][0] : null
+    nameSplit?.length > 1 && !!nameSplit[nameSplit?.length - 1].length
+      ? nameSplit[nameSplit?.length - 1][0]
+      : null
   return (
     <div className="no-cam-background">
       <div className="logo-wrap">

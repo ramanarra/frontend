@@ -15,6 +15,7 @@ function Chat({
   messages,
   patientName,
   doctorName,
+  ...rest
 }) {
   const classes = usestyle()
 
@@ -88,10 +89,16 @@ function Chat({
                   >
                     <Box
                       className={
-                        classes[text.from === 'user' ? 'uNamePatient' : 'uNameDoc']
+                        classes[text.from === 'user' ? 'uNameDoc' : 'uNamePatient']
                       }
                     >
-                      {text.from === 'user' ? patientName : doctorName}
+                      {text.from === 'user'
+                        ? rest?.userRole === 'DOCTOR'
+                          ? doctorName
+                          : patientName
+                        : rest?.userRole === 'DOCTOR'
+                        ? patientName
+                        : doctorName}
                     </Box>
                     <Typography className={classes.textMessage}>
                       {text.message}

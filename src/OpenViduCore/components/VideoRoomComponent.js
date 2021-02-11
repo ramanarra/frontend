@@ -513,6 +513,7 @@ class VideoRoomComponent extends Component {
               handleOnFullScreen={this.props.handleOnFullScreen}
               isFullScreen={this.props.isFullScreen}
               handleOnInterChange={this.props.handleOnInterChange}
+              userRole={this.props.userRole}
             />
           </div>
         )}
@@ -533,6 +534,8 @@ class VideoRoomComponent extends Component {
               streamId={sub.streamManager.stream.streamId}
               doctorClick={'joined'}
               patientName={this.props.patientName}
+              doctorName={this.props.doctorName}
+              userRole={this.props.userRole}
             />
           </div>
         ))}

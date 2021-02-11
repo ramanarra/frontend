@@ -42,7 +42,7 @@ function AppointmentDatePicker({ doctorKey, doctorDetails }) {
     }
   }, [doctorKey, selectedDate])
 
-  const [updateData, updateError, isUpdating, data] = useManualFetch()
+  const [updateData, updateError, isUpdating, data, resetBookingData] = useManualFetch()
 
   const [
     updateOverBooking,
@@ -80,6 +80,7 @@ function AppointmentDatePicker({ doctorKey, doctorDetails }) {
 
   useEffect(() => {
     setOpen(true)
+    setDate(slots?.date ?? new Date())
   }, [slots])
 
   const onBookAppoinment = () => {
@@ -166,6 +167,7 @@ function AppointmentDatePicker({ doctorKey, doctorDetails }) {
       return
     }
     setOpen(false)
+    resetBookingData()
     if (data?.appointment) {
       history.push('/patient/appointments/upcoming')
     }
