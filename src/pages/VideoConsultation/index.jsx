@@ -6,42 +6,30 @@ import ConfirmationModal from './ConfirmationModel'
 import Video from './Video'
 import SnackBar from '../../components/SnackBar'
 import { baseURL } from '../../baseURL'
+import { connect } from 'react-redux'
+import { setMessages } from '../../actions/doctor'
 
 const ENDPOINT = baseURL
 
-function VideoConsulation() {
+function VideoConsulation({ sendMessage }) {
   const [open, setOpen] = useState(false)
-
   const [isJoinDisabled, setIsJoinDisabled] = useState(true)
-
   const [videoAvailability, setVideoAvailability] = useState(true)
-
   const [audioAvailability, setAudioAvailability] = useState(true)
-
   const [sessionID, setSessionID] = useState('')
-
   const [token, setToken] = useState('')
-
   const [socket, setSocket] = useState('')
-
   const [timer, setTimer] = useState(null)
-
   const [index, setIndex] = useState(null)
-
   const [patientList, setPatientList] = useState('')
-
   const [openDialog, setOpenDialog] = useState(false)
-
   const [data, setData] = useState(null)
-
   const [isAudioStatus, setIsAudioStatus] = useState(true)
-
   const [isVideoStatus, setIsVideoStatus] = useState(true)
-
   const [patientAppointmentId, setPatientAppointmentId] = useState(null)
+  const [prescription, setPrescription] = useState(null)
 
   const location = useLocation()
-
   const history = useHistory()
 
   useEffect(() => {
@@ -65,8 +53,11 @@ function VideoConsulation() {
         socket.emit('updateLiveStatusOfUser', { status: 'online' })
       }
 
-      if(localStorage.getItem('loginUser') === 'doctor') {
-        const timer = setInterval(() => socket.emit('getAppointmentListForDoctor'), 10000)
+      if (localStorage.getItem('loginUser') === 'doctor') {
+        const timer = setInterval(
+          () => socket.emit('getAppointmentListForDoctor'),
+          10000
+        )
         setTimer(timer)
       }
 
@@ -111,6 +102,10 @@ function VideoConsulation() {
       }
     })
 
+    socket.on('getPrescriptionDetails', (res) => {
+      setPrescription(res)
+    })
+
     setSocket(socket)
   }, [])
 
@@ -125,9 +120,9 @@ function VideoConsulation() {
   }
 
   useEffect(() => {
-    if(location.isWaiting && patientList) {
+    if (location.isWaiting && patientList) {
       patientList.map((patient, index) => {
-        if(patient.appointmentId === location.state.appointmentId) {
+        if (patient.appointmentId === location.state.appointmentId) {
           setIndex(index)
           setOpen(false)
         }
@@ -135,6 +130,19 @@ function VideoConsulation() {
     }
   }, [patientList])
 
+  useEffect(() => {
+    if (!!prescription) {
+      sendMessage(
+        {
+          message: `Prescription`,
+          from: localStorage.getItem('loginUser') === 'patient' ? 'sender' : 'user',
+          type: 'spl_prescription',
+          data: prescription,
+        },
+        prescription?.appointmentId
+      )
+    }
+  }, [prescription])
 
   return (
     <Fragment>
@@ -175,6 +183,7 @@ function VideoConsulation() {
           isAudioStatus={isAudioStatus}
           isVideoStatus={isVideoStatus}
           setPatientAppointmentId={setPatientAppointmentId}
+          prescription={prescription}
         />
       )}
       {openDialog && data && (
@@ -189,4 +198,10 @@ function VideoConsulation() {
   )
 }
 
-export default VideoConsulation
+const mapDispatchToProps = (dispatch) => {
+  return {
+    sendMessage: (data, appointmentId) => dispatch(setMessages(data, appointmentId)),
+  }
+}
+
+export default connect(null, mapDispatchToProps)(VideoConsulation)

@@ -39,6 +39,8 @@ function SideBar({
   appointmentId,
   patientName,
   doctorName,
+  session,
+  prescription,
   ...rest
 }) {
   const classes = useStyle()
@@ -186,6 +188,21 @@ function SideBar({
     setOPenMedicine(false)
   }
 
+  function sendMessage(message, onSuccess) {
+    session
+      .signal({
+        data: message, // Any string (optional)
+        to: [], // Array of Connection objects (optional. Broadcast to everyone if empty)
+        type: 'session-chat', // The type of message (optional)
+      })
+      .then(() => {
+        onSuccess && onSuccess()
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+  }
+
   return (
     <Box>
       {(localStorage.getItem('loginUser') === 'doctor' ||
@@ -200,6 +217,7 @@ function SideBar({
                 />
               </div>
             )}
+
             {openTopBar && (
               <div className={classes.topBar}>
                 <div
@@ -260,6 +278,7 @@ function SideBar({
               </div>
             )}
           </div>
+
           {open && localStorage.getItem('loginUser') === 'doctor' && (
             <PatientList
               patientList={patientList}
@@ -285,6 +304,7 @@ function SideBar({
           )}
         </div>
       )}
+
       {openChat && (
         <Chat
           onClose={handleChatClose}
@@ -292,15 +312,22 @@ function SideBar({
           doctorName={doctorName}
           patientName={patientName}
           userRole={rest?.userRole}
+          prescription={prescription}
+          appointmentId={selected || appointmentId}
         />
       )}
+
       {openMedicine && (
         <MedicineList
           onClose={handleMedicineClose}
           setOpenTopBar={setOpenTopBar}
           appointmentId={selected}
+          userRole={rest?.userRole}
+          socket={socket}
+          sendMessage={sendMessage}
         />
       )}
+
       {openDialog && (
         <AddNewPatientConfirmationModel
           open={openDialog}
@@ -309,10 +336,17 @@ function SideBar({
           onPatientJoining={handleOnPatientJoining}
           nextPatientDetails={nextPatientDetails}
           byDoctor={byDoctor}
+          appointmentId={appointmentId}
         />
       )}
     </Box>
   )
+}
+
+const mapStateToProps = (state) => {
+  return {
+    session: state.doctor.session,
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -322,4 +356,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(SideBar)
+export default connect(mapStateToProps, mapDispatchToProps)(SideBar)
