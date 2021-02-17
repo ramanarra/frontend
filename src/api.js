@@ -20,10 +20,12 @@ export const URL = {
   hospitalDetailsEdit: '/calendar/doctor/hospitaldetailsEdit',
   doctorSettingsPersonalView: '/calendar/doctor/personalSettingsView',
   doctorConfigUpdate: '/calendar/doctor/configUpdate',
+  doctorChangePassword:'/auth/doctor/changePassword',
+  patientChangePassword:'auth/patient/changePassword',
   workschedule: {
     data: '/calendar/doctor/workScheduleView',
     update: '/calendar/doctor/workScheduleEdit',
-  },
+    },
   patient: {
     list: '/calendar/admin/patients',
     info: '/calendar/doctor/detailsofpatient',
