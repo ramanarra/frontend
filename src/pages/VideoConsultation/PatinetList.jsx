@@ -14,7 +14,7 @@ import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord'
 import CircularProgress from '@material-ui/core/CircularProgress'
 
 import getTimeFormatWithNoon, { getTimeFormat } from '../../lib/dateLib'
-import { setOpenSideBar } from '../../actions/doctor'
+import { setMessages, setOpenSideBar } from '../../actions/doctor'
 import useStyle from './usePatientListStyle'
 import { useState } from 'react'
 import Carousel from 'react-material-ui-carousel'
@@ -24,6 +24,8 @@ import AdvertisementImage3 from '../../assets/img/advertisementImages/download.p
 import { BsFillChatDotsFill as ChatIcon } from 'react-icons/bs'
 import { CgPill as PillIcon } from 'react-icons/cg'
 import clsx from 'clsx'
+import useFetch from '../../hooks/useFetch'
+import { URL } from '../../api'
 
 function Item({ item }) {
   return (
@@ -54,8 +56,15 @@ function PatientList({
   setInterChange,
   switchTab,
   notRead,
+  sendMessage
 }) {
   const classes = useStyle()
+
+  const { appointmentReport, fetchAppointmentReport } = useFetch({
+    name: 'appointmentReport',
+    url: URL.appointmentReport,
+    initLoad: false
+  })
 
   const handleTab = (e, id) => {
     e.stopPropagation()
@@ -94,6 +103,25 @@ function PatientList({
       setInterChange(false)
     }
   }, [isWaiting])
+
+  useEffect(() => {
+    !!presentAppointmentId && fetchAppointmentReport({
+      params: {
+        appointmentId: presentAppointmentId
+      }
+    })
+  }, [presentAppointmentId])
+
+  useEffect(() => {
+    if(!!appointmentReport && !!appointmentReport?.reports?.length && !!presentAppointmentId) {
+      sendMessage({
+        message: `Appointment report`,
+        from: localStorage.getItem('loginUser') === 'patient' ? 'user' : 'sender',
+        type: 'spl_appointment_report',
+        data: appointmentReport?.reports,
+      }, appointmentReport?.appoinmentId)
+    }
+  }, [appointmentReport])
 
   const items = [
     {
@@ -227,6 +255,7 @@ function PatientList({
 const mapDispatchToProps = (dispatch) => {
   return {
     setOpenSideBar: (data) => dispatch(setOpenSideBar(data)),
+    sendMessage: (data, appointmentId) => dispatch(setMessages(data, appointmentId))
   }
 }
 

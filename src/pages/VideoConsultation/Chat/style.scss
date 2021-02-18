@@ -108,12 +108,61 @@
 
     .special-msg-wrap {
       @include chatBubble;
+      max-width: 100%;
 
       .chat-message {
         @include chatBubbleFlat;
-      }
 
-      // --------------------- Prescription msg buble -----------------------
+        // --------------------- Prescription msg buble -----------------------
+        
+        .presription-msg {
+          .table-wrap {
+            .head {
+              font-size: 14px;
+            }
+
+            .head, .cell {
+              padding: 4px;
+            }
+          }
+        }
+
+        // --------------------- report msg bubble ---------------------------
+
+        .app-rprt-msg {
+          .title {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 0;
+          }
+
+          .report-list-wrap {
+            padding: 8px 0;
+
+            .rprt-entry {
+              padding: 8px 0;
+
+              .report {
+                color: #fff;
+                text-transform: capitalize;
+
+                &:hover {
+                  font-weight: bold;
+                }
+              }
+
+              .comment {
+                margin-left: 16px;
+                font-size: 12px;
+
+                &.has-index {
+                  margin-left: 24px;
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 

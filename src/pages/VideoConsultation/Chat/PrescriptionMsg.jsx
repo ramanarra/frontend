@@ -2,7 +2,7 @@ import { IconButton } from '@material-ui/core'
 import React from 'react'
 import { FaFileDownload as DownloadIcon } from 'react-icons/fa'
 
-const Entry = (data) => {
+const Entry = ({ data }) => {
   const { medicine, dose, comment } = data
 
   return (
@@ -37,10 +37,10 @@ const Attachment = ({ url, index, hasMultiple }) => {
 const PrescriptionMsg = ({ text }) => {
   const { data } = text
 
-  const attachments = data?.reduce((a, c) => {
-    const current = a.includes(c) ? [] : [c]
-    return [...a, ...current]
-  }, [])
+  // const attachments = data?.reduce((a, c) => {
+  //   const current = a.includes(c.attachment) ? [] : [c.attachment]
+  //   return [...a, ...current]
+  // }, [])
 
   return (
     <div className="presription-msg">
@@ -64,7 +64,7 @@ const PrescriptionMsg = ({ text }) => {
           </tbody>
         </table>
 
-        <div className="attachments">
+        {/* <div className="attachments">
           {attachments?.map((i, index) => (
             <Attachment
               key={index}
@@ -73,7 +73,7 @@ const PrescriptionMsg = ({ text }) => {
               hasMultiple={attachments.length > 1}
             />
           ))}
-        </div>
+        </div> */}
       </div>
     </div>
   )

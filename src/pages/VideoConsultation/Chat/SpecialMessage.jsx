@@ -1,8 +1,9 @@
 import clsx from 'clsx'
 import React from 'react'
+import AppointmentReportMsg from './AppointmentReportMsg'
 import PrescriptionMsg from './PrescriptionMsg'
 
-const SpecialMessage = (props) => {
+const SpecialMessage = React.forwardRef((props, ref) => {
   const { type, from } = props?.text
   const name =
     from === 'user'
@@ -15,6 +16,9 @@ const SpecialMessage = (props) => {
     switch (type) {
       case 'spl_prescription':
         return <PrescriptionMsg {...props} />
+      
+      case 'spl_appointment_report': return <AppointmentReportMsg {...props}/>
+
       default:
         return <></>
     }
@@ -23,8 +27,9 @@ const SpecialMessage = (props) => {
   return (
     <div
       className={clsx('special-msg-wrap', from === 'user' ? 'is-user' : 'is-sender')}
+      ref={props.isLast ? ref : undefined}
     >
-      <div className="chat-name"></div>
+      <div className="chat-name">{name}</div>
       <div
         className={clsx('chat-message', from === 'user' ? 'is-user' : 'is-sender')}
       >
@@ -32,6 +37,6 @@ const SpecialMessage = (props) => {
       </div>
     </div>
   )
-}
+})
 
 export default SpecialMessage

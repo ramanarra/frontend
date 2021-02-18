@@ -5,7 +5,7 @@ import { Box } from '@material-ui/core'
 
 import OpenViduReact from '../../OpenViduCore/components/VideoRoomComponent'
 import ToolBarComponent from './Toolbar'
-import SideBar from './Sidebar'
+import Sidebar from './Sidebar/index'
 import { setOpenSideBar } from '../../actions/doctor'
 
 function VideoConsultotion({
@@ -140,7 +140,7 @@ function VideoConsultotion({
             userRole={userRole}
             appointmentId={appointmenttId ?? appointmentId}
           />
-          <SideBar
+          <Sidebar
             patientList={patientList}
             onPatientJoining={onPatientJoining}
             endCall={endCall}
