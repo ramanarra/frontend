@@ -8,7 +8,7 @@ const Entry = ({ data, index, hasMultiple }) => {
       <a className="report" href={attachment} target="_blank">
         {`${hasMultiple ? `${index+1}) ` : ''}${filename}`}
       </a>
-      {comments && <div className={clsx("comment", hasMultiple && 'has-index')}>{comments}</div>}
+      {comments && <span className={clsx("comment", hasMultiple && 'has-index')}>( {comments} )</span>}
     </div>
   )
 }

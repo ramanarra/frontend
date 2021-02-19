@@ -56,7 +56,8 @@ function PatientList({
   setInterChange,
   switchTab,
   notRead,
-  sendMessage
+  sendMessage,
+  messages
 }) {
   const classes = useStyle()
 
@@ -105,15 +106,18 @@ function PatientList({
   }, [isWaiting])
 
   useEffect(() => {
-    !!presentAppointmentId && fetchAppointmentReport({
-      params: {
-        appointmentId: presentAppointmentId
-      }
-    })
+    if (!!presentAppointmentId && appointmentReport?.appoinmentId !== presentAppointmentId) {
+      const hasReport = !!messages && !!messages[presentAppointmentId] && messages[presentAppointmentId].find(f => f.type === 'spl_appointment_report') !== -1
+      !hasReport && fetchAppointmentReport({
+        params: {
+          appointmentId: presentAppointmentId
+        }
+      })
+    }
   }, [presentAppointmentId])
 
   useEffect(() => {
-    if(!!appointmentReport && !!appointmentReport?.reports?.length && !!presentAppointmentId) {
+    if (!!appointmentReport && !!appointmentReport?.reports?.length && !!presentAppointmentId) {
       sendMessage({
         message: `Appointment report`,
         from: localStorage.getItem('loginUser') === 'patient' ? 'user' : 'sender',
@@ -171,25 +175,25 @@ function PatientList({
                 <Box height={75}>
                   <Avatar src={patientDetails.photo} className={classes.photo} />
                   {patientDetails.status === 'paused' &&
-                  patientDetails.patientLiveStatus === 'online' ? (
-                    <FiberManualRecordIcon className={classes.pausedIcon} />
-                  ) : (
-                    patientDetails.patientLiveStatus &&
-                    ((patientDetails.patientLiveStatus === 'online' && (
-                      <FiberManualRecordIcon className={classes.onlineStatus} />
-                    )) ||
-                      (patientDetails.patientLiveStatus === 'offline' && (
-                        <FiberManualRecordIcon className={classes.offlineStatus} />
+                    patientDetails.patientLiveStatus === 'online' ? (
+                      <FiberManualRecordIcon className={classes.pausedIcon} />
+                    ) : (
+                      patientDetails.patientLiveStatus &&
+                      ((patientDetails.patientLiveStatus === 'online' && (
+                        <FiberManualRecordIcon className={classes.onlineStatus} />
                       )) ||
-                      (patientDetails.patientLiveStatus === 'videoSessionReady' && (
-                        <FiberManualRecordIcon
-                          className={classes.videoSessionReady}
-                        />
-                      )) ||
-                      (patientDetails.patientLiveStatus === 'inSession' && (
-                        <FiberManualRecordIcon className={classes.inSession} />
-                      )))
-                  )}
+                        (patientDetails.patientLiveStatus === 'offline' && (
+                          <FiberManualRecordIcon className={classes.offlineStatus} />
+                        )) ||
+                        (patientDetails.patientLiveStatus === 'videoSessionReady' && (
+                          <FiberManualRecordIcon
+                            className={classes.videoSessionReady}
+                          />
+                        )) ||
+                        (patientDetails.patientLiveStatus === 'inSession' && (
+                          <FiberManualRecordIcon className={classes.inSession} />
+                        )))
+                    )}
                 </Box>
                 <Box className={classes.detail}>
                   <Box display="flex">
@@ -252,6 +256,12 @@ function PatientList({
   )
 }
 
+const mapStateToProps = (state) => {
+  return {
+    messages: state.doctor.messages
+  }
+}
+
 const mapDispatchToProps = (dispatch) => {
   return {
     setOpenSideBar: (data) => dispatch(setOpenSideBar(data)),
@@ -259,4 +269,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(PatientList)
+export default connect(mapStateToProps, mapDispatchToProps)(PatientList)

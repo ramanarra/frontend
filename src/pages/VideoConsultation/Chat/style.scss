@@ -124,7 +124,15 @@
             .head, .cell {
               padding: 4px;
             }
+
+            .note-msg {
+              font-size: 12px;
+              color: #cd5c5c;
+              margin-bottom: 0;
+              margin-top: 1rem;
+            }
           }
+         
         }
 
         // --------------------- report msg bubble ---------------------------
@@ -144,7 +152,7 @@
 
               .report {
                 color: #fff;
-                text-transform: capitalize;
+                font-size: 16px;
 
                 &:hover {
                   font-weight: bold;
@@ -152,12 +160,9 @@
               }
 
               .comment {
-                margin-left: 16px;
-                font-size: 12px;
-
-                &.has-index {
-                  margin-left: 24px;
-                }
+                margin-left: 8px;
+                font-size: 14px;
+                color: #636363;
               }
             }
           }

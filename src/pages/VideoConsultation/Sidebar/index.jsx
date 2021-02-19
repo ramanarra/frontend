@@ -134,7 +134,7 @@ const Sidebar = ({
   }
 
   const hasBack = tab !== 3
-  const notRead = !!messages?.length ? messages.length - parseInt(lastRead || 0) : 0
+  const notRead = !!messages?.length ? Math.abs(messages.length - parseInt(lastRead || 0)) : 0
 
   return (
     <div className={clsx('sidebar-wrap', isOpen && 'is-open')}>

@@ -346,6 +346,7 @@ function SideBar({
 const mapStateToProps = (state) => {
   return {
     session: state.doctor.session,
+    messages: state.doctor.message
   }
 }
 

@@ -64,6 +64,8 @@ const PrescriptionMsg = ({ text }) => {
           </tbody>
         </table>
 
+        <p className="note-msg">NOTE: You can find the PDF of prescription in a appointment details page</p>
+
         {/* <div className="attachments">
           {attachments?.map((i, index) => (
             <Attachment
