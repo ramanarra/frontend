@@ -126,7 +126,6 @@ const useStyles = makeStyles(() => ({
     top: '50%',
     left: '50%',
   }
-  },
 }))
 
 function PatientHeader({socket}) {
