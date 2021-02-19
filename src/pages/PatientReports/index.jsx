@@ -14,6 +14,7 @@ import SnackBar from '../../components/SnackBar'
 import moment from 'moment'
 import useStyle from './useStyle'
 import './style.scss'
+import FileViewer from '../../components/FileViewer'
 
 const Reports = (props) => {
   const [searchText, setSearchText] = useState('')
@@ -21,6 +22,11 @@ const Reports = (props) => {
   const [item, setItem] = useState(false)
   const [paginationStart, setPaginationStart] = useState(0)
   const [count, setCount] = useState(0)
+  const [openFile, setOpenFile] = useState({
+    status: false,
+    url: null,
+    type: null,
+  })
   const classes = useStyle()
   const location = useLocation()
 
@@ -75,6 +81,22 @@ const Reports = (props) => {
     } else if (paginationStart + 15 < show) {
       setPaginationStart(paginationStart + 15)
     }
+  }
+
+  const handleFileClose = () => {
+    setOpenFile({
+      status: false,
+      url: null,
+      type: null,
+    })
+  }
+
+  const openFileViewer = (url, type) => {
+    setOpenFile({
+      status: true,
+      url,
+      type,
+    })
   }
 
   useEffect(() => {
@@ -148,11 +170,16 @@ const Reports = (props) => {
                       <td className="tbl-cell comments">{i?.comments}</td>
                       <td className="tbl-cell attchmnt">
                         <div className="view-icon-wrap">
-                          <a href={i?.attachment} target="_blank">
-                            <IconButton className="view-icon-btn">
-                              <FileIcon className="view-icon" />
-                            </IconButton>
-                          </a>
+                          <IconButton
+                            className="view-icon-btn"
+                            onClick={openFileViewer.bind(
+                              this,
+                              i?.attachment,
+                              i?.fileType
+                            )}
+                          >
+                            <FileIcon className="view-icon" />
+                          </IconButton>
                         </div>
                       </td>
                     </tr>
@@ -199,6 +226,8 @@ const Reports = (props) => {
           )}
         </div>
       )}
+
+      {openFile.status && <FileViewer {...openFile} onClose={handleFileClose} />}
     </div>
   )
 }

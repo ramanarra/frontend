@@ -164,15 +164,21 @@ class VideoRoomComponent extends Component {
     //message
     const mySession = this.state.session
     this.props.setSession(mySession)
-    mySession.on('signal:my-chat', (event) => {
+    mySession.on('signal:session-chat', (event) => {
       const message = event.data
       var messageDetail = this.state.messageDetail
       if (event.from.connectionId == event.from.session.connection.connectionId) {
         messageDetail.push({ message: message, from: 'user' })
-        this.props.setMessages({ message: message, from: 'user' })
+        this.props.setMessages(
+          { message: message, from: 'user' },
+          this.props.appointmentId
+        )
       } else {
         messageDetail.push({ message: message, from: 'sender' })
-        this.props.setMessages({ message: message, from: 'sender' })
+        this.props.setMessages(
+          { message: message, from: 'sender' },
+          this.props.appointmentId
+        )
       }
       this.setState({ messageDetail: messageDetail })
       // this.props.setMessages(messageDetail)
@@ -205,7 +211,7 @@ class VideoRoomComponent extends Component {
     // this.props.endCall()
 
     this.props.leaveCall(status)
-    this.props.clearMessages([])
+    this.props.clearMessages()
   }
   camStatusChanged() {
     localUser.setVideoActive(!localUser.isVideoActive())
@@ -557,7 +563,7 @@ class VideoRoomComponent extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     setSession: (data) => dispatch(setSession(data)),
-    setMessages: (data) => dispatch(setMessages(data)),
+    setMessages: (data, appointmentId) => dispatch(setMessages(data, appointmentId)),
     clearMessages: (data) => dispatch(clearMessages(data)),
   }
 }

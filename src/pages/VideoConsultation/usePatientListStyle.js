@@ -1,15 +1,17 @@
 import { makeStyles } from '@material-ui/core/styles'
+import { nodeName } from 'jquery'
 
 const usePatientListStyle = makeStyles((theme) => ({
   dialog: {
-    position: 'absolute',
-    right: 0,
+    // position: 'absolute',
+    // right: 0,
     margin: 0,
-    top: 56,
+    // top: 56,
     backgroundColor: '#ffffff',
-    width: '23%',
-    padding: '25px 15px 10px 23px',
-    height: 'calc(100% - 63px)',
+    // width: '23%',
+    // padding: '25px 15px 10px 23px',
+    // height: 'calc(100% - 63px)',
+    height: '100%',
     overflowY: 'auto',
   },
   backButton: {
@@ -22,11 +24,58 @@ const usePatientListStyle = makeStyles((theme) => ({
     backgroundColor: '#ffffff',
     cursor: 'pointer',
   },
-  patientDetails: {
-    paddingBottom: 8,
-    paddingTop: 8,
-    cursor: 'pointer',
+
+  patientDetailsWrap: {
+    padding: '8px 16px',
+    display: 'flex',
+    justifyContent: 'space-between',
     height: 75,
+
+    '&:hover': {
+      backgroundColor: '#e6f7ff',
+
+      '& .action-btn': {
+        display: 'inline-flex',
+      },
+    },
+
+    '&.has-unread': {
+      '& .action-btn.has-unread': {
+        display: 'inline-flex',
+      },
+    },
+  },
+  actionBtn: {
+    // color: '#312f2f',
+    color: '#666',
+    position: 'relative',
+    display: 'none',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  unread: {
+    position: 'absolute',
+    top: '7px',
+    right: '3px',
+    width: 18,
+    height: 18,
+    background: '#00b5ff',
+    display: 'inline-flex',
+    textAlign: 'center',
+    borderRadius: '50%',
+    fontSize: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+
+  patientDetails: {
+    // paddingBottom: 8,
+    // paddingTop: 8,
+    cursor: 'pointer',
+    // height: 75,
   },
   icon: {
     marginTop: 7.5,
@@ -103,7 +152,7 @@ const usePatientListStyle = makeStyles((theme) => ({
   },
   spinner: {
     marginLeft: '45%',
-    marginTop: 20
+    marginTop: 20,
   },
 }))
 

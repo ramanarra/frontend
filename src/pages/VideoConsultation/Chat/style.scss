@@ -1,0 +1,204 @@
+@import '../../../mixins/common';
+
+// -------------- mixins -----------------------------------------
+
+@mixin chatBubble {
+  margin: 16px 10px;
+  max-width: 80%;
+
+  &.is-sender {
+    align-self: flex-start;
+  }
+
+  &.is-user {
+    align-self: flex-end;
+  }
+
+  .chat-message {
+    font-size: 16px;
+    font-weight: normal;
+    padding: 10px 18px;
+    border-radius: 5px;
+
+    &.is-sender {
+      background: #00b5ff;
+      color: #fff;
+    }
+
+    &.is-user {
+      background: #e6e5eb;
+      color: #4e4e4e;
+    }
+  }
+}
+
+@mixin chatBubbleArrow {
+  position: relative;
+
+  &::before {
+    content: '\00a0';
+    display: block;
+    height: 16px;
+    width: 9px;
+    position: absolute;
+    bottom: -7.5px;
+  }
+
+  &.is-sender {
+    &::before {
+      background-color: #00b5ff;
+      left: 10px;
+      transform: rotate(70deg) skew(5deg);
+      -webkit-transform: rotate(70deg) skew(5deg);
+    }
+  }
+
+  &.is-user {
+    &::before {
+      background-color: #e6e5eb;
+      right: 10px;
+      transform: rotate(118deg) skew(-5deg);
+      -webkit-transform: rotate(118deg) skew(-5deg);
+    }
+  }
+}
+
+@mixin chatBubbleFlat {
+  .is-user {
+    border-bottom-right-radius: 0;
+  }
+
+  .is-sender {
+    border-bottom-left-radius: 0;
+  }
+}
+
+// ---------------------------------------------------------------------
+
+.openvidu-chat-screen {
+  position: relative;
+  height: 100%;
+  width: calc(400px - 36px);
+
+  .chat-bubble-container {
+    display: flex;
+    flex-direction: column;
+    padding: 16px 8px 0;
+    height: calc(100% - 72px);
+    overflow-y: auto;
+
+    .chat-name {
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: 4px;
+      color: #363636;
+    }
+
+    //----------------------- normal chat bubble --------------------------
+
+    .chat-bubble-wrap {
+      @include chatBubble;
+
+      .chat-message {
+        @include chatBubbleArrow;
+      }
+    }
+
+    // --------------------- Spl msg buble -----------------------
+
+    .special-msg-wrap {
+      @include chatBubble;
+      max-width: 100%;
+
+      .chat-message {
+        @include chatBubbleFlat;
+
+        // --------------------- Prescription msg buble -----------------------
+        
+        .presription-msg {
+          .table-wrap {
+            .head {
+              font-size: 14px;
+            }
+
+            .head, .cell {
+              padding: 4px;
+            }
+
+            .note-msg {
+              font-size: 12px;
+              color: #cd5c5c;
+              margin-bottom: 0;
+              margin-top: 1rem;
+            }
+          }
+         
+        }
+
+        // --------------------- report msg bubble ---------------------------
+
+        .app-rprt-msg {
+          .title {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 0;
+          }
+
+          .report-list-wrap {
+            padding: 8px 0;
+
+            .rprt-entry {
+              padding: 8px 0;
+
+              .report {
+                color: #fff;
+                font-size: 16px;
+
+                &:hover {
+                  font-weight: bold;
+                }
+              }
+
+              .comment {
+                margin-left: 8px;
+                font-size: 14px;
+                color: #636363;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .message-box-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    padding: 16px 24px;
+
+    .message-box {
+      width: 100%;
+      padding: 6px 12px;
+      font-size: 16px;
+      font-weight: normal;
+      min-height: 36px;
+
+      &:focus {
+        outline-color: #00b5ff;
+      }
+    }
+
+    .send-btn-wrap {
+      margin-left: 10px;
+      background: #00b5ff;
+      color: #fff;
+      padding: 6px;
+    }
+  }
+}
