@@ -1,0 +1,47 @@
+
+    .report-list-panel {
+      padding: 24px 24px 40px;
+      margin-top: 20px;
+  
+      .table-wrap {
+        max-height: calc(100vh - 212px);
+        overflow: auto;
+
+        .tableTitle{
+            color: '#ADADAD';
+            font-size: 20px;
+        }
+  
+        table {
+          width: 100%;
+          border: 1px solid black;
+  
+          th,
+          td {
+            padding: 8px;
+          }
+  
+          thead th {
+            font-size: 14px;
+            color: #b7b7b7;
+            font-weight: 500;
+          }
+  
+          tbody td {
+            font-size: 14px;
+            font-weight: normal;
+            color: #464646;
+  
+            .view-icon-btn {
+              padding: 6px;
+  
+              .view-icon {
+                font-size: 18px;
+              }
+            }
+          }
+        }
+      }
+    }
+
+  

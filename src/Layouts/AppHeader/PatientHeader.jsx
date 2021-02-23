@@ -125,11 +125,10 @@ const useStyles = makeStyles(() => ({
     position: 'fixed',
     top: '50%',
     left: '50%',
-  }
   },
 }))
 
-function PatientHeader({socket}) {
+function PatientHeader({ socket }) {
   const classes = useStyles()
 
   const history = useHistory()

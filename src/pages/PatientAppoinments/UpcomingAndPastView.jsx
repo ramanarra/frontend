@@ -139,6 +139,23 @@ function UpcomingAndPastView({
     })
   }
 
+  function handleOnAppointmentDetials() {
+    console.log('appointment details button clicked');
+
+    history.push({
+      pathname: '/patient/appoints/upcoming/appointmentDetail',
+      doctorKey: appointmentDetail.doctorKey,
+      appointmentId: appointmentDetail.appointmentId,
+      appointmentDetail: appointmentDetail,
+      startTime: startTime,
+      endTime: endTime,
+      date: date,
+      socket: socket,
+      list: list,
+      onReschedule: onReschedule,
+    })
+  }
+
   // Upload report code start here
   function handlePopupMsg() {
     setOpens(true)
@@ -355,6 +372,14 @@ function UpcomingAndPastView({
                       className={classes.startConsultationText}
                     >
                       START CONSULTATION
+                    </Typography>
+                  </Box>
+                  <Box className={classes.appointmentDetailsButton}>
+                    <Typography
+                      onClick={handleOnAppointmentDetials}
+                      className={classes.appointmentDetailsText}
+                    >
+                      APPOINTMENT DETAILS
                     </Typography>
                   </Box>
                   <Button

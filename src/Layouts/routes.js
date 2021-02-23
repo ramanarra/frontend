@@ -11,6 +11,7 @@ import PatientReports from '../pages/PatientReports'
 import PatientDetials from '../pages/Patients/PatientDetials'
 import PatientFindDoctor from '../pages/PatientFindDoctor'
 import PatientBookAppointment from '../pages/PatientBookAppointment'
+import AppointmentDetails from '../pages/AppointmentDetails'
 
 export const PatientRoutes = [
   {
@@ -42,6 +43,12 @@ export const PatientRoutes = [
     name: 'PatientBookAppointment',
     exact: true,
     component: PatientBookAppointment,
+  },
+  {
+    path: '/patient/appoints/upcoming/appointmentDetail',
+    name: 'AppointmentDetails',
+    exact: true,
+    component: AppointmentDetails,
   },
 ]
 
