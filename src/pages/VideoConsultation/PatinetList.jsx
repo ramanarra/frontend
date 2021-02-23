@@ -14,12 +14,28 @@ import Carousel from 'react-material-ui-carousel'
 import AdvertisementImage1 from '../../assets/img/advertisementImages/low-cost-advertising-for-startups.png'
 import AdvertisementImage2 from '../../assets/img/advertisementImages/maxresdefault.jpg'
 import AdvertisementImage3 from '../../assets/img/advertisementImages/download.png'
+import { URL } from '../../api'
+import useFetch from '../../hooks/useFetch'
 
-function Item({ item }) {
+function Item({ i, item }) {
+  const classes = useStyle()
+  let bgcolor
+  i % 2 == 0 ? bgcolor = '#cdd1ce' : bgcolor = '#eaeddd'
   return (
-    <Paper style={{ maxHeight: 75 }}>
-      <img src={item.images} />
-    </Paper>
+    <div className={classes.advertisement} style={{ backgroundColor: bgcolor }}>
+      { item.url != null ?
+        <div > <img className={classes.image} src={item.url} /> </div > :
+        <div  ><br />
+          <div className={classes.adTitle} style={{ float: 'left' }}>{item.name}</div>
+          <div className={classes.adCode} style={{ float: 'right' }}>Use Code: {item.code}</div><br />
+          <br />
+          <div style={{ textAlign: "center" }}>
+            <h5>
+              {item.content}
+            </h5>
+          </div>
+        </div>}
+    </div>
   )
 }
 
@@ -85,19 +101,13 @@ function PatientList({
     }
   }, [isWaiting])
 
-  const items = [
-    {
-      images: AdvertisementImage1
-    },
-    {
-      images: AdvertisementImage2
-    },
-    {
-      images: AdvertisementImage3
-    }
-  ]
-
-
+  const { data } = useFetch({
+    url: URL.advertisementList
+  })
+  let items = null
+  if (data) {
+    items = data.data;
+  }
   return (
     <Box>
       {open && (
@@ -107,9 +117,7 @@ function PatientList({
           </Box>
           <Box className={classes.dialog} style={{ paddingLeft: 0, paddingRight: 0 }}>
             <Carousel>
-              {
-                items.map((item, i) => <Item key={i} item={item} />)
-              }
+              {items !== null && items.map((item, i) => <Item i={i} item={item} />)}
             </Carousel>
             {patientList &&
               patientList.map((patientDetails, index) => {
