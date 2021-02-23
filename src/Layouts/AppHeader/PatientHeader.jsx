@@ -10,6 +10,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import AccountBoxIcon from '@material-ui/icons/AccountBox'
 import Backdrop from '@material-ui/core/Backdrop'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import CreateIcon from '@material-ui/icons/Create'
 
 import Stretch from '../../components/Stretch'
 import Logo from '../../assets/img/logo.png'
@@ -18,6 +19,7 @@ import useManualFetch from '../../hooks/useManualFetch'
 import { METHOD, URL } from '../../api'
 import message from './../../lib/iconMsg'
 import { NotificationTip } from '../../components/Tooltip'
+import ChangePassword from '../../pages/ChangePasswordOption/ChangePasswordDailogPatient'
 
 const useStyles = makeStyles(() => ({
   appBar: {
@@ -81,7 +83,7 @@ const useStyles = makeStyles(() => ({
     position: 'absolute',
     zIndex: 1,
     right: 70,
-    width: 140,
+    width: 160,
     padding: 5,
     backgroundColor: '#ffffff',
     border: '1px solid #c1c1c1',
@@ -112,6 +114,9 @@ const useStyles = makeStyles(() => ({
   exitIcon: {
     width: 22,
   },
+  createIcon: {
+    width: 22,
+  },
   backdrop: {
     zIndex: 1,
     color: '#fff',
@@ -123,7 +128,7 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-function PatientHeader({socket}) {
+function PatientHeader({ socket }) {
   const classes = useStyles()
 
   const history = useHistory()
@@ -136,6 +141,7 @@ function PatientHeader({socket}) {
 
   const patientName = useSelector(state => state.patient.patientName) || localStorage.getItem('patientName')
   const patientProfile = useSelector(state => state.patient.patientProfile) || localStorage.getItem('photo')
+  const [passwordDlg, setPasswordDlg] = useState(false)
 
   function handleFindDoctor() {
     history.push('/patient/find-doctor')
@@ -143,6 +149,15 @@ function PatientHeader({socket}) {
 
   function handleOnClick() {
     setOpen(!open)
+  }
+  function handleOpenDialog() {
+    setPasswordDlg(true)
+  }
+  function handleClose() {
+    setPasswordDlg(false)
+  }
+  function handleOnSubmit() {
+    setPasswordDlg(true)
   }
 
   function handleOnAwayClick() {
@@ -211,6 +226,15 @@ function PatientHeader({socket}) {
                 </Typography>
               </Box>
               <Box display="flex">
+                <CreateIcon className={classes.createIcon} />
+                <Typography
+                  className={classes.logoutText}
+                  onClick={handleOpenDialog}
+                >
+                  Change Password
+                </Typography>
+              </Box>
+              <Box display="flex">
                 <ExitToAppIcon className={classes.exitIcon} />
                 <Typography className={classes.logoutText} onClick={handleOnLogout}>
                   Logout
@@ -224,6 +248,13 @@ function PatientHeader({socket}) {
         <Backdrop className={classes.backdrop} open={openSpinner}>
           <CircularProgress color="inherit" />
         </Backdrop>
+      )}
+      {passwordDlg && (
+        <ChangePassword
+          open={true}
+          handleClose={handleClose}
+          handleOnSubmit={handleOnSubmit}
+        />
       )}
     </Box>
   )

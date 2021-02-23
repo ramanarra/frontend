@@ -1,0 +1,117 @@
+@import '../../../mixins/common';
+
+.sidebar-wrap {
+  position: fixed;
+  right: 0;
+  left: calc(100vw - 36px);
+  top: 0;
+  bottom: 0;
+  display: flex;
+  transition: 0.7s;
+
+  &.is-open {
+    left: calc(100vw - 400px);
+  }
+
+  .sidebar-toggle {
+    margin-top: 52px;
+
+    .arrow-icon-wrap {
+      position: relative;
+      background: rgba($color: #fff, $alpha: 0.7);
+      border-bottom-left-radius: 72px;
+      border-top-left-radius: 72px;
+      height: 72px;
+      width: 36px;
+      cursor: pointer;
+
+      .arrow-icon {
+        position: absolute;
+        font-size: 36px;
+        top: 18px;
+        right: -5px;
+        transition: 0.7s;
+      }
+
+      .unread-msgs {
+        @include colMiddle;
+        // background: #e49400;
+        background: #00b5ff;
+        color: #fff;
+        font-weight: bold;
+        font-size: 14px;
+        text-align: center;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        position: absolute;
+        top: -5px;
+        transition: 0.3s;
+
+        &.has-hover {
+          cursor: pointer;
+
+          &:hover {
+            width: 26px;
+            height: 26px;
+          }
+        }
+      }
+
+      &:hover {
+        background: #fff;
+      }
+
+      &.is-open {
+        background: #fff;
+
+        .arrow-icon {
+          transform: rotate(180deg);
+        }
+
+        .unread-msgs {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .sidebar-content {
+    width: calc(400px - 36px);
+    height: 100%;
+    background: #fff;
+
+    .navigation-bar {
+      @include lrPartition;
+      padding: 8px;
+      background: #00b5ff;
+
+      .left-part,
+      .right-part {
+        @include rowCenter;
+      }
+
+      .back-btn {
+        padding: 6px;
+        color: #fff;
+      }
+
+      .person-name {
+        font-size: 14px;
+        font-weight: normal;
+        margin-left: 16px;
+        max-width: 200px;
+        @include textOverflow;
+        color: #fff;
+      }
+    }
+
+    .sidebar-screens {
+      height: 100%;
+
+      &.has-back {
+        height: calc(100% - 52px);
+      }
+    }
+  }
+}

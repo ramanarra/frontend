@@ -1,7 +1,7 @@
-import React, {  useState } from 'react'
+import React, { useState } from 'react'
 import classNames from 'classnames'
 import { useLocation, useHistory } from 'react-router-dom'
-import { Box, Typography, TextField,Button } from '@material-ui/core'
+import { Box, Typography, TextField, Button } from '@material-ui/core'
 import useNavigationStyles from './useStyle'
 import { setOpenSideBar } from '../../actions/doctor'
 import AddDoctor from '../MyDoctors/AddDoctor/index'
@@ -19,10 +19,10 @@ const Navigation = ({ doctorList, contentRefresh }) => {
 
   const pathName = path[1]
 
-  const[Open,setOpen]=useState(false)
+  const [Open, setOpen] = useState(false)
 
-  const [change,setChange] = useState(true)
-  
+  const [change, setChange] = useState(true)
+
 
   function handleAppointmentOnClick() {
     if (doctorList) {
@@ -35,19 +35,19 @@ const Navigation = ({ doctorList, contentRefresh }) => {
     history.push('/doctors')
   }
 
-  function handleOpen(){
+  function handleOpen() {
     setOpen(true);
   }
 
-  function handleClose(){
+  function handleClose() {
     setOpen(false);
-    
+
     contentRefresh();
   }
- 
 
 
-  function handleAddDoctor(){
+
+  function handleAddDoctor() {
     setChange(!change)
     console.log(change)
   }
@@ -67,8 +67,8 @@ const Navigation = ({ doctorList, contentRefresh }) => {
           ></i>
           {
             localStorage.getItem('role') === 'DOCTOR' ?
-            <Typography className={classes.content}>My Hospital</Typography> :
-            <Typography className={classes.content} onClick={handleAddDoctor}>My Doctors</Typography>
+              <Typography className={classes.content}>My Hospital</Typography> :
+              <Typography className={classes.content} onClick={handleAddDoctor}>My Doctors</Typography>
           }
         </Box>
         <Box
@@ -84,20 +84,20 @@ const Navigation = ({ doctorList, contentRefresh }) => {
           <Typography className={classes.content} onClick={handleAddDoctor}>Appointments</Typography>
         </Box>
 
-        { 
-            localStorage.getItem('role') !== 'DOCTOR' && pathName==='doctors' &&
-             <Box>            
-            <Button className={classes.contentlast} style={{backgroundColor:'rgb(11, 181, 255)'}}
-               onClick={handleOpen}>Add Doctor</Button> 
+        {
+          localStorage.getItem('role') !== 'DOCTOR' && pathName === 'doctors' &&
+          <Box>
+            <Button className={classes.contentlast} style={{ backgroundColor: 'rgb(11, 181, 255)' }}
+              onClick={handleOpen}>Add Doctor</Button>
             {
               Open &&
               <AddDoctor
-              handleClose={handleClose}
+                handleClose={handleClose}
               />
             }
-            </Box>
+          </Box>
         }
-           
+
       </Box>
 
     </Box>

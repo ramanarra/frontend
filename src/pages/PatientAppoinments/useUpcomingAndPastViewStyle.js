@@ -70,7 +70,7 @@ const useUpcomingAndPastViewStyle = makeStyles(() => ({
   button: {
     alignItems: 'center',
     justifyContent: 'center',
-    padding: '10px 180px',
+    padding: '10px 100px',
     paddingTop: 30,
     paddingBottom: 10,
   },
@@ -83,6 +83,19 @@ const useUpcomingAndPastViewStyle = makeStyles(() => ({
     marginRight: 15,
   },
   startConsultationText: {
+    fontSize: 10,
+    color: '#f7f7f7',
+    paddingTop: 2,
+  },
+  appointmentDetailsButton: {
+    padding: '6px 20px',
+    backgroundColor: '#0bb5ff',
+    borderRadius: 17,
+    textAlign: 'center',
+    cursor: 'pointer',
+    marginRight: 15,
+  },
+  appointmentDetailsText: {
     fontSize: 10,
     color: '#f7f7f7',
     paddingTop: 2,

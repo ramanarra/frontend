@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react'
 import moment from 'moment'
 import NumberToWords from 'number-to-words'
-import { useHistory } from 'react-router-dom'
+import { Redirect, Route, useHistory } from 'react-router-dom'
 import AddCircleOutlineTwoToneIcon from '@material-ui/icons/AddCircleOutlineTwoTone';
 import PatientReport from '../PatientReports/PatientReport.jsx'
 import SnackBar from '../../components/SnackBar'
@@ -136,6 +136,23 @@ function UpcomingAndPastView({
       socket: socket,
       appointmentDetail: appointmentDetail,
       list: list,
+    })
+  }
+
+  function handleOnAppointmentDetials() {
+    console.log('appointment details button clicked');
+
+    history.push({
+      pathname: '/patient/appoints/upcoming/appointmentDetail',
+      doctorKey: appointmentDetail.doctorKey,
+      appointmentId: appointmentDetail.appointmentId,
+      appointmentDetail: appointmentDetail,
+      startTime: startTime,
+      endTime: endTime,
+      date: date,
+      socket: socket,
+      list: list,
+      onReschedule: onReschedule,
     })
   }
 
@@ -355,6 +372,14 @@ function UpcomingAndPastView({
                       className={classes.startConsultationText}
                     >
                       START CONSULTATION
+                    </Typography>
+                  </Box>
+                  <Box className={classes.appointmentDetailsButton}>
+                    <Typography
+                      onClick={handleOnAppointmentDetials}
+                      className={classes.appointmentDetailsText}
+                    >
+                      APPOINTMENT DETAILS
                     </Typography>
                   </Box>
                   <Button

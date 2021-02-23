@@ -49,3 +49,9 @@
     height: 3px;
   }
 }
+
+@mixin textOverflow {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
