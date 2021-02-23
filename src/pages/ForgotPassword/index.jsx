@@ -139,7 +139,7 @@ const ForgotPassword = (props) => {
             </div>
             <Paper className={classes.paper}variant="outlined" square>
               <Typography className={classes.heading} variant="subtitle1">
-                Forgot Password
+                Doctor Forgot Password
                 <span className={classes.line}/>
               </Typography>
               <form onSubmit={formik.handleSubmit}>
@@ -235,7 +235,7 @@ const ForgotPassword = (props) => {
               Remembered Password?
             </Typography>
             <Typography color="primary" variant="h4" onClick={redirectToLogin}>
-              Signin
+              Doctor Signin
             </Typography>
           </Centralize>
             </Paper>

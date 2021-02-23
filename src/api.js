@@ -78,4 +78,5 @@ export const URL = {
     collection: '/calendar/doctor/amountListReport',
   },
   appointmentReport: '/calendar/getAppointmentReports',
+  advertisementList: '/calendar/advertisementList',
 }

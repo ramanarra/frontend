@@ -154,6 +154,33 @@ const usePatientListStyle = makeStyles((theme) => ({
     marginLeft: '45%',
     marginTop: 20,
   },
+  advertisement: {
+    paddingBottom: 8,
+    paddingTop: 8,
+    cursor: 'pointer',
+    height: 200,
+    marginTop: 7.5,
+    paddingLeft: 5,
+    paddingRight: 5,
+    zIndex: 'auto',
+    align: 'center'
+  },
+  adTitle: {
+    fontSize: 15,
+    color: '#ff0000',
+  },
+  adCode: {
+    fontSize: 15,
+    color: '#312f2f',
+
+  },
+  image: {
+    objectFit: 'contain',
+    width: 350,
+    height: 190,
+    alignSelf: 'center'
+  }
+
 }))
 
 export default usePatientListStyle
