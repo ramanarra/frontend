@@ -7,10 +7,11 @@
 
       .ExportButton{
         background-color: #00b5fb;
-        width: 100px;
+        width: 12%;
         text-align: center;
-        border-radius: 20px;
+        border-radius: 10px;
         font-size: medium;
+        pointer-events: visible;
       }
 
       .table-wrap {

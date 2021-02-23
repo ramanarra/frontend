@@ -73,7 +73,7 @@ const DocReports = React.memo(({ filter, handleFilter, pathType, tab }) => {
     <div className="report-list-panel">
 
       {Boolean(data?.data?.list?.length) &&
-        <div className='ExportButton' onClick={exportExcel}>export</div>
+        <div className='ExportButton' onClick={exportExcel}>Export as Excel</div>
       }
 
       <div className={clsx('table-wrap', totalCount > 15 && 'has-pagination')}>
