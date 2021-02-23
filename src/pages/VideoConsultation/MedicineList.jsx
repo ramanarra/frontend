@@ -264,19 +264,26 @@ function MedicineList({
             />
           )}
         </Box>
-        <Box display="flex" justifyContent="space-between" alignItems="center">
+        <Box
+          className={classes.addMedicine}
+        >
           {appointmentId && icon && (
             <Button
               className={classes.added}
               onClick={handlesubscription}
               color="primary"
             >
-              + Add Prescription
+              + Add Medicine
             </Button>
           )}
+
+        </Box>
+        <Box
+          className={classes.finish}
+        >
           {list.length > 0 && icon && (
             <Button className={classes.submit} onClick={addPrescription}>
-              submit
+              finish and submit to patient
             </Button>
           )}
         </Box>

@@ -4,7 +4,7 @@ import { FullscreenExit } from '@material-ui/icons'
 
 const useMedicineListStyle = makeStyles(() => ({
   submit: {
-    textTransform: 'lowercase',
+    textTransform: 'capitalize',
     color: 'white',
     // position: 'relative',
     // top: 0,
@@ -17,6 +17,14 @@ const useMedicineListStyle = makeStyles(() => ({
     '&:hover': {
       backgroundColor: '#2abade',
     },
+  },
+
+  addMedicine:{
+    display:"flex", justifyContent:"space-between", alignItems:"center"
+  },
+  finish:{
+    display: 'flex', 
+    float: 'right' 
   },
   date: {
     display: 'flex',
