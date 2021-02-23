@@ -128,7 +128,7 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-function PatientHeader({socket}) {
+function PatientHeader({ socket }) {
   const classes = useStyles()
 
   const history = useHistory()

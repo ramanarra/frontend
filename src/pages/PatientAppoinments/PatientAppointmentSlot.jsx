@@ -145,52 +145,63 @@ function PatientAppointmentSlot({
   }
 
   return (
-      <Box className={classes.topContainer}>
-        <Box
-          className={classes.container}
-          style={{ borderLeft: `3px solid ${borderColor}` }}
-          onClick={handleOnClick}
-        >
-          <Box className={classes.timing} display="flex">
-            <ScheduleIcon className={classes.scheduleIcon} />
-            <Typography
-              className={classes.time}
-            >{`${startTime}${'-'}${endTime}`}</Typography>
+    <Box className={classes.topContainer}>
+      <Box
+        className={classes.container}
+        style={{ borderLeft: `3px solid ${borderColor}` }}
+        onClick={handleOnClick}
+      >
+        <Box className={classes.timing} display="flex">
+          <ScheduleIcon className={classes.scheduleIcon} />
+          <Typography
+            className={classes.time}
+          >{`${startTime}${'-'}${endTime}`}</Typography>
+        </Box>
+        <Box display="flex">
+          <Box className={classes.dateAndMonth}>
+            <Typography className={classes.date} variant="h3">
+              {date}
+            </Typography>
+            <Typography className={classes.month} variant="h2">
+              {month}
+            </Typography>
           </Box>
-          <Box display="flex">
-            <Box className={classes.dateAndMonth}>
-              <Typography className={classes.date} variant="h3">
-                {date}
-              </Typography>
-              <Typography className={classes.month} variant="h2">
-                {month}
-              </Typography>
-            </Box>
-            <Box className={classes.doctorDetails}>
-              <Typography className={classes.name} variant="h5">{`${'Dr. '}${
-                appointmentDetail.doctorFirstName
+          <Box className={classes.doctorDetails}>
+            <Typography className={classes.name} variant="h5">{`${'Dr. '}${appointmentDetail.doctorFirstName
               } ${doctorLastName} `}</Typography>
-              <Typography className={classes.hospitalName}>
-                {appointmentDetail.hospitalName}
-              </Typography>
-            </Box>
+            <Typography className={classes.hospitalName}>
+              {appointmentDetail.hospitalName}
+            </Typography>
           </Box>
         </Box>
+      </Box>
       {open && (
-        <UpcomingAndPastView
-          appointmentDetail={appointmentDetail}
-          open={open}
-          startTime={startTime}
-          endTime={endTime}
-          preConsultationTime={preConsultaionTime}
-          onClose={handleOnClose}
-          onSave={onSave}
-          past={past}
-          onCancel={handleOnCancel}
-          onReschedule={handleOnReschedule}
-          socket={socket}
-          list={list}
-        />
+        // <UpcomingAndPastView
+        //   appointmentDetail={appointmentDetail}
+        //   open={open}
+        //   startTime={startTime}
+        //   endTime={endTime}
+        //   preConsultationTime={preConsultaionTime}
+        //   onClose={handleOnClose}
+        //   onSave={onSave}
+        //   past={past}
+        //   onCancel={handleOnCancel}
+        //   onReschedule={handleOnReschedule}
+        //   socket={socket}
+        //   list={list}
+        // />
+        history.push({
+          pathname: '/patient/appoints/upcoming/appointmentDetail',
+          doctorKey: appointmentDetail.doctorKey,
+          appointmentId: appointmentDetail.appointmentId,
+          appointmentDetail: { appointmentDetail },
+          startTime: startTime,
+          endTime: endTime,
+          date: appointmentDate,
+          socket: socket,
+          list: list,
+          onReschedule: { handleOnReschedule },
+        })
       )}
       {openCancel && (
         <CancelAppointmentModal
