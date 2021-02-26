@@ -13,6 +13,8 @@ import CancelAppointmentModal from './CancelAppointmentModal'
 import RescheduleAppointmentModal from './RescheduleAppointmentModal'
 import useStyle from './usePatientAppointmentSlotStyle'
 import { baseURL } from '../../baseURL'
+import { useSelector, useDispatch } from 'react-redux'
+import { setPatientAppointmentList, setPatientAppointment, setIsPast } from '../../actions/patient'
 
 const ENDPOINT = baseURL
 
@@ -26,6 +28,8 @@ function PatientAppointmentSlot({
   list,
 }) {
   const classes = useStyle()
+
+  const dispatch = useDispatch()
 
   const [open, setOpen] = useState(false)
 
@@ -115,8 +119,17 @@ function PatientAppointmentSlot({
     }
   }, [])
 
-  function handleOnClick() {
-    setOpen(true)
+  const handleOnClick = (data) => {
+    localStorage.setItem('docKey', appointmentDetail.doctorKey)
+    dispatch(setPatientAppointmentList(list))
+    dispatch(setPatientAppointment(appointmentDetail))
+    dispatch(setIsPast(past))
+    history.push({
+      pathname: `/patient/appoints/upcoming/appointmentDetail/${appointmentDetail.appointmentId}`,
+      doctorKey: appointmentDetail.doctorKey,
+      appointmentId: appointmentDetail.appointmentId,
+    })
+
   }
 
   function handleOnClose(event) {
@@ -149,7 +162,7 @@ function PatientAppointmentSlot({
       <Box
         className={classes.container}
         style={{ borderLeft: `3px solid ${borderColor}` }}
-        onClick={handleOnClick}
+        onClick={handleOnClick.bind(this, appointmentDetail.appointmentId, appointmentDetail.doctorKey)}
       >
         <Box className={classes.timing} display="flex">
           <ScheduleIcon className={classes.scheduleIcon} />
@@ -175,34 +188,7 @@ function PatientAppointmentSlot({
           </Box>
         </Box>
       </Box>
-      {open && (
-        // <UpcomingAndPastView
-        //   appointmentDetail={appointmentDetail}
-        //   open={open}
-        //   startTime={startTime}
-        //   endTime={endTime}
-        //   preConsultationTime={preConsultaionTime}
-        //   onClose={handleOnClose}
-        //   onSave={onSave}
-        //   past={past}
-        //   onCancel={handleOnCancel}
-        //   onReschedule={handleOnReschedule}
-        //   socket={socket}
-        //   list={list}
-        // />
-        history.push({
-          pathname: '/patient/appoints/upcoming/appointmentDetail',
-          doctorKey: appointmentDetail.doctorKey,
-          appointmentId: appointmentDetail.appointmentId,
-          appointmentDetail: { appointmentDetail },
-          startTime: startTime,
-          endTime: endTime,
-          date: appointmentDate,
-          socket: socket,
-          list: list,
-          onReschedule: { handleOnReschedule },
-        })
-      )}
+
       {openCancel && (
         <CancelAppointmentModal
           open={openCancel}

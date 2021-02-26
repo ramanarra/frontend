@@ -7,7 +7,7 @@ import {
     Avatar,
     Button,
 } from '@material-ui/core'
-import { useLocation, useHistory } from 'react-router-dom'
+import { useLocation, useHistory, useParams } from 'react-router-dom'
 import useCustomFecth from '../../hooks/useCustomFetch'
 import useAppointmentUpdate from '../../hooks/useAppointmentUpdate'
 import SnackBar from '../../components/SnackBar'
@@ -24,13 +24,28 @@ import moment from 'moment'
 import CancelAppointmentModal from '../PatientAppoinments/CancelAppointmentModal'
 import RescheduleAppointmentModal from '../PatientAppoinments/RescheduleAppointmentModal'
 import AddCircleOutlineTwoToneIcon from '@material-ui/icons/AddCircleOutlineTwoTone';
+import VerticalAlignBottomOutlinedIcon from '@material-ui/icons/VerticalAlignBottomOutlined'
 import PatientReport from '../PatientReports/PatientReport.jsx'
 import useUpload from '../../hooks/useUpload'
+import API from '../../api'
+import getTimeFormatWithNoon from '../../lib/dateLib'
+import socketIOClient from 'socket.io-client'
+import { setSocket, setTimer } from '../../actions/doctor'
+import { useSelector, useDispatch } from 'react-redux'
+import { baseURL } from '../../baseURL'
+import NumberToWords from 'number-to-words'
 
-
+const ENDPOINT = baseURL
 
 function AppoinmentDetails() {
     const classes = useStyle()
+    const dispatch = useDispatch()
+    const socketRef = useSelector(state => state.doctor.socket)
+    const listRef = useSelector(state => state.patient.appointmentList)
+    const appointmentDetail = useSelector(state => state.patient.appointment)
+    const past = useSelector(state => state.patient.isPast)
+    const timer = useSelector(state => state.doctor.timer)
+
     const [item, setItem] = useState(false)
     const [open, setOpen] = useState(false)
     const [reportOpen, setReportOpen] = useState(false)
@@ -46,11 +61,13 @@ function AppoinmentDetails() {
         }
     });
 
+    const doctorKey = localStorage.getItem('docKey')
+    const { appointmentId } = useParams()
+    const params = { appointmentId: parseInt(appointmentId), doctorKey }
+
     let reportFileArray = []
 
-    const refetch = () => {
-
-    }
+    const refetch = () => { }
 
     function handleLabReport() {
         setReportOpen(true)
@@ -73,11 +90,9 @@ function AppoinmentDetails() {
     function handleClick() {
         appointmentReportArray.push({
             pathname: '/patient/reports',
-            state: location.appointmentId
+            state: params.appointmentId
         })
     }
-
-
 
     const [onSave, response] = useAppointmentUpdate(refetch)
 
@@ -89,10 +104,10 @@ function AppoinmentDetails() {
 
     const key = useMemo(() => {
         return {
-            doctorKey: location.doctorKey,
-            appointmentId: location.appointmentId,
+            doctorKey: params.doctorKey,
+            appointmentId: params.appointmentId,
         }
-    }, [location])
+    }, [])
 
     const [appointmentDetails] = useCustomFecth(
         METHOD.GET,
@@ -103,6 +118,7 @@ function AppoinmentDetails() {
     const role = localStorage.getItem('role')
 
     const [openReschedule, setOpenReschedule] = useState(false)
+
     function handleOnReschedule(event) {
         setOpenReschedule(true)
         event.stopPropagation()
@@ -133,22 +149,60 @@ function AppoinmentDetails() {
         ? `${appointmentDetails?.doctorFirstName}${' '}${appointmentDetails?.doctorLastName}`
         : appointmentDetails?.doctorFirstName
 
+    useEffect(() => {
+        if (!past) {
+            const socket = socketIOClient(ENDPOINT, {
+                transports: ['websocket'],
+                jsonp: false,
+                query: {
+                    token: localStorage.getItem('virujhToken'),
+                },
+                path: '/socket.io',
+            })
+
+            socket.on('connect', function () {
+                dispatch(setSocket(socket))
+
+                if (localStorage.getItem('loginUser') === 'doctor') {
+                    socket.emit('createTokenForDoctor')
+                } else {
+                    if (!past) {
+                        socket.emit('updateLiveStatusOfUser', { status: 'online' })
+                        socket.emit('getPatientTokenForDoctor', params.appointmentId)
+                    }
+
+                }
+
+                socket.on('videoTokenForPatient', (data) => {
+                    if (data.isToken) {
+                        socket.emit('updateLiveStatusOfUser', { status: 'videoSessionReady' })
+                        if (data.appointmentId !== params.appointmentId) {
+                            //  handleOnOpen(data.appointmentId)
+                        }
+                    }
+                })
+            })
+
+        }
+
+    }, [])
+
     function handleOnStartConsulation() {
-        location.socket.emit('getPatientTokenForDoctor', location.appointmentId)
-        location.socket.on('videoTokenForPatient', (data) => {
-            location.socket.emit('updateLiveStatusOfUser', { status: 'videoSessionReady' })
+        console.log(params.appointmentId)
+        socketRef.emit('getPatientTokenForDoctor', params.appointmentId)
+        socketRef.on('videoTokenForPatient', (data) => {
+            socketRef.emit('updateLiveStatusOfUser', { status: 'videoSessionReady' })
             if (data.isToken) {
-                location.socket.emit('updateLiveStatusOfUser', { status: 'videoSessionReady' })
+                socketRef.emit('updateLiveStatusOfUser', { status: 'videoSessionReady' })
             }
         })
         history.push({
             pathname: '/video-consultation',
-            state: location.appointmentId,
+            state: params.appointmentId,
             doctorName: doctorName,
             liveStatus: appointmentDetails?.doctorLiveStatus,
-            socket: location.socket,
-            appointmentDetail: location.appointmentDetail,
-            list: location.list,
+            socket: socketRef,
+            list: listRef,
         })
     }
 
@@ -157,14 +211,29 @@ function AppoinmentDetails() {
     const appoinmentDate = moment(appointmentDetails?.appointmentDate).format(
         'DD/MM/YYYY'
     )
+    const startTime = getTimeFormatWithNoon(appointmentDetails?.startTime)
 
-    const appointmentDateWithTime = appoinmentDate + ' ' + location.startTime
+    const endTime = getTimeFormatWithNoon(appointmentDetails?.endTime)
+
+    const appointmentDateWithTime = appoinmentDate + ' ' + startTime
 
     const difference = moment(appointmentDateWithTime, 'DD/MM/YYYY HH:mm:ss').diff(
         moment(currentTime, 'DD/MM/YYYY HH:mm:ss')
     )
 
     const differenceInDays = moment.duration(difference)
+
+    const days =
+        NumberToWords.toWords(differenceInDays.days()).charAt(0).toUpperCase() +
+        NumberToWords.toWords(differenceInDays.days()).slice(1)
+
+    const hours =
+        NumberToWords.toWords(differenceInDays.hours()).charAt(0).toUpperCase() +
+        NumberToWords.toWords(differenceInDays.hours()).slice(1)
+
+    const minutes =
+        NumberToWords.toWords(differenceInDays.minutes()).charAt(0).toUpperCase() +
+        NumberToWords.toWords(differenceInDays.minutes()).slice(1)
 
     const cancelDisable =
         appointmentDetails?.cancellationDays !== null
@@ -183,6 +252,10 @@ function AppoinmentDetails() {
                 ? false
                 : true
             : false
+
+    const prescriptionDisplay =
+        (appointmentDetails?.prescriptionUrl && appointmentDetails?.prescriptionUrl.length)
+            ? true : false
 
     const Entry = ({ data, role }) => {
         return (
@@ -241,31 +314,31 @@ function AppoinmentDetails() {
                     <Box display="flex" className={classes.details}>
                         <Box>
                             <Box display="flex" className={classes.nameAndValuePair}>
-                                <Typography className={classes.name}>Email :</Typography>
+                                <Typography className={classes.name}>Email:</Typography>
                                 <Typography className={classes.value} variant="h5">
                                     {appointmentDetails.email}
                                 </Typography>
                             </Box>
                             <Box display="flex" className={classes.nameAndValuePair}>
                                 <Typography className={classes.name}>
-                                    Invite Time Zone :
+                                    Invite Time Zone:
                                 </Typography>
                                 <Typography className={classes.value} variant="h5">
                                     Indian standard Time
                                 </Typography>
                             </Box>
                             <Box display="flex" className={classes.nameAndValuePair}>
-                                <Typography className={classes.name}>Hospital Name : </Typography>
+                                <Typography className={classes.name}>Hospital Name: </Typography>
                                 <Typography className={classes.value} variant="h5">
                                     {appointmentDetails.hospitalName}
                                 </Typography>
                             </Box>
                             <Box display="flex" className={classes.nameAndValuePair}>
-                                <Typography className={classes.name}>Time : </Typography>
+                                <Typography className={classes.name}>Time: </Typography>
                                 <Typography
                                     className={classes.value}
                                     variant="h5"
-                                >{`${location.startTime}${' - '}${location.endTime}`}</Typography>
+                                >{`${startTime}${' - '}${endTime}`}</Typography>
                             </Box>
 
 
@@ -273,67 +346,56 @@ function AppoinmentDetails() {
                         <Box className={classes.rightSide}>
 
                             <Box display="flex" className={classes.nameAndValuePair}>
-                                <Typography className={classes.name}>Date : </Typography>
+                                <Typography className={classes.name}>Date: </Typography>
                                 <Typography className={classes.value} variant="h5">
-                                    {location.date}
+                                    {appoinmentDate}
                                 </Typography>
                             </Box>
 
                             <Box display="flex" className={classes.nameAndValuePair}>
-                                <Typography className={classes.name}>Doctor Status : </Typography>
+                                <Typography className={classes.name}>Doctor Status: </Typography>
                                 <Typography className={classes.value} variant="h5">
                                     {appointmentDetails.doctorLiveStatus}
                                 </Typography>
                             </Box>
 
                             <Box display="flex" className={classes.nameAndValuePair}>
-                                <Typography className={classes.name}>Speciality : </Typography>
+                                <Typography className={classes.name}>Speciality: </Typography>
                                 <Typography className={classes.value} variant="h5">
                                     {appointmentDetails.speciality}
                                 </Typography>
                             </Box>
 
+                            {(prescriptionDisplay) ?
+                                past && (
+                                    <Box display="flex" className={classes.nameAndValuePair}>
+
+                                        <Typography className={classes.name}>Prescription : </Typography>
+                                        <Box display="flex" className={classes.download}>
+                                            <a className={classes.value} href={appointmentDetails.prescriptionUrl[0]}
+                                                target="_blank"
+                                                style={{ color: '#37befa', textDecorationLine: 'none' }}
+                                                variant="h5">
+                                                Click here
+                                            </a>
+                                            <VerticalAlignBottomOutlinedIcon
+                                                onClick={appointmentDetails.prescriptionUrl[0]}
+                                                className={classes.downloadIcon}
+                                            />
+                                        </Box>
+                                    </Box>
+                                )
+                                :
+                                <div></div>
+                            }
+
                             <Box>
                                 <Box className={classes.nameAndValuePair} style={{ display: "flex" }}>
-                                    <Typography className={classes.name}>Lab Report :</Typography>
+                                    <Typography className={classes.name}>Lab Report:</Typography>
                                     <Button className="title" onClick={handleLabReport} style={{ textTransform: "none", position: "relative", top: "-6px", left: "-10px" }} >
                                         <AddCircleOutlineTwoToneIcon />
                                     </Button>
                                 </Box>
-                                {/* <Box style={{ display: "flex", height: "50px", width: "50px" }}>
-
-                                    {
-                                        appointmentDetails?.reportDetail?.map((item, index) => {
-                                            if (index <= 3) {
-                                                if (item?.fileType?.includes("pdf")) {
-                                                    return (
-                                                        <Box>
-                                                            <img style={{ width: "40px", height: "40px", marginRight: "10px", borderRadius: "8px" }} src={pdf} />
-                                                            <Typography style={{ fontSize: "9px", width: "40px", height: "10px", overflow: "hidden", textOverflow: "clip" }}>{item.fileName}</Typography>
-                                                        </Box>
-                                                    )
-                                                }
-                                                else {
-                                                    return (
-                                                        <Box>
-                                                            <img style={{ width: "40px", height: "40px", marginRight: "10px", borderRadius: "8px" }} src={item.reportURL} />
-                                                            <Typography style={{ fontSize: "9px", width: "40px", height: "10px", overflow: "hidden", textOverflow: "clip" }}>{item.fileName}</Typography>
-                                                        </Box>
-                                                    )
-                                                }
-                                            }
-                                        })
-                                    }
-                                </Box>
-
-                                {/* To show the patient reports 
-                                <Box>
-                                    {
-                                        appointmentDetails?.reportDetail?.length > 4 &&
-                                        <a onClick={handleClick} style={{ color: "#0bb5ff", fontSize: "12px" }}>View {(appointmentDetails?.reportDetail?.length - 4)} more</a>
-                                    }
-
-                                </Box> */}
                             </Box>
 
                             {
@@ -342,7 +404,7 @@ function AppoinmentDetails() {
                                     open={reportOpen}
                                     setOpen={setReportOpen}
                                     setItem={setItem}
-                                    appointmentId={location.appointmentId}
+                                    appointmentId={params.appointmentId}
                                     handleClose={handleReportClose}
                                     setReportFile={setReportFile}
                                     setVal={setVal}
@@ -352,32 +414,34 @@ function AppoinmentDetails() {
 
                         </Box>
 
+                        {/* table view of lab reports */}
+                        <Box>
+                            {!!appointmentDetails?.reportDetail?.length &&
+                                <div className="report-list-panel">
+                                    <div className={clsx('table-wrap')}>
+                                        <div className="tableTitle">Lap Reports</div>
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th className="head">File Name</th>
+                                                    <th className="head">Report Date</th>
+                                                    <th className="head">Comment</th>
+                                                    <th className="head">Attachment</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {!!appointmentDetails?.reportDetail?.length &&
+                                                    appointmentDetails.reportDetail?.map((i, index) => (
+                                                        <Entry data={i} key={index} role={role} />
+                                                    ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>}
+                        </Box>
+
                     </Box>
-                    {/* table view of lab reports */}
-                    <Box>
-                        {!!appointmentDetails?.reportDetail?.length &&
-                            <div className="report-list-panel">
-                                <div className={clsx('table-wrap')}>
-                                    <div className="tableTitle">Lap Reports</div>
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th className="head">File Name</th>
-                                                <th className="head">Report Date</th>
-                                                <th className="head">Comment</th>
-                                                <th className="head">Attachment</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {!!appointmentDetails?.reportDetail?.length &&
-                                                appointmentDetails.reportDetail?.map((i, index) => (
-                                                    <Entry data={i} key={index} role={role} />
-                                                ))}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>}
-                    </Box>
+
                     <Box>
                         {/* <Box display="flex" className={classes.preConsultaion}>
                   <InfoOutlinedIcon className={classes.infoIcon} />
@@ -394,7 +458,7 @@ function AppoinmentDetails() {
                             >
                                 <Typography className={rescheduleDisable ? classes.disableRescheduleText : classes.rescheduleText}>
                                     RESCHEDULE
-                    </Typography>
+                                </Typography>
                             </Button>
                             <Box className={classes.startConsultationButton}>
                                 <Typography
@@ -402,7 +466,7 @@ function AppoinmentDetails() {
                                     className={classes.startConsultationText}
                                 >
                                     START CONSULTATION
-                    </Typography>
+                                </Typography>
                             </Box>
 
                             <Button
@@ -471,7 +535,7 @@ function AppoinmentDetails() {
                         time={appointmentDetails.startTime}
                         date={appoinmentDate}
                         onClose={handleClose}
-                        appointmentId={location.appointmentId}
+                        appointmentId={params.appointmentId}
                         onSave={onSave}
                     />
                 )
@@ -482,7 +546,7 @@ function AppoinmentDetails() {
                     onClose={handleCloseReschedule}
                     time={appointmentDetails.startTime}
                     date={appoinmentDate}
-                    appointmentDetail={location.appointmentDetail}
+                    appointmentDetail={appointmentDetail}
                     onSave={onSave}
                 />
             )}
@@ -570,5 +634,7 @@ function AppoinmentDetails() {
 
     )
 }
+
+
 
 export default AppoinmentDetails
