@@ -491,8 +491,8 @@ class VideoRoomComponent extends Component {
             className={
               this.props.isFullScreen
                 ? this.props.isInterChange
-                  ? 'subscriber-custom-class-inter-change'
-                  : 'custom-class-with-full-screen'
+                  ? 'custom-class-with-full-screen-inter-change'
+                  : 'subscriber-custom-class'
                 : 'OT_root OT_publisher custom-class'
             }
             id="localUser"
@@ -529,8 +529,8 @@ class VideoRoomComponent extends Component {
             className={
               this.props.isFullScreen
                 ? this.props.isInterChange
-                  ? 'custom-class-with-full-screen-inter-change'
-                  : 'subscriber-custom-class'
+                  ? 'subscriber-custom-class-inter-change'
+                  : 'custom-class-with-full-screen'
                 : 'OT_root OT_publisher custom-class'
             }
             id="remoteUsers"
