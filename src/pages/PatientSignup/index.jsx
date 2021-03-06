@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import moment from 'moment'
-import { Paper, Button, Snackbar } from '@material-ui/core'
+import { Paper, Button, Snackbar, Select, MenuItem } from '@material-ui/core'
 import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers'
 import { GoCalendar } from 'react-icons/go'
 import { useForm, Controller } from 'react-hook-form'
@@ -11,10 +11,26 @@ import Textfield from '../../components/Textfield'
 import './style.scss'
 import Api, { URL } from '../../api'
 import SnackBar from '../../components/SnackBar'
+import { MapRounded, NoEncryptionTwoTone, SportsRugbySharp, Star } from '@material-ui/icons'
+import { makeStyles } from '@material-ui/core/styles'
+
+const useStyles = makeStyles({
+  root: {
+    fontSize: 12,
+    color: '#636363',
+  },
+  select: {
+    fontSize: 12,
+    color: '#636363',
+    width: 390,
+  },
+});
 
 const SnackbarPosition = { vertical: 'bottom', horizontal: 'center' }
 
 const PatientSignup = (props) => {
+
+  const classes = useStyles()
   const { register, watch, errors, control, handleSubmit } = useForm()
 
   const watchDateOfBirth = watch('dateOfBirth', null)
@@ -33,6 +49,8 @@ const PatientSignup = (props) => {
 
   const [password, setPassword] = useState();
 
+  const [honorific, setHonorific] = useState("Mr")
+
   const currentTime = moment().format('DD/MM/YYYY HH:mm:ss')
 
   const redirectToLogin = () => props.history.push('/login')
@@ -42,6 +60,8 @@ const PatientSignup = (props) => {
   const redirectToDoctorLogin = () => props.history.push('/doctor/login')
 
   const onSubmit = (data) => {
+    console.log(data)
+    data = honorific ? ({ ...data, "honorific": honorific }) : data
     if (data.phone === data.alternateContact) {
       setMessage('Both contact numbers should not be same')
       setError(true)
@@ -124,6 +144,10 @@ const PatientSignup = (props) => {
     setError(false)
   }
 
+  const handleHonorificChange = (event) => {
+    setHonorific(event.target.value)
+  }
+
   return (
     <div className="patient-sign-up">
       <div className="logo-wrap">
@@ -136,6 +160,20 @@ const PatientSignup = (props) => {
       <Paper className="card" elevation={0}>
         <h3 className="title">Patient register</h3>
         <form className="fields" onSubmit={handleSubmit(onSubmit)}>
+          <div className="honorific-head">
+            <label className="honorific-title">Honorific</label>
+            <Star className="honorific-star-icon" />
+          </div>
+
+          <Select className="honorific-field-partition" classes={{ select: classes.select, underline: classes.underline }}
+            value={honorific}
+            onChange={handleHonorificChange}
+          >
+            <MenuItem classes={{ root: classes.root }} value={"Mr"}>Mr.</MenuItem>
+            <MenuItem classes={{ root: classes.root }} value={"Ms"}>Ms.</MenuItem>
+            <MenuItem classes={{ root: classes.root }} value={"Mrs"}>Mrs.</MenuItem>
+          </Select>
+
           <div className="field-wrap field-partition">
             <Textfield
               name="firstName"
