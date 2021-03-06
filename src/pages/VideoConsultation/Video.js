@@ -5,7 +5,7 @@ import { Box } from '@material-ui/core'
 
 import OpenViduReact from '../../OpenViduCore/components/VideoRoomComponent'
 import ToolBarComponent from './Toolbar'
-import SideBar from './SideBar'
+import Sidebar from './Sidebar/index'
 import { setOpenSideBar } from '../../actions/doctor'
 
 function VideoConsultotion({
@@ -24,6 +24,7 @@ function VideoConsultotion({
   isVideoStatus,
   setPatientAppointmentId,
   setOpenSideBar,
+  prescription,
 }) {
   const [end, setEnd] = useState(false)
 
@@ -137,8 +138,9 @@ function VideoConsultotion({
             isInterChange={interChange}
             handleOnInterChange={handleOnInterChange}
             userRole={userRole}
+            appointmentId={appointmenttId ?? appointmentId}
           />
-          <SideBar
+          <Sidebar
             patientList={patientList}
             onPatientJoining={onPatientJoining}
             endCall={endCall}
@@ -157,7 +159,7 @@ function VideoConsultotion({
             setPatientAppointmentId={setPatientAppointmentId}
             setFullScreen={setFullScreen}
             setInterChange={setInterChange}
-            appointmentId={appointmentId}
+            appointmentId={appointmenttId ?? appointmentId}
             patientName={
               localStorage.getItem('loginUser') === 'doctor'
                 ? patientName
@@ -165,6 +167,7 @@ function VideoConsultotion({
             }
             doctorName={doctorName}
             userRole={userRole}
+            prescription={prescription}
           />
         </Box>
       )}
