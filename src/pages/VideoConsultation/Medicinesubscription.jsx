@@ -110,7 +110,7 @@ function Medicinesubscription({ open, handlesubscriptionclose, handleOnMedicine,
     }
     else {
       let medicine = { nameOfMedicine: '', countOfDays: '', doseOfMedicine: '', minus: '', isdone: 'true' }
-      let medicineList = [...list]
+      let medicineList = [...existList]
       medicineList.push(medicine)
       setList(medicineList)
     }
