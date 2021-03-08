@@ -96,25 +96,26 @@ function AppoinmentDetails() {
 
     const [onSave, response] = useAppointmentUpdate(refetch)
 
-    useEffect(() => {
-        if (response) {
-            setOpen(true)
-        }
-    }, [response])
-
     const key = useMemo(() => {
         return {
             doctorKey: params.doctorKey,
             appointmentId: params.appointmentId,
         }
     }, [])
-
-    const [appointmentDetails] = useCustomFecth(
+    const [appointmentDetails, reFetch] = useCustomFecth(
         METHOD.GET,
         URL.appointmentDoctorDetails,
         key
     )
 
+    useEffect(() => {
+        if (response) {
+            setOpen(true)
+        }
+        if(data?.statusCode === 200) {
+            reFetch()
+        }
+    }, [response, data])
     const role = localStorage.getItem('role')
 
     const [openReschedule, setOpenReschedule] = useState(false)
@@ -409,6 +410,7 @@ function AppoinmentDetails() {
                                     setReportFile={setReportFile}
                                     setVal={setVal}
                                     handleUpload={handleUpload}
+                                    handleClick={handleClick}
                                 />
                             }
 
