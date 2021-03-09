@@ -41,7 +41,7 @@ const DoctorInfoCard = ({ doctorDetail, doctorListInHospital, isHospital }) => {
             {doctorDetail.doctorKey && (
               <Typography
                 className={classes.name}
-              >{`${doctorDetail.firstName} ${doctorLastName}`}</Typography>
+              > Dr.{`${doctorDetail.firstName} ${doctorLastName}`}</Typography>
             )}
           </Box>
           {doctorDetail.doctorKey && (
