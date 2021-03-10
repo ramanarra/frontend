@@ -301,10 +301,10 @@ function AppoinmentDetails() {
                         <Typography className={classes.val}>{appointmentDetails.consultationTimeSlot + "mins"}</Typography>
                     </Box>
 
-                    <Box className={classes.doctorContact}>
+                    {/* <Box className={classes.doctorContact}>
                         <Typography className={classes.title}>Contact Number</Typography>
                         <Typography className={classes.val}>{appointmentDetails.mobileNo}</Typography>
-                    </Box>
+                    </Box> */}
 
                     <Box className={classes.location}>
                         <Typography className={classes.title}>Location</Typography>
