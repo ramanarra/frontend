@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+
+  sample-prod:
+    container_name: virujh-frontend
+    build:
+     context: .
+    ports:
+      - '1337:80'
+    networks:
+      - virujh_redis-net
+
+networks:
+   virujh_redis-net:
+    external: true
