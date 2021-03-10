@@ -45,7 +45,7 @@ export const PatientRoutes = [
     component: PatientBookAppointment,
   },
   {
-    path: '/patient/appoints/upcoming/appointmentDetail',
+    path: '/patient/appoints/upcoming/appointmentDetail/:appointmentId',
     name: 'AppointmentDetails',
     exact: true,
     component: AppointmentDetails,

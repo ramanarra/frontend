@@ -1,42 +1,40 @@
-
     .report-list-panel {
-      padding: 24px 24px 40px;
-      margin-top: 20px;
+      padding: 0px 5px 40px 70px;
   
       .table-wrap {
         max-height: calc(100vh - 212px);
         overflow: auto;
 
         .tableTitle{
-            color: '#ADADAD';
-            font-size: 20px;
+            color: #888888;
+            font-size: 24px;
+            padding-bottom: 10px;
         }
   
         table {
           width: 100%;
-          border: 1px solid black;
   
           th,
           td {
-            padding: 8px;
+            padding: 10px 15px;
           }
   
           thead th {
             font-size: 14px;
-            color: #b7b7b7;
+            color: #9d9d9d;
             font-weight: 500;
           }
   
           tbody td {
             font-size: 14px;
             font-weight: normal;
-            color: #464646;
+            color: #1a1a1a;
   
             .view-icon-btn {
               padding: 6px;
   
               .view-icon {
-                font-size: 18px;
+                font-size: 22px;
               }
             }
           }
