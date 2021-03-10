@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import {Box, Dialog, Typography, DialogTitle, TextareaAutosize, Button } from '@material-ui/core'
+import { Box, Dialog, Typography, DialogTitle, TextareaAutosize, Button } from '@material-ui/core'
 import useStyle from './useStyle'
 import CloseIcon from '@material-ui/icons/Close'
 import './style.scss'
@@ -8,7 +8,7 @@ import pdfIcon from '../../assets/img/pdfIcon.svg'
 import SnackBar from '../../components/SnackBar'
 
 
-function PatientReport({ open, setOpen, setItem, handleClose, appointmentId, setReportFile, setVal,handleUpload }) {
+function PatientReport({ open, setOpen, setItem, handleClose, appointmentId, setReportFile, setVal, handleUpload }) {
   const classes = useStyle()
   const [file, setFile] = useState([])
   const [opens, setOpens] = useState(false)
@@ -18,12 +18,11 @@ function PatientReport({ open, setOpen, setItem, handleClose, appointmentId, set
     reportDate: moment(date).format('YYYY-MM-DD'),
     comments: ""
   })
-  const formdata = new FormData();
 
   const handlechange = (e) => {
     const item = e.target.files;
-    setFile([...item])
-    const fileName = item[0].name;
+    setFile([...file, ...item])
+    const fileName = item[0]?.name;
     setReport({ ...report, title: fileName })
   }
 
@@ -42,18 +41,22 @@ function PatientReport({ open, setOpen, setItem, handleClose, appointmentId, set
   const handleSave = (e) => {
     const comments = report.comments
     const patientId = localStorage.getItem('patientId');
-    formdata.append("files", file[0]);
-    formdata.append("patientId", patientId);
-    formdata.append("comments", comments);
+    file.map((value, index) => {
+      const formdata = new FormData();
+      formdata.append("files", value);
+      formdata.append("patientId", patientId);
+      formdata.append("comments", comments);
 
-    // Add appoitment if its added through appointment
-    if (appointmentId) {
-      formdata.append("appointmentId", appointmentId);
-    }
+      // Add appoitment if its added through appointment
+      if (appointmentId) {
+        formdata.append("appointmentId", appointmentId);
+      }
 
-    if(handleUpload) {
-      handleUpload(formdata)
-    }
+      if (handleUpload) {
+        handleUpload(formdata)
+      }
+    })
+
 
     const fileName = file[0].name;
 
@@ -102,18 +105,17 @@ function PatientReport({ open, setOpen, setItem, handleClose, appointmentId, set
                   const fileName = file[index].name;
 
                   const fileExtension = fileName.split('.').pop();
-                  if (fileExtension === "pdf" && index < 3)
-                   {
+                  if (fileExtension === "pdf" && index < 3) {
                     return (
-                      <div className={classes.firstReportFile}>
-                        <img src={pdfIcon} alt='img1'  className={classes.image} />
+                      <div key={`uploadedfile-${value.name}-${value.lastModified}`} className={classes.firstReportFile}>
+                        <img src={pdfIcon} alt='img1' className={classes.image} />
                         <abbr className={classes.font} title={fileName}>{fileName}</abbr>
                       </div>
                     )
                   }
                   else if ((fileExtension === "svg" || fileExtension === "png") && index < 3) {
                     return (
-                      <div className={classes.reportFiles}>
+                      <div key={`uploadedfile-${value.name}-${value.lastModified}`} className={classes.reportFiles}>
                         <img src={URL.createObjectURL(file[index])} alt='img' className={classes.image} />
                         <abbr className={classes.font} title={fileName}>{fileName} </abbr>
                       </div>
@@ -121,8 +123,8 @@ function PatientReport({ open, setOpen, setItem, handleClose, appointmentId, set
                   }
                   else if (fileExtension === "jpg" && index < 3) {
                     return (
-                      <div className={classes.reportFiles}>
-                        <img src={URL.createObjectURL(file[index])} alt='img' className={classes.image}/>
+                      <div key={`uploadedfile-${value.name}-${value.lastModified}`} className={classes.reportFiles}>
+                        <img src={URL.createObjectURL(file[index])} alt='img' className={classes.image} />
                         <abbr className={classes.font} title={fileName}  > {fileName} </abbr>
                       </div>
                     )
@@ -142,20 +144,21 @@ function PatientReport({ open, setOpen, setItem, handleClose, appointmentId, set
                   accept=".jpg,.svg,.png, .pdf"
                   className={classes.inputField}
                   required
+                  multiple
                 />
               </div>
 
               <div  >
                 {(report.title !== "") ?
                   <Button variant="contained" className={classes.saveButton}
-                    style={{outline:"none"}}
+                    style={{ outline: "none" }}
                     onClick={handleSave}
                   >save</Button>
                   :
                   <Box>
-                    <Button variant="contained" className={classes.saveButton}  
-                    style={{outline:"none"}}  
-                    onClick={handleDisabled}
+                    <Button variant="contained" className={classes.saveButton}
+                      style={{ outline: "none" }}
+                      onClick={handleDisabled}
                     >save</Button>
 
                   </Box>

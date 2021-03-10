@@ -392,7 +392,7 @@ function AppoinmentDetails() {
 
                             <Box>
                                 <Box className={classes.nameAndValuePair} style={{ display: "flex" }}>
-                                    <Typography className={classes.name}>Lab Report:</Typography>
+                                    <Typography className={classes.name}>Upload Report:</Typography>
                                     <Button className="title" onClick={handleLabReport} style={{ textTransform: "none", position: "relative", top: "-6px", left: "-10px" }} >
                                         <AddCircleOutlineTwoToneIcon />
                                     </Button>
