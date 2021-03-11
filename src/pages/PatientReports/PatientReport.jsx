@@ -5,6 +5,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import './style.scss'
 import moment from 'moment'
 import pdfIcon from '../../assets/img/pdfIcon.svg'
+import imageIcon from '../../assets/img/imageIcon.svg'
 import SnackBar from '../../components/SnackBar'
 
 
@@ -113,7 +114,7 @@ function PatientReport({ open, setOpen, setItem, handleClose, appointmentId, set
                   const fileName = file[index].name;
 
                   const fileExtension = fileName.split('.').pop();
-                  if (fileExtension === "pdf" && index < 3) {
+                  if (fileExtension === "pdf" && index < 6) {
                     return (
                       <div key={`uploadedfile-${value.name}-${value.lastModified}`} className={classes.firstReportFile}>
                         <img src={pdfIcon} alt='img1' className={classes.image} />
@@ -121,7 +122,7 @@ function PatientReport({ open, setOpen, setItem, handleClose, appointmentId, set
                       </div>
                     )
                   }
-                  else if ((fileExtension === "svg" || fileExtension === "png") && index < 3) {
+                  else if ((fileExtension === "svg" || fileExtension === "png" || fileExtension === "jpg") && index < 6) {
                     return (
                       <div key={`uploadedfile-${value.name}-${value.lastModified}`} className={classes.reportFiles}>
                         <img src={URL.createObjectURL(file[index])} alt='img' className={classes.image} />
@@ -129,10 +130,10 @@ function PatientReport({ open, setOpen, setItem, handleClose, appointmentId, set
                       </div>
                     )
                   }
-                  else if (fileExtension === "jpg" && index < 3) {
+                  else if (index < 6) {
                     return (
                       <div key={`uploadedfile-${value.name}-${value.lastModified}`} className={classes.reportFiles}>
-                        <img src={URL.createObjectURL(file[index])} alt='img' className={classes.image} />
+                        <img src={imageIcon} alt='img' className={classes.image} />
                         <abbr className={classes.font} title={fileName}  > {fileName} </abbr>
                       </div>
                     )
@@ -149,7 +150,7 @@ function PatientReport({ open, setOpen, setItem, handleClose, appointmentId, set
                   name="files"
                   onChange={handlechange}
                   id="files"
-                  accept=".jpg,.svg,.png, .pdf"
+                  // accept=".jpg,.svg,.png, .pdf"
                   className={classes.inputField}
                   required
                   multiple
