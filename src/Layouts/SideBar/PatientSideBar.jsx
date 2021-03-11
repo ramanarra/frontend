@@ -5,6 +5,8 @@ import { Box } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 
 import appointmentIcon from '../../assets/img/appointments.svg'
+import { Toolmenu } from '../../components/Tooltip'
+import messages from '../../lib/iconMsg'
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -13,13 +15,13 @@ const useStyles = makeStyles(() => ({
   },
 
   item: {
-    color: "#9ddcf8",
+    color: '#9ddcf8',
     fontSize: 22,
     paddingTop: 7,
     paddingBottom: 16,
     display: 'flex',
     justifyContent: 'center',
-    textDecoration: 'none'
+    textDecoration: 'none',
   },
   appointmentIcon: {
     width: 19,
@@ -32,7 +34,7 @@ const useStyles = makeStyles(() => ({
   },
   report: {
     fontSize: 20,
-    paddingTop: 14
+    paddingTop: 14,
   },
   logout: {
     fontSize: 52,
@@ -40,39 +42,58 @@ const useStyles = makeStyles(() => ({
     cursor: 'pointer',
   },
   selectedColor: {
-    color: "#f7f7f7",
+    color: '#f7f7f7',
   },
 }))
 
 function PatientSideBar() {
   const classes = useStyles()
-  
-  const location = useLocation()
 
+  const location = useLocation()
 
   const path = location.pathname.split('/')
 
-  const pathName = path[2] 
+  const pathName = path[2]
 
-  
   return (
     <Box className={classes.container}>
       <Box paddingTop={1}>
-        <Link className={classNames(classes.item, {
-              [classes.selectedColor]: pathName === 'appointments',
-            })} to="/patient/appointments/upcoming"> 
-          <img src={appointmentIcon} alt="appointment Icon" className={classNames(classes.appointmentIcon,{
+        <Link
+          className={classNames(classes.item, {
             [classes.selectedColor]: pathName === 'appointments',
-          })} />
+          })}
+          to="/patient/appointments/upcoming"
+        >
+          <Toolmenu title={messages.appointment} placement="left">
+            <img
+              src={appointmentIcon}
+              alt="appointment Icon"
+              className={classNames(classes.appointmentIcon, {
+                [classes.selectedColor]: pathName === 'appointments',
+              })}
+            />
+          </Toolmenu>
         </Link>
-        <Link className={classNames(classes.item, classes.setting, {
-              [classes.selectedColor]: pathName === 'setting',
-            })} to="/patient/setting">
-          <i className="icon-settings "></i>
+        <Link
+          className={classNames(classes.item, classes.setting, {
+            [classes.selectedColor]: pathName === 'setting',
+          })}
+          to="/patient/setting"
+        >
+          <Toolmenu title={messages.setting} placement="left">
+            <i className="icon-settings "></i>
+          </Toolmenu>
         </Link>
-        <Link className={classNames(classes.item, classes.report, {
+        <Link
+          className={classNames(classes.item, classes.report, {
             [classes.selectedColor]: pathName === 'reports',
-          })} to="/patient/reports" ><i className="icon-progress "></i></Link>
+          })}
+          to="/patient/reports"
+        >
+          <Toolmenu title={messages.report} placement="left">
+            <i className="icon-progress "></i>
+          </Toolmenu>
+        </Link>
       </Box>
     </Box>
   )
