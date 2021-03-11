@@ -12,6 +12,7 @@ function PatientReport({ open, setOpen, setItem, handleClose, appointmentId, set
   const classes = useStyle()
   const [file, setFile] = useState([])
   const [opens, setOpens] = useState(false)
+  const [largeSizeOpens, setLargeSizeOpens] = useState(false)
   const date = new Date();
   const [report, setReport] = useState({
     title: "",
@@ -20,9 +21,15 @@ function PatientReport({ open, setOpen, setItem, handleClose, appointmentId, set
   })
 
   const handlechange = (e) => {
-    const item = e.target.files;
-    setFile([...file, ...item])
-    const fileName = item[0]?.name;
+    const items = [...e.target.files];
+    let selectItem = []
+    items.map((value, index) => {
+      //checking file size less than or equal to 5 Mb
+      (value.size < 5242881) ? selectItem = [...selectItem, value] : setLargeSizeOpens(true)
+
+    })
+    setFile([...file, ...selectItem])
+    const fileName = items[0]?.name;
     setReport({ ...report, title: fileName })
   }
 
@@ -36,6 +43,7 @@ function PatientReport({ open, setOpen, setItem, handleClose, appointmentId, set
       return
     }
     setOpens(false);
+    setLargeSizeOpens(false);
   }
 
   const handleSave = (e) => {
@@ -95,7 +103,7 @@ function PatientReport({ open, setOpen, setItem, handleClose, appointmentId, set
               </Box>
             </DialogTitle>
 
-            <TextareaAutosize aria-label="minimum height" rowsMin={5}  className={classes.reportText}  placeholder="Type here..."
+            <TextareaAutosize aria-label="minimum height" rowsMin={5} className={classes.reportText} placeholder="Type here..."
               onChange={handleText}
             />
 
@@ -135,7 +143,7 @@ function PatientReport({ open, setOpen, setItem, handleClose, appointmentId, set
               </div>
 
               <div className={classes.reportLeft} >
-                <label for="files" name="files" className={classes.selectFile} > + Select File </label>
+                <label htmlFor="files" name="files" className={classes.selectFile} > + Select File </label>
                 <input
                   type="file"
                   name="files"
@@ -171,13 +179,21 @@ function PatientReport({ open, setOpen, setItem, handleClose, appointmentId, set
         </Dialog>
 
       </Box>
-      
+
       <SnackBar
         openDialog={opens}
         message={"Please Select File"}
         onclose={handleOnClose}
         severity={'error'}
-        style={{outline:"none"}}
+        style={{ outline: "none" }}
+      />
+
+      <SnackBar
+        openDialog={largeSizeOpens}
+        message={"Please Select File Less than 5 Mb"}
+        onclose={handleOnClose}
+        severity={'error'}
+        style={{ outline: "none" }}
       />
 
     </Box>
