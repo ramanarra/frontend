@@ -12,7 +12,7 @@ import exportFromJSON from 'export-from-json'
 const Entry = ({ data, role }) => {
   return (
     <tr>
-      {role === 'ADMIN' && <td className="cell">{data?.doctorName}</td>}
+      {role === 'ADMIN' && <td className="cell">Dr.{data?.doctorName}</td>}
       <td className="cell">{data?.patientName}</td>
       <td className="cell">{dateFmtWthOutTimeZone(data?.createdTime)}</td>
       <td className="cell">{dateFmtWthOutTimeZone(data?.appointment_date)}</td>
@@ -91,7 +91,7 @@ const DocReports = React.memo(({ filter, handleFilter, pathType, tab }) => {
           <tbody>
             {Boolean(!!data?.data?.list?.length) &&
               data.data?.list.map((i, index) => (
-                <Entry data={i} key={index} role={role} />
+                <Entry  data={i} key={index} role={role} />
               ))}
           </tbody>
         </table>

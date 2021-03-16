@@ -35,7 +35,7 @@ const InfoCard = ({ doctorDetails, isRead }) => {
         <Box style={{ marginLeft: 13, marginTop: 7, width: 200 }}>
           <Typography
             className={classes.name}
-          >{`${doctorDetails.firstName} ${doctorDetails.lastName}`}</Typography>
+          >Dr.{`${doctorDetails.firstName} ${doctorDetails.lastName}`}</Typography>
           <Typography className={classes.desgination}>
             {doctorDetails.speciality}
           </Typography>

@@ -95,7 +95,7 @@ function Chat({
           className="message-box"
           value={currentMessage}
           placeholder={`To: ${
-            rest?.userRole === 'DOCTOR' ? patientName : doctorName
+            rest?.userRole === 'DOCTOR' ? patientName : "Dr."+doctorName
           }`}
           onChange={handleTextChange}
           onKeyPress={handleKeyPress}

@@ -8,11 +8,10 @@ const useAppointmentDetailsStyle = makeStyles((theme) => ({
         width: '100%',
     },
     doctorDetails: {
-        width: 300,
         marginLeft: 20,
     },
     appointmentDetails: {
-        marginTop: 50
+        marginTop: 20
     },
     doctorName: {
         marginLeft: 20,
@@ -22,13 +21,13 @@ const useAppointmentDetailsStyle = makeStyles((theme) => ({
     doctorSpeciality: {
         marginLeft: 20,
         fontSize: '14px',
-        color: '#ADADAD',
+        color: '#777777',
     },
     doctorContact: {
         margin: 10,
     },
     title: {
-        color: '#ADADAD',
+        color: '#777777',
         paddingLeft: 10,
         paddingTop: 10,
         fontSize: '10px',
@@ -52,7 +51,7 @@ const useAppointmentDetailsStyle = makeStyles((theme) => ({
     },
     name: {
         fontSize: '15px',
-        color: '#ADADAD',
+        color: '#777777',
         marginBottom: 20,
     },
     value: {
@@ -69,7 +68,7 @@ const useAppointmentDetailsStyle = makeStyles((theme) => ({
             position: 'absolute',
             width: '144px',
             height: '144px',
-            marginTop: '65px',
+            marginTop: '20px',
             borderRadius: '100px',
             backgroundColor: 'transparent',
         }
@@ -78,7 +77,7 @@ const useAppointmentDetailsStyle = makeStyles((theme) => ({
         width: theme.spacing(18),
         height: theme.spacing(18),
         border: '7px solid #9DE1FF',
-        marginTop: 65,
+        marginTop: 20,
         marginRight: 10,
     },
     detailsContainer: {
@@ -89,13 +88,17 @@ const useAppointmentDetailsStyle = makeStyles((theme) => ({
     rightSide: {
         marginLeft: 30,
     },
+
+    button: {
+        marginTop: 50,
+    },
     startConsultationButton: {
         padding: '6px 20px',
         backgroundColor: '#0bb5ff',
         borderRadius: 17,
         textAlign: 'center',
         cursor: 'pointer',
-        marginRight: 15,
+        marginRight: 40,
     },
     startConsultationText: {
         fontSize: 10,
@@ -103,14 +106,14 @@ const useAppointmentDetailsStyle = makeStyles((theme) => ({
         paddingTop: 2,
     },
     rescheduleButton: {
-        marginRight: 15,
+        marginRight: 40,
         padding: '5px 40px',
         borderRadius: 17,
         border: '1.5px solid #0bb5ff',
         cursor: 'pointer',
     },
     disableReschduleButton: {
-        marginRight: 15,
+        marginRight: 40,
         padding: '5px 40px',
         borderRadius: 17,
         border: '1.5px solid #e4e3e3',
