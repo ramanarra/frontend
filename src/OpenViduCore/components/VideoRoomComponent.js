@@ -164,15 +164,21 @@ class VideoRoomComponent extends Component {
     //message
     const mySession = this.state.session
     this.props.setSession(mySession)
-    mySession.on('signal:my-chat', (event) => {
+    mySession.on('signal:session-chat', (event) => {
       const message = event.data
       var messageDetail = this.state.messageDetail
       if (event.from.connectionId == event.from.session.connection.connectionId) {
         messageDetail.push({ message: message, from: 'user' })
-        this.props.setMessages({ message: message, from: 'user' })
+        this.props.setMessages(
+          { message: message, from: 'user' },
+          this.props.appointmentId
+        )
       } else {
         messageDetail.push({ message: message, from: 'sender' })
-        this.props.setMessages({ message: message, from: 'sender' })
+        this.props.setMessages(
+          { message: message, from: 'sender' },
+          this.props.appointmentId
+        )
       }
       this.setState({ messageDetail: messageDetail })
       // this.props.setMessages(messageDetail)
@@ -205,7 +211,7 @@ class VideoRoomComponent extends Component {
     // this.props.endCall()
 
     this.props.leaveCall(status)
-    this.props.clearMessages([])
+    this.props.clearMessages()
   }
   camStatusChanged() {
     localUser.setVideoActive(!localUser.isVideoActive())
@@ -485,8 +491,8 @@ class VideoRoomComponent extends Component {
             className={
               this.props.isFullScreen
                 ? this.props.isInterChange
-                  ? 'subscriber-custom-class-inter-change'
-                  : 'custom-class-with-full-screen'
+                  ? 'custom-class-with-full-screen-inter-change'
+                  : 'subscriber-custom-class'
                 : 'OT_root OT_publisher custom-class'
             }
             id="localUser"
@@ -500,7 +506,7 @@ class VideoRoomComponent extends Component {
               micStatusChanged={this.micStatusChanged}
               leaveSession={this.leaveSession}
               patientList={this.props.patientList}
-              doctorName={this.props.doctorName}
+              doctorName={"Dr."+this.props.doctorName}
               patientName={this.props.patientName}
               AddNextPatient={this.props.AddNextPatient}
               videoAvailability={this.props.videoAvailability}
@@ -523,8 +529,8 @@ class VideoRoomComponent extends Component {
             className={
               this.props.isFullScreen
                 ? this.props.isInterChange
-                  ? 'custom-class-with-full-screen-inter-change'
-                  : 'subscriber-custom-class'
+                  ? 'subscriber-custom-class-inter-change'
+                  : 'custom-class-with-full-screen'
                 : 'OT_root OT_publisher custom-class'
             }
             id="remoteUsers"
@@ -534,6 +540,8 @@ class VideoRoomComponent extends Component {
               streamId={sub.streamManager.stream.streamId}
               doctorClick={'joined'}
               patientName={this.props.patientName}
+              doctorName={"Dr."+this.props.doctorName}
+              userRole={this.props.userRole}
             />
           </div>
         ))}
@@ -555,7 +563,7 @@ class VideoRoomComponent extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     setSession: (data) => dispatch(setSession(data)),
-    setMessages: (data) => dispatch(setMessages(data)),
+    setMessages: (data, appointmentId) => dispatch(setMessages(data, appointmentId)),
     clearMessages: (data) => dispatch(clearMessages(data)),
   }
 }

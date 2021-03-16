@@ -36,24 +36,24 @@
   }
 
   .txt-label-wrap {
-
-  .txt-field-label {
-    font-size: 14px;
-    font-weight: normal;
-    margin-bottom: 8px;
+    .txt-field-label {
+      font-size: 14px;
+      font-weight: normal;
+      margin-bottom: 8px;
+    }
   }
-}
 
   .star-icon {
     width: 8px;
     color: #ff0023;
     position: absolute;
+    padding-bottom: 10px;
   }
 
   .txt-field-error {
     color: #dc3545;
     display: block;
-    font-size: 14px;
+    font-size: 11px;
     font-weight: normal;
     height: 10px;
   }

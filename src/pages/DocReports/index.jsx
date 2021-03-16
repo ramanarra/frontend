@@ -7,11 +7,12 @@ import './styles.scss'
 import NoReport from './NoReport'
 import Footer from './Footer'
 import clsx from 'clsx'
+import exportFromJSON from 'export-from-json'
 
 const Entry = ({ data, role }) => {
   return (
     <tr>
-      {role === 'ADMIN' && <td className="cell">{data?.doctorName}</td>}
+      {role === 'ADMIN' && <td className="cell">Dr.{data?.doctorName}</td>}
       <td className="cell">{data?.patientName}</td>
       <td className="cell">{dateFmtWthOutTimeZone(data?.createdTime)}</td>
       <td className="cell">{dateFmtWthOutTimeZone(data?.appointment_date)}</td>
@@ -50,9 +51,31 @@ const DocReports = React.memo(({ filter, handleFilter, pathType, tab }) => {
     },
     [searchText, fromDate, toDate, paginationLimit, paginationStart, tab]
   )
+
+  const returnData = () => {
+    if (data.data.list.length > 0) { return data.data.list }
+    else { return [] }
+  }
+
+  const exportExcel = () => {
+
+    // const dataa = [{ foo: 'foo', bar: 'abc', xyz: 'pqr' }, { bar: 'bar' }]
+
+    const data = returnData();
+    const fileName = 'download'
+    const exportType = 'xls'
+
+    exportFromJSON({ data, fileName, exportType })
+  }
+
   const totalCount = data?.data?.totalCount
   return (
     <div className="report-list-panel">
+
+      {Boolean(data?.data?.list?.length) &&
+        <div className='ExportButton' onClick={exportExcel}>Export as Excel</div>
+      }
+
       <div className={clsx('table-wrap', totalCount > 15 && 'has-pagination')}>
         <table>
           <thead>
@@ -66,9 +89,9 @@ const DocReports = React.memo(({ filter, handleFilter, pathType, tab }) => {
             </tr>
           </thead>
           <tbody>
-            {!!data?.data?.list?.length &&
+            {Boolean(!!data?.data?.list?.length) &&
               data.data?.list.map((i, index) => (
-                <Entry data={i} key={index} role={role} />
+                <Entry  data={i} key={index} role={role} />
               ))}
           </tbody>
         </table>

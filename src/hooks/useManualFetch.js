@@ -10,6 +10,10 @@ const useManualFetch = () => {
     Authorization: 'Bearer '.concat(token),
   }
 
+  const resetData = () => {
+    setData(null)
+  }
+
   const handleFetch = (method, url, data) => {
     setLoading(true)
     api({
@@ -31,7 +35,7 @@ const useManualFetch = () => {
       })
   }
 
-  return [handleFetch, error, isLoading, data]
+  return [handleFetch, error, isLoading, data, resetData, setData]
 }
 
 export default useManualFetch

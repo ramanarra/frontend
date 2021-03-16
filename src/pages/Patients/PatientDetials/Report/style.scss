@@ -1,0 +1,39 @@
+.pat-det-view-screen {
+  .report-list-panel {
+    padding: 24px 24px 40px;
+
+    .table-wrap {
+      max-height: calc(100vh - 212px);
+      overflow: auto;
+
+      table {
+        width: 100%;
+
+        th,
+        td {
+          padding: 8px;
+        }
+
+        thead th {
+          font-size: 14px;
+          color: #b7b7b7;
+          font-weight: 500;
+        }
+
+        tbody td {
+          font-size: 14px;
+          font-weight: normal;
+          color: #464646;
+
+          .view-icon-btn {
+            padding: 6px;
+
+            .view-icon {
+              font-size: 18px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

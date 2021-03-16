@@ -1,0 +1,55 @@
+.monthHeader{
+    display: flex;
+}
+
+.monthName{
+    font-size: medium;
+    color: rgba(56, 54, 54, 0.919);
+    padding: 0 12px;
+    
+}
+
+.displayArea{
+    display: flex;
+    width:auto;
+}
+
+.dateColumn{
+    width: 120px;
+    padding: 5px;
+}
+
+.date{
+text-align: center;
+
+}
+.day{
+    text-align: center;
+    font-size: small;
+    color: rgb(124, 124, 124);
+}
+
+.emptySlots{
+    padding-top: 5px;
+    padding-left: 5px;
+}
+.freeSlot{
+    font-size: 10px;
+    background-color: rgb(133, 208, 154);
+    color: rgb(80, 79, 79);
+    text-align: center;
+    padding: 8px 4px;
+    margin-top: 5px;
+}
+.pagination{
+    font-size: 40px;
+    padding: 10px;
+}
+.previousPage{
+    padding: 0 10px;
+    color: rgb(99, 95, 95);
+}
+.nextPage{
+    padding: 0 10px;
+    color: rgb(99, 95, 95);
+}

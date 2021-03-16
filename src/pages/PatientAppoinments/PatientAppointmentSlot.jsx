@@ -13,6 +13,8 @@ import CancelAppointmentModal from './CancelAppointmentModal'
 import RescheduleAppointmentModal from './RescheduleAppointmentModal'
 import useStyle from './usePatientAppointmentSlotStyle'
 import { baseURL } from '../../baseURL'
+import { useSelector, useDispatch } from 'react-redux'
+import { setPatientAppointmentList, setPatientAppointment, setIsPast } from '../../actions/patient'
 
 const ENDPOINT = baseURL
 
@@ -26,6 +28,8 @@ function PatientAppointmentSlot({
   list,
 }) {
   const classes = useStyle()
+
+  const dispatch = useDispatch()
 
   const [open, setOpen] = useState(false)
 
@@ -115,8 +119,17 @@ function PatientAppointmentSlot({
     }
   }, [])
 
-  function handleOnClick() {
-    setOpen(true)
+  const handleOnClick = (data) => {
+    localStorage.setItem('docKey', appointmentDetail.doctorKey)
+    dispatch(setPatientAppointmentList(list))
+    dispatch(setPatientAppointment(appointmentDetail))
+    dispatch(setIsPast(past))
+    history.push({
+      pathname: `/patient/appoints/upcoming/appointmentDetail/${appointmentDetail.appointmentId}`,
+      doctorKey: appointmentDetail.doctorKey,
+      appointmentId: appointmentDetail.appointmentId,
+    })
+
   }
 
   function handleOnClose(event) {
@@ -145,53 +158,37 @@ function PatientAppointmentSlot({
   }
 
   return (
-      <Box className={classes.topContainer}>
-        <Box
-          className={classes.container}
-          style={{ borderLeft: `3px solid ${borderColor}` }}
-          onClick={handleOnClick}
-        >
-          <Box className={classes.timing} display="flex">
-            <ScheduleIcon className={classes.scheduleIcon} />
-            <Typography
-              className={classes.time}
-            >{`${startTime}${'-'}${endTime}`}</Typography>
+    <Box className={classes.topContainer}>
+      <Box
+        className={classes.container}
+        style={{ borderLeft: `3px solid ${borderColor}` }}
+        onClick={handleOnClick.bind(this, appointmentDetail.appointmentId, appointmentDetail.doctorKey)}
+      >
+        <Box className={classes.timing} display="flex">
+          <ScheduleIcon className={classes.scheduleIcon} />
+          <Typography
+            className={classes.time}
+          >{`${startTime}${'-'}${endTime}`}</Typography>
+        </Box>
+        <Box display="flex">
+          <Box className={classes.dateAndMonth}>
+            <Typography className={classes.date} variant="h3">
+              {date}
+            </Typography>
+            <Typography className={classes.month} variant="h2">
+              {month}
+            </Typography>
           </Box>
-          <Box display="flex">
-            <Box className={classes.dateAndMonth}>
-              <Typography className={classes.date} variant="h3">
-                {date}
-              </Typography>
-              <Typography className={classes.month} variant="h2">
-                {month}
-              </Typography>
-            </Box>
-            <Box className={classes.doctorDetails}>
-              <Typography className={classes.name} variant="h5">{`${'Dr. '}${
-                appointmentDetail.doctorFirstName
+          <Box className={classes.doctorDetails}>
+            <Typography className={classes.name} variant="h5">{`${'Dr. '}${appointmentDetail.doctorFirstName
               } ${doctorLastName} `}</Typography>
-              <Typography className={classes.hospitalName}>
-                {appointmentDetail.hospitalName}
-              </Typography>
-            </Box>
+            <Typography className={classes.hospitalName}>
+              {appointmentDetail.hospitalName}
+            </Typography>
           </Box>
         </Box>
-      {open && (
-        <UpcomingAndPastView
-          appointmentDetail={appointmentDetail}
-          open={open}
-          startTime={startTime}
-          endTime={endTime}
-          preConsultationTime={preConsultaionTime}
-          onClose={handleOnClose}
-          onSave={onSave}
-          past={past}
-          onCancel={handleOnCancel}
-          onReschedule={handleOnReschedule}
-          socket={socket}
-          list={list}
-        />
-      )}
+      </Box>
+
       {openCancel && (
         <CancelAppointmentModal
           open={openCancel}

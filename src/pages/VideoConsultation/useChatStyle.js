@@ -48,8 +48,8 @@ const useChatStyle = makeStyles(() => ({
     marginTop: 5,
   },
   messageContainer: {
-    overflowY: 'auto',
-    height: '100%',
+    // overflowY: 'auto',
+    // height: '100%',
   },
   senderHeader: {
     display: 'flex',

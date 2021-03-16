@@ -3,15 +3,10 @@ import classNames from 'classnames'
 import moment from 'moment'
 import { useHistory } from 'react-router-dom'
 import Webcam from 'react-webcam'
-import {
-  Box,
-  Dialog,
-  DialogContent,
-  Button,
-  Typography,
-} from '@material-ui/core'
+import { Box, Dialog, DialogContent, Button, Typography } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 import IconButton from '@material-ui/core/IconButton'
+import { VideocamOff, MicOff } from '@material-ui/icons'
 
 import Wait from '../../assets/img/wait.svg'
 import Join from '../../assets/img/join.svg'
@@ -22,6 +17,7 @@ import MicOffIcon from '../../assets/img/mic-off.svg'
 import VideoOnIcon from '../../assets/img/video-on.svg'
 import VideoOffIcon from '../../assets/img/video-off.svg'
 import useStyle from './useConfirmationModalStyle'
+import NoCam from '../../OpenViduCore/components/stream/NoCam'
 
 function ConfirmationPopUp({
   open,
@@ -46,33 +42,34 @@ function ConfirmationPopUp({
 
   const [videoAvailable, setVideoAvailable] = useState(true)
 
-  const detail = list && list.filter(appointment => appointment.appointmentId === patientAppointmentId)
+  const detail =
+    list &&
+    list.filter((appointment) => appointment.appointmentId === patientAppointmentId)
 
   const doctorName = detail
-      ? detail[0]?.doctorLastName
-        ? `${detail[0]?.doctorFirstName}${' '}${
-            detail[0]?.doctorLastName
-          }`
-        : `${detail[0]?.doctorFirstName}`
-        : null
-      // : 
-      // appointmentDetail?.doctorLastName
-      // ? `${appointmentDetail?.doctorFirstName}${' '}${
-      //     appointmentDetail?.doctorLastName
-      //   }`
-      // : `${appointmentDetail?.doctorFirstName}`
+    ? detail[0]?.doctorLastName
+      ? `${detail[0]?.doctorFirstName}${' '}${detail[0]?.doctorLastName}`
+      : `${detail[0]?.doctorFirstName}`
+    : null
+  // :
+  // appointmentDetail?.doctorLastName
+  // ? `${appointmentDetail?.doctorFirstName}${' '}${
+  //     appointmentDetail?.doctorLastName
+  //   }`
+  // : `${appointmentDetail?.doctorFirstName}`
 
-  const date = detail  ?
-  moment(detail[0]?.appointmentDate).format('DD MMMM YYYY') :
-  null
+  const userName =
+    localStorage.getItem('loginUser') === 'doctor'
+      ? localStorage.getItem('doctorName')
+      : localStorage.getItem('patientName')
 
-  const startTime = detail ?
-  getTimeFormatWithNoon(detail[0]?.startTime) :
-  null
+  const date = detail
+    ? moment(detail[0]?.appointmentDate).format('DD MMMM YYYY')
+    : null
 
-  const endTime = detail ?
-  getTimeFormatWithNoon(detail[0]?.endTime) :
-  null
+  const startTime = detail ? getTimeFormatWithNoon(detail[0]?.startTime) : null
+
+  const endTime = detail ? getTimeFormatWithNoon(detail[0]?.endTime) : null
 
   function handleClose() {
     socket.disconnect()
@@ -128,20 +125,30 @@ function ConfirmationPopUp({
                   [classes.videoOff]: videoAvailable && !isVideoStatus,
                 })}
               >
-                {videoAvailable && isVideoStatus && (
+                {videoAvailable && isVideoStatus ? (
                   <Webcam
                     audio={false}
                     width="212"
                     height="160"
                     onUserMediaError={() => handleOnVideo()}
                   />
+                ) : (
+                  <Box>
+                    <NoCam name={userName} />
+                  </Box>
                 )}
-                {!videoAvailable && (
-                  <Box className={classes.errorBox}>
-                    <img src={CameraOff} className={classes.cameraOff} />
-                    <Typography className={classes.error}>
-                      Camera not found
-                    </Typography>
+                {(!isVideoStatus || !isAudioStatus) && (
+                  <Box className={classes.statusWrap}>
+                    {!isVideoStatus && (
+                      <Box className={classes.statusIconWrap}>
+                        <VideocamOff />
+                      </Box>
+                    )}
+                    {!isAudioStatus && (
+                      <Box className={classes.statusIconWrap}>
+                        <MicOff />
+                      </Box>
+                    )}
                   </Box>
                 )}
               </Box>
@@ -219,7 +226,11 @@ function ConfirmationPopUp({
                   className={classes.joinButton}
                   onClick={handleOnClick}
                   disabled={isJoinDisabled}
-                  style={ isJoinDisabled ? { backgroundColor: '#edeff2' } : { backgroundColor: '#00b5ff'}}
+                  style={
+                    isJoinDisabled
+                      ? { backgroundColor: '#edeff2' }
+                      : { backgroundColor: '#00b5ff' }
+                  }
                 >
                   JOIN
                 </Button>

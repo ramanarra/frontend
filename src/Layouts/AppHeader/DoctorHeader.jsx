@@ -9,6 +9,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import AccountBoxIcon from '@material-ui/icons/AccountBox'
 import Backdrop from '@material-ui/core/Backdrop'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import CreateIcon from '@material-ui/icons/Create'
 
 import Stretch from '../../components/Stretch'
 import Logo from '../../assets/img/logo.png'
@@ -17,7 +18,9 @@ import useManualFetch from '../../hooks/useManualFetch'
 import { METHOD, URL } from '../../api'
 import message from './../../lib/iconMsg'
 import { NotificationTip } from '../../components/Tooltip'
+import ChangePassword from '../../pages/ChangePasswordOption/ChangePasswordDialogDoctor'
 
+const Open = true
 const useStyles = makeStyles(() => ({
   appBar: {
     height: 70,
@@ -67,13 +70,20 @@ const useStyles = makeStyles(() => ({
     paddingTop: 5,
     cursor: 'pointer',
   },
+  changePasswordText: {
+    color: '#5c5a5a',
+    cursor: 'pointer',
+    fontSize: '14px',
+    marginLeft: '8px',
+    fontFamily: 'product-sans-regular',
+  },
 
   logout: {
     position: 'absolute',
     zIndex: 1,
     right: 70,
     top: 52,
-    width: 140,
+    width: 160,
     padding: 5,
     backgroundColor: '#ffffff',
     border: '1px solid #c1c1c1',
@@ -99,6 +109,19 @@ const useStyles = makeStyles(() => ({
     paddingBottom: 2.5,
     borderBottom: '1px solid #f3f3f3',
   },
+  createText: {
+    marginLeft: 5,
+    fontSize: 14,
+    cursor: 'pointer',
+    color: '#5c5a5a',
+    paddingLeft: 5,
+    paddingBottom: 2.5,
+    borderBottom: '1px solid #f3f3f3',
+  },
+
+  createIcon: {
+    width: 22,
+  },
   profileIcon: {
     width: 22,
   },
@@ -120,6 +143,7 @@ function DoctorHeader({ socket, timer }) {
   const classes = useStyles()
   const history = useHistory()
   const [open, setOpen] = useState(false)
+  const [passwordDlg, setPasswordDlg] = useState(false)
   const [openSpinner, setOpenSpinner] = useState(false)
   const [updateData, updateError, isUpdating, data] = useManualFetch() 
   
@@ -136,6 +160,16 @@ function DoctorHeader({ socket, timer }) {
 
   function handleOnClick() {
     setOpen(!open)
+  }
+
+  function handleOpenDialog() {
+    setPasswordDlg(true)
+  }
+  function handleClose() {
+    setPasswordDlg(false)
+  }
+  function handleOnSubmit() {
+    setPasswordDlg(true)
   }
 
   function handleOnAwayClick() {
@@ -216,6 +250,15 @@ function DoctorHeader({ socket, timer }) {
                 </Typography>
               </Box>
               <Box display="flex">
+                <CreateIcon className={classes.createIcon} />
+                <Typography
+                  className={classes.logoutText}
+                  onClick={handleOpenDialog}
+                >
+                  Change Password
+                </Typography>
+              </Box>
+              <Box display="flex">
                 <ExitToAppIcon className={classes.exitIcon} />
                 <Typography className={classes.logoutText} onClick={handleOnLogout}>
                   Logout
@@ -229,6 +272,13 @@ function DoctorHeader({ socket, timer }) {
         <Backdrop className={classes.backdrop} open={openSpinner}>
           <CircularProgress color="inherit" />
         </Backdrop>
+      )}
+      {passwordDlg && (
+        <ChangePassword
+          open={true}
+          handleClose={handleClose}
+          handleOnSubmit={handleOnSubmit}
+        />
       )}
     </Box>
   )
