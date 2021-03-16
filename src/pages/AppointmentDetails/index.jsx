@@ -207,7 +207,7 @@ function AppoinmentDetails() {
         })
     }
 
-    const currentTime = moment().format('DD/MM/YYY HH:mm:ss')
+    const currentTime = moment().format('DD/MM/YYYY HH:mm:ss')
 
     const appoinmentDate = moment(appointmentDetails?.appointmentDate).format(
         'DD/MM/YYYY'
