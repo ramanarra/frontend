@@ -146,12 +146,12 @@ function RescheduleAppointmentModal({
                     {doctorDetails.location}
                   </Typography>
                 </Box>
-                <Box display="flex" className={classes.detailField}>
+                {/* <Box display="flex" className={classes.detailField}>
                   <Typography className={classes.name}>Mobile No:</Typography>
                   <Typography className={classes.value}>
                     {doctorDetails.mobileNo}
                   </Typography>
-                </Box>
+                </Box> */}
               </Box>
             </Box>
             <Box className={classes.date}>

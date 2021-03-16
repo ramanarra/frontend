@@ -43,7 +43,7 @@ function DoctorDetails({ doctorDetails }) {
               variant="h5"
             >{`₹ ${doctorDetails.fee}`}</Typography>
           </Box>
-          <Box className={classes.detail}>
+          {/* <Box className={classes.detail}>
             <Typography className={classes.name}>Contact Number</Typography>
             {doctorDetails.mobileNo && (
               <Typography
@@ -51,7 +51,7 @@ function DoctorDetails({ doctorDetails }) {
                 variant="h5"
               >{`+91 ${doctorDetails.mobileNo}`}</Typography>
             )}
-          </Box>
+          </Box> */}
           <Box className={classes.location}>
             <Typography className={classes.name}>Location</Typography>
             <Typography className={classes.value} variant="h5">
