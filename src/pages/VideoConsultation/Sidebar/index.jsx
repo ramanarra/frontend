@@ -170,7 +170,7 @@ const Sidebar = ({
                   <BackIcon className="back-icon" />
                 </IconButton>
               )}
-              <div className="person-name">{isDoc ? patientName : doctorName}</div>
+              <div className="person-name">{isDoc ? patientName : "Dr."+doctorName}</div>
             </div>
             <div className="right-part">
               {isDoc ? (

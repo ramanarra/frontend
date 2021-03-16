@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import classNames from 'classnames'
-import { Box, Typography, TextField, InputAdornment, Backdrop, CircularProgress } from '@material-ui/core'
+import {
+  Box,
+  Typography,
+  TextField,
+  InputAdornment,
+  Backdrop,
+  CircularProgress,
+} from '@material-ui/core'
 import { Edit, Check, Clear } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/core/styles'
 import IconButton from '@material-ui/core/IconButton'
@@ -12,16 +19,14 @@ import useDoctorDetailsUpdate from '../../hooks/useDoctorDetailsUpdate'
 import useSignatureUpload from '../../hooks/useSignatureUpload'
 import PhotoCameraRounded from '@material-ui/icons/PhotoCameraRounded'
 
-
 const useStyles = makeStyles(() => ({
   photoContainerhead: {
     position: 'absolute',
     right: 80,
   },
   backdropbox: {
-      position: 'absolute',
-      left:100,
-      
+    position: 'absolute',
+    left: 100,
   },
   backdropcircle: {
     zIndex: 1,
@@ -128,13 +133,11 @@ const useStyles = makeStyles(() => ({
       position: 'absolute',
       width: '144px',
       height: '144px',
-      marginLeft: "1px",
+      marginLeft: '1px',
       borderRadius: '100px',
       backgroundColor: 'transparent',
-
-    }
-  }
-  
+    },
+  },
 }))
 
 function ConsulationAndSignature({
@@ -152,10 +155,9 @@ function ConsulationAndSignature({
   const [open, setOpen] = useState(false)
   const classes = useStyles()
 
-  const formdata = new FormData();
+  const formdata = new FormData()
   const [image, setImage] = useState([])
   const [openSpinner, setOpenSpinner] = useState(false)
-
 
   useEffect(() => {
     setFees(configDetails?.consultationCost)
@@ -187,8 +189,6 @@ function ConsulationAndSignature({
       setOpen(true)
     }
   }
-
-
   useEffect(() => {
     !!doctorDetails && localStorage.setItem('signature', doctorDetails.signature)
   }, [doctorDetails])
@@ -201,8 +201,6 @@ function ConsulationAndSignature({
     !!contents && setOpenSpinner(false)
   }, [contents])
 
-
-
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return
@@ -210,11 +208,10 @@ function ConsulationAndSignature({
 
     setOpen(false)
   }
-  
 
   function handlePhotoChange(e) {
-    const item = e.target.files;
-    setImage(item);
+    const item = e.target.files
+    setImage(item)
     formdata.append('file', item[0])
     formdata.append('doctorId', doctorDetails.doctorId)
     handleSignatureUpload(formdata)
@@ -252,47 +249,57 @@ function ConsulationAndSignature({
                 <EditTip title={messages.edit} placement="right" />
               </IconButton>
             ) : (
-                <div>
-                  <IconButton className={classes.iconbutton} onClick={handleOnCancel}>
-                    <Clear className={classes.cancelation} />
-                  </IconButton>
-                  <IconButton className={classes.iconbutton} onClick={hanleOnSave}>
-                    <Check className={classes.checkIcon} />
-                  </IconButton>
-                </div>
-              )}
+              <div>
+                <IconButton className={classes.iconbutton} onClick={handleOnCancel}>
+                  <Clear className={classes.cancelation} />
+                </IconButton>
+                <IconButton className={classes.iconbutton} onClick={hanleOnSave}>
+                  <Check className={classes.checkIcon} />
+                </IconButton>
+              </div>
+            )}
           </div>
         )}
       </Box>
-      <Box className={classes.photoContainer} style={{ display: 'flex' }}>
-        <div className={classes.signature}>
-          <img
-            src={doctorDetails?.signature ? doctorDetails.signature : image}
-            className={classes.sign}
-          />
-        </div>
-        <div>
-          {openSpinner && (
-            <Backdrop className={classes.backdropbox} open={openSpinner} >
-              <CircularProgress className={classes.backdropcircle} color="block !important" />
-            </Backdrop>
-          )}</div>
+      <Box>
+        <Typography className={classes.text}>Signature</Typography>
+        <Box className={classes.photoContainer} style={{ display: 'flex' }}>
+          <div className={classes.signature}>
+            <img
+              src={doctorDetails?.signature ? doctorDetails.signature : image}
+              className={classes.sign}
+            />
+          </div>
+          <div>
+            {openSpinner && (
+              <Backdrop className={classes.backdropbox} open={openSpinner}>
+                <CircularProgress
+                  className={classes.backdropcircle}
+                  color="block !important"
+                />
+              </Backdrop>
+            )}
+          </div>
 
-        <div className={classes.photoContainerhead}>
-          <label style={{ width: '10px', height: '10px' }}>
-            <UploadImageTip title={messages.image} placement="right" className={classes.positionfeild} />
-            <input
-              type="file"
-              name="files"
-              id="files"
-              accept=".jpg,.png,.jpeg"
-              required
-              style={{ visibility: "hidden", }}
-              onChange={handlePhotoChange} />
-
-          </label>
-
-        </div>
+          <div className={classes.photoContainerhead}>
+            <label style={{ width: '10px', height: '10px' }}>
+              <UploadImageTip
+                title={messages.uploadimage}
+                placement="right"
+                className={classes.positionfeild}
+              />
+              <input
+                type="file"
+                name="files"
+                id="files"
+                accept=".jpg,.png,.jpeg"
+                required
+                style={{ visibility: 'hidden' }}
+                onChange={handlePhotoChange}
+              />
+            </label>
+          </div>
+        </Box>
       </Box>
     </Box>
   )

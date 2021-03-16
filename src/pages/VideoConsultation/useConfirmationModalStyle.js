@@ -21,6 +21,7 @@ const useConfirmationModalStyle = makeStyles(() => ({
     width: 450,
     height: 400,
     border: '1px solid #a8a8a8',
+    position: 'relative',
   },
   button: {
     textAlign: 'center',
@@ -157,7 +158,19 @@ const useConfirmationModalStyle = makeStyles(() => ({
   },
   details: {
     paddingLeft: 10,
-  }
+  },
+  statusWrap: {
+    bottom: 0,
+    background: '#c71100',
+    padding: '2px 4px',
+    position: 'absolute',
+    color: '#ffffff',
+    display: 'flex',
+  },
+  statusIconWrap: {
+    textAlign: 'center',
+    padding: '6px',
+  },
 }))
 
 export default useConfirmationModalStyle

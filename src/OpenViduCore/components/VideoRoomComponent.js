@@ -491,8 +491,8 @@ class VideoRoomComponent extends Component {
             className={
               this.props.isFullScreen
                 ? this.props.isInterChange
-                  ? 'subscriber-custom-class-inter-change'
-                  : 'custom-class-with-full-screen'
+                  ? 'custom-class-with-full-screen-inter-change'
+                  : 'subscriber-custom-class'
                 : 'OT_root OT_publisher custom-class'
             }
             id="localUser"
@@ -506,7 +506,7 @@ class VideoRoomComponent extends Component {
               micStatusChanged={this.micStatusChanged}
               leaveSession={this.leaveSession}
               patientList={this.props.patientList}
-              doctorName={this.props.doctorName}
+              doctorName={"Dr."+this.props.doctorName}
               patientName={this.props.patientName}
               AddNextPatient={this.props.AddNextPatient}
               videoAvailability={this.props.videoAvailability}
@@ -529,8 +529,8 @@ class VideoRoomComponent extends Component {
             className={
               this.props.isFullScreen
                 ? this.props.isInterChange
-                  ? 'custom-class-with-full-screen-inter-change'
-                  : 'subscriber-custom-class'
+                  ? 'subscriber-custom-class-inter-change'
+                  : 'custom-class-with-full-screen'
                 : 'OT_root OT_publisher custom-class'
             }
             id="remoteUsers"
@@ -540,7 +540,7 @@ class VideoRoomComponent extends Component {
               streamId={sub.streamManager.stream.streamId}
               doctorClick={'joined'}
               patientName={this.props.patientName}
-              doctorName={this.props.doctorName}
+              doctorName={"Dr."+this.props.doctorName}
               userRole={this.props.userRole}
             />
           </div>

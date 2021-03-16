@@ -173,21 +173,11 @@ function MedicineList({
   }
 
   function handleAddMedicineList(medicineList) {
-    if (seperate) {
-      setList(medicineList)
-      setOpen(false)
-      setExistList([])
-      setIndex(null)
-      setPrescription(medicineList)
-    } else {
-      let newList = [...list]
-      medicineList.map((list) => {
-        newList.push(list)
-      })
-      setList(newList)
-      setPrescription(newList)
-      setOpen(false)
-    }
+    setList(medicineList)
+    setOpen(false)
+    setExistList([])
+    setIndex(null)
+    setPrescription(medicineList)
   }
 
   function handleOnEdit() {

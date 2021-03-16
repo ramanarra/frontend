@@ -62,7 +62,7 @@ export default class StreamComponent extends Component {
       <div className="OT_widget-container">
         <div className="pointer nickname">
           <div style={{ display: 'flex' }}>
-            <div>{this.props.doctorName}</div>
+            <div>Dr.{this.props.doctorName}</div>
             {this.props.subscribers &&
               this.props.subscribers.length > 0 &&
               this.props.patientName && (

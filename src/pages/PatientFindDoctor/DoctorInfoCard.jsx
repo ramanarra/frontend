@@ -41,7 +41,7 @@ const DoctorInfoCard = ({ doctorDetail, doctorListInHospital, isHospital }) => {
             {doctorDetail.doctorKey && (
               <Typography
                 className={classes.name}
-              >{`${doctorDetail.firstName} ${doctorLastName}`}</Typography>
+              > Dr.{`${doctorDetail.firstName} ${doctorLastName}`}</Typography>
             )}
           </Box>
           {doctorDetail.doctorKey && (
@@ -66,7 +66,7 @@ const DoctorInfoCard = ({ doctorDetail, doctorListInHospital, isHospital }) => {
             >{`₹${doctorDetail.fee}`}</Typography>
           </Box>
         )}
-        <Box
+        {/* <Box
           paddingLeft={4}
           className={classNames(classes.contactNumber, {
             [classes.hospital]: !doctorDetail.doctorKey,
@@ -78,7 +78,7 @@ const DoctorInfoCard = ({ doctorDetail, doctorListInHospital, isHospital }) => {
               className={classes.value}
             >{`+91 ${doctorDetail.number}`}</Typography>
           )}
-        </Box>
+        </Box> */}
 
         <Box paddingLeft={4} className={classes.location}>
           <Typography className={classes.text}>Location</Typography>
