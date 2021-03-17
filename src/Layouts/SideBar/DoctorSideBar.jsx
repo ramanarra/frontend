@@ -3,6 +3,8 @@ import { Link, useLocation } from 'react-router-dom'
 import { Box } from '@material-ui/core'
 import classNames from 'classnames'
 import { makeStyles } from '@material-ui/core/styles'
+import { Toolmenu } from '../../components/Tooltip'
+import messages from '../../lib/iconMsg'
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -57,7 +59,9 @@ function DoctorSideaBar() {
           })}
           to="/doctors"
         >
-          <i className="icon-doctor"></i>
+          <Toolmenu title={messages.appointment} placement="left">
+            <i className="icon-doctor"></i>
+          </Toolmenu>
         </Link>
         <Link
           className={classNames(classes.item, classes.patient, {
@@ -65,7 +69,9 @@ function DoctorSideaBar() {
           })}
           to="/patients"
         >
-          <i className="icon-patient "></i>
+          <Toolmenu title={messages.patient} placement="left">
+            <i className="icon-patient "></i>
+          </Toolmenu>
         </Link>
         <Link
           className={classNames(classes.item, classes.report, {
@@ -74,7 +80,9 @@ function DoctorSideaBar() {
           to="/reports/list"
         >
           {/* {' '} */}
-          <i className="icon-progress "></i>
+          <Toolmenu title={messages.report} placement="left">
+            <i className="icon-progress "></i>
+          </Toolmenu>
         </Link>
         <Link
           className={classNames(classes.item, classes.setting, {
@@ -82,7 +90,9 @@ function DoctorSideaBar() {
           })}
           to="/settings"
         >
-          <i className="icon-settings "></i>
+          <Toolmenu title={messages.setting} placement="left">
+            <i className="icon-settings "></i>
+          </Toolmenu>
         </Link>
       </Box>
     </Box>

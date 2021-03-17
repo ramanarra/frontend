@@ -297,7 +297,7 @@ function AppoinmentDetails() {
                         />
                     </Box>
                     <Box ><Typography className={classes.doctorName}>
-                        {doctorName}
+                        Dr.{doctorName}
                     </Typography>
                         <Typography className={classes.doctorSpeciality}>{appointmentDetails.speciality}</Typography>
                     </Box>

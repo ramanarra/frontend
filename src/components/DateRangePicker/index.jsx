@@ -86,7 +86,7 @@ const DateRangePicker = ({
         <div className="date-picker-wrap">
           <DateRange
             color="#0bb5ff"
-            rangeColors="#0bb5ff"
+            rangeColors={["#0bb5ff"]}
             scroll={{
               enabled: true,
             }}

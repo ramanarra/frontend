@@ -20,7 +20,7 @@ function DoctorDetails({ doctorDetails }) {
             className={classes.large}
           />
           <Typography className={classes.doctorName} variant="h5">
-            {doctorDetails.name}
+            Dr.{doctorDetails.name}
           </Typography>
           <Typography className={classes.speciality}>
             {doctorDetails.speciality}
