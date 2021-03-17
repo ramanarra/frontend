@@ -33,3 +33,5 @@ export const setLastRead = (index, appointmentId) => ({
   appointmentId,
   index,
 })
+
+export const setReportList = (value) => ({ type: 'SET_REPORT_LIST', data: value })

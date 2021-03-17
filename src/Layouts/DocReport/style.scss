@@ -39,6 +39,17 @@
         }
       }
 
+      .ExportButton{
+        width: 30px;
+        pointer-events: visible;
+        margin-right: 10px;
+        cursor: pointer;
+        
+        .downloadIconImg{
+          width: 30px;
+        }
+      }
+
       .right-partition {
         display: flex;
         align-items: flex-end;

@@ -102,6 +102,10 @@ const doctor = (state = intialState, action) => {
       } else return state
     }
 
+    case 'SET_REPORT_LIST': {
+      return { ...state, reportList: action.data }
+    }
+
     default:
       return state
   }

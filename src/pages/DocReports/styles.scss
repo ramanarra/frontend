@@ -5,15 +5,6 @@
     .report-list-panel {
       padding: 24px;
 
-      .ExportButton{
-        background-color: #00b5fb;
-        width: 12%;
-        text-align: center;
-        border-radius: 10px;
-        font-size: medium;
-        pointer-events: visible;
-      }
-
       .table-wrap {
         max-height: calc(100vh - 212px);
         overflow: auto;
