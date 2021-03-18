@@ -422,32 +422,6 @@ function AppoinmentDetails() {
 
                         </Box>
 
-                        {/* table view of lab reports */}
-                        <Box>
-                            {!!appointmentDetails?.reportDetail?.length &&
-                                <div className="report-list-panel">
-                                    <div className={clsx('table-wrap')}>
-                                        <div className="tableTitle">Lap Reports</div>
-                                        <table>
-                                            <thead>
-                                                <tr>
-                                                    <th className="head">File Name</th>
-                                                    <th className="head">Report Date</th>
-                                                    <th className="head">Comment</th>
-                                                    <th className="head">Attachment</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {!!appointmentDetails?.reportDetail?.length &&
-                                                    appointmentDetails.reportDetail?.map((i, index) => (
-                                                        <Entry data={i} key={index} role={role} />
-                                                    ))}
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>}
-                        </Box>
-
                     </Box>
 
                     <Box>
@@ -530,6 +504,31 @@ function AppoinmentDetails() {
 
                     </Box>
 
+                    {/* table view of lab reports */}
+                    <Box>
+                        {!!appointmentDetails?.reportDetail?.length &&
+                            <div className="report-list-panel">
+                                <div className={clsx('table-wrap')}>
+                                    <div className="tableTitle">Lap Reports</div>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th className="head">File Name</th>
+                                                <th className="head">Report Date</th>
+                                                <th className="head">Comment</th>
+                                                <th className="head">Attachment</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {!!appointmentDetails?.reportDetail?.length &&
+                                                appointmentDetails.reportDetail?.map((i, index) => (
+                                                    <Entry data={i} key={index} role={role} />
+                                                ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>}
+                    </Box>
 
                 </Box>
 
