@@ -53,6 +53,7 @@ export const URL = {
   reportUploading: '/calendar/patient/reportUploading',
   listOfDoctorsInHospital: '/calendar/patient/listOfDoctorsInHospital',
   appointmentDoctorDetails: '/calendar/patient/appointmentDoctorDetails',
+  deleteApi:'/calendar/patient/reportDelete',
   viewDoctorDetails: '/calendar/patient/viewDoctorDetails',
   patientAppointmentSlotsView: '/calendar/patient/appointmentSlotsView',
   patientBookAppointment: '/calendar/patient/bookAppointment',
