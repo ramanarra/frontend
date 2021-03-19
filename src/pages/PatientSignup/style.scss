@@ -41,8 +41,37 @@
   }
 
   .fields {
+
+    .honorific-field-partition{
+      @include equalSplitPartiton;
+      border: 1px solid rgba(222,222,222,1.0);
+
+      .honorific-value{
+        font-size: 12px;
+        color: #636363;
+      }
+    }
+
     .field-partition {
       @include equalSplitPartiton;
+    }
+
+    .honorific-head{
+      .honorific-title{
+        font-family: var(--fontMain);
+        font-size: 12px;
+        color:#636363;
+          font-weight: normal;
+          margin-bottom: 8px;
+      }
+  
+      .honorific-star-icon {
+        width: 8px;
+        color: #ff0023;
+        position: absolute;
+        padding-bottom: 10px;
+      }
+  
     }
 
     .field-wrap {
@@ -153,4 +182,12 @@
       }
     }
   }
+}
+
+
+.MuiInput-underline:before {
+  border-bottom: none !important;
+}
+.MuiInput-underline:after {
+  border-bottom: none !important;
 }

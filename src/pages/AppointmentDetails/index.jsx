@@ -121,7 +121,7 @@ function AppoinmentDetails() {
         if (response) {
             setOpen(true)
         }
-        if(data?.statusCode === 200) {
+        if (data?.statusCode === 200) {
             reFetch()
         }
     }, [response, data])
@@ -243,7 +243,7 @@ function AppoinmentDetails() {
         })
     }
 
-    const currentTime = moment().format('DD/MM/YYY HH:mm:ss')
+    const currentTime = moment().format('DD/MM/YYYY HH:mm:ss')
 
     const appoinmentDate = moment(appointmentDetails?.appointmentDate).format(
         'DD/MM/YYYY'
@@ -254,8 +254,8 @@ function AppoinmentDetails() {
 
     const appointmentDateWithTime = appoinmentDate + ' ' + startTime
 
-    const difference = moment(appointmentDateWithTime, 'DD/MM/YYYY HH:mm:ss').diff(
-        moment(currentTime, 'DD/MM/YYYY HH:mm:ss')
+    const difference = moment(appointmentDateWithTime, 'DD/MM/YYYY HH:mm:ss A').diff(
+        moment(currentTime, 'DD/MM/YYYY HH:mm:ss A')
     )
 
     const differenceInDays = moment.duration(difference)
@@ -274,18 +274,24 @@ function AppoinmentDetails() {
 
     const cancelDisable =
         appointmentDetails?.cancellationDays !== null
-            ? differenceInDays.days() >= Number(appointmentDetails?.cancellationDays) &&
-                differenceInDays.hours() >= Number(appointmentDetails?.cancellationHours) &&
-                differenceInDays.minutes() >= Number(appointmentDetails?.cancellationMins)
+            ? differenceInDays.days() > Number(appointmentDetails?.cancellationDays) ||
+                (differenceInDays.days() == Number(appointmentDetails?.cancellationDays) &&
+                    differenceInDays.hours() > Number(appointmentDetails?.cancellationHours)) ||
+                (differenceInDays.days() == Number(appointmentDetails?.cancellationDays) &&
+                    differenceInDays.hours() == Number(appointmentDetails?.cancellationHours) &&
+                    differenceInDays.minutes() >= Number(appointmentDetails?.cancellationMins))
                 ? false
                 : true
             : false
 
     const rescheduleDisable =
         appointmentDetails?.rescheduleDays !== null
-            ? differenceInDays.days() >= Number(appointmentDetails?.rescheduleDays) &&
-                differenceInDays.hours() >= Number(appointmentDetails?.rescheduleHours) &&
-                differenceInDays.minutes() >= Number(appointmentDetails?.rescheduleMins)
+            ? differenceInDays.days() > Number(appointmentDetails?.rescheduleDays) ||
+                (differenceInDays.days() == Number(appointmentDetails?.rescheduleDays) &&
+                    differenceInDays.hours() > Number(appointmentDetails?.rescheduleHours)) ||
+                (differenceInDays.days() == Number(appointmentDetails?.rescheduleDays) &&
+                    differenceInDays.hours() == Number(appointmentDetails?.rescheduleHours) &&
+                    differenceInDays.minutes() >= Number(appointmentDetails?.rescheduleMins))
                 ? false
                 : true
             : false
@@ -458,34 +464,6 @@ function AppoinmentDetails() {
                             }
 
                         </Box>
-
-                        {/* table view of lab reports */}
-                        <Box>
-                            {!!appointmentDetails?.reportDetail?.length &&
-                                <div className="report-list-panel">
-                                    <div className={clsx('table-wrap')}>
-                                        <div className="tableTitle">Lab Reports</div>
-                                        <table>
-                                            <thead>
-                                                <tr>
-                                                    <th className="head">File Name</th>
-                                                    <th className="head">Report Date</th>
-                                                    <th className="head">Comment</th>
-                                                    <th className="head">Attachment</th>
-                                                    <th className="head"> Delete</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {!!appointmentDetails?.reportDetail?.length &&
-                                                    appointmentDetails.reportDetail?.map((i, index) => (
-                                                        <Entry data={i} key={index} role={role} />
-                                                    ))}
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>}
-                        </Box>
-
                     </Box>
 
                     <Box>
@@ -536,38 +514,64 @@ function AppoinmentDetails() {
                                         className={classes.text}
                                     >{`${days} day and ${hours} more hours to join`}</Typography>
                                 ) : (
-                                        <Typography
-                                            className={classes.text}
-                                        >{`${days} days and ${hours} more hours to join`}</Typography>
-                                    )
+                                    <Typography
+                                        className={classes.text}
+                                    >{`${days} days and ${hours} more hours to join`}</Typography>
+                                )
                             ) : differenceInDays.hours() > 0 ? (
                                 differenceInDays.hours() === 1 ||
                                     differenceInDays.hours() === 0 ? (
-                                        <Typography
-                                            className={classes.text}
-                                        >{`${hours} more hour to join`}</Typography>
-                                    ) : (
-                                        <Typography
-                                            className={classes.text}
-                                        >{`${hours} more hours to join`}</Typography>
-                                    )
+                                    <Typography
+                                        className={classes.text}
+                                    >{`${hours} more hour to join`}</Typography>
+                                ) : (
+                                    <Typography
+                                        className={classes.text}
+                                    >{`${hours} more hours to join`}</Typography>
+                                )
                             ) : (
-                                        differenceInDays.minutes() > 0 &&
-                                        (differenceInDays.minutes() === 1 ? (
-                                            <Typography
-                                                className={classes.text}
-                                            >{`${minutes} more minute to join`}</Typography>
-                                        ) : (
-                                                <Typography
-                                                    className={classes.text}
-                                                >{`${minutes} more minutes to join`}</Typography>
-                                            ))
-                                    )}
+                                differenceInDays.minutes() > 0 &&
+                                (differenceInDays.minutes() === 1 ? (
+                                    <Typography
+                                        className={classes.text}
+                                    >{`${minutes} more minute to join`}</Typography>
+                                ) : (
+                                    <Typography
+                                        className={classes.text}
+                                    >{`${minutes} more minutes to join`}</Typography>
+                                ))
+                            )}
                         </Box>
 
 
                     </Box>
 
+                    {/* table view of lab reports */}
+                    <Box>
+                        {!!appointmentDetails?.reportDetail?.length &&
+                            <div className="report-list-panel">
+                                <div className={clsx('table-wrap')}>
+                                    <div className="tableTitle">Lap Reports</div>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th className="head">File Name</th>
+                                                <th className="head">Report Date</th>
+                                                <th className="head">Comment</th>
+                                                <th className="head">Attachment</th>
+                                                <th className="head"> Delete</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {!!appointmentDetails?.reportDetail?.length &&
+                                                appointmentDetails.reportDetail?.map((i, index) => (
+                                                    <Entry data={i} key={index} role={role} />
+                                                ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>}
+                    </Box>
 
                 </Box>
 
