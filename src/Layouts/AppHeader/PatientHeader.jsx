@@ -199,7 +199,7 @@ function PatientHeader({ socket }) {
           onClick={handleFindDoctor}
         >
           <img src={appointmentIcon} className={classes.searchIcon} />
-          <span className={classes.findDoctorText}>BOOK APPOINTMENT</span>
+          <span className={classes.findDoctorText}>FIND DOCTOR / BOOK APPOINTMENT</span>
         </Button>
       </Box>
       <Box className={classes.gap}>
