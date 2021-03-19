@@ -229,7 +229,7 @@ function CreateAppointmentForNewPatient({
           <Box className={classes.createButton}>
             <Box className={classes.submitbtn} onClick={handleOnSubmit}>
               <Typography className={classes.submitText}>
-                CREATE PATIENT AND BOOK APPOINTMENT
+                 BOOK APPOINTMENT
               </Typography>
             </Box>
           </Box>

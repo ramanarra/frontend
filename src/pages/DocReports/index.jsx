@@ -77,7 +77,7 @@ const DocReports = React.memo(({ filter, handleFilter, pathType, tab }) => {
       }
 
       <div className={clsx('table-wrap', totalCount > 15 && 'has-pagination')}>
-        <table>
+        <table className="amount-table">
           <thead>
             <tr>
               {role === 'ADMIN' && <th className="head">Doctor name</th>}

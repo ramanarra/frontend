@@ -16,7 +16,7 @@ import useStyle from './useAppointmentDetailsStyle'
 import { IconButton } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 import StarIcon from '@material-ui/icons/Star'
-import { MdInsertDriveFile as FileIcon } from 'react-icons/md'
+import { MdInsertDriveFile as FileIcon,MdDelete } from 'react-icons/md'
 import clsx from 'clsx'
 import './style.scss'
 import { dateFmt } from '../../components/commonFormat'
@@ -34,6 +34,8 @@ import { setSocket, setTimer } from '../../actions/doctor'
 import { useSelector, useDispatch } from 'react-redux'
 import { baseURL } from '../../baseURL'
 import NumberToWords from 'number-to-words'
+import { LeftCircleArrow } from '../../components/Tooltip'
+import useFetch from '../../hooks/useFetch'
 
 const ENDPOINT = baseURL
 
@@ -55,6 +57,7 @@ function AppoinmentDetails() {
     const [report, setReport] = useState([])
     const [val, setVal] = useState()
     const appointmentReportArray = useHistory()
+    const [showAlert, setShowAlert] = useState(false)
     const [handleUpload, data, Loading] = useUpload({
         onSuccess: () => {
 
@@ -93,6 +96,12 @@ function AppoinmentDetails() {
             state: params.appointmentId
         })
     }
+    function handleOnBack() { 
+        history.push({
+            pathname: 'patient/appointments',
+            appointmentId:params.appointmentId,
+         })
+      }
 
     const [onSave, response] = useAppointmentUpdate(refetch)
 
@@ -116,6 +125,33 @@ function AppoinmentDetails() {
             reFetch()
         }
     }, [response, data])
+
+
+    const {fetchDeleteReport, isDeleteReportLoading} = useFetch({
+        name: 'deleteReport',
+        method: 'PUT',
+        url: URL.deleteApi,
+        initLoad: false,
+        onSuccess: reFetch,
+        
+    })
+
+  
+    function hanldeDelete(data){  
+        fetchDeleteReport({
+            params: {
+               id: data.id
+            }
+            
+        })
+        setShowAlert(true)
+    }
+
+    function reportClose()
+    {
+        setShowAlert(false)
+    }
+    
     const role = localStorage.getItem('role')
 
     const [openReschedule, setOpenReschedule] = useState(false)
@@ -271,14 +307,21 @@ function AppoinmentDetails() {
                         </IconButton>
                     </a>
                 </td>
+                <td className="cell">
+                <IconButton className="view-icon-btn" onClick={hanldeDelete.bind(this,data)}>   
+                 <MdDelete className="delete-icon"/>
+                 </IconButton>
+                </td>
             </tr>
         )
     }
 
     return (
         <Box className={classes.container}>
+            <Box display="flex">
+            <LeftCircleArrow onClick={handleOnBack} className={classes.leftArrows} placement='left'/>
             <Box className={classes.header}> Appointment Details </Box>
-
+            </Box>
             {Boolean(appointmentDetails) && (<Box display="flex">
 
                 <Box className={classes.doctorDetails}>
@@ -421,7 +464,7 @@ function AppoinmentDetails() {
                             {!!appointmentDetails?.reportDetail?.length &&
                                 <div className="report-list-panel">
                                     <div className={clsx('table-wrap')}>
-                                        <div className="tableTitle">Lap Reports</div>
+                                        <div className="tableTitle">Lab Reports</div>
                                         <table>
                                             <thead>
                                                 <tr>
@@ -429,6 +472,7 @@ function AppoinmentDetails() {
                                                     <th className="head">Report Date</th>
                                                     <th className="head">Comment</th>
                                                     <th className="head">Attachment</th>
+                                                    <th className="head"> Delete</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -630,7 +674,15 @@ function AppoinmentDetails() {
                     severity={'success'}
                 />
             }
-
+            {
+                <SnackBar
+                   openDialog={showAlert}
+                    message={"Report deleted successfully"}
+                    onclose={reportClose}
+                    severity={'success'}
+                />
+            }
+         
 
         </Box >
 
