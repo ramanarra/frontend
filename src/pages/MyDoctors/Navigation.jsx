@@ -93,6 +93,7 @@ const Navigation = ({ doctorList, contentRefresh }) => {
               Open &&
               <AddDoctor
                 handleClose={handleClose}
+                open={Open}
               />
             }
           </Box>
