@@ -69,7 +69,7 @@ function List({ appointments, onSave, doctorKey }) {
               slot={slot}
               date={todayDate}
               onSave={onSave}
-              name={slot.patientFirstName}
+              name={`${slot.honorific ? slot.honorific + "." : ""} ${slot.patientFirstName}`}
               bgColor={'#f1f3f5'}
               textColor={'#aab5c2'}
               ModalComponent={CancelAndRescheduleModal}
@@ -83,7 +83,7 @@ function List({ appointments, onSave, doctorKey }) {
               slot={slot}
               date={todayDate}
               onSave={onSave}
-              name={slot.patientFirstName}
+              name={`${slot.honorific ? slot.honorific + "." : ""} ${slot.patientFirstName}`}
               bgColor={'#e4f5fd'}
               textColor={'#0bb5ff'}
               ModalComponent={CancelAndRescheduleModal}

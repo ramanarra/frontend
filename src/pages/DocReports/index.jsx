@@ -14,7 +14,7 @@ const Entry = ({ data, role }) => {
   return (
     <tr>
       {role === 'ADMIN' && <td className="cell">Dr.{data?.doctorName}</td>}
-      <td className="cell">{data?.patientName}</td>
+      <td className="cell">{`${data?.honorific ? data.honorific + "." : ""} ${data?.patientName}`}</td>
       <td className="cell">{dateFmtWthOutTimeZone(data?.createdTime)}</td>
       <td className="cell">{dateFmtWthOutTimeZone(data?.appointment_date)}</td>
       <td className="cell">{data?.phone}</td>
