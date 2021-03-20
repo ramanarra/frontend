@@ -85,6 +85,8 @@ const DoctorSignUp = (props) => {
     consultationCost: 'Invalid consultationCost',
     consultationSessionTimings: 'Invalid consultationSessionTimings',
     textmsg : 'Provide Specific Date and Time to contact',
+    passwordValidation: 'password must contain one alphabet and one numeric',
+    passwordLength: 'Password must has minimum length of 6 and maximum length of 12',
   }
   function handleOnClose(reason) {
     if (reason === 'clickaway') {
@@ -199,6 +201,7 @@ const DoctorSignUp = (props) => {
               isRequired
               inputProps={{
                 ref: register({
+                  required:'Required',
                   minLength: {
                     value: 3,
                     message: validationErr.qualification,
@@ -320,8 +323,40 @@ const DoctorSignUp = (props) => {
               type="password"
               placeholder="********"
               isRequired
-              inputProps={{ ref: register({ required: 'Required' }) }}
+              inputProps={{ ref: register({ required: 'Required',
+                  maxLength: {
+                    value: 12,
+                    message: validationErr.passwordLength,
+                  },
+                  minLength: {
+                    value: 6,
+                    message: validationErr.passwordLength,
+                  },
+                  pattern: {
+                    value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,12}$/,
+                    message: validationErr.passwordValidation,
+                  },
+            }) 
+            }}
               error={!!errors.password && errors.password.message}
+              hasValidation
+            />
+          </div>
+          <div className="field-wrap">
+          <Textfield
+              name="ConfirmPassword"
+              label="Confirm Password"
+              type="password"
+              placeholder="********"
+              // onChange={handleChange}
+              isRequired
+              inputProps={{ 
+                ref: register({ required: 'Required', 
+                validate:(value) =>
+                value === watch('password') ||
+                "password and confirmation password must be same"}), 
+                }}
+                error={!!errors.ConfirmPassword && errors.ConfirmPassword.message}
               hasValidation
             />
           </div>

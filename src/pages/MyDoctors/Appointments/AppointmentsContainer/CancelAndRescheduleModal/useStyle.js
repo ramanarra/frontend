@@ -88,13 +88,21 @@ const useStyle = makeStyles(() => ({
     cursor: 'pointer',
     marginLeft: 10,
   },
+  closeDetails:{
+    padding: '11px 22px',
+    backgroundColor: '#f4f2f2',
+    borderRadius: 17,
+    textAlign: 'center',
+    cursor: 'pointer',
+    marginLeft:40,
+  },
   patientDetails: {
     padding: '10px 14px',
     backgroundColor: '#0bb5ff',
     borderRadius: 17,
     textAlign: 'center',
     cursor: 'pointer',
-    marginLeft:17,
+    // marginLeft:20,
   },
 
   cancle: {
@@ -103,15 +111,15 @@ const useStyle = makeStyles(() => ({
     borderRadius: 17,
     textAlign: 'center',
     cursor: 'pointer',
-    marginLeft: 15,
+    marginLeft: 30,
   },
   reschedule: {
     padding: '10px 14px',
     backgroundColor: '#0bb5ff',
-    borderRadius: 17,
+    borderRadius: 37,
     textAlign: 'center',
     cursor: 'pointer',
-    marginLeft:17,
+    marginLeft:30,
   },
   cancleBtn: {
     fontSize: 11,
@@ -120,6 +128,11 @@ const useStyle = makeStyles(() => ({
   patientDetailsBtn: {
     fontSize: 11,
     color: 'white',
+  },
+
+  closeDetailsBtn:{
+    fontSize: 11,
+    color: '#a8a8a8',
   },
 
   rescheduleBtn: {

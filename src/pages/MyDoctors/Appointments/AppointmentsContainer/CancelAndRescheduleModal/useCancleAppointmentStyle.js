@@ -36,7 +36,7 @@ const useCancleAppointmentStyle = makeStyles(() => ({
     },
   },
   checkBoxText: {
-    paddingTop: 9,
+    paddingTop: 10,
     fontSize: 14.7,
     color: '#7d7b7b',
   },

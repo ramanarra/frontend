@@ -2,8 +2,15 @@ import { makeStyles } from '@material-ui/core/styles'
 
 const useAppointmentDetailsStyle = makeStyles((theme) => ({
     header: {
-        margin: 20,
+        marginTop: 30,
+        marginLeft: 10,
     },
+    leftArrows:{
+    width: 20,
+    marginTop: 35,
+    marginLeft: 8,
+    },
+   
     container: {
         width: '100%',
     },
