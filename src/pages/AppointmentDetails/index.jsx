@@ -596,7 +596,7 @@ function AppoinmentDetails() {
                     onClose={handleCloseReschedule}
                     time={appointmentDetails.startTime}
                     date={appoinmentDate}
-                    appointmentDetail={appointmentDetail}
+                    appointmentDetail={appointmentDetails}
                     onSave={onSave}
                 />
             )}
