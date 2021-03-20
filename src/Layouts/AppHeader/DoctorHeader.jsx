@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import classNames from 'classnames'
 import { connect, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { Box, Button, Typography , Avatar} from '@material-ui/core'
+import { Box, Button, Typography, Avatar } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
@@ -18,7 +18,7 @@ import useManualFetch from '../../hooks/useManualFetch'
 import { METHOD, URL } from '../../api'
 import message from './../../lib/iconMsg'
 import { NotificationTip } from '../../components/Tooltip'
-import ChangePassword from '../../pages/ChangePasswordOption/ChangePasswordDialogDoctor'
+// import ChangePassword from '../../pages/ChangePasswordOption/ChangePasswordDialogDoctor'
 
 const Open = true
 const useStyles = makeStyles(() => ({
@@ -145,10 +145,14 @@ function DoctorHeader({ socket, timer }) {
   const [open, setOpen] = useState(false)
   const [passwordDlg, setPasswordDlg] = useState(false)
   const [openSpinner, setOpenSpinner] = useState(false)
-  const [updateData, updateError, isUpdating, data] = useManualFetch() 
-  
-  const IndividualHospitalName = useSelector(state => state.hospital.hospitalName) || window.localStorage.getItem('hospitalName')
-  const hospitalProfile = useSelector(state => state.hospital.hospitalProfile) || window.localStorage.getItem('hospitalPhoto')
+  const [updateData, updateError, isUpdating, data] = useManualFetch()
+
+  const IndividualHospitalName =
+    useSelector((state) => state.hospital.hospitalName) ||
+    window.localStorage.getItem('hospitalName')
+  const hospitalProfile =
+    useSelector((state) => state.hospital.hospitalProfile) ||
+    window.localStorage.getItem('hospitalPhoto')
 
   function handleOnVideoClick() {
     if (socket) {
@@ -216,30 +220,30 @@ function DoctorHeader({ socket, timer }) {
         </Box>
       )}
 
-        <Box className={classes.gap}>
-          <NotificationTip  title={message.notification} placement="bottom" />
-        </Box>
-    
+      <Box className={classes.gap}>
+        <NotificationTip title={message.notification} placement="bottom" />
+      </Box>
+
       <Box className={classes.gap}>
         <Typography className={classes.text}>{IndividualHospitalName}</Typography>
       </Box>
       <ClickAwayListener onClickAway={handleOnAwayClick}>
         <Box className={classes.hospitalLogoContainer}>
           {localStorage.getItem('role') === 'DOCTOR' && (
-          <Avatar
-            src={hospitalProfile}
-            alt="hospital logo"
-            className={classes.hospitalLogo}
-            onClick={handleOnClick}
-          />
-          )} 
+            <Avatar
+              src={hospitalProfile}
+              alt="hospital logo"
+              className={classes.hospitalLogo}
+              onClick={handleOnClick}
+            />
+          )}
           {localStorage.getItem('role') === 'ADMIN' && (
-          <Avatar
-            src={hospitalProfile}
-            alt="hospital logo"
-            className={classes.hospitalLogo}
-            onClick={handleOnClick}
-          />
+            <Avatar
+              src={hospitalProfile}
+              alt="hospital logo"
+              className={classes.hospitalLogo}
+              onClick={handleOnClick}
+            />
           )}
           {open && (
             <Box className={classes.logout}>
@@ -273,13 +277,13 @@ function DoctorHeader({ socket, timer }) {
           <CircularProgress color="inherit" />
         </Backdrop>
       )}
-      {passwordDlg && (
+      {/* {passwordDlg && (
         <ChangePassword
           open={true}
           handleClose={handleClose}
           handleOnSubmit={handleOnSubmit}
         />
-      )}
+      )} */}
     </Box>
   )
 }

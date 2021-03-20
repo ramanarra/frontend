@@ -35,6 +35,7 @@ function ConfirmationPopUp({
   setIsVideoStatus,
   patientAppointmentId,
   list,
+  isPaused,
 }) {
   const classes = useStyle()
 
@@ -244,8 +245,10 @@ function ConfirmationPopUp({
                     )
                   : localStorage.getItem('loginUser') === 'patient' && (
                       <Typography className={classes.message}>
-                        Take Online {'Dr. '}
-                        {doctorName} Consultation
+                        {isPaused
+                          ? 'Dr. ${doctorName} has placed you on hold'
+                          : `Take Online ${'Dr. '}
+                        ${doctorName} Consultation`}
                       </Typography>
                     )}
               </Box>
