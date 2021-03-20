@@ -7,7 +7,7 @@ import api, { URL } from '../../api'
 import PatientReport from './PatientReport'
 import AddCircleOutlineTwoToneIcon from '@material-ui/icons/AddCircleOutlineTwoTone'
 import { Button, IconButton } from '@material-ui/core'
-import { MdInsertDriveFile as FileIcon } from 'react-icons/md'
+import { MdInsertDriveFile as FileIcon,MdDelete } from 'react-icons/md'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import Grid from '@material-ui/core/Grid'
 import SnackBar from '../../components/SnackBar'
@@ -22,6 +22,7 @@ const Reports = (props) => {
   const [item, setItem] = useState(false)
   const [paginationStart, setPaginationStart] = useState(0)
   const [count, setCount] = useState(0)
+  const [showAlert, setShowAlert] = useState(false)
   const [openFile, setOpenFile] = useState({
     status: false,
     url: null,
@@ -33,7 +34,7 @@ const Reports = (props) => {
   const paginationLimit = 15
 
   // fetch paitent list
-  const { patientList, fetchPatientList } = useFetch(
+  const { patientList, fetchPatientList  } = useFetch(
     {
       name: 'patientList',
       url: URL.patientReportList,
@@ -53,6 +54,7 @@ const Reports = (props) => {
       fetchPatientList()
     },
   })
+  console.log(data)
   const show = patientList?.totalCount
 
   const handlePopupMsg = () => {
@@ -101,7 +103,38 @@ const Reports = (props) => {
 
   useEffect(() => {
     setCount(0)
-  }, [searchText])
+      // if (data) {
+      //     setOpen(true)
+      // }
+      // if(data?.statusCode === 200) {
+      //     reFetch()
+      // }
+
+  }, [searchText,data])
+
+
+  function reportClose()
+  {
+      setShowAlert(false)
+  }
+
+  const {fetchDeleteReport} = useFetch({
+    name: 'deleteReport',
+    method: 'PUT',
+    url: URL.deleteApi,
+    initLoad: false,
+    onSuccess:fetchPatientList   
+})
+
+function hanldeDelete(i){  
+    fetchDeleteReport({
+        params: {
+           id: i.id
+        }
+        
+    })
+    setShowAlert(true)
+}
 
   console.log(patientList?.list?.length)
 
@@ -109,7 +142,7 @@ const Reports = (props) => {
     <div className="doctor-patients-list">
       <Grid container direction="row" className="header-bar">
         <Grid className="left-report" item xs={6}>
-          <h1 className="title">Lab Reports</h1>
+          <h1 className="title">Patient Lab Reports</h1>
         </Grid>
         <Grid
           container
@@ -153,7 +186,8 @@ const Reports = (props) => {
                   <th className="tbl-head title">Title</th>
                   <th className="tbl-head reportDate">Report Date</th>
                   <th className="tbl-head comments">Comments</th>
-                  <th className="tbl-head view_attchmnt"></th>
+                  <th className="tbl-head view_attchmnt">attachment</th>
+                  <th className="tbl-head comments">Delete</th>
                 </tr>
               </thead>
               <tbody className="body">
@@ -181,7 +215,12 @@ const Reports = (props) => {
                             <FileIcon className="view-icon" />
                           </IconButton>
                         </div>
-                      </td>
+                      </td>     
+                      <td className="cell">
+                          <IconButton className="view-icon-btn" onClick={hanldeDelete.bind(this,i)}>   
+                          <MdDelete className="delete-icon"/>
+                        </IconButton>
+                       </td>
                     </tr>
                   ))}
                 {!patientList?.list?.length && (
@@ -189,6 +228,7 @@ const Reports = (props) => {
                     <td className="tbl-cell fileName"></td>
                     <td className="tbl-cell reportDate no-data">No Data Found</td>
                     <td className="tbl-cell comments"></td>
+                    <td className="tbl-cell attchmnt"></td>
                     <td className="tbl-cell attchmnt"></td>
                   </tr>
                 )}
@@ -226,6 +266,15 @@ const Reports = (props) => {
           )}
         </div>
       )}
+
+              {
+                <SnackBar
+                   openDialog={showAlert}
+                    message={"Report deleted successfully"}
+                    onclose={reportClose}
+                    severity={'success'}
+                />
+            }
 
       {openFile.status && <FileViewer {...openFile} onClose={handleFileClose} />}
     </div>

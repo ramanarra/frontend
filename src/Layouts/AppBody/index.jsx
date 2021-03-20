@@ -5,7 +5,7 @@ import DoctorRoutes, { PatientRoutes } from '../routes'
 const AppBody = () => {
   if (localStorage.getItem('loginUser') === 'doctor') {
     return (
-      <div style={{ width: 'calc(100% - 79px)',overflow:'hidden' }}>
+      <div style={{ width: 'calc(100% - 79px)', overflow: 'auto' }}>
         <Switch>
           {DoctorRoutes.map((route, index) => {
             const Component = route.component
@@ -30,7 +30,7 @@ const AppBody = () => {
 
   // if (localStorage.getItem('loginUser') === 'patient') {
   return (
-    <div style={{ width: 'calc(100% - 79px)', overflow:'hidden' }}>
+    <div style={{ width: 'calc(100% - 79px)', overflow: 'auto' }}>
       <Switch>
         {PatientRoutes.map((route, index) => {
           const Component = route.component

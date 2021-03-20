@@ -72,7 +72,7 @@ function CancelAndRescheduleInfo({ doctorDetails }) {
         <Box display="flex" className={classes.cancellationContent}>
           <InfoOutlined className={classes.infoIcon} />
           <Typography className={classes.text}>
-            Cancellation allowed for before {cancellation}
+            Cancellation allowed  before {cancellation}
           </Typography>
         </Box>
       )}
@@ -80,7 +80,7 @@ function CancelAndRescheduleInfo({ doctorDetails }) {
         <Box display="flex" className={classes.rescheduleContent}>
           <InfoOutlined className={classes.infoIcon} />
           <Typography className={classes.text}>
-            Reschedule allowed for before {reschedule}
+            Reschedule allowed  before {reschedule}
           </Typography>
         </Box>
       )}

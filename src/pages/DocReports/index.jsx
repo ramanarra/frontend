@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { URL } from '../../api'
 import useFetch from '../../hooks/useFetch'
 import { dateFmtWthOutTimeZone } from '../../components/commonFormat'
@@ -7,13 +7,14 @@ import './styles.scss'
 import NoReport from './NoReport'
 import Footer from './Footer'
 import clsx from 'clsx'
-import exportFromJSON from 'export-from-json'
+import { useDispatch } from 'react-redux'
+import { setReportList } from '../../actions/doctor'
 
 const Entry = ({ data, role }) => {
   return (
     <tr>
       {role === 'ADMIN' && <td className="cell">Dr.{data?.doctorName}</td>}
-      <td className="cell">{data?.patientName}</td>
+      <td className="cell">{`${data?.honorific ? data.honorific + "." : ""} ${data?.patientName}`}</td>
       <td className="cell">{dateFmtWthOutTimeZone(data?.createdTime)}</td>
       <td className="cell">{dateFmtWthOutTimeZone(data?.appointment_date)}</td>
       <td className="cell">{data?.phone}</td>
@@ -28,6 +29,7 @@ const DocReports = React.memo(({ filter, handleFilter, pathType, tab }) => {
   // Based on role doctor name will disply
   const role = localStorage.getItem('role')
 
+  const dispatch = useDispatch()
   //prettier-ignore
   let { searchText, fromDate, toDate, paginationStart, paginationLimit } = filter[tab]
   const isCollection = tab === 1
@@ -52,32 +54,17 @@ const DocReports = React.memo(({ filter, handleFilter, pathType, tab }) => {
     [searchText, fromDate, toDate, paginationLimit, paginationStart, tab]
   )
 
-  const returnData = () => {
-    if (data.data.list.length > 0) { return data.data.list }
-    else { return [] }
-  }
+  useEffect(() => {
+    dispatch(setReportList(data))
+  }, [data])
 
-  const exportExcel = () => {
 
-    // const dataa = [{ foo: 'foo', bar: 'abc', xyz: 'pqr' }, { bar: 'bar' }]
-
-    const data = returnData();
-    const fileName = 'download'
-    const exportType = 'xls'
-
-    exportFromJSON({ data, fileName, exportType })
-  }
 
   const totalCount = data?.data?.totalCount
   return (
     <div className="report-list-panel">
-
-      {Boolean(data?.data?.list?.length) &&
-        <div className='ExportButton' onClick={exportExcel}>Export as Excel</div>
-      }
-
       <div className={clsx('table-wrap', totalCount > 15 && 'has-pagination')}>
-        <table>
+        <table className="amount-table">
           <thead>
             <tr>
               {role === 'ADMIN' && <th className="head">Doctor name</th>}
@@ -91,7 +78,7 @@ const DocReports = React.memo(({ filter, handleFilter, pathType, tab }) => {
           <tbody>
             {Boolean(!!data?.data?.list?.length) &&
               data.data?.list.map((i, index) => (
-                <Entry  data={i} key={index} role={role} />
+                <Entry data={i} key={index} role={role} />
               ))}
           </tbody>
         </table>

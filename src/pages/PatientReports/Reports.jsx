@@ -26,6 +26,7 @@ const Reports = (props) => {
   const [reportList, setReportList] = useState([])
   const [show, setShow] = useState(0)
   const [count, setCount] = useState(0)
+  const [showAlert, setShowAlert] = useState(false)
 
   const location = useLocation();
 

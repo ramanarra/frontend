@@ -169,7 +169,10 @@ function AppointmentDatePicker({ doctorKey, doctorDetails }) {
     setOpen(false)
     resetBookingData()
     if (data?.appointment) {
-      history.push('/patient/appointments/upcoming')
+      history.push({
+         pathname: `/patient/appoints/upcoming/appointmentDetail/${data?.appointment.appointmentdetails.id}`,
+         appointmentId: data?.appointment.appointmentdetails.id,
+      })
     }
   }
 

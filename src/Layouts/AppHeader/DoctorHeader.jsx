@@ -233,6 +233,14 @@ function DoctorHeader({ socket, timer }) {
             onClick={handleOnClick}
           />
           )} 
+          {localStorage.getItem('role') === 'DOC_ASSISTANT' && (
+          <Avatar
+            src={hospitalProfile}
+            alt="hospital logo"
+            className={classes.hospitalLogo}
+            onClick={handleOnClick}
+          />
+          )} 
           {localStorage.getItem('role') === 'ADMIN' && (
           <Avatar
             src={hospitalProfile}

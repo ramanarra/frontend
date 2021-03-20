@@ -12,6 +12,7 @@
         border-radius: 10px;
         font-size: medium;
         pointer-events: visible;
+        cursor:pointer;
       }
 
       .table-wrap {
@@ -20,6 +21,14 @@
 
         &.has-pagination {
           max-height: calc(100vh - 239px);
+        }
+        .amount-table{
+          tr:hover {
+            cursor: pointer;
+            background:#e9ece8fb;
+            padding: 1;
+            box-shadow: 5px 3px 20px 1px #e9ece8fb;
+           }
         }
 
         table {
@@ -37,7 +46,7 @@
           }
 
           tbody td {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: normal;
           }
         }
