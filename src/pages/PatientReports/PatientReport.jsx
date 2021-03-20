@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Box, Dialog, Typography, DialogTitle, TextareaAutosize, Button } from '@material-ui/core'
+import React, { useState, useEffect } from 'react'
+import { Box, Dialog, Typography, DialogTitle, TextareaAutosize, Button, IconButton, Checkbox, Grid } from '@material-ui/core'
 import useStyle from './useStyle'
 import CloseIcon from '@material-ui/icons/Close'
 import './style.scss'
@@ -7,6 +7,12 @@ import moment from 'moment'
 import pdfIcon from '../../assets/img/pdfIcon.svg'
 import imageIcon from '../../assets/img/imageIcon.svg'
 import SnackBar from '../../components/SnackBar'
+import useFetch from '../../hooks/useFetch'
+import { useLocation } from 'react-router'
+import { MdInsertDriveFile as FileIcon } from 'react-icons/md'
+import { URL } from '../../api'
+import InfiniteScroll from 'react-infinite-scroll-component'
+import FileViewer from '../../components/FileViewer'
 
 
 function PatientReport({ open, setOpen, setItem, handleClose, appointmentId, setReportFile, setVal, handleUpload }) {
@@ -14,12 +20,40 @@ function PatientReport({ open, setOpen, setItem, handleClose, appointmentId, set
   const [file, setFile] = useState([])
   const [opens, setOpens] = useState(false)
   const [largeSizeOpens, setLargeSizeOpens] = useState(false)
+  const [paginationStart, setPaginationStart] = useState(0)
+  const [selectedFiles, setSelectedFiles] = useState([])
+  const location = useLocation()
+  const paginationLimit = 15;
   const date = new Date();
   const [report, setReport] = useState({
     title: "",
     reportDate: moment(date).format('YYYY-MM-DD'),
     comments: ""
   })
+  const [openFile, setOpenFile] = useState({
+    status: false,
+    url: null,
+    type: null,
+  })
+
+  const { patientList, fetchPatientList } = useFetch(
+    {
+      name: 'patientList',
+      url: URL.patientReportList,
+      params: {
+        paginationStart: paginationStart,
+        paginationLimit: paginationLimit,
+        searchText: "",
+        appointmentId: location.state,
+      },
+      initLoad: false,
+    },
+    ["", paginationStart]
+  )
+
+  useEffect(() => {
+    fetchPatientList()
+  }, [paginationStart])
 
   const handlechange = (e) => {
     const items = [...e.target.files];
@@ -83,30 +117,145 @@ function PatientReport({ open, setOpen, setItem, handleClose, appointmentId, set
     setOpens(true)
   }
 
-  var allfiles = file.map((eachfile) => {
-    return <img src={eachfile} className={classes.image} />
-  })
+  const fetchData = () => {
+    setPaginationStart(paginationStart + 1)
+  }
+
+  const handleFileClose = () => {
+    setOpenFile({
+      status: false,
+      url: null,
+      type: null,
+    })
+  }
 
   return (
-    <Box  >
+    <Box>
       <Box className={classes.holesize}  >
-        <Dialog open={open} className={classes.boxsize} >
+        <Dialog
+          open={open}
+          className={classes.boxsize}
+          maxWidth='md'
+          fullWidth
+          style={{ minHeight: 500 }}
+        // style={{ width: 750 }}
+        >
           <Box className={classes.mainBox}>
-            <CloseIcon className={classes.closeIcon} onClick={handleClose} />
+            {/* <CloseIcon className={classes.closeIcon} onClick={handleClose} /> */}
 
             <DialogTitle className={classes.header} style={{ paddingTop: "0px" }}>
-              <Box display="flex">
-                <Box>
+              <Grid container spacing={24}>
+                <Grid item xs={10} style={{ display: "flex", justifyContent: "center" }}>
                   <Typography className={classes.title} variant="h5" className={classes.heading}>
                     Add Report
                   </Typography>
-                </Box>
-              </Box>
-            </DialogTitle>
+                </Grid>
+                <Grid item xs={2}>
+                  <CloseIcon className={classes.closeIcon} onClick={handleClose} />
+                </Grid>
+              </Grid>
 
-            <TextareaAutosize aria-label="minimum height" rowsMin={5} className={classes.reportText} placeholder="Type here..."
-              onChange={handleText}
-            />
+            </DialogTitle>
+            <Grid className="model-patient-table-wrap">
+              <div className="table-wrap">
+                <InfiniteScroll
+                  dataLength={patientList?.list?.length || 0}
+                  children={patientList?.list || []}
+                  style={{ maxHeight: "330px", marginBottom: 12 }}
+                  next={fetchData}
+                  hasMore={true}
+                >
+                  <table className="patient-table" style={{ width: "100%" }}>
+                    <thead className="head" style={{ height: "100%", tableLayout: "fixed" }}>
+                      <tr>
+                        <th className="tbl-head view_attchmnt"></th>
+                        <th className="tbl-head title">Title</th>
+                        <th className="tbl-head reportDate">Report Date</th>
+                        <th className="tbl-head comments">Comments</th>
+                      </tr>
+                    </thead>
+                    <tbody className="body" id="table-body">
+                      {patientList &&
+                        patientList?.list?.length > 0 &&
+                        patientList?.list?.map((i) => (
+                          <tr>
+                            <td className="tbl-cell" style={{ paddingLeft: 20, width: 30 }}>
+                              <Checkbox
+                                checked={selectedFiles.find((file) => file.attachment === i.attachment)}
+                                onChange={(event) => {
+                                  if (event.target.checked) {
+                                    selectedFiles.push(i);
+                                    setSelectedFiles(selectedFiles);
+                                  }
+                                  else {
+                                    const newSelectedList = selectedFiles.filter((file) => file.attachment !== i.attachment);
+                                    setSelectedFiles(newSelectedList);
+                                  }
+                                }}
+                              />
+                            </td>
+                            <td className="tbl-cell fileName">{i?.fileName}</td>
+                            <td className="tbl-cell reportDate">
+                              {i?.reportDate
+                                ? moment(i?.reportDate).format('YYYY-MM-DD')
+                                : '-'}
+                            </td>
+                            <td className="tbl-cell comments">{i?.comments}</td>
+                          </tr>
+                        ))}
+                      {!patientList?.list?.length && (
+                        <tr className="no-data">
+                          <td className="tbl-cell fileName"></td>
+                          <td className="tbl-cell reportDate no-data">No Data Found</td>
+                          <td className="tbl-cell comments"></td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </InfiniteScroll>
+              </div>
+            </Grid>
+
+            <Grid container spacing={24} style={{ marginTop: "20px" }}>
+              <Grid item xs={2}>
+                <div className={classes.reportLeft} >
+                  <label htmlFor="files" name="files" className={classes.selectFile} > + Select File </label>
+                  <input
+                    type="file"
+                    name="files"
+                    onChange={handlechange}
+                    id="files"
+                    // accept=".jpg,.svg,.png, .pdf"
+                    className={classes.inputField}
+                    required
+                    multiple
+                  />
+                </div>
+              </Grid>
+              <Grid item xs={8}>
+                <TextareaAutosize aria-label="minimum height" rowsMin={2} className={classes.reportText} placeholder="Type here..."
+                  onChange={handleText}
+                />
+              </Grid>
+              <Grid item xs={2}>
+                <div>
+                  {(report.title !== "") ?
+                    <Button variant="contained" className={classes.saveButton}
+                      style={{ outline: "none" }}
+                      onClick={handleSave}
+                    >save</Button>
+                    :
+                    <Box>
+                      <Button variant="contained" className={classes.saveButton}
+                        style={{ outline: "none" }}
+                        onClick={handleDisabled}
+                      >save</Button>
+
+                    </Box>
+                  }
+                </div>
+              </Grid>
+            </Grid>
 
             <div >
               <div className={classes.files}>
@@ -142,43 +291,11 @@ function PatientReport({ open, setOpen, setItem, handleClose, appointmentId, set
                 })
                 }
               </div>
-
-              <div className={classes.reportLeft} >
-                <label htmlFor="files" name="files" className={classes.selectFile} > + Select File </label>
-                <input
-                  type="file"
-                  name="files"
-                  onChange={handlechange}
-                  id="files"
-                  // accept=".jpg,.svg,.png, .pdf"
-                  className={classes.inputField}
-                  required
-                  multiple
-                />
-              </div>
-
-              <div  >
-                {(report.title !== "") ?
-                  <Button variant="contained" className={classes.saveButton}
-                    style={{ outline: "none" }}
-                    onClick={handleSave}
-                  >save</Button>
-                  :
-                  <Box>
-                    <Button variant="contained" className={classes.saveButton}
-                      style={{ outline: "none" }}
-                      onClick={handleDisabled}
-                    >save</Button>
-
-                  </Box>
-                }
-              </div>
             </div>
-
             <Box className={classes.bordersize} />
           </Box>
         </Dialog>
-
+        {openFile.status && <FileViewer {...openFile} onClose={handleFileClose} />}
       </Box>
 
       <SnackBar
