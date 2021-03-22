@@ -39,7 +39,7 @@ const useFetch = (props, updateProps = []) => {
     shouldLoad && setLoading(true)
     setError(null)
 
-    const type = !!config?.method ? config?.method?.toLowerCase() : 'get'
+    const type = !!config?.method ? config?.method?.toLowerCase() : !!method ? method : 'get'
     const fetchUrl = config?.url ?? url
     const fetchParams = config?.params ?? params
 

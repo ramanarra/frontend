@@ -551,7 +551,7 @@ function AppoinmentDetails() {
                         {!!appointmentDetails?.reportDetail?.length &&
                             <div className="report-list-panel">
                                 <div className={clsx('table-wrap')}>
-                                    <div className="tableTitle">Lap Reports</div>
+                                    <div className="tableTitle">Lab Reports</div>
                                     <table>
                                         <thead>
                                             <tr>
