@@ -416,8 +416,7 @@ function AppoinmentDetails() {
                                 </Typography>
                             </Box>
 
-                            {(prescriptionDisplay) ?
-                                past && (
+                              {  past ?
                                     <Box display="flex" className={classes.nameAndValuePair}>
 
                                         <Typography className={classes.name}>Prescription : </Typography>
@@ -426,7 +425,7 @@ function AppoinmentDetails() {
                                                 target="_blank"
                                                 style={{ color: '#37befa', textDecorationLine: 'none' }}
                                                 variant="h5">
-                                                Click here
+                                                Click here to download
                                             </a>
                                             <VerticalAlignBottomOutlinedIcon
                                                 onClick={appointmentDetails.prescriptionUrl[0]}
@@ -434,20 +433,40 @@ function AppoinmentDetails() {
                                             />
                                         </Box>
                                     </Box>
-                                )
+                                
                                 :
-                                <div></div>
-                            }
+                                <Box display="flex" className={classes.nameAndValuePair}>
 
-                            <Box>
-                                <Box className={classes.nameAndValuePair} style={{ display: "flex" }}>
-                                    <Typography className={classes.name}>Upload Report:</Typography>
-                                    <Button className="title" onClick={handleLabReport} style={{ textTransform: "none", position: "relative", top: "-6px", left: "-10px" }} >
-                                        <AddCircleOutlineTwoToneIcon />
-                                    </Button>
+                                <Typography className={classes.name}>Prescription : </Typography>
+                                <Box display="flex" className={classes.download}>
+                                    <a className={classes.value} href={appointmentDetails.prescriptionUrl[0]}
+                                        target="_blank"
+                                        style={{ color: '#37befa', textDecorationLine: 'none' }}
+                                        variant="h5">
+                                        Click here to download
+                                    </a>
+                                    {/* <VerticalAlignBottomOutlinedIcon
+                                        onClick={appointmentDetails.prescriptionUrl[0]}
+                                        className={classes.downloadIcon}
+                                    /> */}
                                 </Box>
                             </Box>
-
+                               
+                            }
+        
+                       {past  ?            
+                            <Box>
+                            </Box>    :
+                        <Box>
+                        <Box className={classes.nameAndValuePair} style={{ display: "flex" }}>
+                        <Typography className={classes.name}>Upload Report:</Typography>
+                        <Button className="title" onClick={handleLabReport} style={{ textTransform: "none", position: "relative", top: "-6px", left: "-10px" }} >
+                        <AddCircleOutlineTwoToneIcon />
+                        </Button>
+                        </Box>
+                        </Box>
+                            }
+                  
                             {
                                 reportOpen &&
                                 <PatientReport

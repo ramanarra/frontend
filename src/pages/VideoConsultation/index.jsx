@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react'
+import React, { useState, useEffect, Fragment, useMemo } from 'react'
 import { useLocation, useHistory } from 'react-router-dom'
 import socketIOClient from 'socket.io-client'
 
@@ -8,6 +8,8 @@ import SnackBar from '../../components/SnackBar'
 import { baseURL } from '../../baseURL'
 import { connect } from 'react-redux'
 import { setMessages } from '../../actions/doctor'
+import useFetch from '../../hooks/useFetch'
+import { URL } from '../../api'
 
 const ENDPOINT = baseURL
 
@@ -31,6 +33,8 @@ function VideoConsulation({ sendMessage }) {
 
   const location = useLocation()
   const history = useHistory()
+
+  const appointmentId = useMemo(() => location.state, [location.state])
 
   useEffect(() => {
     setOpen(true)
@@ -143,6 +147,37 @@ function VideoConsulation({ sendMessage }) {
       )
     }
   }, [prescription])
+//  here the report is sended for both doctor and patient
+  const { appointmentReport, fetchAppointmentReport } = useFetch({
+    name: 'appointmentReport',
+    url: URL.appointmentReport,
+    initLoad: false
+  })
+//to get appointmentId for report
+  useEffect(() => {
+    if(!!appointmentId) {
+      fetchAppointmentReport({
+        params: {
+          appointmentId
+        }
+      })
+    }
+  }, [appointmentId])
+
+
+  useEffect(() => {
+    //to send reports to chat
+ 
+    if (!!appointmentReport && !!appointmentReport?.reports?.length ) {
+      sendMessage({
+        message: `Appointment report`,
+        from: localStorage.getItem('loginUser') === 'patient' ? 'user' : 'sender',
+        type: 'spl_appointment_report',
+        data: appointmentReport?.reports,
+      }, appointmentReport?.appoinmentId)
+     }
+    
+  }, [appointmentReport])
 
   return (
     <Fragment>
