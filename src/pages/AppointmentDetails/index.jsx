@@ -416,7 +416,7 @@ function AppoinmentDetails() {
                                 </Typography>
                             </Box>
 
-                              {  past ?
+                              {  appointmentDetails.prescriptionUrl.length ?
                                     <Box display="flex" className={classes.nameAndValuePair}>
 
                                         <Typography className={classes.name}>Prescription : </Typography>
@@ -435,22 +435,8 @@ function AppoinmentDetails() {
                                     </Box>
                                 
                                 :
-                                <Box display="flex" className={classes.nameAndValuePair}>
-
-                                <Typography className={classes.name}>Prescription : </Typography>
-                                <Box display="flex" className={classes.download}>
-                                    <a className={classes.value} href={appointmentDetails.prescriptionUrl[0]}
-                                        target="_blank"
-                                        style={{ color: '#37befa', textDecorationLine: 'none' }}
-                                        variant="h5">
-                                        Click here to download
-                                    </a>
-                                    {/* <VerticalAlignBottomOutlinedIcon
-                                        onClick={appointmentDetails.prescriptionUrl[0]}
-                                        className={classes.downloadIcon}
-                                    /> */}
+                                <Box>
                                 </Box>
-                            </Box>
                                
                             }
         
@@ -493,6 +479,10 @@ function AppoinmentDetails() {
                     consultation starts at <b>{startTime}</b>
                   </Typography>
                     </Box> */}
+
+                        {past  ?   
+                        <Box></Box>
+                        :
                         <Box className={classes.button} display="flex">
                             <Button
                                 className={rescheduleDisable ? classes.disableReschduleButton : classes.rescheduleButton}
@@ -521,6 +511,7 @@ function AppoinmentDetails() {
                             </Button>
 
                         </Box>
+                        }
                         <Box display="flex" className={classes.hoursToJoinText}>
                             {(differenceInDays.days() > 0 ||
                                 differenceInDays.hours() > 0 ||
