@@ -13,7 +13,7 @@ import { setReportList } from '../../actions/doctor'
 const Entry = ({ data, role }) => {
   return (
     <tr>
-      {role === 'ADMIN' && <td className="cell">Dr.{data?.doctorName}</td>}
+      {role === 'ADMIN'||'DOC_ASSISTANT' && <td className="cell">Dr.{data?.doctorName}</td>}
       <td className="cell">{data?.patientName}</td>
       <td className="cell">{dateFmtWthOutTimeZone(data?.createdTime)}</td>
       <td className="cell">{dateFmtWthOutTimeZone(data?.appointment_date)}</td>
@@ -67,7 +67,7 @@ const DocReports = React.memo(({ filter, handleFilter, pathType, tab }) => {
         <table className="amount-table">
           <thead>
             <tr>
-              {role === 'ADMIN' && <th className="head">Doctor name</th>}
+              {role === 'ADMIN'||'DOC_ASSISTANT' && <th className="head">Doctor name</th>}
               <th className="head">Patient name</th>
               <th className="head">Booked date</th>
               <th className="head">Appointment date</th>
