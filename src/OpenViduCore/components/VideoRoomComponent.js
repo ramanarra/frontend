@@ -506,7 +506,7 @@ class VideoRoomComponent extends Component {
               micStatusChanged={this.micStatusChanged}
               leaveSession={this.leaveSession}
               patientList={this.props.patientList}
-              doctorName={'Dr.' + this.props.doctorName}
+              doctorName={this.props.doctorName}
               patientName={this.props.patientName}
               AddNextPatient={this.props.AddNextPatient}
               videoAvailability={this.props.videoAvailability}

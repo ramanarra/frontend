@@ -357,7 +357,16 @@ function AppoinmentDetails() {
 
                     <Box className={classes.location}>
                         <Typography className={classes.title}>Location</Typography>
-                        <Typography className={classes.val}>{appointmentDetails.location}</Typography>
+                        <Typography className={classes.val}>{appointmentDetails.street +
+                            ', ' +
+                            appointmentDetails.city +
+                            ', ' +
+                            appointmentDetails.state +
+                            ', ' +
+                            appointmentDetails.country +
+                            ', ' +
+                            appointmentDetails.pincode}
+                            </Typography>
                     </Box>
                 </Box>
                 <Box className={classes.appointmentDetails}>
@@ -479,8 +488,7 @@ function AppoinmentDetails() {
                     consultation starts at <b>{startTime}</b>
                   </Typography>
                     </Box> */}
-
-                        {past  ?            
+                    {past  ?            
                             <Box>
                             </Box>    :
                         <Box className={classes.button} display="flex">

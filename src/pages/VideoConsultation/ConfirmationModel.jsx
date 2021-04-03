@@ -239,7 +239,7 @@ function ConfirmationPopUp({
                   ? localStorage.getItem('loginUser') === 'patient' && (
                       <Typography className={classes.errorMsg}>
                         {liveStatus
-                          ? `${'Dr. '}${doctorName}${' is '}${liveStatus}`
+                          ? `${'Requested Doctor to Join Please wait...'}`
                           : `${'Waiting for '}${'Dr. '}${doctorName}${' to come online'}`}
                       </Typography>
                     )

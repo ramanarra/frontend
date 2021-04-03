@@ -139,12 +139,9 @@ function PatientHeader({ socket }) {
 
   const [updateData, updateError, isUpdating, data] = useManualFetch()
 
-  const patientName =
-    useSelector((state) => state.patient.patientName) ||
-    localStorage.getItem('patientName')
-  const patientProfile =
-    useSelector((state) => state.patient.patientProfile) ||
-    localStorage.getItem('photo')
+  const patientName =localStorage.getItem('patientName') || useSelector(state => state.patient.patientName)
+  const patientProfile = localStorage.getItem('photo') || useSelector(state => state.patient.patientProfile)
+
   const [passwordDlg, setPasswordDlg] = useState(false)
 
   function handleFindDoctor() {
