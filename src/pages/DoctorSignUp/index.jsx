@@ -1,9 +1,5 @@
-import React, { useState,useEffect } from 'react'
-import {
-  Paper,
-  Button,
-  Snackbar,
-} from '@material-ui/core'
+import React, { useState, useEffect } from 'react'
+import { Paper, Button, Snackbar } from '@material-ui/core'
 import { useForm } from 'react-hook-form'
 import Textfield from '../../components/Textfield'
 import './style.scss'
@@ -13,7 +9,7 @@ import Api, { URL } from '../../api'
 const SnackbarPosition = { vertical: 'bottom', horizontal: 'center' }
 
 const DoctorSignUp = (props) => {
-  const { register, errors, control, handleSubmit } = useForm()
+  const { register, errors, control, handleSubmit, watch } = useForm()
 
   const [Error, setError] = useState(false)
   const [message, setMessage] = useState(null)
@@ -21,40 +17,37 @@ const DoctorSignUp = (props) => {
   const [response, setResponse] = useState(null)
   const [count, setCount] = useState(false)
   const redirectToLogin = () => props.history.push('/doctor/login')
-  
-  const onSubmit = (data) => {
-   
-    
-    data.consultationSessionTimings=Number(data.consultationSessionTimings)
-    console.log(data);
-    Api.post(URL.doctorSignup, data)
-    .then((res) => {
-      const { data } = res
-      setCount(true)
-      setResponse(data)
-      if (data.doctor?.accessToken) {
-        localStorage.setItem('virujhToken', data.doctor.accessToken)
-        localStorage.setItem('doctroId', data.doctor.doctorId)
-        localStorage.setItem(
-          'doctorName',
-          `${data.details.firstName} ${data.details.lastName}`
-        )
-        setMessage('Thanks! Your account has been created successfully')
-        setDetail(data)
-        setError(true)
-      } else if (data?.doctor.update === 'updated password') {
-        setError(true)
-        setMessage('Created successfully...Please do signin')
-      } else if (data?.statusCode) {
-        setError(true)
-        setMessage(data?.message)
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-      setCount(true)
-    })
 
+  const onSubmit = (data) => {
+    data.consultationSessionTimings = Number(data.consultationSessionTimings)
+    console.log(data)
+    Api.post(URL.doctorSignup, data)
+      .then((res) => {
+        const { data } = res
+        setCount(true)
+        setResponse(data)
+        if (data.doctor?.accessToken) {
+          localStorage.setItem('virujhToken', data.doctor.accessToken)
+          localStorage.setItem('doctroId', data.doctor.doctorId)
+          localStorage.setItem(
+            'doctorName',
+            `${data.details.firstName} ${data.details.lastName}`
+          )
+          setMessage('Thanks! Your account has been created successfully')
+          setDetail(data)
+          setError(true)
+        } else if (data?.doctor.update === 'updated password') {
+          setError(true)
+          setMessage('Created successfully...Please do signin')
+        } else if (data?.statusCode) {
+          setError(true)
+          setMessage(data?.message)
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+        setCount(true)
+      })
   }
   useEffect(() => {
     if (count) {
@@ -70,10 +63,11 @@ const DoctorSignUp = (props) => {
     }
   }, [response, count])
 
-  const redirectPatientRegistration = () => props.history.push('/patient/registration')
+  const redirectPatientRegistration = () =>
+    props.history.push('/patient/registration')
 
   const redirectPatientLogin = () => props.history.push('/login')
-  
+
   const validationErr = {
     name: 'Invalid name',
     number: 'Invalid phone number',
@@ -84,7 +78,7 @@ const DoctorSignUp = (props) => {
     experience: 'Invalid experience number',
     consultationCost: 'Invalid consultationCost',
     consultationSessionTimings: 'Invalid consultationSessionTimings',
-    textmsg : 'Provide Specific Date and Time to contact',
+    textmsg: 'Provide Specific Date and Time to contact',
     passwordValidation: 'password must contain one alphabet and one numeric',
     passwordLength: 'Password must has minimum length of 6 and maximum length of 12',
   }
@@ -153,28 +147,25 @@ const DoctorSignUp = (props) => {
           </div>
           <div className="field-wrap">
             <div>
-            <Textfield
-              name="hospitalkey"
-              label="Hospital Code"
-              placeholder="Acc_1"
-              inputProps={{
-                ref: register({
-                  required: false,
-                  minLength: {
-                    value: 5,
-                    message: validationErr.hospitalkey,
-                  },
-                }),
-              }}
-              error={
-                !!errors.hospitalkey && errors.hospitalkey.message
-              }
-              hasValidation
-              
-            />
-             </div>
+              <Textfield
+                name="hospitalkey"
+                label="Hospital Code"
+                placeholder="Acc_1"
+                inputProps={{
+                  ref: register({
+                    required: false,
+                    minLength: {
+                      value: 5,
+                      message: validationErr.hospitalkey,
+                    },
+                  }),
+                }}
+                error={!!errors.hospitalkey && errors.hospitalkey.message}
+                hasValidation
+              />
+            </div>
           </div>
-         
+
           <div className="field-wrap">
             <Textfield
               name="speciality"
@@ -201,7 +192,7 @@ const DoctorSignUp = (props) => {
               isRequired
               inputProps={{
                 ref: register({
-                  required:'Required',
+                  required: 'Required',
                   minLength: {
                     value: 3,
                     message: validationErr.qualification,
@@ -270,7 +261,10 @@ const DoctorSignUp = (props) => {
                   },
                 }),
               }}
-              error={!!errors.consultationSessionTimings && errors.consultationSessionTimings.message}
+              error={
+                !!errors.consultationSessionTimings &&
+                errors.consultationSessionTimings.message
+              }
               hasValidation
             />
           </div>
@@ -323,7 +317,9 @@ const DoctorSignUp = (props) => {
               type="password"
               placeholder="********"
               isRequired
-              inputProps={{ ref: register({ required: 'Required',
+              inputProps={{
+                ref: register({
+                  required: 'Required',
                   maxLength: {
                     value: 12,
                     message: validationErr.passwordLength,
@@ -336,53 +332,56 @@ const DoctorSignUp = (props) => {
                     value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,12}$/,
                     message: validationErr.passwordValidation,
                   },
-            }) 
-            }}
+                }),
+              }}
               error={!!errors.password && errors.password.message}
               hasValidation
             />
           </div>
           <div className="field-wrap">
-          <Textfield
+            <Textfield
               name="ConfirmPassword"
               label="Confirm Password"
               type="password"
               placeholder="********"
               // onChange={handleChange}
               isRequired
-              inputProps={{ 
-                ref: register({ required: 'Required', 
-                validate:(value) =>
-                value === watch('password') ||
-                "password and confirmation password must be same"}), 
-                }}
-                error={!!errors.ConfirmPassword && errors.ConfirmPassword.message}
+              inputProps={{
+                ref: register({
+                  required: 'Required',
+                  validate: (value) =>
+                    value === watch('password') ||
+                    'password and confirmation password must be same',
+                }),
+              }}
+              error={!!errors.ConfirmPassword && errors.ConfirmPassword.message}
               hasValidation
             />
           </div>
           <div className="field-wrap">
             <label className="informationHeader">
               <div className="field-line">
-                <div style={{ width: '37%'}}> 
-                  <span > When can we contact?</span><sup className="star-color">★</sup>
-                  
-               </div>
-               <div className="field-mover">
-                  <span className="rolling-info"> (<marquee > Provide Further Details to Contact</marquee>)</span>
+                <div style={{ width: '37%' }}>
+                  <span> When can we contact?</span>
+                  <sup className="star-color">★</sup>
                 </div>
-               </div>
+                <div className="field-mover">
+                  <span className="rolling-info">
+                    {' '}
+                    (<marquee> Provide Further Details to Contact</marquee>)
+                  </span>
+                </div>
+              </div>
             </label>
             <div className="field-Text">
-         
-              
-                 <Textfield
-                  name="textmsg"
-                 placeholder="Type here..."
-                 multiline
-                 rows={2}
-                 rowsMax={4}
-                 isRequired
-                 inputProps={{
+              <Textfield
+                name="textmsg"
+                placeholder="Type here..."
+                multiline
+                rows={2}
+                rowsMax={4}
+                isRequired
+                inputProps={{
                   ref: register({
                     required: 'Required',
                     minLength: {
@@ -393,11 +392,8 @@ const DoctorSignUp = (props) => {
                 }}
                 error={!!errors.textmsg && errors.textmsg.message}
                 hasValidation
-              
-               />
-
+              />
             </div>
-            
           </div>
           <div className="submt-btn-wrap">
             <Button type="submit" className="signup-btn">
@@ -409,24 +405,22 @@ const DoctorSignUp = (props) => {
                 Signin
               </span>
             </div>
-         
+
             {/* Navigating to patient registration  */}
 
             <div className="signin-btn-wrap signin-btn-align">
               If you are a new patient?
               <span className="signin-btn" onClick={redirectPatientRegistration}>
-              Patient SignUp
+                Patient SignUp
               </span>
             </div>
 
             <div className="signin-btn-wrap ">
               If you are a patient?
               <span className="signin-btn" onClick={redirectPatientLogin}>
-              Patient Login
+                Patient Login
               </span>
             </div>
-
-
           </div>
         </form>
       </Paper>

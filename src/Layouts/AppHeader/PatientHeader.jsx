@@ -19,7 +19,7 @@ import useManualFetch from '../../hooks/useManualFetch'
 import { METHOD, URL } from '../../api'
 import message from './../../lib/iconMsg'
 import { NotificationTip } from '../../components/Tooltip'
-import ChangePassword from '../../pages/ChangePasswordOption/ChangePasswordDailogPatient'
+// import ChangePassword from '../../pages/ChangePasswordOption/ChangePasswordDailogPatient'
 
 const useStyles = makeStyles(() => ({
   appBar: {
@@ -125,7 +125,7 @@ const useStyles = makeStyles(() => ({
     position: 'fixed',
     top: '50%',
     left: '50%',
-  }
+  },
 }))
 
 function PatientHeader({ socket }) {
@@ -139,8 +139,12 @@ function PatientHeader({ socket }) {
 
   const [updateData, updateError, isUpdating, data] = useManualFetch()
 
-  const patientName = useSelector(state => state.patient.patientName) || localStorage.getItem('patientName')
-  const patientProfile = useSelector(state => state.patient.patientProfile) || localStorage.getItem('photo')
+  const patientName =
+    useSelector((state) => state.patient.patientName) ||
+    localStorage.getItem('patientName')
+  const patientProfile =
+    useSelector((state) => state.patient.patientProfile) ||
+    localStorage.getItem('photo')
   const [passwordDlg, setPasswordDlg] = useState(false)
 
   function handleFindDoctor() {
@@ -167,7 +171,7 @@ function PatientHeader({ socket }) {
   function handleOnLogout() {
     setOpenSpinner(true)
     updateData(METHOD.GET, URL.logout)
-    if(socket) {
+    if (socket) {
       socket.disconnect()
     }
   }
@@ -199,16 +203,16 @@ function PatientHeader({ socket }) {
           onClick={handleFindDoctor}
         >
           <img src={appointmentIcon} className={classes.searchIcon} />
-          <span className={classes.findDoctorText}>FIND DOCTOR / BOOK APPOINTMENT</span>
+          <span className={classes.findDoctorText}>
+            FIND DOCTOR / BOOK APPOINTMENT
+          </span>
         </Button>
       </Box>
       <Box className={classes.gap}>
-      <NotificationTip title={message.notification} placement="bottom" />
+        <NotificationTip title={message.notification} placement="bottom" />
       </Box>
       <Box className={classes.gap}>
-        <Typography className={classes.text}>
-        {patientName}
-        </Typography>
+        <Typography className={classes.text}>{patientName}</Typography>
       </Box>
       <ClickAwayListener onClickAway={handleOnAwayClick}>
         <Box className={classes.hospitalLogoContainer}>
@@ -249,13 +253,13 @@ function PatientHeader({ socket }) {
           <CircularProgress color="inherit" />
         </Backdrop>
       )}
-      {passwordDlg && (
+      {/* {passwordDlg && (
         <ChangePassword
           open={true}
           handleClose={handleClose}
           handleOnSubmit={handleOnSubmit}
         />
-      )}
+      )} */}
     </Box>
   )
 }
@@ -267,4 +271,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, null)(PatientHeader);
+export default connect(mapStateToProps, null)(PatientHeader)

@@ -14,7 +14,11 @@ import RescheduleAppointmentModal from './RescheduleAppointmentModal'
 import useStyle from './usePatientAppointmentSlotStyle'
 import { baseURL } from '../../baseURL'
 import { useSelector, useDispatch } from 'react-redux'
-import { setPatientAppointmentList, setPatientAppointment, setIsPast } from '../../actions/patient'
+import {
+  setPatientAppointmentList,
+  setPatientAppointment,
+  setIsPast,
+} from '../../actions/patient'
 
 const ENDPOINT = baseURL
 
@@ -73,10 +77,10 @@ function PatientAppointmentSlot({
       .format('hh:mm A')
   )
 
-  function handleOnOpen(appointmentId) {
+  function handleOnOpen(appointmentId, isPaused) {
     history.push({
       pathname: '/video-consultation',
-      state: appointmentId,
+      state: { appointmentId, isPaused },
       socket: socket,
       appointmentDetail: appointmentDetail,
       doctorName: `${appointmentDetail.doctorFirstName}${' '}${doctorLastName}`,
@@ -113,6 +117,12 @@ function PatientAppointmentSlot({
             }
           }
         })
+
+        socket.on('emitPauseStatus', (res) => {
+          if (res.status === 'CALL_PAUSED_BY_DOCTOR') {
+            setTimeout(() => handleOnOpen(res.appoinmentId, true), 1000)
+          }
+        })
       })
 
       setSocket(socket)
@@ -129,7 +139,6 @@ function PatientAppointmentSlot({
       doctorKey: appointmentDetail.doctorKey,
       appointmentId: appointmentDetail.appointmentId,
     })
-
   }
 
   function handleOnClose(event) {
@@ -162,7 +171,11 @@ function PatientAppointmentSlot({
       <Box
         className={classes.container}
         style={{ borderLeft: `3px solid ${borderColor}` }}
-        onClick={handleOnClick.bind(this, appointmentDetail.appointmentId, appointmentDetail.doctorKey)}
+        onClick={handleOnClick.bind(
+          this,
+          appointmentDetail.appointmentId,
+          appointmentDetail.doctorKey
+        )}
       >
         <Box className={classes.timing} display="flex">
           <ScheduleIcon className={classes.scheduleIcon} />
@@ -180,8 +193,9 @@ function PatientAppointmentSlot({
             </Typography>
           </Box>
           <Box className={classes.doctorDetails}>
-            <Typography className={classes.name} variant="h5">{`${'Dr. '}${appointmentDetail.doctorFirstName
-              } ${doctorLastName} `}</Typography>
+            <Typography className={classes.name} variant="h5">{`${'Dr. '}${
+              appointmentDetail.doctorFirstName
+            } ${doctorLastName} `}</Typography>
             <Typography className={classes.hospitalName}>
               {appointmentDetail.hospitalName}
             </Typography>
