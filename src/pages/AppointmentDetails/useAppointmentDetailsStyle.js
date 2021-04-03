@@ -46,6 +46,7 @@ const useAppointmentDetailsStyle = makeStyles((theme) => ({
     },
     location: {
         margin: 10,
+        width:'60%'
     },
     sessionTiming: {
         marginLeft: 10,

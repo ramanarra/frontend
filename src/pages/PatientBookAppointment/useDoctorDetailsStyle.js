@@ -51,6 +51,7 @@ const useDoctorDetailsStyle = makeStyles((theme) => ({
   },
   location: {
     paddingTop: 35,
+    width:'60%'
   },
 }))
 
