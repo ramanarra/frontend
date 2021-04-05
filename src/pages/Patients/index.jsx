@@ -24,8 +24,8 @@ const Patients = (props) => {
   const accountKey = localStorage.getItem('accountKey')
   const [paginationNumber, setPaginationNumber] = useState(0)
   const [patientList, setPatientList] = useState([])
-  const url =
-    localStorage.getItem('role') === 'ADMIN'
+  const url =//In here we are checking the roles of doctors
+   ( localStorage.getItem('role') === 'ADMIN'|| localStorage.getItem('role') === 'DOC_ASSISTANT')
       ? `${URL.patient.list}?accountKey=${accountKey}`
       : `${URL.patient.listForDoctor}?paginationNumber=${paginationNumber}`
   // const [patientList] = useCustomFetch('GET', url)
@@ -42,6 +42,12 @@ const Patients = (props) => {
     }
 
     if (localStorage.getItem('role') === 'ADMIN') {
+      if (data) {
+        setPatientList(patientList.concat(data))
+      }
+    }
+
+    if (localStorage.getItem('role') === 'DOC_ASSISTANT') {
       if (data) {
         setPatientList(patientList.concat(data))
       }
