@@ -26,6 +26,7 @@ function Toolbar({
   isFullScreen,
   handleOnFullScreen,
   handleOnInterChange,
+  socket,
 }) {
   const classes = useStyle()
 
@@ -50,7 +51,7 @@ function Toolbar({
 
   return (
     <div>
-      <div className={ isFullScreen ? classes.rootForFullScreen : classes.root}>
+      <div className={isFullScreen ? classes.rootForFullScreen : classes.root}>
         {isFullScreen && (
           <IconButton className={classes.iconButton} onClick={handleOnInterChange}>
             <img src={InterChangeIcon} className={classes.videoIcon} />
@@ -110,6 +111,7 @@ function Toolbar({
           open={openLeaveModal}
           setOpenLeaveModal={setOpenLeaveModal}
           onLeaveSession={onLeaveSession}
+          socket={socket}
         />
       )}
     </div>

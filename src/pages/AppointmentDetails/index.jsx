@@ -357,7 +357,16 @@ function AppoinmentDetails() {
 
                     <Box className={classes.location}>
                         <Typography className={classes.title}>Location</Typography>
-                        <Typography className={classes.val}>{appointmentDetails.location}</Typography>
+                        <Typography className={classes.val}>{appointmentDetails.street +
+                            ', ' +
+                            appointmentDetails.city +
+                            ', ' +
+                            appointmentDetails.state +
+                            ', ' +
+                            appointmentDetails.country +
+                            ', ' +
+                            appointmentDetails.pincode}
+                            </Typography>
                     </Box>
                 </Box>
                 <Box className={classes.appointmentDetails}>
@@ -416,8 +425,7 @@ function AppoinmentDetails() {
                                 </Typography>
                             </Box>
 
-                            {(prescriptionDisplay) ?
-                                past && (
+                              {  appointmentDetails.prescriptionUrl.length ?
                                     <Box display="flex" className={classes.nameAndValuePair}>
 
                                         <Typography className={classes.name}>Prescription : </Typography>
@@ -426,7 +434,7 @@ function AppoinmentDetails() {
                                                 target="_blank"
                                                 style={{ color: '#37befa', textDecorationLine: 'none' }}
                                                 variant="h5">
-                                                Click here
+                                                Click here to download
                                             </a>
                                             <VerticalAlignBottomOutlinedIcon
                                                 onClick={appointmentDetails.prescriptionUrl[0]}
@@ -434,20 +442,26 @@ function AppoinmentDetails() {
                                             />
                                         </Box>
                                     </Box>
-                                )
+                                
                                 :
-                                <div></div>
-                            }
-
-                            <Box>
-                                <Box className={classes.nameAndValuePair} style={{ display: "flex" }}>
-                                    <Typography className={classes.name}>Upload Report:</Typography>
-                                    <Button className="title" onClick={handleLabReport} style={{ textTransform: "none", position: "relative", top: "-6px", left: "-10px" }} >
-                                        <AddCircleOutlineTwoToneIcon />
-                                    </Button>
-                                </Box>
+                                <Box>
                             </Box>
-
+                               
+                            }
+        
+                       {past  ?            
+                            <Box>
+                            </Box>    :
+                        <Box>
+                        <Box className={classes.nameAndValuePair} style={{ display: "flex" }}>
+                        <Typography className={classes.name}>Upload Report:</Typography>
+                        <Button className="title" onClick={handleLabReport} style={{ textTransform: "none", position: "relative", top: "-6px", left: "-10px" }} >
+                        <AddCircleOutlineTwoToneIcon />
+                        </Button>
+                        </Box>
+                        </Box>
+                            }
+                  
                             {
                                 reportOpen &&
                                 <PatientReport
@@ -474,6 +488,9 @@ function AppoinmentDetails() {
                     consultation starts at <b>{startTime}</b>
                   </Typography>
                     </Box> */}
+                    {past  ?            
+                            <Box>
+                            </Box>    :
                         <Box className={classes.button} display="flex">
                             <Button
                                 className={rescheduleDisable ? classes.disableReschduleButton : classes.rescheduleButton}
@@ -502,6 +519,7 @@ function AppoinmentDetails() {
                             </Button>
 
                         </Box>
+                        }
                         <Box display="flex" className={classes.hoursToJoinText}>
                             {(differenceInDays.days() > 0 ||
                                 differenceInDays.hours() > 0 ||
@@ -551,7 +569,7 @@ function AppoinmentDetails() {
                         {!!appointmentDetails?.reportDetail?.length &&
                             <div className="report-list-panel">
                                 <div className={clsx('table-wrap')}>
-                                    <div className="tableTitle">Lap Reports</div>
+                                    <div className="tableTitle">Lab Reports</div>
                                     <table>
                                         <thead>
                                             <tr>
@@ -596,7 +614,7 @@ function AppoinmentDetails() {
                     onClose={handleCloseReschedule}
                     time={appointmentDetails.startTime}
                     date={appoinmentDate}
-                    appointmentDetail={appointmentDetails}
+                    appointmentDetail={appointmentDetail}
                     onSave={onSave}
                 />
             )}

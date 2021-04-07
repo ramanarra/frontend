@@ -4,7 +4,11 @@ import { Box, Dialog, DialogContent, Typography } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 
 import useStyle from './useLeaveCallStyle'
-import { setPrescription, setSelectedAppointmentId,setIcon } from '../../actions/doctor'
+import {
+  setPrescription,
+  setSelectedAppointmentId,
+  setIcon,
+} from '../../actions/doctor'
 import { data } from 'jquery'
 
 function LeaveCallModal({
@@ -15,6 +19,7 @@ function LeaveCallModal({
   setSelectedAppointmentId,
   setPrescription,
   setIcon,
+  socket,
 }) {
   const classes = useStyle()
 
@@ -32,6 +37,9 @@ function LeaveCallModal({
   }
 
   function handlePause(status) {
+    !!patientAppointmentId &&
+      socket.emit('emitPauseStatus', { appointmentId: patientAppointmentId })
+
     let list = []
     setPrescription(list)
     onLeaveSession(status)
@@ -90,7 +98,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setSelectedAppointmentId: (data) => dispatch(setSelectedAppointmentId(data)),
     setPrescription: (data) => dispatch(setPrescription(data)),
-    setIcon:(data)=>dispatch(setIcon(data)),
+    setIcon: (data) => dispatch(setIcon(data)),
   }
 }
 

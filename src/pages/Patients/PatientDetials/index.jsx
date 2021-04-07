@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import { Tab, Tabs } from '@material-ui/core'
-import { useParams } from 'react-router-dom'
+import { useParams,useHistory } from 'react-router-dom'
 import Details from './Details'
 import Appointment from './Appointment'
 import Report from './Report'
 import './style.scss'
+import { LeftCircleArrow } from '../../../components/Tooltip'
 
 const PatientDetails = () => {
   const [tab, switchTab] = useState(0)
@@ -15,11 +16,15 @@ const PatientDetails = () => {
   const headers = {
     Authorization: 'Bearer '.concat(token),
   }
-
+  const history = useHistory()
+  function handleOnClick() {
+    history.push('/patients')
+  }
   const allyProps = { params, headers, patientId, doctorKey }
 
   return (
     <div className="pat-det-view-screen">
+      <LeftCircleArrow className="back-arrow" onClick={handleOnClick} title={"Back"} placement='top'/>
       <div className="tab-wrap">
         <Tabs
           className="report-tab-switcher"
