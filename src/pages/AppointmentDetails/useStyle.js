@@ -197,7 +197,9 @@ const ReportStyle = makeStyles(() => ({
   fileremove:{
     position: 'relative',
     bottom: '80px',
-    left: '40px'
+    left: '40px',
+    cursor:'pointer',
+    width:'10px'
   }
 })
 )

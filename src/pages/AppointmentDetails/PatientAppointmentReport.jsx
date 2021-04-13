@@ -194,12 +194,10 @@ function PatientAppointmentReport({
   }
 
   const removeFile = (index) => {
-    // find the index of the item
-    // remove the item from array
+   
+    file.splice(index, 1)
+    setFile([...file])
 
-    selectedFiles.splice(index, 1)
-    // update selectedFiles array
-    setSelectedFiles([...selectedFiles])
   }
   return (
     <Box>
@@ -427,7 +425,7 @@ function PatientAppointmentReport({
                 })}
               </div>
               <div>
-                {report.title !== '' && upload && (
+                {report.title !== '' && file.length > 0 && (
                   <Button
                     variant="contained"
                     className={classes.uploadButton}
