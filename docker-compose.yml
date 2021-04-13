@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+
+  virujh-frontend:
+    container_name: virujh-frontend
+    restart: on-failure
+    build:
+     context: .
+    ports:
+      - '80:80'
+      - '443:443'
+    networks:
+      - redis-net
+
+networks:
+   redis-net:
+    external: true
