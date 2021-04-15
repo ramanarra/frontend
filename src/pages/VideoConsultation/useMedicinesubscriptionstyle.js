@@ -18,8 +18,8 @@ const useMedicinesubscriptionstyle = makeStyles(() => ({
     textTransform: 'lowercase',
     color: 'white',
     position: 'relative',
-    top: 0,
-    left: 200,
+    top: 4,
+    left: 235,
     height: 30,
     borderRadius: 8,
     backgroundColor: '#2abade',
@@ -27,6 +27,10 @@ const useMedicinesubscriptionstyle = makeStyles(() => ({
     '&:hover': {
       backgroundColor: '#2abade',
     }
+  },
+  txtField:{
+    width:'100%',
+    fontSize:'12px',
   },
   date: {
     display: 'flex',

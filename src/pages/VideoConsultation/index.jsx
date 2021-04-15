@@ -152,7 +152,11 @@ function VideoConsulation({ sendMessage, setVideoStatus }) {
           message: `Prescription`,
           from: localStorage.getItem('loginUser') === 'patient' ? 'sender' : 'user',
           type: 'spl_prescription',
-          data: prescription?.prescription,
+          data: {
+            prescription: prescription?.prescription,
+            remarks: prescription?.prescriptionRemarks
+          },
+
         },
         prescription?.appointmentId
       )

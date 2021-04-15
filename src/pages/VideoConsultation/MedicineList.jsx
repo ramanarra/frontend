@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Box, Button, Typography } from '@material-ui/core'
+import { Box, Button, TextField, Typography } from '@material-ui/core'
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 import { connect, useSelector } from 'react-redux'
 import moment from 'moment'
@@ -20,12 +20,11 @@ function MedicineListEntry({ list }) {
       <table className={classes.table}>
         <thead style={{ fontSize: 14 }} className={classes.head}>
           <tr>
-            <th style={{ width: '25%', textAlign: 'left' }}>Medicine</th>
-            <th style={{ width: '25%', textAlign: 'left' }}>Quantity/Dose</th>
-            <th style={{ width: '25%', textAlign: 'left' }}>Consumption comments</th>
+            <th style={{ width: '25%', textAlign: 'left' }}>Description</th>
+            <th style={{ width: '25%',textAlign:'center' }}>Quantity</th>
+            <th style={{ width: '25%', textAlign: 'left' }}>Comments</th>
           </tr>
         </thead>
-
         <tbody>
           {list.length > 0 &&
             list.map((data) => (
@@ -43,7 +42,7 @@ function MedicineListEntry({ list }) {
                   style={{
                     paddingBottom: '15px',
                     wordBreak: 'break-word',
-                    textAlign: 'left',
+                    textAlign: 'center',
                   }}
                 >
                   {data.countOfDays}
@@ -88,6 +87,7 @@ function MedicineList({
   const [close, setClose] = useState(true)
   const [updateData, error, loading, data] = useManualFetch()
   const [prescriptionList, setPrescriptionList] = useState(null)
+  const [remarks, setRemarks] = useState()
   var id = appointmentId
 
   useEffect(() => {
@@ -205,6 +205,7 @@ function MedicineList({
     let param = {
       appointmentId: String(appointmentId),
       prescriptionList: templist,
+      remarks
     }
     updateData(METHOD.POST, URL.prescriptionAdd, param)
     setOpens(true)
@@ -251,6 +252,8 @@ function MedicineList({
               handleAddMedicineList={handleAddMedicineList}
               seperate={seperate}
               existList={list}
+              setRemarks={setRemarks}
+              remarks={remarks}
             />
           )}
         </Box>
@@ -268,9 +271,13 @@ function MedicineList({
           )}
 
         </Box>
-        <Box
-          className={classes.finish}
-        >
+          <Box>
+          {!!remarks && <label className={classes.remarks} >Remarks</label>}
+          {!!remarks ? <Box className={classes.newremarks}>
+             {remarks}
+           </Box> : ""}
+           </Box>
+        <Box>
           {list.length > 0 && icon && (
             <Button className={classes.submit} onClick={addPrescription}>
               finish and submit to patient
