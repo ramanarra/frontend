@@ -51,6 +51,8 @@ const PatientSignup = (props) => {
 
   const [honorific, setHonorific] = useState("Mr")
 
+  const[gender , setGender] = useState();
+
   const currentTime = moment().format('DD/MM/YYYY HH:mm:ss')
 
   const redirectToLogin = () => props.history.push('/login')
@@ -62,6 +64,7 @@ const PatientSignup = (props) => {
   const onSubmit = (data) => {
     console.log(data)
     data = honorific ? ({ ...data, "honorific": honorific }) : data
+    data = gender ? ({ ...data, "gender": gender }) : data
     if (data.phone === data.alternateContact) {
       setMessage('Both contact numbers should not be same')
       setError(true)
@@ -148,6 +151,10 @@ const PatientSignup = (props) => {
     setHonorific(event.target.value)
   }
 
+  const handleGenderChange=(event)=>{
+    setGender(event.target.value)
+  }
+
   return (
     <div className="patient-sign-up">
       <div className="logo-wrap">
@@ -172,6 +179,19 @@ const PatientSignup = (props) => {
             <MenuItem classes={{ root: classes.root }} value={"Mr"}>Mr.</MenuItem>
             <MenuItem classes={{ root: classes.root }} value={"Ms"}>Ms.</MenuItem>
             <MenuItem classes={{ root: classes.root }} value={"Mrs"}>Mrs.</MenuItem>
+          </Select>
+
+          <div className="honorific-head">
+            <label className="honorific-title">Gender</label>
+            <Star className="honorific-star-icon" />
+          </div>
+          <Select className="honorific-field-partition" classes={{ select: classes.select, underline: classes.underline }}
+            value={gender}
+            onChange={handleGenderChange}
+          >
+            <MenuItem classes={{ root: classes.root }} value={"Male"}>Male</MenuItem>
+            <MenuItem classes={{ root: classes.root }} value={"Female"}>Female</MenuItem>
+            <MenuItem classes={{ root: classes.root }} value={"Others"}>Others</MenuItem>
           </Select>
 
           <div className="field-wrap field-partition">
