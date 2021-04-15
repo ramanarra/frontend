@@ -1,6 +1,7 @@
 const initialState = {
   patientName: null,
-  patientProfile: null
+  patientProfile: null,
+  newValue: '',
 }
 
 const patient = (state = initialState, action) => {
@@ -23,6 +24,10 @@ const patient = (state = initialState, action) => {
 
     case 'IS_PAST': {
       return { ...state, isPast: action.data }
+    }
+
+    case 'SET_CALL_STATUS': {
+      return { ...state, newValue: action.data }
     }
 
     default:

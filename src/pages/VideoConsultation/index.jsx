@@ -1,19 +1,22 @@
 import React, { useState, useEffect, Fragment, useMemo } from 'react'
 import { useLocation, useHistory } from 'react-router-dom'
 import socketIOClient from 'socket.io-client'
-
+import LeaveCallModal from './LeaveCallModal'
 import ConfirmationModal from './ConfirmationModel'
 import Video from './Video'
 import SnackBar from '../../components/SnackBar'
 import { baseURL } from '../../baseURL'
 import { connect } from 'react-redux'
 import { setMessages } from '../../actions/doctor'
+import{setvideoStatus} from '../../actions/patient'
 import useFetch from '../../hooks/useFetch'
 import { URL } from '../../api'
+import useStyle from './useConfirmationModalStyle'
+import { Box ,DialogContent,Typography,DialogTitle,Dialog} from '@material-ui/core'
 
 const ENDPOINT = baseURL
 
-function VideoConsulation({ sendMessage }) {
+function VideoConsulation({ sendMessage, setVideoStatus }) {
   const [open, setOpen] = useState(false)
   const [isJoinDisabled, setIsJoinDisabled] = useState(true)
   const [videoAvailability, setVideoAvailability] = useState(true)
@@ -30,7 +33,8 @@ function VideoConsulation({ sendMessage }) {
   const [isVideoStatus, setIsVideoStatus] = useState(true)
   const [patientAppointmentId, setPatientAppointmentId] = useState(null)
   const [prescription, setPrescription] = useState(null)
-
+  // const[videoStatus, setVideoStatus]=useState()
+  const classes = useStyle()
   const location = useLocation()
   const history = useHistory()
 
@@ -89,9 +93,16 @@ function VideoConsulation({ sendMessage }) {
     })
 
     socket.on('videoTokenRemoved', (data) => {
-      if (data.isRemoved) {
+      
+       if (data.Videostatus=='completed') {
+        
+        const newValue=data.Videostatus;
+        setVideoStatus(newValue)
         if (localStorage.getItem('loginUser') === 'patient') {
-          history.push('/patient/appointments/upcoming')
+          history.push({
+                pathname: 'patient/appointments/upcoming',
+                newState: newValue,
+             })
           socket.emit('updateLiveStatusOfUser', { status: 'online' })
         }
       }
@@ -236,6 +247,7 @@ function VideoConsulation({ sendMessage }) {
 const mapDispatchToProps = (dispatch) => {
   return {
     sendMessage: (data, appointmentId) => dispatch(setMessages(data, appointmentId)),
+    setVideoStatus: (newValue) => dispatch(setvideoStatus(newValue)),
   }
 }
 
