@@ -164,7 +164,7 @@ class VideoRoomComponent extends Component {
     //message
     const mySession = this.state.session
     this.props.setSession(mySession)
-    mySession.on('signal:session-chat', (event) => {
+    mySession.on('signal:my-chat', (event) => {
       const message = event.data
       var messageDetail = this.state.messageDetail
       if (event.from.connectionId == event.from.session.connection.connectionId) {
