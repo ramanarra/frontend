@@ -7,4 +7,4 @@ services:
     restart: on-failure
     build:
      context: .
-    networks_mode: host
+    network_mode: host
