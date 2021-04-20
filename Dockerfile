@@ -4,6 +4,7 @@ RUN mkdir -p /usr/share/nginx/html/app
 RUN mkdir -p /etc/virujh-ca
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY sshKey/. /etc/virujh-ca/.
+COPY virujh-static/. /usr/share/nginx/html/
 COPY ./build/. /usr/share/nginx/html/app/
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
