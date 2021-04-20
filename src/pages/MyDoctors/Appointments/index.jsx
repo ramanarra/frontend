@@ -39,7 +39,7 @@ const useStyles = makeStyles(() => ({
     position: 'fixed',
     top: '50%',
     left: '50%',
-  }
+  },
 }))
 
 function Appointment({ doctorList, socket, timer }) {
@@ -54,10 +54,12 @@ function Appointment({ doctorList, socket, timer }) {
   const [openLoader, setOpenLoader] = useState(true)
 
   useEffect(() => {
-    if (socket) {
-      socket.disconnect()
-      clearInterval(timer)
-    }
+    try {
+      if (socket) {
+        socket.disconnect()
+        clearInterval(timer)
+      }
+    } catch (error) {}
   }, [])
 
   const key = useMemo(() => {

@@ -180,7 +180,7 @@ function VideoConsulation({ sendMessage }) {
 
   useEffect(() => {
     //to send reports to chat
- 
+
     if (!!appointmentReport && !!appointmentReport?.reports?.length ) {
       sendMessage({
         message: `Appointment report`,
@@ -189,7 +189,7 @@ function VideoConsulation({ sendMessage }) {
         data: appointmentReport?.reports,
       }, appointmentReport?.appoinmentId)
      }
-    
+
   }, [appointmentReport])
 
   return (
@@ -209,7 +209,7 @@ function VideoConsulation({ sendMessage }) {
           setIsAudioStatus={setIsAudioStatus}
           isVideoStatus={isVideoStatus}
           setIsVideoStatus={setIsVideoStatus}
-          // patientAppointmentId={patientAppointmentId}
+          patientAppointmentId={patientAppointmentId}
           patientAppointmentId={location.state?.appointmentId}
           list={location.list}
           isPaused={isPaused}
