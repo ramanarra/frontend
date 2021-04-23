@@ -35,17 +35,20 @@ function ConfirmationPopUp({
   setIsVideoStatus,
   patientAppointmentId,
   list,
+  isPaused,
 }) {
   const classes = useStyle()
 
   const history = useHistory()
 
   const [videoAvailable, setVideoAvailable] = useState(true)
-
-  const detail =
-    list &&
-    list.filter((appointment) => appointment.appointmentId === patientAppointmentId)
-
+  const detail = patientAppointmentId
+    ? list.filter(
+        (appointment) => appointment.appointmentId === patientAppointmentId
+      )
+    : list
+  console.log('hii')
+  console.log(list)
   const doctorName = detail
     ? detail[0]?.doctorLastName
       ? `${detail[0]?.doctorFirstName}${' '}${detail[0]?.doctorLastName}`
@@ -238,14 +241,16 @@ function ConfirmationPopUp({
                   ? localStorage.getItem('loginUser') === 'patient' && (
                       <Typography className={classes.errorMsg}>
                         {liveStatus
-                          ? `${'Dr. '}${doctorName}${' is '}${liveStatus}`
+                          ? `${'Requested Doctor to Join Please wait...'}`
                           : `${'Waiting for '}${'Dr. '}${doctorName}${' to come online'}`}
                       </Typography>
                     )
                   : localStorage.getItem('loginUser') === 'patient' && (
                       <Typography className={classes.message}>
-                        Take Online {'Dr. '}
-                        {doctorName} Consultation
+                        {isPaused
+                          ? 'Dr. ${doctorName} has placed you on hold'
+                          : `Take Online ${'Dr. '}
+                        ${doctorName} Consultation`}
                       </Typography>
                     )}
               </Box>

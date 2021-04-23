@@ -118,6 +118,7 @@ export default class StreamComponent extends Component {
                 isFullScreen={this.props.isFullScreen}
                 handleOnFullScreen={this.props.handleOnFullScreen}
                 handleOnInterChange={this.props.handleOnInterChange}
+                socket={this.props.socket}
               />
             ) : null}
             <VideocamOff id="statusCam" />

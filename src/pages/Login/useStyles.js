@@ -107,8 +107,10 @@ const useStyles = makeStyles(() => ({
     },
   
     singupContent: {
-      marginTop: 10,
-      cursor: 'pointer',
+      marginTop: 10
+    },
+    singupContentLink: {
+      cursor: 'pointer'
     },
   
     singupLabel: {

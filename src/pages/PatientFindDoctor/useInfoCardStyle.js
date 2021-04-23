@@ -51,7 +51,9 @@ const useInforCardStyle = makeStyles((theme) => ({
   location: {
     paddingLeft: '9%',
   },
-
+  experience:{
+    paddingLeft:'9%',
+  },
   text: {
     fontSize: '57%',
     color: '#c8c8c8',

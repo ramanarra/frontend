@@ -88,7 +88,7 @@ function Doctors({ doctorList, setSocket, socket, setTimer, timer }) {
   function handleJOinVideo(patient) {
     history.push({
       pathname: '/video-consultation',
-      state: patient,
+      state: { appointmentId: patient },
       isWaiting: true,
       socket: socket,
     })

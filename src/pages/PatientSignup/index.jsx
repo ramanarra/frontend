@@ -24,12 +24,11 @@ const useStyles = makeStyles({
     color: '#636363',
     width: 390,
   },
-});
+})
 
 const SnackbarPosition = { vertical: 'bottom', horizontal: 'center' }
 
 const PatientSignup = (props) => {
-
   const classes = useStyles()
   const { register, watch, errors, control, handleSubmit } = useForm()
 
@@ -47,9 +46,9 @@ const PatientSignup = (props) => {
 
   const [age, setAge] = useState(null)
 
-  const [password, setPassword] = useState();
+  const [password, setPassword] = useState()
 
-  const [honorific, setHonorific] = useState("Mr")
+  const [honorific, setHonorific] = useState('Mr')
 
   const[gender , setGender] = useState();
 
@@ -125,6 +124,7 @@ const PatientSignup = (props) => {
   const validationErr = {
     name: 'Invalid name',
     phone: 'Invalid phone number',
+    email: 'Invalid Email',
     age: 'Invalid age',
     passwordValidation: 'password must contain one alphabet and one numeric',
     passwordLength: 'Password must has minimum length of 6 and maximum length of 12',
@@ -281,6 +281,27 @@ const PatientSignup = (props) => {
               hasValidation
             />
           </div>
+          <div className="field-wrap">
+            <Textfield
+              name="email"
+              label="Email"
+              placeholder="example@company.com"
+              isRequired
+              type="email"
+              inputProps={{
+                ref: register({
+                  required: 'Please enter your Email',
+
+                  pattern: {
+                    value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/,
+                    message: validationErr.email,
+                  },
+                }),
+              }}
+              error={!!errors.email && errors.email.message}
+              hasValidation
+            />
+          </div>
           <div className="field-wrap field-partition">
             <div className="dob-field">
               <MuiPickersUtilsProvider utils={MomentUtils}>
@@ -396,7 +417,7 @@ const PatientSignup = (props) => {
 
               error={!!errors.country && errors.country.message}
               hasValidation
-            /> 
+            />
 
             <Textfield
               name="pincode"
@@ -479,7 +500,7 @@ const PatientSignup = (props) => {
                 Signin
               </span>
             </div>
-             
+
             {/* Navigating to doctor registration  */}
 
             <div className="signin-btn-wrap signin-btn-align">

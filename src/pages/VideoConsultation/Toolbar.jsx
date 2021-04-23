@@ -26,12 +26,21 @@ function Toolbar({
   isFullScreen,
   handleOnFullScreen,
   handleOnInterChange,
+  socket,
 }) {
   const classes = useStyle()
-
+  let patientName = ''
   const [open, setOpen] = useState(false)
-
+  const [patientList, setPatientList] = useState()
   const [name, setName] = useState('')
+  socket.on('getDoctorAppointments', (data) => {
+    setPatientList(data)
+  })
+
+  if (patientList)
+    patientList.map((patientDetails, index) => {
+      patientName = patientDetails.firstName + ' ' + patientDetails.lastName
+    })
 
   const [openLeaveModal, setOpenLeaveModal] = useState(false)
 
@@ -50,7 +59,7 @@ function Toolbar({
 
   return (
     <div>
-      <div className={ isFullScreen ? classes.rootForFullScreen : classes.root}>
+      <div className={isFullScreen ? classes.rootForFullScreen : classes.root}>
         {isFullScreen && (
           <IconButton className={classes.iconButton} onClick={handleOnInterChange}>
             <img src={InterChangeIcon} className={classes.videoIcon} />
@@ -110,6 +119,8 @@ function Toolbar({
           open={openLeaveModal}
           setOpenLeaveModal={setOpenLeaveModal}
           onLeaveSession={onLeaveSession}
+          socket={socket}
+          patientName={patientName}
         />
       )}
     </div>

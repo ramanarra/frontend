@@ -82,7 +82,23 @@ const DoctorInfoCard = ({ doctorDetail, doctorListInHospital, isHospital }) => {
 
         <Box paddingLeft={4} className={classes.location}>
           <Typography className={classes.text}>Location</Typography>
-          <Typography className={classes.value}>{doctorDetail.location}</Typography>
+          <Typography className={classes.value}>
+            {doctorDetail.street +
+              ', ' +
+              doctorDetail.city +
+              ', ' +
+              doctorDetail.state +
+              ', ' +
+              doctorDetail.country +
+              '-' +
+              doctorDetail.pincode}
+          </Typography>
+        </Box>
+        <Box paddingLeft={4} className={classes.experience}>
+          <Typography className={classes.text}>Experience</Typography>
+          <Typography className={classes.value}>
+            {doctorDetail.experience}
+          </Typography>
         </Box>
       </Box>
 

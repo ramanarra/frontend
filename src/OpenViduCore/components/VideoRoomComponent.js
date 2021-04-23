@@ -164,7 +164,7 @@ class VideoRoomComponent extends Component {
     //message
     const mySession = this.state.session
     this.props.setSession(mySession)
-    mySession.on('signal:session-chat', (event) => {
+    mySession.on('signal:my-chat', (event) => {
       const message = event.data
       var messageDetail = this.state.messageDetail
       if (event.from.connectionId == event.from.session.connection.connectionId) {
@@ -506,7 +506,7 @@ class VideoRoomComponent extends Component {
               micStatusChanged={this.micStatusChanged}
               leaveSession={this.leaveSession}
               patientList={this.props.patientList}
-              doctorName={"Dr."+this.props.doctorName}
+              doctorName={this.props.doctorName}
               patientName={this.props.patientName}
               AddNextPatient={this.props.AddNextPatient}
               videoAvailability={this.props.videoAvailability}
@@ -520,6 +520,7 @@ class VideoRoomComponent extends Component {
               isFullScreen={this.props.isFullScreen}
               handleOnInterChange={this.props.handleOnInterChange}
               userRole={this.props.userRole}
+              socket={this.props.socket}
             />
           </div>
         )}
@@ -540,7 +541,7 @@ class VideoRoomComponent extends Component {
               streamId={sub.streamManager.stream.streamId}
               doctorClick={'joined'}
               patientName={this.props.patientName}
-              doctorName={"Dr."+this.props.doctorName}
+              doctorName={'Dr.' + this.props.doctorName}
               userRole={this.props.userRole}
             />
           </div>

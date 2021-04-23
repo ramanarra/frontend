@@ -193,7 +193,7 @@ function SideBar({
       .signal({
         data: message, // Any string (optional)
         to: [], // Array of Connection objects (optional. Broadcast to everyone if empty)
-        type: 'session-chat', // The type of message (optional)
+        type: 'my-chat', // The type of message (optional)
       })
       .then(() => {
         onSuccess && onSuccess()

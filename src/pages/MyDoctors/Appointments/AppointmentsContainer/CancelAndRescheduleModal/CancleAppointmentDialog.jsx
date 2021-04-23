@@ -66,7 +66,7 @@ function CancleAppointment({
               {`Are you sure do you want to cancel your appointment ${slotDate[1]} ${slotDate[2]} ${slotDate[0]} ?`}
             </Typography>
           </Box>
-          {/* <Box>
+          <Box>
             {doubleStar && (
               <Box display="flex">
                 <Checkbox className={classes.checkBox} onChange={checkConfimation} />
@@ -75,7 +75,7 @@ function CancleAppointment({
                 </Typography>
               </Box>
             )}
-          </Box> */}
+          </Box>
           <Box display="flex" className={classes.notes}>
             <StarIcon className={classes.confirmationStar} />
             <Typography variant="h5" className={classes.confirmationNote}>

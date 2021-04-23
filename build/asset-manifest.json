@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/app/static/css/main.449d9cb9.chunk.css",
-    "main.js": "/app/static/js/main.98122224.chunk.js",
-    "main.js.map": "/app/static/js/main.98122224.chunk.js.map",
+    "main.css": "/app/static/css/main.56e844f1.chunk.css",
+    "main.js": "/app/static/js/main.15fd432d.chunk.js",
+    "main.js.map": "/app/static/js/main.15fd432d.chunk.js.map",
     "runtime-main.js": "/app/static/js/runtime-main.9e38e486.js",
     "runtime-main.js.map": "/app/static/js/runtime-main.9e38e486.js.map",
     "static/css/2.a1840750.chunk.css": "/app/static/css/2.a1840750.chunk.css",
-    "static/js/2.a663e0cc.chunk.js": "/app/static/js/2.a663e0cc.chunk.js",
-    "static/js/2.a663e0cc.chunk.js.map": "/app/static/js/2.a663e0cc.chunk.js.map",
+    "static/js/2.455b3d20.chunk.js": "/app/static/js/2.455b3d20.chunk.js",
+    "static/js/2.455b3d20.chunk.js.map": "/app/static/js/2.455b3d20.chunk.js.map",
     "index.html": "/app/index.html",
-    "precache-manifest.f17c587bac0fcfdb057064ac5de0bca6.js": "/app/precache-manifest.f17c587bac0fcfdb057064ac5de0bca6.js",
+    "precache-manifest.fe5b6c64b2400095b3326ac1219f2e9d.js": "/app/precache-manifest.fe5b6c64b2400095b3326ac1219f2e9d.js",
     "service-worker.js": "/app/service-worker.js",
     "static/css/2.a1840750.chunk.css.map": "/app/static/css/2.a1840750.chunk.css.map",
-    "static/css/main.449d9cb9.chunk.css.map": "/app/static/css/main.449d9cb9.chunk.css.map",
-    "static/js/2.a663e0cc.chunk.js.LICENSE.txt": "/app/static/js/2.a663e0cc.chunk.js.LICENSE.txt",
+    "static/css/main.56e844f1.chunk.css.map": "/app/static/css/main.56e844f1.chunk.css.map",
+    "static/js/2.455b3d20.chunk.js.LICENSE.txt": "/app/static/js/2.455b3d20.chunk.js.LICENSE.txt",
     "static/media/No-Appoinments.svg": "/app/static/media/No-Appoinments.5c1c6efb.svg",
     "static/media/stylesheet.css": "/app/static/media/ProductSans-Regular.d3e70bb9.woff",
     "static/media/Schedule.svg": "/app/static/media/Schedule.a2630e5b.svg",
@@ -21,6 +21,7 @@
     "static/media/appointments.svg": "/app/static/media/appointments.09ab14ac.svg",
     "static/media/call-on.svg": "/app/static/media/call-on.35c33b7f.svg",
     "static/media/camera-off.svg": "/app/static/media/camera-off.e83b5dea.svg",
+    "static/media/excel_icon.svg": "/app/static/media/excel_icon.c59164de.svg",
     "static/media/eye.svg": "/app/static/media/eye.e2bc5679.svg",
     "static/media/full-screen.svg": "/app/static/media/full-screen.e890961f.svg",
     "static/media/hospitalLogo.png": "/app/static/media/hospitalLogo.78be083b.png",
@@ -44,8 +45,8 @@
   "entrypoints": [
     "static/js/runtime-main.9e38e486.js",
     "static/css/2.a1840750.chunk.css",
-    "static/js/2.a663e0cc.chunk.js",
-    "static/css/main.449d9cb9.chunk.css",
-    "static/js/main.98122224.chunk.js"
+    "static/js/2.455b3d20.chunk.js",
+    "static/css/main.56e844f1.chunk.css",
+    "static/js/main.15fd432d.chunk.js"
   ]
 }
