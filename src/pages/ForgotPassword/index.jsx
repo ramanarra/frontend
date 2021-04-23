@@ -270,7 +270,7 @@ const ForgotPassword = (props) => {
       {openSnackBar && (
         <SnackBar
           openDialog={openSnackBar}
-          message={'You will get the password to your mobile number'}
+          message={'You will get the password to your email'}
           onclose={handleClose}
           severity={'success'}
         />
