@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react'
-import { Box, makeStyles, Button } from '@material-ui/core'
+import { Box, makeStyles, Button, Dialog, DialogContent, Typography } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
+import { connect } from 'react-redux'
+// import {mapDispatchToProps} from 'react-redux'
 import InfiniteScroll from 'react-infinite-scroll-component'
-
 import PatientAppointmentSlot from './PatientAppointmentSlot'
 import useManualFetch from '../../hooks/useManualFetch'
+import { useLocation } from 'react-router-dom'
 import { METHOD, URL } from '../../api'
 import borderColors from './constants'
 import useAppointmentUpdate from '../../hooks/useAppointmentUpdate'
 import SnackBar from '../../components/SnackBar'
 import ScheduleImg from '../../assets/img/Schedule.svg'
+import CloseIcon from '@material-ui/icons/Close'
+import { setvideoStatus } from '../../actions/patient'
 
 const useStyle = makeStyles(() => ({
   container: {
@@ -30,6 +34,35 @@ const useStyle = makeStyles(() => ({
     display: 'flex',
     flexWrap: 'wrap',
   },
+  closeIcon: {
+    cursor: 'pointer',
+    color: '#a8a8a8',
+    margin:'-15px'
+  },
+  text:{
+    position: 'relative',
+    textAlign:'center',
+    marginTop: '7px'
+  },
+  dialog:{
+    height: '106px',
+ 
+  },
+  cancelText: {
+    fontSize: 12,
+    fontFamily: 'product-sans-regular, sans-serif',
+  },
+  cancelButton: {
+    padding: '2.5px 22px',
+    borderRadius: 25,
+    backgroundColor: '#e1e0e0',
+    marginTop:'14px',
+    cursor: 'pointer',
+    textAlign:'center',
+    marginLeft:'40%',
+    width:'20%'
+   
+  },
   appointmentSlots: {
     width: '100%',
     display: 'flex',
@@ -43,6 +76,10 @@ const useStyle = makeStyles(() => ({
   noappointmentsImage: {
     width: 450,
   },
+  icon: {
+    textAlign: 'end',
+    marginTop:'-15px',
+  },
   button: {
     padding: '8px 18px',
     borderRadius: 25,
@@ -50,13 +87,12 @@ const useStyle = makeStyles(() => ({
   },
 }))
 
-function UpcomingAppointments() {
-  const classes = useStyle()
+function UpcomingAppointments(props) {
 
   const [open, setOpen] = useState(false)
-
+  const classes = useStyle()
   const history = useHistory()
-
+  const location = useLocation()
   const [isRefetch, setRefetch] = useState(false)
 
   const [paginationNumber, setPaginationNumber] = useState(0)
@@ -65,6 +101,10 @@ function UpcomingAppointments() {
 
   const [updateDate, error, loading, data] = useManualFetch()
 
+  const { newValue } = props
+
+  const [openDialog, setOpenDialog] = useState(true)
+ 
   const refetch = () => {
     setPaginationNumber(0)
     setAppointmentsList([])
@@ -95,11 +135,16 @@ function UpcomingAppointments() {
     }
   }, [response])
 
+
+  // const
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return
     }
     setOpen(false)
+    setOpenDialog(false)
+    props.setVideoStatus()
+    
   }
 
   function handleOnClick() {
@@ -134,6 +179,30 @@ function UpcomingAppointments() {
               )
             })}
         </Box>
+
+        {newValue == 'completed' &&
+          <Box>
+            <Dialog open={openDialog}>
+              <DialogContent className={classes.dialog}>
+                < Box className={classes.icon}>
+                  <CloseIcon className={classes.closeIcon} onClick={handleClose} />
+                </Box>
+                <Box>
+                <Typography className={classes.text} variant="h5">
+                Video Consultation has been ended sucessfully, Thank you
+               </Typography>
+               </Box>
+               <Box className={classes.cancelButton} onClick={handleClose}>
+                <Typography className={classes.cancelText}>OK</Typography>
+              </Box>
+              </DialogContent>
+            </Dialog>
+          </Box>
+        }
+
+
+
+
         {appointmentsList &&
           (appointmentsList.length === 0 || appointmentsList.statusCode === 204) && (
             <Box className={classes.noappointmentsBox}>
@@ -219,5 +288,15 @@ function UpcomingAppointments() {
     </Box>
   )
 }
+const mapStateToProps = (state) => {
+  return {
+    newValue: state.patient.newValue,
+  }
+}
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setVideoStatus: () => dispatch(setvideoStatus(null)),
+  }
+}
 
-export default UpcomingAppointments
+export default connect(mapStateToProps, mapDispatchToProps)(UpcomingAppointments)

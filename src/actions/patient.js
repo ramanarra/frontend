@@ -7,3 +7,9 @@ export const setPatientAppointmentList = (value) => { return { type: 'PATIENT_AP
 export const setPatientAppointment = (value) => { return { type: 'PATIENT_APPOINTMENT', data: value } }
 
 export const setIsPast = (value) => { return { type: 'IS_PAST', data: value } }
+
+export const setvideoStatus = (value) => ({
+    type: 'SET_CALL_STATUS',
+    newValue: value,
+    data: value,
+  })
