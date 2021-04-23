@@ -19,7 +19,7 @@ import SnackBar from '../../components/SnackBar'
 import useFetch from '../../hooks/useFetch'
 import { useLocation } from 'react-router'
 import { MdInsertDriveFile as FileIcon } from 'react-icons/md'
-import { URL } from '../../api'
+// import { URL } from '../../api'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import FileViewer from '../../components/FileViewer'
 
@@ -62,7 +62,7 @@ function PatientAppointmentReport({
   const { patientList, fetchPatientList } = useFetch(
     {
       name: 'patientList',
-      url: URL.patientReportList,
+      url: '/calendar/patient/report/list',
       params: {
         paginationStart: paginationStart,
         paginationLimit: paginationLimit,
@@ -175,7 +175,7 @@ function PatientAppointmentReport({
   const { fetchUpdateReport, isDeleteReportLoading } = useFetch({
     name: 'updateReport',
     method: 'PUT',
-    url: URL.updateReport,
+    url: '/calendar/patient/reportId',
     initLoad: false,
     onSuccess: fetchPatientList,
   })
