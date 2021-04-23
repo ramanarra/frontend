@@ -36,7 +36,7 @@ function Slots({
 
   function handleOnClick() {
     setOpen(true)
-    
+
   }
 
   function handeOnClose(event) {
@@ -51,66 +51,67 @@ function Slots({
 
   let currentDate = moment().format('DD/MM/YYYY')
 
-  let show = date === currentDate ? 
-              slot.startTime > currentTime ? true : false
-              : true
+  // let show = date === currentDate ? slot.startTime > currentTime ? true : false : true
+  let show = true
   return (
-    show &&
-    <Box className={classes.singleSlot}>
-      <Box
-        className={classes.box}
-        onClick={handleOnClick}
-        style={{ backgroundColor: bgColor }}
-      >
-        <Box className={classes.top} display="flex">
-          <Box display="flex" width="100%">
-            {singleStar || doubleStar ? (
-              <StarIcon className={classes.star} color="primary" />
-            ) : null}
-            {doubleStar && (
-              <StarIcon className={classes.star} color="primary" />
-            )}
-            <Typography className={classes.name} style={{ color: textColor }}>
-              {name}
+    show && (
+      <Box className={classes.singleSlot}>
+        <Box
+          className={classes.box}
+          onClick={handleOnClick}
+          style={{ backgroundColor: bgColor }}
+        >
+          <Box className={classes.top} display="flex">
+            <Box display="flex" width="100%">
+              {singleStar || doubleStar ? (
+                <StarIcon className={classes.star} color="primary" />
+              ) : null}
+              {doubleStar && <StarIcon className={classes.star} color="primary" />}
+              <Typography className={classes.name} style={{ color: textColor }}>
+                {name}
+              </Typography>
+              <Stretch />
+              <div className={classes.round}>
+                <FiberManualRecordIcon style={{ color: textColor }} />
+              </div>
+            </Box>
+          </Box>
+          <Box className={classes.bottom} display="flex">
+            <ScheduleIcon
+              className={classes.schedule}
+              style={{ color: textColor }}
+            />
+            <Typography className={classes.fromTime} style={{ color: textColor }}>
+              {`${startTime} - `}
+            </Typography>
+            <Typography className={classes.toTime} style={{ color: textColor }}>
+              {endTime}
             </Typography>
             <Stretch />
-            <div className={classes.round}>
-              <FiberManualRecordIcon style={{ color: textColor }} />
-            </div>
+            <Typography className={classes.total} style={{ color: textColor }}>
+              {`${slot.slotTiming}m`}
+            </Typography>
           </Box>
         </Box>
-        <Box className={classes.bottom} display="flex">
-          <ScheduleIcon className={classes.schedule} style={{ color: textColor }} />
-          <Typography className={classes.fromTime} style={{ color: textColor }}>
-            {`${startTime} - `}
-          </Typography>
-          <Typography className={classes.toTime} style={{ color: textColor }}>
-            {endTime}
-          </Typography>
-          <Stretch />
-          <Typography className={classes.total} style={{ color: textColor }}>
-            {`${slot.slotTiming}m`}
-          </Typography>
-        </Box>
+        {DialogComponent && (
+          <DialogComponent
+            doctorKey={doctorKey}
+            appointmentId={slot.id}
+            patientId={slot.patient_id}
+            open={open}
+            onClose={handeOnClose}
+            slotTime={slotTime}
+            onSave={onSave}
+            bookedBy={bookedBy}
+            note={note}
+            singleStar={singleStar}
+            doubleStar={doubleStar}
+            cancellationNote={cancellationNote}
+            slot={slot}
+          />
+        )}
       </Box>
-      {DialogComponent && (
-        <DialogComponent
-          doctorKey={doctorKey}
-          appointmentId={slot.id}
-          patientId={slot.patient_id}
-          open={open}
-          onClose={handeOnClose}
-          slotTime={slotTime}
-          onSave={onSave}
-          bookedBy={bookedBy}
-          note={note}
-          singleStar={singleStar}
-          doubleStar={doubleStar}
-          cancellationNote={cancellationNote}
-          slot={slot}
-        />
-      )}
-    </Box>
+    )
   )
 }
 

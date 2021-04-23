@@ -33,8 +33,8 @@ const Reports = (props) => {
 
   const paginationLimit = 15
 
-  // fetch paitent list
-  const { patientList, fetchPatientList  } = useFetch(
+  // fetch paitent Report list
+  const { patientList, fetchPatientList } = useFetch(
     {
       name: 'patientList',
       url: URL.patientReportList,

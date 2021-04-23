@@ -360,34 +360,37 @@ const Login = ({
               LOGIN
             </Button>
           </form>
-          {localStorage.getItem('loginUser') === 'doctor' && (
+
           <Centralize className={classes.singupContent}>
-            <Typography color="primary" variant="h4" onClick={forgotPassword}>
+            <Typography
+              className={classes.singupContentLink}
+              color="primary"
+              variant="h4"
+              onClick={forgotPassword}
+            >
               Forgot password?
             </Typography>
           </Centralize>
-          // <Centralize className={classes.singupContent}>
-          //   <Typography color="primary" variant="h4" onClick={OTPVerifiaction}>
-          //     OTP?
-          //   </Typography>
-          // </Centralize>
-          // <Centralize className={classes.singupContent}>
-          //   <Typography className={classes.singupLabel} variant="h6">
-          //     I am new doctor?
-          //   </Typography>
-          //   <Typography color="primary" variant="h4" onClick={handleSignup}>
-          //     Signup
-          //   </Typography>
-          // </Centralize>
-          )}
-
+          {/* // <Centralize className={classes.singupContent}>
+              //   <Typography color="primary" variant="h4" onClick={OTPVerifiaction}>
+              //     OTP?
+              //   </Typography>
+              // </Centralize>
+              // <Centralize className={classes.singupContent}>
+              //   <Typography className={classes.singupLabel} variant="h6">
+              //     I am new doctor?
+              //   </Typography>
+              //   <Typography color="primary" variant="h4" onClick={handleSignup}>
+              //     Signup
+              //   </Typography>
+              // </Centralize> */}
 
         {localStorage.getItem('loginUser') === 'doctor' && (
          <Centralize className={classes.singupContent}>
             <Typography className={classes.singupLabel} variant="h6">
               I am new doctor?
             </Typography>
-            <Typography color="primary" variant="h4" onClick={handleSignup}>
+            <Typography className={classes.singupContentLink} color="primary" variant="h4" onClick={handleSignup}>
               Signup
             </Typography>
           </Centralize>
@@ -398,7 +401,7 @@ const Login = ({
               <Typography className={classes.singupLabel} variant="h6">
                 I am new patient?
               </Typography>
-              <Typography color="primary" variant="h4" onClick={handleSignup}>
+              <Typography className={classes.singupContentLink} color="primary" variant="h4" onClick={handleSignup}>
                 Signup
               </Typography>
             </Centralize>
@@ -409,7 +412,7 @@ const Login = ({
               <Typography className={classes.singupLabel} variant="h6">
                 If you are a doctor?
               </Typography>
-              <Typography color="primary" variant="h4" onClick={doctorLoginPage}>
+              <Typography className={classes.singupContentLink} color="primary" variant="h4" onClick={doctorLoginPage}>
                 Doctor Login
               </Typography>
             </Centralize>
@@ -419,7 +422,7 @@ const Login = ({
               <Typography className={classes.singupLabel} variant="h6">
                 If you are a patient?
               </Typography>
-              <Typography color="primary" variant="h4" onClick={patientLoginPage}>
+              <Typography className={classes.singupContentLink} color="primary" variant="h4" onClick={patientLoginPage}>
                 Patient Login
               </Typography>
             </Centralize>
@@ -430,7 +433,7 @@ const Login = ({
               <Typography className={classes.singupLabel} variant="h6">
                 If you are a new doctor?
               </Typography>
-              <Typography color="primary" variant="h4" onClick={doctorRegistration}>
+              <Typography className={classes.singupContentLink} color="primary" variant="h4" onClick={doctorRegistration}>
                 Doctor SignUp
               </Typography>
             </Centralize>
@@ -440,7 +443,7 @@ const Login = ({
               <Typography className={classes.singupLabel} variant="h6">
                 If you are a new patient?
               </Typography>
-              <Typography color="primary" variant="h4" onClick={patientRegistration}>
+              <Typography className={classes.singupContentLink} color="primary" variant="h4" onClick={patientRegistration}>
                 Patient SignUp
               </Typography>
             </Centralize>

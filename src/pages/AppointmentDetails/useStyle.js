@@ -96,10 +96,21 @@ const ReportStyle = makeStyles(() => ({
     height: "30px",
     fontSize: "16px",
     textTransform: "lowercase",
-    outline: 'none'
+    outline: 'none',
+    width:"77px"
   },
 
-
+  uploadButton: {
+      marginTop:"-60px",
+    borderRadius: "10px",
+    background: "#2abade",
+    float: "right",
+    color: "white",
+    height: "30px",
+    fontSize: "16px",
+    textTransform: "lowercase",
+    outline: 'none'
+  },
 
   reportText: {
     width: "100%",
@@ -183,6 +194,13 @@ const ReportStyle = makeStyles(() => ({
   addButton: {
     display: "flex"
   },
+  fileremove:{
+    position: 'relative',
+    bottom: '80px',
+    left: '40px',
+    cursor:'pointer',
+    width:'10px'
+  }
 })
 )
 export default ReportStyle
