@@ -151,9 +151,9 @@ function PatientList({
 
   return (
     <Box className={classes.dialog} style={{ paddingLeft: 0, paddingRight: 0 }}>
-       <Carousel>
-              {items !== null && items.map((item, i) => <Item i={i} item={item} />)}
-            </Carousel>
+      <Carousel>
+        {items !== null && items.map((item, i) => <Item i={i} item={item} />)}
+      </Carousel>
       {patientList &&
         patientList.map((patientDetails, index) => {
           const isCurrentAppointment =
@@ -184,27 +184,32 @@ function PatientList({
                   <Avatar src={patientDetails.photo} className={classes.photo} />
                   {patientDetails.status === 'paused' &&
                     patientDetails.patientLiveStatus === 'online' ? (
-                      <FiberManualRecordIcon className={classes.pausedIcon} />
-                    ) : (
-                      patientDetails.patientLiveStatus &&
-                      ((patientDetails.patientLiveStatus === 'online' && (
-                        <FiberManualRecordIcon className={classes.onlineStatus} />
+                    <FiberManualRecordIcon className={classes.pausedIcon} />
+                  ) : (
+                    patientDetails.patientLiveStatus &&
+                    ((patientDetails.patientLiveStatus === 'online' && (
+                      <FiberManualRecordIcon className={classes.onlineStatus} />
+                    )) ||
+                      (patientDetails.patientLiveStatus === 'offline' && (
+                        <FiberManualRecordIcon className={classes.offlineStatus} />
                       )) ||
-                        (patientDetails.patientLiveStatus === 'offline' && (
-                          <FiberManualRecordIcon className={classes.offlineStatus} />
-                        )) ||
-                        (patientDetails.patientLiveStatus === 'videoSessionReady' && (
-                          <FiberManualRecordIcon
-                            className={classes.videoSessionReady}
-                          />
-                        )) ||
-                        (patientDetails.patientLiveStatus === 'inSession' && (
-                          <FiberManualRecordIcon className={classes.inSession} />
-                        )))
-                    )}
+                      (patientDetails.patientLiveStatus === 'videoSessionReady' && (
+                        <FiberManualRecordIcon
+                          className={classes.videoSessionReady}
+                        />
+                      )) ||
+                      (patientDetails.patientLiveStatus === 'inSession' && (
+                        <FiberManualRecordIcon className={classes.inSession} />
+                      )))
+                  )}
                 </Box>
                 <Box className={classes.detail}>
                   <Box display="flex">
+                    {patientDetails.honorific && (
+                      <Typography className={classes.honorific} variant="h5">
+                        {patientDetails.honorific + "."}
+                      </Typography>
+                    )}
                     <Typography className={classes.firstName} variant="h5">
                       {patientDetails.firstName}
                     </Typography>

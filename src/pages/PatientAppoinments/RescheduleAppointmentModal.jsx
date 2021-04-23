@@ -172,7 +172,7 @@ function RescheduleAppointmentModal({
               <Box display="flex" flexWrap="wrap" className={classes.availableSlots}>
                 {availableSlots?.slots &&
                   availableSlots.slots.map((data, index) => {
-                    let show = todayDate === currentDate ?
+                    let show = todayDate === availableSlots.date ?
                                   data.startTime > currentTime ? true : false
                                   : true
                     return (

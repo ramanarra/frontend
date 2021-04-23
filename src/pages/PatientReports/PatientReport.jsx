@@ -1,5 +1,12 @@
 import React, { useState } from 'react'
-import { Box, Dialog, Typography, DialogTitle, TextareaAutosize, Button } from '@material-ui/core'
+import {
+  Box,
+  Dialog,
+  Typography,
+  DialogTitle,
+  TextareaAutosize,
+  Button,
+} from '@material-ui/core'
 import useStyle from './useStyle'
 import CloseIcon from '@material-ui/icons/Close'
 import './style.scss'
@@ -7,58 +14,68 @@ import moment from 'moment'
 import pdfIcon from '../../assets/img/pdfIcon.svg'
 import imageIcon from '../../assets/img/imageIcon.svg'
 import SnackBar from '../../components/SnackBar'
+import useUpload from '../../hooks/useUpload'
 
-
-function PatientReport({ open, setOpen, setItem, handleClose, appointmentId, setReportFile, setVal, handleUpload }) {
+function PatientReport({
+  open,
+  setOpen,
+  setItem,
+  handleClose,
+  appointmentId,
+  setReportFile,
+  setVal,
+  handleUpload,
+}) {
   const classes = useStyle()
   const [file, setFile] = useState([])
   const [opens, setOpens] = useState(false)
   const [largeSizeOpens, setLargeSizeOpens] = useState(false)
-  const date = new Date();
+  const date = new Date()
   const [report, setReport] = useState({
-    title: "",
+    title: '',
     reportDate: moment(date).format('YYYY-MM-DD'),
-    comments: ""
+    comments: '',
   })
 
   const handlechange = (e) => {
-    const items = [...e.target.files];
+    const items = [...e.target.files]
     let selectItem = []
     items.map((value, index) => {
       //checking file size less than or equal to 5 Mb
-      (value.size < 5242881) ? selectItem = [...selectItem, value] : setLargeSizeOpens(true)
-
+      value.size < 5242881
+        ? (selectItem = [...selectItem, value])
+        : setLargeSizeOpens(true)
     })
     setFile([...file, ...selectItem])
-    const fileName = items[0]?.name;
+    const fileName = items[0]?.name
     setReport({ ...report, title: fileName })
   }
 
   const handleText = (e) => {
     const comments = e.target.value
     setReport({ ...report, comments: comments })
-  };
+  }
 
   const handleOnClose = (reason) => {
     if (reason === 'clickaway') {
       return
     }
-    setOpens(false);
-    setLargeSizeOpens(false);
+    setOpens(false)
+    setLargeSizeOpens(false)
   }
 
   const handleSave = (e) => {
     const comments = report.comments
-    const patientId = localStorage.getItem('patientId');
+    const patientId = localStorage.getItem('patientId')
     file.map((value, index) => {
-      const formdata = new FormData();
-      formdata.append("files", value);
-      formdata.append("patientId", patientId);
-      formdata.append("comments", comments);
+      const formdata = new FormData()
+      formdata.append('files', value)
+      formdata.append('patientId', patientId)
+      formdata.append('comments', comments)
 
       // Add appoitment if its added through appointment
       if (appointmentId) {
-        formdata.append("appointmentId", appointmentId);
+        formdata.append('appointmentId', appointmentId)
       }
 
       if (handleUpload) {
@@ -66,12 +83,11 @@ function PatientReport({ open, setOpen, setItem, handleClose, appointmentId, set
       }
     })
 
-
-    const fileName = file[0].name;
+    const fileName = file[0].name
 
     //Passing  patient report fileName to the report when setVal is true
     if (setVal) {
-      setVal(fileName);
+      setVal(fileName)
       setReportFile(URL.createObjectURL(file[0]))
     }
 
@@ -88,63 +104,95 @@ function PatientReport({ open, setOpen, setItem, handleClose, appointmentId, set
   })
 
   return (
-    <Box  >
-      <Box className={classes.holesize}  >
-        <Dialog open={open} className={classes.boxsize} >
+    <Box>
+      <Box className={classes.holesize}>
+        <Dialog open={open} className={classes.boxsize}>
           <Box className={classes.mainBox}>
             <CloseIcon className={classes.closeIcon} onClick={handleClose} />
 
-            <DialogTitle className={classes.header} style={{ paddingTop: "0px" }}>
+            <DialogTitle className={classes.header} style={{ paddingTop: '0px' }}>
               <Box display="flex">
                 <Box>
-                  <Typography className={classes.title} variant="h5" className={classes.heading}>
+                  <Typography
+                    className={classes.title}
+                    variant="h5"
+                    className={classes.heading}
+                  >
                     Add Report
                   </Typography>
                 </Box>
               </Box>
             </DialogTitle>
 
-            <TextareaAutosize aria-label="minimum height" rowsMin={5} className={classes.reportText} placeholder="Type here..."
+            <TextareaAutosize
+              aria-label="minimum height"
+              rowsMin={5}
+              className={classes.reportText}
+              placeholder="Type here..."
               onChange={handleText}
             />
 
-            <div >
+            <div>
               <div className={classes.files}>
                 {file.map((value, index) => {
-                  const fileName = file[index].name;
+                  const fileName = file[index].name
 
-                  const fileExtension = fileName.split('.').pop();
-                  if (fileExtension === "pdf" && index < 6) {
+                  const fileExtension = fileName.split('.').pop()
+                  if (fileExtension === 'pdf' && index < 6) {
                     return (
-                      <div key={`uploadedfile-${value.name}-${value.lastModified}`} className={classes.firstReportFile}>
-                        <img src={pdfIcon} alt='img1' className={classes.image} />
-                        <abbr className={classes.font} title={fileName}>{fileName}</abbr>
+                      <div
+                        key={`uploadedfile-${value.name}-${value.lastModified}`}
+                        className={classes.firstReportFile}
+                      >
+                        <img src={pdfIcon} alt="img1" className={classes.image} />
+                        <abbr className={classes.font} title={fileName}>
+                          {fileName}
+                        </abbr>
+                      </div>
+                    )
+                  } else if (
+                    (fileExtension === 'svg' ||
+                      fileExtension === 'png' ||
+                      fileExtension === 'jpg') &&
+                    index < 6
+                  ) {
+                    return (
+                      <div
+                        key={`uploadedfile-${value.name}-${value.lastModified}`}
+                        className={classes.reportFiles}
+                      >
+                        <img
+                          src={URL.createObjectURL(file[index])}
+                          alt="img"
+                          className={classes.image}
+                        />
+                        <abbr className={classes.font} title={fileName}>
+                          {fileName}{' '}
+                        </abbr>
+                      </div>
+                    )
+                  } else if (index < 6) {
+                    return (
+                      <div
+                        key={`uploadedfile-${value.name}-${value.lastModified}`}
+                        className={classes.reportFiles}
+                      >
+                        <img src={imageIcon} alt="img" className={classes.image} />
+                        <abbr className={classes.font} title={fileName}>
+                          {' '}
+                          {fileName}{' '}
+                        </abbr>
                       </div>
                     )
                   }
-                  else if ((fileExtension === "svg" || fileExtension === "png" || fileExtension === "jpg") && index < 6) {
-                    return (
-                      <div key={`uploadedfile-${value.name}-${value.lastModified}`} className={classes.reportFiles}>
-                        <img src={URL.createObjectURL(file[index])} alt='img' className={classes.image} />
-                        <abbr className={classes.font} title={fileName}>{fileName} </abbr>
-                      </div>
-                    )
-                  }
-                  else if (index < 6) {
-                    return (
-                      <div key={`uploadedfile-${value.name}-${value.lastModified}`} className={classes.reportFiles}>
-                        <img src={imageIcon} alt='img' className={classes.image} />
-                        <abbr className={classes.font} title={fileName}  > {fileName} </abbr>
-                      </div>
-                    )
-                  }
-
-                })
-                }
+                })}
               </div>
 
-              <div className={classes.reportLeft} >
-                <label htmlFor="files" name="files" className={classes.selectFile} > + Select File </label>
+              <div className={classes.reportLeft}>
+                <label htmlFor="files" name="files" className={classes.selectFile}>
+                  {' '}
+                  + Select File{' '}
+                </label>
                 <input
                   type="file"
                   name="files"
@@ -157,49 +205,52 @@ function PatientReport({ open, setOpen, setItem, handleClose, appointmentId, set
                 />
               </div>
 
-              <div  >
-                {(report.title !== "") ?
-                  <Button variant="contained" className={classes.saveButton}
-                    style={{ outline: "none" }}
+              <div>
+                {report.title !== '' ? (
+                  <Button
+                    variant="contained"
+                    className={classes.saveButton}
+                    style={{ outline: 'none' }}
                     onClick={handleSave}
-                  >save</Button>
-                  :
+                  >
+                    save
+                  </Button>
+                ) : (
                   <Box>
-                    <Button variant="contained" className={classes.saveButton}
-                      style={{ outline: "none" }}
+                    <Button
+                      variant="contained"
+                      className={classes.saveButton}
+                      style={{ outline: 'none' }}
                       onClick={handleDisabled}
-                    >save</Button>
-
+                    >
+                      save
+                    </Button>
                   </Box>
-                }
+                )}
               </div>
             </div>
 
             <Box className={classes.bordersize} />
           </Box>
         </Dialog>
-
       </Box>
 
       <SnackBar
         openDialog={opens}
-        message={"Please Select File"}
+        message={'Please Select File'}
         onclose={handleOnClose}
         severity={'error'}
-        style={{ outline: "none" }}
+        style={{ outline: 'none' }}
       />
 
       <SnackBar
         openDialog={largeSizeOpens}
-        message={"Please Select File Less than 5 Mb"}
+        message={'Please Select File Less than 5 Mb'}
         onclose={handleOnClose}
         severity={'error'}
-        style={{ outline: "none" }}
+        style={{ outline: 'none' }}
       />
-
     </Box>
-
-
   )
 }
-export default PatientReport;
+export default PatientReport

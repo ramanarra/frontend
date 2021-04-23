@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react'
 import moment from 'moment'
 import NumberToWords from 'number-to-words'
 import { Redirect, Route, useHistory } from 'react-router-dom'
-import AddCircleOutlineTwoToneIcon from '@material-ui/icons/AddCircleOutlineTwoTone';
+import AddCircleOutlineTwoToneIcon from '@material-ui/icons/AddCircleOutlineTwoTone'
 import PatientReport from '../PatientReports/PatientReport.jsx'
 import SnackBar from '../../components/SnackBar'
 import {
@@ -43,11 +43,9 @@ function UpcomingAndPastView({
   const [val, setVal] = useState()
   const history = useHistory()
   const appointmentReportArray = useHistory()
-  const [handleUpload,data, Loading] = useUpload({
-    onSuccess: () => {
-
-    }
-  });
+  const [handleUpload, data, Loading] = useUpload({
+    onSuccess: () => {},
+  })
 
   const key = useMemo(() => {
     return {
@@ -103,18 +101,18 @@ function UpcomingAndPastView({
         : true
       : false
 
-
   const rescheduleDisable =
     doctorDetails?.rescheduleDays !== null
-    ? differenceInDays.days() >= Number(doctorDetails?.rescheduleDays) &&
-      differenceInDays.hours() >= Number(doctorDetails?.rescheduleHours) &&
-      differenceInDays.minutes() >= Number(doctorDetails?.rescheduleMins)
-      ? false
-      : true
-    : false
+      ? differenceInDays.days() >= Number(doctorDetails?.rescheduleDays) &&
+        differenceInDays.hours() >= Number(doctorDetails?.rescheduleHours) &&
+        differenceInDays.minutes() >= Number(doctorDetails?.rescheduleMins)
+        ? false
+        : true
+      : false
   const prescriptionDisplay =
-    (doctorDetails?.prescriptionUrl && doctorDetails?.prescriptionUrl.length)
-      ? true : false
+    doctorDetails?.prescriptionUrl && doctorDetails?.prescriptionUrl.length
+      ? true
+      : false
 
   function handleOnClose(event) {
     onCancel(event)
@@ -130,7 +128,7 @@ function UpcomingAndPastView({
     })
     history.push({
       pathname: '/video-consultation',
-      state: appointmentDetail.appointmentId,
+      state: { appointmentId: appointmentDetail.appointmentId },
       doctorName: doctorName,
       liveStatus: appointmentDetail.liveStatus,
       socket: socket,
@@ -140,7 +138,7 @@ function UpcomingAndPastView({
   }
 
   function handleOnAppointmentDetials() {
-    console.log('appointment details button clicked');
+    console.log('appointment details button clicked')
 
     history.push({
       pathname: '/patient/appoints/upcoming/appointmentDetail',
@@ -166,12 +164,8 @@ function UpcomingAndPastView({
     setItem(false)
     let image = { name: val, url: reportFile }
     console.log(image)
-    setReport([
-      ...report,
-      image
-    ])
+    setReport([...report, image])
     reportFileArray.push(reportFile)
-
   }
   // Upload report code end here
 
@@ -187,7 +181,7 @@ function UpcomingAndPastView({
   function handleClick() {
     appointmentReportArray.push({
       pathname: '/patient/reports',
-      state: appointmentDetail.appointmentId
+      state: appointmentDetail.appointmentId,
     })
   }
 
@@ -234,15 +228,12 @@ function UpcomingAndPastView({
                   >{`${startTime}${' - '}${endTime}`}</Typography>
                 </Box>
 
-
                 {/* <Box display="flex" className={classes.nameAndValuePair}>
                   <Typography className={classes.name}> User Credit : </Typography>
                   <Typography className={classes.value} variant="h5">
                     200
                   </Typography>
                 </Box> */}
-
-
               </Box>
               <Box className={classes.rightSide}>
                 <Box display="flex" className={classes.nameAndValuePair}>
@@ -265,18 +256,22 @@ function UpcomingAndPastView({
                 </Box>
 
                 {/* Upload report */}
-                {(prescriptionDisplay) ?
+                {prescriptionDisplay ? (
                   past && (
                     <Box display="flex" className={classes.prescription}>
-
-                      <Typography className={classes.name}>Prescription : </Typography>
+                      <Typography className={classes.name}>
+                        Prescription :{' '}
+                      </Typography>
                       <Box display="flex" className={classes.download}>
-                        <a className={classes.value}  href={doctorDetails.prescriptionUrl[0]}
-                        target="_blank"
-                        style={{ color: '#37befa', textDecorationLine: 'none' }}
-                        variant="h5">
+                        <a
+                          className={classes.value}
+                          href={doctorDetails.prescriptionUrl[0]}
+                          target="_blank"
+                          style={{ color: '#37befa', textDecorationLine: 'none' }}
+                          variant="h5"
+                        >
                           Click here
-                      </a>
+                        </a>
                         <VerticalAlignBottomOutlinedIcon
                           onClick={doctorDetails.prescriptionUrl[0]}
                           className={classes.downloadIcon}
@@ -284,53 +279,96 @@ function UpcomingAndPastView({
                       </Box>
                     </Box>
                   )
-                  :
+                ) : (
                   <div></div>
-                }
+                )}
                 <Box>
-                  <Box style={{ display: "flex" }}>
+                  <Box style={{ display: 'flex' }}>
                     <Typography className={classes.name}>Upload Report :</Typography>
-                    <Button className="title" onClick={handlePopupMsg} style={{ textTransform: "none", position: "relative", top: "-6px", left: "-10px" }} >
+                    <Button
+                      className="title"
+                      onClick={handlePopupMsg}
+                      style={{
+                        textTransform: 'none',
+                        position: 'relative',
+                        top: '-6px',
+                        left: '-10px',
+                      }}
+                    >
                       <AddCircleOutlineTwoToneIcon />
                     </Button>
                   </Box>
-                  <Box style={{ display: "flex", height: "50px", width: "50px" }}>
-
-                    {
-                      doctorDetails?.reportDetail?.map((item, index) => {
-                        if (index <= 3) {
-                          if (item?.fileType?.includes("pdf")) {
-                            return (
-                              <Box>
-                                <img style={{ width: "40px", height: "40px", marginRight: "10px", borderRadius: "8px" }} src={pdf} />
-                                <Typography style={{ fontSize: "9px", width: "40px", height: "10px", overflow: "hidden", textOverflow: "clip" }}>{item.fileName}</Typography>
-                              </Box>
-                            )
-                          }
-                          else {
-                            return (
-                              <Box>
-                                <img style={{ width: "40px", height: "40px", marginRight: "10px", borderRadius: "8px" }} src={item.reportURL} />
-                                <Typography style={{ fontSize: "9px", width: "40px", height: "10px", overflow: "hidden", textOverflow: "clip" }}>{item.fileName}</Typography>
-                              </Box>
-                            )
-                          }
+                  <Box style={{ display: 'flex', height: '50px', width: '50px' }}>
+                    {doctorDetails?.reportDetail?.map((item, index) => {
+                      if (index <= 3) {
+                        if (item?.fileType?.includes('pdf')) {
+                          return (
+                            <Box>
+                              <img
+                                style={{
+                                  width: '40px',
+                                  height: '40px',
+                                  marginRight: '10px',
+                                  borderRadius: '8px',
+                                }}
+                                src={pdf}
+                              />
+                              <Typography
+                                style={{
+                                  fontSize: '9px',
+                                  width: '40px',
+                                  height: '10px',
+                                  overflow: 'hidden',
+                                  textOverflow: 'clip',
+                                }}
+                              >
+                                {item.fileName}
+                              </Typography>
+                            </Box>
+                          )
+                        } else {
+                          return (
+                            <Box>
+                              <img
+                                style={{
+                                  width: '40px',
+                                  height: '40px',
+                                  marginRight: '10px',
+                                  borderRadius: '8px',
+                                }}
+                                src={item.reportURL}
+                              />
+                              <Typography
+                                style={{
+                                  fontSize: '9px',
+                                  width: '40px',
+                                  height: '10px',
+                                  overflow: 'hidden',
+                                  textOverflow: 'clip',
+                                }}
+                              >
+                                {item.fileName}
+                              </Typography>
+                            </Box>
+                          )
                         }
-                      })
-                    }
+                      }
+                    })}
                   </Box>
-                  
+
                   {/* To show the patient reports */}
                   <Box>
-                    {
-                      doctorDetails?.reportDetail?.length > 4 &&
-                      <a onClick={handleClick} style={{ color: "#0bb5ff", fontSize: "12px" }}>View {(doctorDetails?.reportDetail?.length - 4)} more</a>
-                    }
-
+                    {doctorDetails?.reportDetail?.length > 4 && (
+                      <a
+                        onClick={handleClick}
+                        style={{ color: '#0bb5ff', fontSize: '12px' }}
+                      >
+                        View {doctorDetails?.reportDetail?.length - 4} more
+                      </a>
+                    )}
                   </Box>
                 </Box>
-                {
-                  opens &&
+                {opens && (
                   <PatientReport
                     open={opens}
                     setOpen={setOpens}
@@ -341,11 +379,8 @@ function UpcomingAndPastView({
                     setVal={setVal}
                     handleUpload={handleUpload}
                   />
-                }
+                )}
               </Box>
-
-
-
             </Box>
             {!past && (
               <Box>
@@ -358,11 +393,21 @@ function UpcomingAndPastView({
                 </Box> */}
                 <Box className={classes.button} display="flex">
                   <Button
-                    className={rescheduleDisable ? classes.disableReschduleButton : classes.rescheduleButton}
+                    className={
+                      rescheduleDisable
+                        ? classes.disableReschduleButton
+                        : classes.rescheduleButton
+                    }
                     onClick={handleOnReschedule}
                     disabled={rescheduleDisable}
                   >
-                    <Typography className={rescheduleDisable ? classes.disableRescheduleText : classes.rescheduleText}>
+                    <Typography
+                      className={
+                        rescheduleDisable
+                          ? classes.disableRescheduleText
+                          : classes.rescheduleText
+                      }
+                    >
                       RESCHEDULE
                     </Typography>
                   </Button>
@@ -383,7 +428,11 @@ function UpcomingAndPastView({
                     </Typography>
                   </Box>
                   <Button
-                    className={cancelDisable ? classes.disableCancelButton : classes.cancelButton}
+                    className={
+                      cancelDisable
+                        ? classes.disableCancelButton
+                        : classes.cancelButton
+                    }
                     onClick={handleOnCancel}
                     disabled={cancelDisable}
                   >
@@ -439,14 +488,12 @@ function UpcomingAndPastView({
       {
         <SnackBar
           openDialog={item}
-          message={"Your report added successfully"}
+          message={'Your report added successfully'}
           onclose={handleClose}
           severity={'success'}
         />
       }
-
     </Box>
-
   )
 }
 

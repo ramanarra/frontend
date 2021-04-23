@@ -33,6 +33,9 @@ function VideoConsulation({ sendMessage }) {
 
   const location = useLocation()
   const history = useHistory()
+  const isPaused = useMemo(() => location.state?.isPaused, [
+    location.state?.isPaused,
+  ])
 
   const appointmentId = useMemo(() => location.state, [location.state])
 
@@ -53,7 +56,7 @@ function VideoConsulation({ sendMessage }) {
         socket.emit('createTokenForDoctor')
         socket.emit('updateLiveStatusOfUser', { status: 'online' })
       } else {
-        socket.emit('getPatientTokenForDoctor', location.state)
+        socket.emit('getPatientTokenForDoctor', location.state?.appointmentId)
         socket.emit('updateLiveStatusOfUser', { status: 'online' })
       }
 
@@ -91,20 +94,30 @@ function VideoConsulation({ sendMessage }) {
     socket.on('videoTokenRemoved', (data) => {
       if (data.isRemoved) {
         if (localStorage.getItem('loginUser') === 'patient') {
+          // if (data?.callEndStatus === 'paused') {
+          //   setPaused(true)
+          // } else {
           history.push('/patient/appointments/upcoming')
           socket.emit('updateLiveStatusOfUser', { status: 'online' })
+          // }
         }
       }
     })
 
     socket.on('videoSessionRemoved', (data) => {
       if (data.isRemoved) {
-        if (localStorage.getItem('loginUser') === 'patient') {
+        if (localStorage.getItem('loginUser') === 'patient' && !isPaused) {
           history.push('/patient/appointments/upcoming')
           socket.emit('updateLiveStatusOfUser', { status: 'online' })
         }
       }
     })
+
+    // socket.on('emitPauseStatus', (res) => {
+    //   if (res.status === 'CALL_PAUSED_BY_DOCTOR') {
+    //     // handleOnOpen(res.appoinmentId, true)
+    //   }
+    // })
 
     socket.on('getPrescriptionDetails', (res) => {
       setPrescription(res)
@@ -167,7 +180,7 @@ function VideoConsulation({ sendMessage }) {
 
   useEffect(() => {
     //to send reports to chat
- 
+
     if (!!appointmentReport && !!appointmentReport?.reports?.length ) {
       sendMessage({
         message: `Appointment report`,
@@ -176,12 +189,12 @@ function VideoConsulation({ sendMessage }) {
         data: appointmentReport?.reports,
       }, appointmentReport?.appoinmentId)
      }
-    
+
   }, [appointmentReport])
 
   return (
     <Fragment>
-      {!location.isWaiting && (
+      {(!location.isWaiting || isPaused) && (
         <ConfirmationModal
           open={open}
           handleOnOpen={setOpen}
@@ -190,19 +203,20 @@ function VideoConsulation({ sendMessage }) {
           audioAvailability={setAudioAvailability}
           socket={socket}
           liveStatus={location.liveStatus}
-          appointmentId={location.state}
+          appointmentId={location.state?.appointmentId}
           appointmentDetail={location.appointmentDetail}
           isAudioStatus={isAudioStatus}
           setIsAudioStatus={setIsAudioStatus}
           isVideoStatus={isVideoStatus}
           setIsVideoStatus={setIsVideoStatus}
-          // patientAppointmentId={patientAppointmentId}
-          patientAppointmentId={location.state}
+          patientAppointmentId={patientAppointmentId}
+          patientAppointmentId={location.state?.appointmentId}
           list={location.list}
+          isPaused={isPaused}
         />
       )}
 
-      {!isJoinDisabled && token && !open && (
+      {!isJoinDisabled && token && !open && !isPaused && (
         <Video
           token={token}
           socket={socket}
@@ -211,8 +225,8 @@ function VideoConsulation({ sendMessage }) {
           patientList={patientList}
           videoAvailability={videoAvailability}
           audioAvailability={audioAvailability}
-          appointmentId={location.state}
-          waitingPatient={location.state}
+          appointmentId={location.state?.appointmentId}
+          waitingPatient={location.state?.appointmentId}
           isWaiting={location.isWaiting}
           waitingIndex={index}
           isAudioStatus={isAudioStatus}

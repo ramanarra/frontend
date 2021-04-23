@@ -73,11 +73,13 @@ function VideoConsultotion({
       clearInterval(timer)
       setOpenSideBar(true)
     } else {
+      // if (status !== 'paused') {
       history.push({
         pathname: '/patient/appointments/upcoming',
         state: appointmentId,
       })
       socket.disconnect()
+      // }
     }
   }
 
@@ -139,6 +141,7 @@ function VideoConsultotion({
             handleOnInterChange={handleOnInterChange}
             userRole={userRole}
             appointmentId={appointmenttId ?? appointmentId}
+            socket={socket}
           />
           <Sidebar
             patientList={patientList}

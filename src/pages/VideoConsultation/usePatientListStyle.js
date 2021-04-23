@@ -90,6 +90,11 @@ const usePatientListStyle = makeStyles((theme) => ({
     paddingTop: 4.5,
     paddingLeft: 15,
   },
+  honorific: {
+    fontSize: 13,
+    color: '#312f2f',
+    paddingRight: 2,
+  },
   firstName: {
     fontSize: 13,
     color: '#312f2f',

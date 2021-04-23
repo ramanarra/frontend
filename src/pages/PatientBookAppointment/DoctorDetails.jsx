@@ -55,7 +55,15 @@ function DoctorDetails({ doctorDetails }) {
           <Box className={classes.location}>
             <Typography className={classes.name}>Location</Typography>
             <Typography className={classes.value} variant="h5">
-              {doctorDetails.location}
+              {doctorDetails.street +
+                ', ' +
+                doctorDetails.city +
+                ', ' +
+                doctorDetails.state +
+                ', ' +
+                doctorDetails.country +
+                '-' +
+                doctorDetails.pincode}
             </Typography>
           </Box>
           <Box className={classes.detail}>
