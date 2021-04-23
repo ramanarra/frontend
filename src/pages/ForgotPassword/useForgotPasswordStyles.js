@@ -100,8 +100,10 @@ const useForgotPasswordStyles = makeStyles(() => ({
     },
   
     singupContent: {
-      marginTop: 10,
-      cursor: 'pointer',
+      marginTop: 10
+    },
+    singupLink:{
+      cursor: 'pointer'
     },
     resendContent: {
       marginTop: 10,

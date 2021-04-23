@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles'
 const useLeaveCallStyle = makeStyles(() => ({
   icon: {
     textAlign: 'end',
-    paddingTop: 20,
   },
   closeIcon: {
     cursor: 'pointer',
@@ -11,9 +10,9 @@ const useLeaveCallStyle = makeStyles(() => ({
     color: '#a8a8a8',
   },
   text: {
-    fontSize: 19,
-    paddingTop: 15,
+    fontSize: 22,
     color: '#4f4f4f',
+    textAlign: 'center'
   },
   buttons: {
     paddingTop: 40,
@@ -37,10 +36,12 @@ const useLeaveCallStyle = makeStyles(() => ({
     border: '1px solid #0bb5ff',
     marginRight: 15,
     cursor: 'pointer',
+    marginLeft:15
   },
   pauseText: {
     fontSize: 12,
     color: '#0bb5ff',
+    marginLeft:'15px'
   },
   confirmButton: {
     padding: '8.5px 38px',

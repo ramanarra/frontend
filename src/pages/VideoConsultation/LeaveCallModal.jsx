@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { Box, Dialog, DialogContent, Typography } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
@@ -20,6 +20,7 @@ function LeaveCallModal({
   setPrescription,
   setIcon,
   socket,
+  patientName,
 }) {
   const classes = useStyle()
 
@@ -56,29 +57,33 @@ function LeaveCallModal({
             <CloseIcon className={classes.closeIcon} onClick={handleClose} />
           </Box>
           <Box>
-            {patientAppointmentId && (
-              <Typography className={classes.text} variant="h5">
-                Finish Consultation and leave the call
-              </Typography>
-            )}
             <Typography className={classes.text} variant="h5">
-              Are you sure want to leave the call?
+              Is your Appoinment/Consultation with {patientName} is Completed?
             </Typography>
+
+            {/* <Typography className={classes.text} variant="h5">
+              Are you sure want to leave the call?
+            </Typography> */}
             <Box className={classes.buttons} display="flex">
-              <Box
-                className={classes.pauseButton}
-                onClick={() => handlePause('paused')}
-              >
-                <Typography className={classes.pauseText}>PAUSE</Typography>
-              </Box>
-              <Box className={classes.cancelButton} onClick={handleClose}>
-                <Typography className={classes.cancelText}>CANCEL</Typography>
-              </Box>
               <Box
                 className={classes.confirmButton}
                 onClick={() => handleSUbmit('completed')}
               >
-                <Typography className={classes.confirmText}>YES</Typography>
+                <Typography className={classes.confirmText}>
+                  Yes,Completed
+                </Typography>
+              </Box>
+              <Box
+                className={classes.pauseButton}
+                onClick={() => handlePause('paused')}
+              >
+                <Typography className={classes.pauseText}>
+                  No, Some Issue Need to join again!
+                </Typography>
+              </Box>
+
+              <Box className={classes.cancelButton} onClick={handleClose}>
+                <Typography className={classes.cancelText}>Stay here!</Typography>
               </Box>
             </Box>
           </Box>
