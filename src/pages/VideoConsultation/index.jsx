@@ -221,8 +221,7 @@ function VideoConsulation({ sendMessage, setVideoStatus }) {
           setIsAudioStatus={setIsAudioStatus}
           isVideoStatus={isVideoStatus}
           setIsVideoStatus={setIsVideoStatus}
-          patientAppointmentId={patientAppointmentId}
-          patientAppointmentId={location.state?.appointmentId}
+          patientAppointmentId={appointmentId}
           list={location.list}
           isPaused={isPaused}
         />

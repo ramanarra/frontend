@@ -172,7 +172,9 @@ function AppoinmentDetails() {
     }
     setOpen(false)
   }
-
+  function handleCancelSnackBarClose() {
+    history.push('patient/appointments/upcoming')
+  }
   function handleCloseReschedule() {
     setOpenReschedule(false)
   }
@@ -306,7 +308,7 @@ function AppoinmentDetails() {
         <td className="cell">
           <a href={data?.reportURL} target="_blank" download>
             <IconButton className="view-icon-btn" title="View">
-              <FileIcon className="view-icon" />
+              <VerticalAlignBottomOutlinedIcon className="view-icon" />
             </IconButton>
           </a>
         </td>
@@ -672,7 +674,7 @@ function AppoinmentDetails() {
           <SnackBar
             openDialog={open}
             message={response.data.message}
-            onclose={handleSnackBarClose}
+            onclose={handleCancelSnackBarClose}
             severity={'success'}
           />
         )) ||
