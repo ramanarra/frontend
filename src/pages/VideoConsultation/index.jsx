@@ -36,10 +36,10 @@ function VideoConsulation({ sendMessage }) {
   const isPaused = useMemo(() => location.state?.isPaused, [
     location.state?.isPaused,
   ])
-
   const appointmentId = useMemo(() => location.state, [location.state])
 
   useEffect(() => {
+    console.log("VideoConsultation useEffect1:");
     setOpen(true)
 
     const socket = socketIOClient(ENDPOINT, {
@@ -62,13 +62,17 @@ function VideoConsulation({ sendMessage }) {
 
       if (localStorage.getItem('loginUser') === 'doctor') {
         const timer = setInterval(
-          () => socket.emit('getAppointmentListForDoctor'),
+          () => {
+            console.log('Pages.VideoConsultation:scoket:getAppointmentListForDoctor:');
+            socket.emit('getAppointmentListForDoctor')
+          },
           10000
         )
         setTimer(timer)
       }
 
       socket.on('getDoctorAppointments', (data) => {
+        console.log('Pages.VideoConsultation:scoket.on:getDoctorAppointments:');
         setPatientList(data)
       })
       socket.on('videoTokenForDoctor', (data) => {
@@ -137,6 +141,7 @@ function VideoConsulation({ sendMessage }) {
   }
 
   useEffect(() => {
+    console.log("VideoConsultation useEffect 2 patientList:"+patientList);
     if (location.isWaiting && patientList) {
       patientList.map((patient, index) => {
         if (patient.appointmentId === location.state.appointmentId) {
@@ -148,6 +153,7 @@ function VideoConsulation({ sendMessage }) {
   }, [patientList])
 
   useEffect(() => {
+    console.log("VideoConsultation useEffect 3 prescription:"+prescription);
     if (!!prescription) {
       sendMessage(
         {
@@ -168,6 +174,7 @@ function VideoConsulation({ sendMessage }) {
   })
 //to get appointmentId for report
   useEffect(() => {
+    console.log("VideoConsultation useEffect 4 appointmentId:"+appointmentId);
     if(!!appointmentId) {
       fetchAppointmentReport({
         params: {
@@ -180,7 +187,7 @@ function VideoConsulation({ sendMessage }) {
 
   useEffect(() => {
     //to send reports to chat
- 
+    console.log("VideoConsultation useEffect 5 appointmentReport:"+appointmentReport);
     if (!!appointmentReport && !!appointmentReport?.reports?.length ) {
       sendMessage({
         message: `Appointment report`,
