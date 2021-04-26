@@ -1,19 +1,22 @@
 import React, { useState, useEffect, Fragment, useMemo } from 'react'
 import { useLocation, useHistory } from 'react-router-dom'
 import socketIOClient from 'socket.io-client'
-
+import LeaveCallModal from './LeaveCallModal'
 import ConfirmationModal from './ConfirmationModel'
 import Video from './Video'
 import SnackBar from '../../components/SnackBar'
 import { baseURL } from '../../baseURL'
 import { connect } from 'react-redux'
 import { setMessages } from '../../actions/doctor'
+import{setvideoStatus} from '../../actions/patient'
 import useFetch from '../../hooks/useFetch'
 import { URL } from '../../api'
+import useStyle from './useConfirmationModalStyle'
+import { Box ,DialogContent,Typography,DialogTitle,Dialog} from '@material-ui/core'
 
 const ENDPOINT = baseURL
 
-function VideoConsulation({ sendMessage }) {
+function VideoConsulation({ sendMessage, setVideoStatus }) {
   const [open, setOpen] = useState(false)
   const [isJoinDisabled, setIsJoinDisabled] = useState(true)
   const [videoAvailability, setVideoAvailability] = useState(true)
@@ -30,7 +33,8 @@ function VideoConsulation({ sendMessage }) {
   const [isVideoStatus, setIsVideoStatus] = useState(true)
   const [patientAppointmentId, setPatientAppointmentId] = useState(null)
   const [prescription, setPrescription] = useState(null)
-
+  // const[videoStatus, setVideoStatus]=useState()
+  const classes = useStyle()
   const location = useLocation()
   const history = useHistory()
   const isPaused = useMemo(() => location.state?.isPaused, [
@@ -96,12 +100,16 @@ function VideoConsulation({ sendMessage }) {
     })
 
     socket.on('videoTokenRemoved', (data) => {
-      if (data.isRemoved) {
+      
+       if (data.Videostatus=='completed') {
+        
+        const newValue=data.Videostatus;
+        setVideoStatus(newValue)
         if (localStorage.getItem('loginUser') === 'patient') {
-          // if (data?.callEndStatus === 'paused') {
-          //   setPaused(true)
-          // } else {
-          history.push('/patient/appointments/upcoming')
+          history.push({
+                pathname: 'patient/appointments/upcoming',
+                newState: newValue,
+             })
           socket.emit('updateLiveStatusOfUser', { status: 'online' })
           // }
         }
@@ -160,7 +168,11 @@ function VideoConsulation({ sendMessage }) {
           message: `Prescription`,
           from: localStorage.getItem('loginUser') === 'patient' ? 'sender' : 'user',
           type: 'spl_prescription',
-          data: prescription?.prescription,
+          data: {
+            prescription: prescription?.prescription,
+            remarks: prescription?.prescriptionRemarks
+          },
+
         },
         prescription?.appointmentId
       )
@@ -187,8 +199,8 @@ function VideoConsulation({ sendMessage }) {
 
   useEffect(() => {
     //to send reports to chat
-    console.log("VideoConsultation useEffect 5 appointmentReport:"+appointmentReport);
     if (!!appointmentReport && !!appointmentReport?.reports?.length ) {
+      console.log("VideoConsultation useEffect 5 appointmentReport:"+appointmentReport);
       sendMessage({
         message: `Appointment report`,
         from: localStorage.getItem('loginUser') === 'patient' ? 'user' : 'sender',
@@ -196,7 +208,7 @@ function VideoConsulation({ sendMessage }) {
         data: appointmentReport?.reports,
       }, appointmentReport?.appoinmentId)
      }
-    
+
   }, [appointmentReport])
 
   return (
@@ -216,7 +228,7 @@ function VideoConsulation({ sendMessage }) {
           setIsAudioStatus={setIsAudioStatus}
           isVideoStatus={isVideoStatus}
           setIsVideoStatus={setIsVideoStatus}
-          // patientAppointmentId={patientAppointmentId}
+          patientAppointmentId={patientAppointmentId}
           patientAppointmentId={location.state?.appointmentId}
           list={location.list}
           isPaused={isPaused}
@@ -257,6 +269,7 @@ function VideoConsulation({ sendMessage }) {
 const mapDispatchToProps = (dispatch) => {
   return {
     sendMessage: (data, appointmentId) => dispatch(setMessages(data, appointmentId)),
+    setVideoStatus: (newValue) => dispatch(setvideoStatus(newValue)),
   }
 }
 

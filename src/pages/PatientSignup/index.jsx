@@ -24,12 +24,11 @@ const useStyles = makeStyles({
     color: '#636363',
     width: 390,
   },
-});
+})
 
 const SnackbarPosition = { vertical: 'bottom', horizontal: 'center' }
 
 const PatientSignup = (props) => {
-
   const classes = useStyles()
   const { register, watch, errors, control, handleSubmit } = useForm()
 
@@ -47,9 +46,11 @@ const PatientSignup = (props) => {
 
   const [age, setAge] = useState(null)
 
-  const [password, setPassword] = useState();
+  const [password, setPassword] = useState()
 
-  const [honorific, setHonorific] = useState("Mr")
+  const [honorific, setHonorific] = useState('Mr')
+
+  const[gender , setGender] = useState();
 
   const currentTime = moment().format('DD/MM/YYYY HH:mm:ss')
 
@@ -62,6 +63,7 @@ const PatientSignup = (props) => {
   const onSubmit = (data) => {
     console.log(data)
     data = honorific ? ({ ...data, "honorific": honorific }) : data
+    data = gender ? ({ ...data, "gender": gender }) : data
     if (data.phone === data.alternateContact) {
       setMessage('Both contact numbers should not be same')
       setError(true)
@@ -122,6 +124,7 @@ const PatientSignup = (props) => {
   const validationErr = {
     name: 'Invalid name',
     phone: 'Invalid phone number',
+    email: 'Invalid Email',
     age: 'Invalid age',
     passwordValidation: 'password must contain one alphabet and one numeric',
     passwordLength: 'Password must has minimum length of 6 and maximum length of 12',
@@ -148,6 +151,10 @@ const PatientSignup = (props) => {
     setHonorific(event.target.value)
   }
 
+  const handleGenderChange=(event)=>{
+    setGender(event.target.value)
+  }
+
   return (
     <div className="patient-sign-up">
       <div className="logo-wrap">
@@ -172,6 +179,19 @@ const PatientSignup = (props) => {
             <MenuItem classes={{ root: classes.root }} value={"Mr"}>Mr.</MenuItem>
             <MenuItem classes={{ root: classes.root }} value={"Ms"}>Ms.</MenuItem>
             <MenuItem classes={{ root: classes.root }} value={"Mrs"}>Mrs.</MenuItem>
+          </Select>
+
+          <div className="honorific-head">
+            <label className="honorific-title">Gender</label>
+            <Star className="honorific-star-icon" />
+          </div>
+          <Select className="honorific-field-partition" classes={{ select: classes.select, underline: classes.underline }}
+            value={gender}
+            onChange={handleGenderChange}
+          >
+            <MenuItem classes={{ root: classes.root }} value={"Male"}>Male</MenuItem>
+            <MenuItem classes={{ root: classes.root }} value={"Female"}>Female</MenuItem>
+            <MenuItem classes={{ root: classes.root }} value={"Others"}>Others</MenuItem>
           </Select>
 
           <div className="field-wrap field-partition">
@@ -258,6 +278,27 @@ const PatientSignup = (props) => {
                 }),
               }}
               error={!!errors.alternateContact && errors.alternateContact.message}
+              hasValidation
+            />
+          </div>
+          <div className="field-wrap">
+            <Textfield
+              name="email"
+              label="Email"
+              placeholder="example@company.com"
+              isRequired
+              type="email"
+              inputProps={{
+                ref: register({
+                  required: 'Please enter your Email',
+
+                  pattern: {
+                    value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/,
+                    message: validationErr.email,
+                  },
+                }),
+              }}
+              error={!!errors.email && errors.email.message}
               hasValidation
             />
           </div>
@@ -376,7 +417,7 @@ const PatientSignup = (props) => {
 
               error={!!errors.country && errors.country.message}
               hasValidation
-            /> 
+            />
 
             <Textfield
               name="pincode"
@@ -459,7 +500,7 @@ const PatientSignup = (props) => {
                 Signin
               </span>
             </div>
-             
+
             {/* Navigating to doctor registration  */}
 
             <div className="signin-btn-wrap signin-btn-align">

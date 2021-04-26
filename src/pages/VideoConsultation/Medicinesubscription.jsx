@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Box, Button, makeStyles, TextField, DialogTitle, Dialog, Grid } from '@material-ui/core'
+import { Box, Button, makeStyles, TextField, DialogTitle, Dialog, Grid,TextareaAutosize } from '@material-ui/core'
 import { useForm } from 'react-hook-form'
 import usestyle from './useMedicinesubscriptionstyle'
 import CloseIcon from '@material-ui/icons/Close'
@@ -9,39 +9,57 @@ import { red } from '@material-ui/core/colors'
 import DeleteIcon from '@material-ui/icons/Delete';
 import useCustomFetch from '../../hooks/useCustomFetch'
 import { METHOD, URL } from '../../api'
+import Textfield from '../../components/Textfield'
 
-function MedicinesubscriptionList({ subIndex, data, handleOnMedicine, handleOnMedicinecountOfDays, handleOndoseOfMedicine, handleRemoveMedicine, list, show }) {
+const useStyle = makeStyles(() => ({
+  holesize: {
+    maxWidth: 800,
+    height: 350,
 
-  const useStyle = makeStyles(() => ({
-    holesize: {
-      maxWidth: 800,
-      height: 350,
-    },
-    medicineField: {
-      width: 150,
-      borderColor: 'red',
-    },
-    quantityField: {
-      marginLeft: 50,
-      width: 75,
+  },
+  medicineField: {
+    width: 150,
+    borderColor: 'red',
+  },
+  quantityField: {
+    marginLeft: 50,
+    width: 75,
 
-    },
-    commentField: {
-      marginLeft: 55,
-      width: 170,
-    },
-    checkBox: {
-      borderColor: ' #bdc7c9',
-      height: 40,
-      width: 40,
-    },
-    holebox: {
-      width: '550px',
-      paddingTop: '5px',
-      paddingBottom: '5px',
-      paddingLeft: '25px',
+  },
+  commentField: {
+    marginLeft: 41,
+    width: 170,
+  },
+  remarksField:{
+    marginLeft: 55,
+    width: 170,
+  },
+  textFieldsize: {
+    position: 'relative',
+    left: '25px',
+    fontSize: '14px',
+    border: 1,
+  },
+
+  checkBox: {
+    borderColor: ' #bdc7c9',
+    height: 40,
+    width: 40,
+  },
+  holebox: {
+    width: '550px',
+    paddingTop: '5px',
+    paddingBottom: '5px',
+    paddingLeft: '25px',
+  },
+  txtField: {
+    '.txt-field': {
+      width: '100%'
     }
-  }))
+  }
+}))
+
+function MedicinesubscriptionList({ subIndex, data, handleOnMedicine, handleOnMedicinecountOfDays, handleOndoseOfMedicine, handleOnRemarks, handleRemoveMedicine, list, show }) {
   const style = useStyle()
   return (
     <Box>
@@ -49,9 +67,9 @@ function MedicinesubscriptionList({ subIndex, data, handleOnMedicine, handleOnMe
         {subIndex === 0 &&
           <Box >
             <Box style={{ fontSize: 14, display: 'flex', paddingBottom: '5px' }}>
-              <Box style={{ position: 'relative' }}>Medicine Name<sup className="star-color" style={{ color: "red" }}>★</sup></Box>
-              <Box style={{ position: 'relative', left: '79px' }}>Quantity/Dosage</Box>
-              <Box style={{ position: 'relative', left: list?.length > 1 ? '95px':'120px' }}>Comments</Box>
+              <Box style={{ position: 'relative' }}>Description<sup className="star-color" style={{ color: "red" }}>★</sup></Box>
+              <Box style={{ position: 'relative', left: '106px' }}>Quantity</Box>
+              <Box style={{ position: 'relative', left: list?.length > 1 ? '95px':'226px' }}>Comments</Box>
               <Box style={{ position: 'relative', left: '20px' }}></Box>
             </Box>
           </Box>
@@ -85,13 +103,15 @@ function MedicinesubscriptionList({ subIndex, data, handleOnMedicine, handleOnMe
     </Box>
   )
 }
-function Medicinesubscription({ open, handlesubscriptionclose, handleOnMedicine, handleAddMedicineList, seperate, existList }) {
+function Medicinesubscription({ open, handlesubscriptionclose, handleOnMedicine, handleAddMedicineList, seperate, existList,  setRemarks, remarks }) {
   const classes = usestyle()
+  const styles = useStyle()
   const [list, setList] = useState([])
   const [show, setShow] = useState(false)
   const [opens, setOpens] = useState(false)
   const [news, setNews] = useState(true)
   const [doctorData, refetch] = useCustomFetch(METHOD.GET, URL.doctorList)
+  const [remarkInp, setRemarkInp] = useState()
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -109,18 +129,22 @@ function Medicinesubscription({ open, handlesubscriptionclose, handleOnMedicine,
       setList(existList)
     }
     else {
-      let medicine = { nameOfMedicine: '', countOfDays: '', doseOfMedicine: '', minus: '', isdone: 'true' }
+      let medicine = { nameOfMedicine: '', countOfDays: '', doseOfMedicine: '', remarks: '', minus: '', isdone: 'true' }
       let medicineList = [...existList]
       medicineList.push(medicine)
       setList(medicineList)
     }
   }, [])
+//value update
+  useEffect(() => {
+    !!remarks && setRemarkInp(remarks)
+  }, [remarks])
 
   function handleOnMedicine(event, subIndex) {
     const { value } = event.target
 
     setList(prev => prev.map((i, index) => {
-      if (index === subIndex) return { ...i, nameOfMedicine: value, isdone:'true' }
+      if (index === subIndex) return { ...i, nameOfMedicine: value, isdone: 'true' }
       return i
     }))
     setNews(true)
@@ -184,6 +208,7 @@ function Medicinesubscription({ open, handlesubscriptionclose, handleOnMedicine,
 
   function handlecheck(list) {
     let count = 0;
+    !!remarkInp && setRemarks(remarkInp)
     list.map((data, index) => {
       list[index].isdone = (!data.nameOfMedicine || data.nameOfMedicine.trim() === '') ? false : true;
       if(!data.nameOfMedicine || data.nameOfMedicine.trim() === '') {
@@ -237,7 +262,20 @@ function Medicinesubscription({ open, handlesubscriptionclose, handleOnMedicine,
               <Button onClick={() => calling(list)} className={classes.added} color="primary" >+ Add Medicine</Button>
             }
           </Box>
-          <Box style={{ textAlign: 'center', paddingBottom: '20px' }}>
+
+          <Box padding="0px 25px" width="100%">
+            <Box style={{ fontSize: '14px' }}>Remarks</Box>
+
+            <TextareaAutosize aria-label="minimum height" rowsMin={5} className={classes.txtField} placeholder="Remarks..."
+               value={remarkInp}
+              onChange={(e) =>
+                setRemarkInp(e.target.value)
+               }
+            />
+          </Box>
+          <Box style={{ display: 'flex' }} >
+          </Box>
+          <Box style={{ textAlign: 'center', paddingBottom: '15px' }}>
             {list.length > 0 &&
               <Button className={classes.submit} type="submit" onClick={() => handlecheck(list)} >save</Button>
             }

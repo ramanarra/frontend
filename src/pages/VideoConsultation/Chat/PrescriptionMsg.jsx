@@ -36,6 +36,7 @@ const Attachment = ({ url, index, hasMultiple }) => {
 
 const PrescriptionMsg = ({ text }) => {
   const { data } = text
+  const { prescription, remarks } = data
 
   // const attachments = data?.reduce((a, c) => {
   //   const current = a.includes(c.attachment) ? [] : [c.attachment]
@@ -48,24 +49,24 @@ const PrescriptionMsg = ({ text }) => {
         <table>
           <thead>
             <th>
-              <div className="head">Medicine</div>
+              <div className="head">Description</div>
             </th>
             <th>
-              <div className="head">Quantity/Dose</div>
+              <div className="head">Quantity</div>
             </th>
             <th>
-              <div className="head">Consumption comments</div>
+              <div className="head">Comments </div>
             </th>
           </thead>
           <tbody>
-            {data?.map((i, index) => (
+            {prescription?.map((i, index) => (
               <Entry key={index} data={i} />
             ))}
           </tbody>
         </table>
 
         <p className="note-msg">NOTE: You can find the PDF of prescription in a appointment details page</p>
-
+        <p className="Remarks" >Remarks :  {remarks}</p>      
         {/* <div className="attachments">
           {attachments?.map((i, index) => (
             <Attachment

@@ -1,0 +1,9 @@
+FROM nginx
+RUN mkdir -p /usr/share/nginx/html/app
+RUN mkdir -p /etc/virujh-ca
+COPY nginx/production/nginx.conf /etc/nginx/conf.d/default.conf
+COPY sshKey/production/. /etc/virujh-ca/.
+COPY ./build/. /usr/share/nginx/html/app/
+COPY ./virujh-static/. /usr/share/nginx/html/
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

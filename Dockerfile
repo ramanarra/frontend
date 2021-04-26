@@ -1,9 +1,8 @@
 FROM nginx
-#RUN rm /usr/share/nginx/html/*
-RUN mkdir -p /usr/share/nginx/html/app
+RUN mkdir -p /var/www/html/app
 RUN mkdir -p /etc/virujh-ca
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY sshKey/. /etc/virujh-ca/.
-COPY ./build/. /usr/share/nginx/html/app/
+COPY ./nginx/local/nginx.conf /etc/nginx/conf.d/default.conf
+COPY ./build/. /var/www/html/app
+COPY ./virujh-static/. /usr/share/nginx/html/
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
