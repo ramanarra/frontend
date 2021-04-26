@@ -8,13 +8,14 @@ services:
     build:
      context: .
      dockerfile: Dockerfile-prod
-    volumes:
-      - ./virujh-static:/usr/share/nginx/html
-      - ./build:/usr/share/nginx/html/app
+     volumes:
+      - ./build:/var/www/html/app
+      - ./config/nginx/production/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./virujh-static:/var/www/html
     network_mode: host
 
   php:
-    container_name: test-php
+    container_name: php-service
     build:
       context: .
       dockerfile: Dockerfile-php

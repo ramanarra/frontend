@@ -6,17 +6,18 @@ services:
     container_name: virujh-frontend
     restart: on-failure
     build:
-     context: .
+     context: ./config
      dockerfile: Dockerfile-dev
     volumes:
-      - ./virujh-static:/usr/share/nginx/html
-      - ./build:/usr/share/nginx/html/app
+      - ./build:/var/www/html/app
+      - ./config/nginx/development/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./virujh-static:/var/www/html
     network_mode: host
 
   php:
-    container_name: test-php
+    container_name: php-service
     build:
-      context: .
+      context: ./config
       dockerfile: Dockerfile-php
     volumes:
       - ./virujh-static:/usr/share/nginx/html
