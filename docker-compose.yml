@@ -7,4 +7,34 @@ services:
     restart: on-failure
     build:
      context: .
-    network_mode: host
+     dockerfile: Dockerfile
+    ports:
+      - "81:80"
+    volumes:
+      - ./build:/var/www/html/app
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./virujh-static:/var/www/html
+      - store:/etc/nginx
+    networks:
+      - app-network
+
+  php:
+    container_name: test-php
+    build:
+      context: .
+      dockerfile: Dockerfile-php
+    volumes:
+      - ./virujh-static:/var/www/html
+      - store:/etc/nginx
+    networks:
+      - app-network
+
+volumes:
+  store:
+    external : true
+networks:
+  app-network:
+    driver: bridge
+
+    
+
