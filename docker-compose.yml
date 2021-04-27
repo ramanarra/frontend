@@ -5,8 +5,6 @@ services:
   virujh-frontend:
     container_name: virujh-nginx
     restart: on-failure
-    volumes:
-      - ./docker-config/nginx/local/nginx.conf:/etc/nginx/conf.d/default.conf
 
   php:
     container_name: php-service
