@@ -3,38 +3,19 @@ version: '3'
 services:
 
   virujh-frontend:
-    container_name: virujh-frontend
+    container_name: virujh-nginx
     restart: on-failure
-    build:
-     context: .
-     dockerfile: Dockerfile
-    ports:
-      - "81:80"
     volumes:
-      - ./build:/var/www/html/app
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf
-      - ./virujh-static:/var/www/html
-      - store:/etc/nginx
-    networks:
-      - app-network
+      - ./docker-config/nginx/local/nginx.conf:/etc/nginx/conf.d/default.conf
 
   php:
-    container_name: test-php
+    container_name: php-service
+    restart: on-failure
     build:
       context: .
-      dockerfile: Dockerfile-php
+      dockerfile: ./docker-config/Dockerfile-php
     volumes:
       - ./virujh-static:/var/www/html
-      - store:/etc/nginx
-    networks:
-      - app-network
-
-volumes:
-  store:
-    external : true
-networks:
-  app-network:
-    driver: bridge
 
     
 

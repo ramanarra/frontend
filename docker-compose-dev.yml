@@ -3,22 +3,11 @@ version: '3'
 services:
 
   virujh-frontend:
-    container_name: virujh-frontend
-    restart: on-failure
     build:
      context: .
-     dockerfile: Dockerfile-dev
-    volumes:
-      - ./virujh-static:/usr/share/nginx/html
-      - ./build:/usr/share/nginx/html/app
+     dockerfile: ./docker-config/Dockerfile-dev
     network_mode: host
 
   php:
-    container_name: test-php
-    build:
-      context: .
-      dockerfile: Dockerfile-php
-    volumes:
-      - ./virujh-static:/usr/share/nginx/html
     network_mode: host
 
