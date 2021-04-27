@@ -2,8 +2,6 @@ FROM nginx
 RUN mkdir -p /var/www/html/app
 RUN mkdir -p /etc/virujh-ca
 COPY docker-config/nginx/local/nginx.conf /etc/nginx/conf.d/default.conf
-#COPY ./docker-config/nginx/local/. /var/www/html/app/.
-RUN echo "$PWD"
 
 COPY /build/. /var/www/html/app/.
 COPY ./virujh-static/. /var/www/html/.
