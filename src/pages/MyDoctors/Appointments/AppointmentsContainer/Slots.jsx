@@ -51,8 +51,9 @@ function Slots({
 
   let currentDate = moment().format('DD/MM/YYYY')
 
-  // let show = date === currentDate ? slot.startTime > currentTime ? true : false : true
-  let show = true
+  let show = date === currentDate ?
+      slot.startTime > currentTime ? true : false
+      : true
   return (
     show && (
       <Box className={classes.singleSlot}>
