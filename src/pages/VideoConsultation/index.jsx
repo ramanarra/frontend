@@ -42,7 +42,9 @@ function VideoConsulation({ sendMessage, setVideoStatus }) {
   ])
 
   const appointmentId = useMemo(() => location.state, [location.state])
+  const currentAppointmentId = location.state?.appointmentId
 
+  const id = currentAppointmentId ? currentAppointmentId : appointmentId
   useEffect(() => {
     setOpen(true)
 
@@ -221,7 +223,7 @@ function VideoConsulation({ sendMessage, setVideoStatus }) {
           setIsAudioStatus={setIsAudioStatus}
           isVideoStatus={isVideoStatus}
           setIsVideoStatus={setIsVideoStatus}
-          patientAppointmentId={appointmentId}
+          patientAppointmentId={id}
           list={location.list}
           isPaused={isPaused}
         />
