@@ -54,9 +54,6 @@ function List({ appointments, onSave, doctorKey }) {
 
   const todayDate = date.format('DD/MM/YYYY')
 
-  let currentTime = moment().format('HH:mm:ss')
-  let checkDate = moment().format('DD/MM/YYYY')
-
   return (
     <Box className={classes.container}>
       <Box className={classes.dateContainer}>
@@ -64,42 +61,10 @@ function List({ appointments, onSave, doctorKey }) {
         <Typography className={classes.day}>{currentDay}</Typography>
       </Box>
       {appointments.slots.map((slot, index) => {
-        let checkDate2 = moment(appointments.day).utc().format('DD/MM/YYYY')
         return slot.id ? (
           slot.created_by === 'PATIENT' ? (
-            slot.startTime < currentTime && checkDate === checkDate2 ? (
-              <Slots
-                key={index}
-                doctorKey={doctorKey}
-                slot={slot}
-                date={todayDate}
-                onSave={onSave}
-                name={`${slot.honorific ? slot.honorific + '.' : ''} ${
-                  slot.patientFirstName
-                }`}
-                bgColor={'#dddddd'}
-                textColor={'#aab5c2'}
-              />
-            ) : (
-              <Slots
-                key={index}
-                doctorKey={doctorKey}
-                slot={slot}
-                date={todayDate}
-                onSave={onSave}
-                name={`${slot.honorific ? slot.honorific + '.' : ''} ${
-                  slot.patientFirstName
-                }`}
-                bgColor={'#f1f3f5'}
-                textColor={'#aab5c2'}
-                ModalComponent={CancelAndRescheduleModal}
-                bookedBy={'Patient'}
-                note={'Patient Booked - Payment made through Virujh'}
-                cancellationNote={'The payment will be refunded to the patient.'}
-              />
-            )
-          ) : slot.startTime < currentTime && checkDate === checkDate2 ? (
             <Slots
+              key={index}
               doctorKey={doctorKey}
               slot={slot}
               date={todayDate}
@@ -107,13 +72,12 @@ function List({ appointments, onSave, doctorKey }) {
               name={`${slot.honorific ? slot.honorific + '.' : ''} ${
                 slot.patientFirstName
               }`}
-              bgColor={'#dddddd'}
+              bgColor={'#f1f3f5'}
               textColor={'#aab5c2'}
-              bookedBy={'Doctor'}
-              singleStar={isSingleStar(slot)}
-              doubleStar={isDoubleStar(slot)}
-              note={addNote(slot)}
-              cancellationNote={addNoteForCancle(slot)}
+              ModalComponent={CancelAndRescheduleModal}
+              bookedBy={'Patient'}
+              note={'Patient Booked - Payment made through Virujh'}
+              cancellationNote={'The payment will be refunded to the patient.'}
             />
           ) : (
             <Slots
@@ -134,16 +98,6 @@ function List({ appointments, onSave, doctorKey }) {
               cancellationNote={addNoteForCancle(slot)}
             />
           )
-        ) : slot.startTime < currentTime && checkDate === checkDate2 ? (
-          <Slots
-            doctorKey={doctorKey}
-            slot={slot}
-            date={todayDate}
-            onSave={onSave}
-            name={'FREE SLOT'}
-            bgColor={'#dddddd'}
-            textColor={'#aab5c2'}
-          />
         ) : (
           <Slots
             doctorKey={doctorKey}
