@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+
+  virujh-frontend:
+    build:
+     context: .
+     dockerfile: ./docker-config/Dockerfile
+    ports: 
+      - "81:80"
+    networks: 
+      - website
+
+  php:
+    networks: 
+      - website 
+
+networks: 
+   website: 
+    driver: bridge
+
