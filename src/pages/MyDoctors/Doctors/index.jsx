@@ -43,7 +43,7 @@ function Doctors({ doctorList, setSocket, socket, setTimer, timer }) {
   }
 
   useEffect(() => {
-    console.log("MyDoctors.Doctors.index.useEffect:default:"+localStorage.getItem('loginUser')+", patientList:"+patientList+", open:"+open+", count:"+count);
+    //console.log("MyDoctors.Doctors.index.useEffect:default:"+localStorage.getItem('loginUser')+", patientList:"+patientList+", open:"+open+", count:"+count);
     if (localStorage.getItem('loginUser') === 'doctor') {
       const socket = socketIOClient(ENDPOINT, {
         transports: ['websocket'],
@@ -63,14 +63,14 @@ function Doctors({ doctorList, setSocket, socket, setTimer, timer }) {
 
         const timer = setInterval(
           () => {
-            console.log('MyDoctors.doctors:scoket:getAppointmentListForDoctor:');
+            //console.log('MyDoctors.doctors:scoket:getAppointmentListForDoctor:');
             socket.emit('getAppointmentListForDoctor');
           },
           10000
         )
 
         socket.on('getDoctorAppointments', (data) => {
-          console.log('MyDoctors.doctors:scoket.on:getDoctorAppointments:');
+          //console.log('MyDoctors.doctors:scoket.on:getDoctorAppointments:');
           setPatientList(data)
           setTimer(timer)
         })
@@ -86,7 +86,7 @@ function Doctors({ doctorList, setSocket, socket, setTimer, timer }) {
     )
 
   useEffect(() => {
-    console.log("MyDoctors.Doctors.index.useEffect:default:"+localStorage.getItem('loginUser')+", patientList:"+patientList+", open:"+open+", count:"+count+",  readyPatient:"+readyPatient);
+    //console.log("MyDoctors.Doctors.index.useEffect:default:"+localStorage.getItem('loginUser')+", patientList:"+patientList+", open:"+open+", count:"+count+",  readyPatient:"+readyPatient);
     if (readyPatient && readyPatient.length > 0 && count === 0) {
       setOpen(true)
     }
