@@ -116,7 +116,7 @@ class VideoRoomComponent extends Component {
   }
 
   connect(token) {
-    console.log("OpenViduCore:VideoRoomComponent connect:"+token);
+    console.log("OpenViduCore:VideoRoomComponent connect:");
     this.state.session
       .connect(token, { clientData: this.state.myUserName })
       .then(() => {
@@ -136,7 +136,6 @@ class VideoRoomComponent extends Component {
   }
 
   connectWebCam() {
-    console.log("OpenViduCore:VideoRoomComponent connectwebcam:this.props.isAudioStatus:"+this.props.isAudioStatus+":localUser.isAudioActive():"+localUser.isAudioActive());
     let publisher = this.OV.initPublisher(undefined, {
       audioSource: undefined,
       videoSource: undefined,
@@ -149,7 +148,6 @@ class VideoRoomComponent extends Component {
 
     if (this.state.session.capabilities.publish) {
       publisher.on('accessAllowed' , () => {
-        console.log('OpenViduCore:VideoRoomComponent connectwebcam:this.state.session.capabilities.publish:'+this.state.session.capabilities.publish);
         this.state.session.publish(publisher).then(() => {
             this.updateSubscribers();
             this.localUserAccessAllowed = true;
@@ -201,7 +199,6 @@ class VideoRoomComponent extends Component {
   }
 
   updateSubscribers() {
-    console.log('OpenViduCore:VideoRoomComponent updateSubscribers this.remotes:'+JSON.stringify(this.remotes));
       var subscribers = this.remotes;
       this.setState(
           {
