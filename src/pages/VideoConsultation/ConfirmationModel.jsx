@@ -42,13 +42,11 @@ function ConfirmationPopUp({
   const history = useHistory()
 
   const [videoAvailable, setVideoAvailable] = useState(true)
-  const detail = patientAppointmentId
-    ? list.filter(
-        (appointment) => appointment.appointmentId === patientAppointmentId
-      )
-    : list
-  console.log('hii')
-  console.log(list)
+  
+  const detail =
+    list &&
+    list.filter((appointment) => appointment.appointmentId === patientAppointmentId)
+
   const doctorName = detail
     ? detail[0]?.doctorLastName
       ? `${detail[0]?.doctorFirstName}${' '}${detail[0]?.doctorLastName}`

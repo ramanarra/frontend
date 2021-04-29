@@ -19,7 +19,7 @@ import useManualFetch from '../../hooks/useManualFetch'
 import { METHOD, URL } from '../../api'
 import message from './../../lib/iconMsg'
 import { NotificationTip } from '../../components/Tooltip'
-// import ChangePassword from '../../pages/ChangePasswordOption/ChangePasswordDailogPatient'
+import ChangePassword from '../../pages/ChangePasswordOption/ChangePasswordDailogPatient'
 
 const useStyles = makeStyles(() => ({
   appBar: {
@@ -253,13 +253,13 @@ function PatientHeader({ socket }) {
           <CircularProgress color="inherit" />
         </Backdrop>
       )}
-      {/* {passwordDlg && (
+      {passwordDlg && (
         <ChangePassword
           open={true}
           handleClose={handleClose}
           handleOnSubmit={handleOnSubmit}
         />
-      )} */}
+      )}
     </Box>
   )
 }

@@ -45,8 +45,9 @@ const Navigation = ({ doctorList, contentRefresh }) => {
     contentRefresh();
   }
 
-
-
+  function myDoctorRefresh() {
+    contentRefresh()
+  }
   function handleAddDoctor() {
     setChange(!change)
     console.log(change)

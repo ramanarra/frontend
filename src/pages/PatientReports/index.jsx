@@ -15,7 +15,7 @@ import moment from 'moment'
 import useStyle from './useStyle'
 import './style.scss'
 import FileViewer from '../../components/FileViewer'
-
+import VerticalAlignBottomOutlinedIcon from '@material-ui/icons/VerticalAlignBottomOutlined'
 const Reports = (props) => {
   const [searchText, setSearchText] = useState('')
   const [open, setOpen] = useState(false)
@@ -204,23 +204,21 @@ function hanldeDelete(i){
                       <td className="tbl-cell comments">{i?.comments}</td>
                       <td className="tbl-cell attchmnt">
                         <div className="view-icon-wrap">
-                          <IconButton
-                            className="view-icon-btn"
-                            onClick={openFileViewer.bind(
-                              this,
-                              i?.attachment,
-                              i?.fileType
-                            )}
-                          >
-                            <FileIcon className="view-icon" />
-                          </IconButton>
+                          <a href={i?.attachment} target="_blank" download>
+                            <IconButton className="view-icon-btn">
+                              <VerticalAlignBottomOutlinedIcon className="view-icon" />
+                            </IconButton>
+                          </a>
                         </div>
-                      </td>     
+                      </td>
                       <td className="cell">
-                          <IconButton className="view-icon-btn" onClick={hanldeDelete.bind(this,i)}>   
-                          <MdDelete className="delete-icon"/>
+                        <IconButton
+                          className="view-icon-btn"
+                          onClick={hanldeDelete.bind(this, i)}
+                        >
+                          <MdDelete className="delete-icon" />
                         </IconButton>
-                       </td>
+                      </td>
                     </tr>
                   ))}
                 {!patientList?.list?.length && (
