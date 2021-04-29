@@ -47,8 +47,6 @@ function ConfirmationPopUp({
         (appointment) => appointment.appointmentId === patientAppointmentId
       )
     : list
-  console.log('hii')
-  console.log(list)
   const doctorName = detail
     ? detail[0]?.doctorLastName
       ? `${detail[0]?.doctorFirstName}${' '}${detail[0]?.doctorLastName}`
@@ -92,14 +90,7 @@ function ConfirmationPopUp({
     socket.emit('updateLiveStatusOfUser', { status: 'inSession' })
   }
 
-  navigator.getUserMedia(
-    { audio: true },
-    function () {},
-    function () {
-      audioAvailability(false)
-    }
-  )
-
+  
   function handleOnVideo() {
     setVideoAvailable(false)
     videoAvailability(false)
@@ -130,7 +121,7 @@ function ConfirmationPopUp({
               >
                 {videoAvailable && isVideoStatus ? (
                   <Webcam
-                    audio={false}
+                    audio={true}
                     width="212"
                     height="160"
                     onUserMediaError={() => handleOnVideo()}
