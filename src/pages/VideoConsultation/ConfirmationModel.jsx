@@ -42,7 +42,7 @@ function ConfirmationPopUp({
   const history = useHistory()
 
   const [videoAvailable, setVideoAvailable] = useState(true)
-  debugger
+  
   const detail =
     list &&
     list.filter((appointment) => appointment.appointmentId === patientAppointmentId)
