@@ -18,7 +18,7 @@ const PatientDetails = () => {
   }
   const history = useHistory()
   function handleOnClick() {
-    history.push('/patients')
+    history.goBack()
   }
   const allyProps = { params, headers, patientId, doctorKey }
 

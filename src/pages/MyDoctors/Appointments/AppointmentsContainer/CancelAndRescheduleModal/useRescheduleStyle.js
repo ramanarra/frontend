@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles'
 const useRescheduleStyle = makeStyles(() => ({
   rescheduled: {
     height: 900,
+    marginTop:'-90px'
   },
 
   dialogTitle: {
