@@ -60,10 +60,10 @@ function AppoinmentDetails() {
   const [handleUpload, data, Loading] = useUpload({
     onSuccess: () => {
       setUpload(false)
-      
+
     },
   })
-
+  const [newAppointmentId, setNewAppointmentId] = useState(0)
   const doctorKey = localStorage.getItem('docKey')
   const { appointmentId } = useParams()
   const params = { appointmentId: parseInt(appointmentId), doctorKey }
@@ -115,6 +115,9 @@ function AppoinmentDetails() {
   )
 
   useEffect(() => {
+    let id = response?.data?.appointment?.appointmentdetails?.id
+    setNewAppointmentId(id)
+
     if (response) {
       setOpen(true)
     }
@@ -123,6 +126,15 @@ function AppoinmentDetails() {
     }
   }, [response, data])
 
+  useEffect(() => {
+    if (newAppointmentId > 0) {
+      history.push(
+        `/patient/appoints/upcoming/appointmentDetail/${newAppointmentId}`
+      )
+
+      window.location.reload()
+    }
+  }, [newAppointmentId])
   const { fetchDeleteReport, isDeleteReportLoading } = useFetch({
     name: 'deleteReport',
     method: 'PUT',
@@ -172,7 +184,9 @@ function AppoinmentDetails() {
     }
     setOpen(false)
   }
-
+  function handleCancelSnackBarClose() {
+    history.push('patient/appointments/upcoming')
+  }
   function handleCloseReschedule() {
     setOpenReschedule(false)
   }
@@ -306,7 +320,7 @@ function AppoinmentDetails() {
         <td className="cell">
           <a href={data?.reportURL} target="_blank" download>
             <IconButton className="view-icon-btn" title="View">
-              <FileIcon className="view-icon" />
+              <VerticalAlignBottomOutlinedIcon className="view-icon" />
             </IconButton>
           </a>
         </td>
@@ -672,7 +686,7 @@ function AppoinmentDetails() {
           <SnackBar
             openDialog={open}
             message={response.data.message}
-            onclose={handleSnackBarClose}
+            onclose={handleCancelSnackBarClose}
             severity={'success'}
           />
         )) ||

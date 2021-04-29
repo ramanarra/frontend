@@ -13,7 +13,25 @@ import { setSelectedAppointmentId } from '../../../actions/doctor'
 import { BsFillChatDotsFill as ChatIcon } from 'react-icons/bs'
 import { CgPill as PillIcon } from 'react-icons/cg'
 import { MdClose as CloseIcon } from 'react-icons/md'
-
+import { makeStyles } from '@material-ui/core/styles'
+const useStyle = makeStyles(() => ({
+  unread: {
+    position: 'absolute',
+    top: '0px',
+    right: '0px',
+    width: 18,
+    height: 18,
+    background: '#44a4cc',
+    display: 'inline-flex',
+    textAlign: 'center',
+    borderRadius: '50%',
+    fontSize: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+}))
 const Sidebar = ({
   patientList,
   onPatientJoining,
@@ -40,6 +58,7 @@ const Sidebar = ({
   userRole,
   ...rest
 }) => {
+  const classes = useStyle()
   const isDoc = userRole === 'DOCTOR'
   const [index, setIndex] = useState(null)
   const [selected, setSelected] = useState(null)
@@ -183,6 +202,9 @@ const Sidebar = ({
                     <PillIcon className="other-icon" />
                   ) : (
                     <ChatIcon className="other-icon" />
+                  )}
+                  {!!notRead && tab !== 1 && (
+                    <span className={classes.unread}>{notRead}</span>
                   )}
                 </IconButton>
               ) : (

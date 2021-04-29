@@ -57,13 +57,16 @@ function LeaveCallModal({
             <CloseIcon className={classes.closeIcon} onClick={handleClose} />
           </Box>
           <Box>
-            <Typography className={classes.text} variant="h5">
-              Is your Appoinment/Consultation with {patientName} is Completed?
-            </Typography>
+            {patientAppointmentId ? (
+              <Typography className={classes.text} variant="h5">
+                Is your Appoinment/Consultation with {patientName} is Completed?
+              </Typography>
+            ) : (
+              <Typography className={classes.text} variant="h5">
+                Do you want to leave video conference ?
+              </Typography>
+            )}
 
-            {/* <Typography className={classes.text} variant="h5">
-              Are you sure want to leave the call?
-            </Typography> */}
             <Box className={classes.buttons} display="flex">
               <Box
                 className={classes.confirmButton}

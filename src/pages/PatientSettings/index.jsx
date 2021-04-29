@@ -74,12 +74,11 @@ function PatientSettings() {
   //   }
   // })
 
-
   const handleTimeout = () => {
     setLoadPage(false)
   }
 
-  setTimeout(() => handleTimeout(), 2000)
+  setTimeout(() => handleTimeout(), 500)
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
