@@ -67,11 +67,13 @@ function VideoConsulation({ sendMessage, setVideoStatus }) {
       }
 
       if (localStorage.getItem('loginUser') === 'doctor') {
-        const timer = setInterval(
-          () => socket.emit('getAppointmentListForDoctor'),
-          10000
-        )
-        setTimer(timer)
+        // const timer = setInterval(
+        //   () => 
+        socket.emit('getAppointmentListForDoctor')
+        // ,
+        //   10000
+        // )
+        // setTimer(timer)
       }
 
       socket.on('getDoctorAppointments', (data) => {

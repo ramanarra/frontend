@@ -61,7 +61,8 @@ function WaitingPatientList({ open, patientList, setOpen, handleJoinVideo, setCo
     }
   return (
     <Box>
-      <Dialog open={open} className={classes.waitingBox}>
+      {patientList &&
+            patientList.length > 0 && <Dialog open={open} className={classes.waitingBox}>
         <DialogContent>
           <Box display="flex" className={classes.header}>
             <Typography className={classes.heading} variant="h5">Waiting Patient List</Typography>
@@ -93,6 +94,7 @@ function WaitingPatientList({ open, patientList, setOpen, handleJoinVideo, setCo
             })}
         </DialogContent>
       </Dialog>
+      }
     </Box>
   )
 }
