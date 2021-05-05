@@ -210,7 +210,7 @@ function VideoConsulation({ sendMessage, setVideoStatus }) {
 
   return (
     <Fragment>
-      {(!location.isWaiting || isPaused) && (
+      {(!location.isWaiting) && (
         <ConfirmationModal
           open={open}
           handleOnOpen={setOpen}
