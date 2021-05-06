@@ -2,11 +2,11 @@ import clsx from 'clsx'
 import React from 'react'
 
 const Entry = ({ data, index, hasMultiple }) => {
-  const { attachment, comments, filename, filetype, reportdate } = data
+  const { reportURL, comments, fileName, filetype, reportdate } = data
   return (
     <div className="rprt-entry">
-      <a className="report" href={attachment} target="_blank">
-        {`${hasMultiple ? `${index+1}) ` : ''}${filename}`}
+      <a className="report" href={reportURL} target="_blank">
+        {`${hasMultiple ? `${index+1}) ` : ''}${fileName}`}
       </a>
       {comments && <span className={clsx("comment", hasMultiple && 'has-index')}>( {comments} )</span>}
     </div>
