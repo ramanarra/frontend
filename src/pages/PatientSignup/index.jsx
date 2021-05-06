@@ -77,7 +77,7 @@ const PatientSignup = (props) => {
             localStorage.setItem('virujhToken', data.patient.accessToken)
             localStorage.setItem('patientId', data.patient.patientId)
             localStorage.setItem(
-              'patientName',
+              'patientName', 
               `${data.details.firstName} ${data.details.lastName}`
             )
             setMessage('Thanks! Your account has been created successfully')
