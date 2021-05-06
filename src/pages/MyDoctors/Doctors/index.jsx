@@ -61,18 +61,17 @@ function Doctors({ doctorList, setSocket, socket, setTimer, timer }) {
           socket.emit('updateLiveStatusOfUser', { status: 'online' })
         }
 
-        const timer = setInterval(
-          () => {
-            //console.log('MyDoctors.doctors:scoket:getAppointmentListForDoctor:');
-            socket.emit('getAppointmentListForDoctor');
-          },
-          10000
-        )
+        // const timer = setInterval(
+        //   () => 
+        socket.emit('getAppointmentListForDoctor')
+        // ,
+        //   10000
+        // )
 
         socket.on('getDoctorAppointments', (data) => {
           //console.log('MyDoctors.doctors:scoket.on:getDoctorAppointments:');
           setPatientList(data)
-          setTimer(timer)
+          // setTimer(timer)
         })
       })
       setSocket(socket)
@@ -95,7 +94,7 @@ function Doctors({ doctorList, setSocket, socket, setTimer, timer }) {
   function handleJOinVideo(patient) {
     history.push({
       pathname: '/video-consultation',
-      state: { appointmentId: patient },
+      state: patient,
       isWaiting: true,
       socket: socket,
     })

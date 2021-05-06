@@ -67,14 +67,13 @@ function VideoConsulation({ sendMessage, setVideoStatus }) {
       }
 
       if (localStorage.getItem('loginUser') === 'doctor') {
-        const timer = setInterval(
-          () => {
-            //console.log('Pages.VideoConsultation:scoket:getAppointmentListForDoctor:');
-            socket.emit('getAppointmentListForDoctor')
-          },
-          10000
-        )
-        setTimer(timer)
+        // const timer = setInterval(
+        //   () => 
+        socket.emit('getAppointmentListForDoctor')
+        // ,
+        //   10000
+        // )
+        // setTimer(timer)
       }
 
       socket.on('getDoctorAppointments', (data) => {
@@ -215,7 +214,7 @@ function VideoConsulation({ sendMessage, setVideoStatus }) {
 
   return (
     <Fragment>
-      {(!location.isWaiting || isPaused) && (
+      {(!location.isWaiting) && (
         <ConfirmationModal
           open={open}
           handleOnOpen={setOpen}
