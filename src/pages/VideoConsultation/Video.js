@@ -54,7 +54,7 @@ function VideoConsultotion({
   const [patientName, setPatientName] = useState('')
 
   function onPatientJoining(appointmenttId, patientName) {
-    socket.emit('createTokenForPatientByDoctor', appointmenttId)
+    socket.emit('createTokenForPatientByDoctor', appointmenttId ?? appointmentId)
     setPatientName(patientName)
   }
 

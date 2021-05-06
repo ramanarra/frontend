@@ -157,7 +157,7 @@ function PatientList({
       {patientList &&
         patientList.map((patientDetails, index) => {
           const isCurrentAppointment =
-            presentAppointmentId === patientDetails.appointmentId
+            presentAppointmentId === patientDetails.appointmentId || patientDetails.appointmentId === waitingPatient
 
           return (
             <Box
