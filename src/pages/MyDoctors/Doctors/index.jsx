@@ -43,6 +43,7 @@ function Doctors({ doctorList, setSocket, socket, setTimer, timer }) {
   }
 
   useEffect(() => {
+    //console.log("MyDoctors.Doctors.index.useEffect:default:"+localStorage.getItem('loginUser')+", patientList:"+patientList+", open:"+open+", count:"+count);
     if (localStorage.getItem('loginUser') === 'doctor') {
       const socket = socketIOClient(ENDPOINT, {
         transports: ['websocket'],
@@ -53,6 +54,7 @@ function Doctors({ doctorList, setSocket, socket, setTimer, timer }) {
         path: '/socket.io',
       })
 
+      //TODO: need to clean this code, no need of having the timer based emit of "getAppointmentListForDoctor"
       socket.on('connect', function () {
         if (localStorage.getItem('loginUser') === 'doctor') {
           socket.emit('createTokenForDoctor')
@@ -67,6 +69,7 @@ function Doctors({ doctorList, setSocket, socket, setTimer, timer }) {
         // )
 
         socket.on('getDoctorAppointments', (data) => {
+          //console.log('MyDoctors.doctors:scoket.on:getDoctorAppointments:');
           setPatientList(data)
           // setTimer(timer)
         })
@@ -82,6 +85,7 @@ function Doctors({ doctorList, setSocket, socket, setTimer, timer }) {
     )
 
   useEffect(() => {
+    //console.log("MyDoctors.Doctors.index.useEffect:default:"+localStorage.getItem('loginUser')+", patientList:"+patientList+", open:"+open+", count:"+count+",  readyPatient:"+readyPatient);
     if (readyPatient && readyPatient.length > 0 && count === 0) {
       setOpen(true)
     }

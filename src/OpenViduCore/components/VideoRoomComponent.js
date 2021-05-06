@@ -17,12 +17,15 @@ var localUser = new UserModel()
 class VideoRoomComponent extends Component {
   constructor(props) {
     super(props)
+    console.log("OpenViduCore:VideoRoomComponent constructor");
     this.hasBeenUpdated = false
     this.layout = new OpenViduLayout()
     let sessionName = this.props.sessionName ? this.props.sessionName : 'SessionA'
     let userName = this.props.user
       ? this.props.user
-      : 'OpenVidu_User' + Math.floor(Math.random() * 100)
+      : 'OpenVidu_User' + Math.floor(Math.random() * 100);
+    this.remotes = [];
+    this.localUserAccessAllowed = false;  
     this.state = {
       mySessionId: sessionName,
       myUserName: userName,
@@ -50,6 +53,7 @@ class VideoRoomComponent extends Component {
   }
 
   componentDidMount() {
+    console.log("OpenViduCore:VideoRoomComponent componentDidMount");
     const openViduLayoutOptions = {
       maxRatio: 3 / 4, // The narrowest ratio that will be used (default 2x3)
       minRatio: 3 / 4, // The widest ratio that will be used (default 16x9)
@@ -76,6 +80,7 @@ class VideoRoomComponent extends Component {
   }
 
   componentWillUnmount() {
+    console.log("OpenViduCore:VideoRoomComponent componentWillUnmount");
     window.removeEventListener('beforeunload', this.onbeforeunload)
     window.removeEventListener('resize', this.updateLayout)
     window.removeEventListener('resize', this.checkSize)
@@ -83,10 +88,12 @@ class VideoRoomComponent extends Component {
   }
 
   onbeforeunload(event) {
+    console.log("OpenViduCore:VideoRoomComponent onbeforeunload");
     this.leaveSession()
   }
 
   joinSession() {
+    console.log("OpenViduCore:VideoRoomComponent joinsession");
     this.OV = new OpenVidu()
 
     this.setState(
@@ -102,12 +109,14 @@ class VideoRoomComponent extends Component {
   }
 
   connectToSession() {
+    console.log("OpenViduCore:VideoRoomComponent connectToSession");
     if (this.props.token !== undefined) {
       this.connect(this.props.token)
     }
   }
 
   connect(token) {
+    console.log("OpenViduCore:VideoRoomComponent connect:");
     this.state.session
       .connect(token, { clientData: this.state.myUserName })
       .then(() => {
@@ -138,11 +147,15 @@ class VideoRoomComponent extends Component {
     })
 
     if (this.state.session.capabilities.publish) {
-      this.state.session.publish(publisher).then(() => {
-        if (this.props.joinSession) {
-          this.props.joinSession()
-        }
-      })
+      publisher.on('accessAllowed' , () => {
+        this.state.session.publish(publisher).then(() => {
+            this.updateSubscribers();
+            this.localUserAccessAllowed = true;
+            if (this.props.joinSession) {
+                this.props.joinSession();
+            }
+        });
+      });
     }
     localUser.setNickname(this.state.myUserName)
     localUser.setConnectionId(this.state.session.connection.connectionId)
@@ -185,7 +198,29 @@ class VideoRoomComponent extends Component {
     })
   }
 
+  updateSubscribers() {
+      var subscribers = this.remotes;
+      this.setState(
+          {
+              subscribers: subscribers,
+          },
+          () => {
+
+              if (this.state.localUser) {
+                  this.sendSignalUserChanged({
+                      isAudioActive: this.state.localUser.isAudioActive(),
+                      isVideoActive: this.state.localUser.isVideoActive(),
+                      nickname: this.state.localUser.getNickname(),
+                      isScreenShareActive: this.state.localUser.isScreenShareActive(),
+                  });
+              }
+              this.updateLayout();
+          },
+      );
+  }
+
   leaveSession(status) {
+    console.log("OpenViduCore:VideoRoomComponent leavesession");
     const mySession = this.state.session
 
     // const  history  = useHistory()
@@ -214,6 +249,7 @@ class VideoRoomComponent extends Component {
     this.props.clearMessages()
   }
   camStatusChanged() {
+    console.log("OpenViduCore:VideoRoomComponent camStatusChanged");
     localUser.setVideoActive(!localUser.isVideoActive())
     localUser.getStreamManager().publishVideo(localUser.isVideoActive())
     this.sendSignalUserChanged({ isVideoActive: localUser.isVideoActive() })
@@ -221,6 +257,7 @@ class VideoRoomComponent extends Component {
   }
 
   micStatusChanged() {
+    console.log("OpenViduCore:VideoRoomComponent micStatusChanged");
     localUser.setAudioActive(!localUser.isAudioActive())
     localUser.getStreamManager().publishAudio(localUser.isAudioActive())
     this.sendSignalUserChanged({ isAudioActive: localUser.isAudioActive() })
@@ -228,6 +265,7 @@ class VideoRoomComponent extends Component {
   }
 
   nicknameChanged(nickname) {
+    console.log("OpenViduCore:VideoRoomComponent nicknamechanged");
     let localUser = this.state.localUser
     localUser.setNickname(nickname)
     this.setState({ localUser: localUser })
@@ -237,6 +275,7 @@ class VideoRoomComponent extends Component {
   }
 
   deleteSubscriber(stream) {
+    console.log("OpenViduCore:VideoRoomComponent deletesubscriber");
     const remoteUsers = this.state.subscribers
     const userStream = remoteUsers.filter(
       (user) => user.getStreamManager().stream === stream
@@ -251,9 +290,10 @@ class VideoRoomComponent extends Component {
   }
 
   subscribeToStreamCreated() {
+    console.log("OpenViduCore:VideoRoomComponent subscribeToStreamCreated");
     this.state.session.on('streamCreated', (event) => {
       const subscriber = this.state.session.subscribe(event.stream, undefined)
-      var subscribers = this.state.subscribers
+      //var subscribers = this.state.subscribers
       subscriber.on('streamPlaying', (e) => {
         this.checkSomeoneShareScreen()
         subscriber.videos[0].video.parentElement.classList.remove('custom-class')
@@ -264,27 +304,15 @@ class VideoRoomComponent extends Component {
       newUser.setType('remote')
       const nickname = event.stream.connection.data.split('%')[0]
       newUser.setNickname(JSON.parse(nickname).clientData)
-      subscribers.push(newUser)
-      this.setState(
-        {
-          subscribers: subscribers,
-        },
-        () => {
-          if (this.state.localUser) {
-            this.sendSignalUserChanged({
-              isAudioActive: this.state.localUser.isAudioActive(),
-              isVideoActive: this.state.localUser.isVideoActive(),
-              nickname: this.state.localUser.getNickname(),
-              isScreenShareActive: this.state.localUser.isScreenShareActive(),
-            })
-          }
-          this.updateLayout()
-        }
-      )
+      this.remotes.push(newUser);
+      if(this.localUserAccessAllowed) {
+          this.updateSubscribers();
+      }
     })
   }
 
   subscribeToStreamDestroyed() {
+    console.log("OpenViduCore:VideoRoomComponent subscribeToStreamDestroyed");
     // On every Stream destroyed...
     this.state.session.on('streamDestroyed', (event) => {
       // Remove the stream from 'subscribers' array
@@ -298,6 +326,7 @@ class VideoRoomComponent extends Component {
   }
 
   subscribeToUserChanged() {
+    console.log("OpenViduCore:VideoRoomComponent subscribeToUserChanged");
     this.state.session.on('signal:userChanged', (event) => {
       let remoteUsers = this.state.subscribers
       remoteUsers.forEach((user) => {
@@ -327,12 +356,14 @@ class VideoRoomComponent extends Component {
   }
 
   updateLayout() {
+    //console.log("OpenViduCore:VideoRoomComponent updateLayout");
     setTimeout(() => {
       this.layout.updateLayout()
     }, 20)
   }
 
   sendSignalUserChanged(data) {
+    console.log("OpenViduCore:VideoRoomComponent sendSignalUserChanged");
     const signalOptions = {
       data: JSON.stringify(data),
       type: 'userChanged',
@@ -341,6 +372,7 @@ class VideoRoomComponent extends Component {
   }
 
   toggleFullscreen() {
+    console.log("OpenViduCore:VideoRoomComponent toggleFullscreen");
     const document = window.document
     const fs = document.getElementById('container')
     if (
@@ -372,6 +404,7 @@ class VideoRoomComponent extends Component {
   }
 
   screenShare() {
+    console.log("OpenViduCore:VideoRoomComponent screenShare");
     const videoSource =
       navigator.userAgent.indexOf('Firefox') !== -1 ? 'window' : 'screen'
     const publisher = this.OV.initPublisher(
@@ -414,15 +447,18 @@ class VideoRoomComponent extends Component {
   }
 
   closeDialogExtension() {
+    console.log("OpenViduCore:VideoRoomComponent closeDialogExtension");
     this.setState({ showExtensionDialog: false })
   }
 
   stopScreenShare() {
+    console.log("OpenViduCore:VideoRoomComponent stopScreenShare");
     this.state.session.unpublish(localUser.getStreamManager())
     this.connectWebCam()
   }
 
   checkSomeoneShareScreen() {
+    //console.log("OpenViduCore:VideoRoomComponent checkSomeoneShareScreen");
     let isScreenShared
     // return true if at least one passes the test
     isScreenShared =
@@ -445,6 +481,7 @@ class VideoRoomComponent extends Component {
   }
 
   toggleChat(property) {
+    console.log("OpenViduCore:VideoRoomComponent toggleChat");
     let display = property
 
     if (display === undefined) {
@@ -459,11 +496,13 @@ class VideoRoomComponent extends Component {
   }
 
   checkNotification(event) {
+    console.log("OpenViduCore:VideoRoomComponent checkNotification");
     this.setState({
       messageReceived: this.state.chatDisplay === 'none',
     })
   }
   checkSize() {
+    console.log("OpenViduCore:VideoRoomComponent checkSize");
     if (
       document.getElementById('layout').offsetWidth <= 700 &&
       !this.hasBeenUpdated
@@ -477,6 +516,7 @@ class VideoRoomComponent extends Component {
   }
 
   render() {
+    //console.log("OpenViduCore:VideoRoomComponent render");
     const mySessionId = this.state.mySessionId
     const localUser = this.state.localUser
     var chatDisplay = { display: this.state.chatDisplay }

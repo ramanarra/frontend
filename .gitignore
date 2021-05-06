@@ -6,11 +6,13 @@
 .pnp.js
 package-lock.json
 
+virujh-static
+
 # testing
 /coverage
 
 # production
-/build
+#/build
 
 # misc
 .DS_Store

@@ -40,12 +40,12 @@ function VideoConsulation({ sendMessage, setVideoStatus }) {
   const isPaused = useMemo(() => location.state?.isPaused, [
     location.state?.isPaused,
   ])
-
   const appointmentId = useMemo(() => location.state, [location.state])
   const currentAppointmentId = location.state?.appointmentId
 
   const id = currentAppointmentId ? currentAppointmentId : appointmentId
   useEffect(() => {
+    //console.log("VideoConsultation useEffect1:");
     setOpen(true)
 
     const socket = socketIOClient(ENDPOINT, {
@@ -77,6 +77,7 @@ function VideoConsulation({ sendMessage, setVideoStatus }) {
       }
 
       socket.on('getDoctorAppointments', (data) => {
+        //console.log('Pages.VideoConsultation:scoket.on:getDoctorAppointments:');
         setPatientList(data)
       })
       socket.on('videoTokenForDoctor', (data) => {
@@ -149,6 +150,7 @@ function VideoConsulation({ sendMessage, setVideoStatus }) {
   }
 
   useEffect(() => {
+    //console.log("VideoConsultation useEffect 2 patientList:"+patientList);
     if (location.isWaiting && patientList) {
       patientList.map((patient, index) => {
         if (patient.appointmentId === location.state.appointmentId) {
@@ -160,6 +162,7 @@ function VideoConsulation({ sendMessage, setVideoStatus }) {
   }, [patientList])
 
   useEffect(() => {
+    //console.log("VideoConsultation useEffect 3 prescription:"+prescription);
     if (!!prescription) {
       sendMessage(
         {
@@ -184,6 +187,7 @@ function VideoConsulation({ sendMessage, setVideoStatus }) {
   })
 //to get appointmentId for report
   useEffect(() => {
+    //console.log("VideoConsultation useEffect 4 appointmentId:"+appointmentId);
     if(!!appointmentId) {
       fetchAppointmentReport({
         params: {
@@ -196,8 +200,8 @@ function VideoConsulation({ sendMessage, setVideoStatus }) {
 
   useEffect(() => {
     //to send reports to chat
-
     if (!!appointmentReport && !!appointmentReport?.reports?.length ) {
+      //console.log("VideoConsultation useEffect 5 appointmentReport:"+appointmentReport);
       sendMessage({
         message: `Appointment report`,
         from: localStorage.getItem('loginUser') === 'patient' ? 'user' : 'sender',

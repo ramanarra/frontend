@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+
+  virujh-frontend:
+    build:
+     context: .
+     dockerfile: ./docker-config/Dockerfile-prod
+    network_mode: host
+    volumes:
+      - ./docker-config/nginx/production/nginx.conf:/etc/nginx/conf.d/default.conf
+
+  php:
+    network_mode: host
+

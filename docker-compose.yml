@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+
+  virujh-frontend:
+    container_name: virujh-nginx
+    restart: on-failure
+
+  php:
+    container_name: php-service
+    restart: on-failure
+    build:
+      context: .
+      dockerfile: ./docker-config/Dockerfile-php
+    volumes:
+      - ./virujh-static:/var/www/html
+
+    
+
