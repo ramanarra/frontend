@@ -187,7 +187,7 @@ function VideoConsulation({ sendMessage, setVideoStatus }) {
     if(!!appointmentId) {
       fetchAppointmentReport({
         params: {
-          appointmentId
+          appointmentId: appointmentId?.appointmentId
         }
       })
     }
