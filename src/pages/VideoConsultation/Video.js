@@ -60,9 +60,9 @@ function VideoConsultotion({
 
   function leaveCall(status) {
     if (localStorage.getItem('loginUser') === 'doctor') {
-      if (appointmenttId) {
+      if (appointmenttId ?? appointmentId) {
         socket.emit('removePatientTokenByDoctor', {
-          appointmentId: appointmenttId,
+          appointmentId: appointmenttId ?? appointmentId,
           status: status,
         })
         socket.emit('removeSessionAndTokenByDoctor')
