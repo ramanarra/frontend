@@ -266,7 +266,16 @@ function AppoinmentDetails() {
     moment(currentTime, 'DD/MM/YYYY HH:mm:ss A')
   )
 
-  const differenceInDays = moment.duration(difference)
+  
+  let differenceInDays = moment.duration(difference)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      differenceInDays = moment.duration(difference)
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
 
   const days =
     NumberToWords.toWords(differenceInDays.days()).charAt(0).toUpperCase() +

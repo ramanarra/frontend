@@ -46,27 +46,27 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload, 
 
   const [values, setValues] = useState({
     patientId: Number(patientId),
-    photo: patientDetails.photo,
-    //name: patientDetails.name,
-    firstName: patientDetails.firstName ?? '-',
-    lastName: patientDetails.lastName ? patientDetails.lastName : '-',
+    photo: patientDetails?.photo ?? '',
+    //name: patientDetails?.name,
+    firstName: patientDetails?.firstName ?? '-',
+    lastName: patientDetails?.lastName ? patientDetails?.lastName : '-',
 
-    landmark: patientDetails.landmark ? patientDetails.landmark : '-',
-    country: patientDetails.country ? patientDetails.country : '-',
-    registrationNumber: patientDetails.registrationNumber ? patientDetails.registrationNumber : '-',
-    address: patientDetails.address ? patientDetails.address : '-',
-    city: patientDetails.city ? patientDetails.city : '-',
-    state: patientDetails.state ? patientDetails.state : '-',
-    pincode: patientDetails.pincode ? patientDetails.pincode : '-',
-    email: patientDetails.email ? patientDetails.email : '-',
+    landmark: patientDetails?.landmark ? patientDetails?.landmark : '-',
+    country: patientDetails?.country ? patientDetails?.country : '-',
+    registrationNumber: patientDetails?.registrationNumber ? patientDetails?.registrationNumber : '-',
+    address: patientDetails?.address ? patientDetails?.address : '-',
+    city: patientDetails?.city ? patientDetails?.city : '-',
+    state: patientDetails?.state ? patientDetails?.state : '-',
+    pincode: patientDetails?.pincode ? patientDetails?.pincode : '-',
+    email: patientDetails?.email ? patientDetails?.email : '-',
 
   })
 
   useEffect(() => {
-    localStorage.setItem('patientName', `${patientDetails.firstName} ${patientDetails.lastName}`)
-    localStorage.setItem('photo', patientDetails.photo)
-    rest.setPatientName(`${patientDetails.firstName} ${patientDetails.lastName}`)
-    rest.setPatientProfile(patientDetails.photo)
+    localStorage.setItem('patientName', `${patientDetails?.firstName} ${patientDetails?.lastName}`)
+    localStorage.setItem('photo', patientDetails?.photo)
+    rest.setPatientName(`${patientDetails?.firstName} ${patientDetails?.lastName}`)
+    rest.setPatientProfile(patientDetails?.photo)
   }, [patientDetails])
 
 
@@ -83,16 +83,18 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload, 
       [event.target.name]: event.target.value,
     })
     if (event.target.name === 'firstName') {
-      patientDetails.firstName = event.target.value;
+      patientDetails = patientDetails ? patientDetails : {};
+      patientDetails['firstName'] = event.target.value;
     }
 
     if (event.target.name === 'lastName') {
-      patientDetails.lastName = event.target.value;
+      patientDetails = patientDetails ? patientDetails : {};
+      patientDetails['lastName'] = event.target.value;
     }
     setContent({
       ...content,
       patientId: Number(patientId),
-      name: `${patientDetails.firstName} ${patientDetails.lastName}`,
+      name: `${patientDetails?.firstName} ${patientDetails?.lastName}`,
       [event.target.name]: event.target.value,
     })
     if (event.target.name === 'name') {
@@ -144,8 +146,8 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload, 
   }
 
   if (name && reload) {
-    //localStorage.setItem('patientName', patientDetails.name)
-    localStorage.setItem('patientName', `${patientDetails.firstName} ${patientDetails.lastName}`)
+    //localStorage.setItem('patientName', patientDetails?.name)
+    localStorage.setItem('patientName', `${patientDetails?.firstName} ${patientDetails?.lastName}`)
     setName(false)
     setReload(false)
     history.push('/patient/setting')
@@ -168,7 +170,7 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload, 
         {/* profile photo edit */}
         <Box className={classes.photoContainer} display="flex">
           <Avatar
-            src={patientDetails.photo}
+            src={patientDetails?.photo}
             className={classes.photo}
             alt="profile photo"
             name="photo"
