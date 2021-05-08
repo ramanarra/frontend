@@ -131,7 +131,10 @@ function HospitalDetails({ hospitalDetails, isAbleToWrite, onSave, ...rest }) {
               className={classes.textField}
               variant="outlined"
               value={values.country}
-              onChange={handleOnEdit}
+              onChange={(e) => {
+                e.target.value = e.target.value.replace(/[^A-Za-z ]/ig, '')
+                handleOnEdit(e)
+              }}
               disabled={fieldName.length === 0 ? true : !Boolean(fieldName.filter((field) => field === 'country').length)}
             />
             <Box> 
@@ -199,7 +202,10 @@ function HospitalDetails({ hospitalDetails, isAbleToWrite, onSave, ...rest }) {
               className={classes.textField}
               variant="outlined"
               value={values.cityState}
-              onChange={handleOnEdit}
+              onChange={(e) => {
+                e.target.value = e.target.value.replace(/[^A-Za-z ]/ig, '')
+                handleOnEdit(e)
+              }}
               disabled={fieldName.length === 0 ? true : !Boolean(fieldName.filter((field) => field === 'cityState').length)}
             />
             <Box>

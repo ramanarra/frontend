@@ -206,7 +206,10 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload, 
                   className={classes.textField}
                   variant="outlined"
                   value={values.firstName}
-                  onChange={handleOnEdit}
+                  onChange={(e) => {
+                    e.target.value = e.target.value.replace(/[^A-Za-z ]/ig, '')
+                    handleOnEdit(e)
+                  }}
                   disabled={fieldName.length === 0 ? true : !Boolean(fieldName.filter((field) => field === 'firstName').length)}
                 />
                 <EditButton
@@ -227,7 +230,10 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload, 
                   className={classes.textField}
                   variant="outlined"
                   value={values.lastName}
-                  onChange={handleOnEdit}
+                  onChange={(e) => {
+                    e.target.value = e.target.value.replace(/[^A-Za-z ]/ig, '')
+                    handleOnEdit(e)
+                  }}
                   disabled={fieldName.length === 0 ? true : !Boolean(fieldName.filter((field) => field === 'lastName').length)}
                 />
                 <EditButton
@@ -268,7 +274,10 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload, 
                   className={classes.textField}
                   variant="outlined"
                   value={values.country}
-                  onChange={handleOnEdit}
+                  onChange={(e) => {
+                    e.target.value = e.target.value.replace(/[^A-Za-z ]/ig, '')
+                    handleOnEdit(e)
+                  }}
                   disabled={fieldName.length === 0 ? true : !Boolean(fieldName.filter((field) => field === 'country').length)}
                   />
                 <EditButton
@@ -331,7 +340,10 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload, 
                   className={classes.textField}
                   variant="outlined"
                   value={values.state}
-                  onChange={handleOnEdit}
+                  onChange={(e) => {
+                    e.target.value = e.target.value.replace(/[^A-Za-z ]/ig, '')
+                    handleOnEdit(e)
+                  }}
                   disabled={fieldName.length === 0 ? true : !Boolean(fieldName.filter((field) => field === 'state').length)}
                   />
                 <EditButton
@@ -353,7 +365,10 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload, 
                   className={classes.textField}
                   variant="outlined"
                   value={values.city}
-                  onChange={handleOnEdit}
+                  onChange={(e) => {
+                    e.target.value = e.target.value.replace(/[^A-Za-z ]/ig, '')
+                    handleOnEdit(e)
+                  }}
                   disabled={fieldName.length === 0 ? true : !Boolean(fieldName.filter((field) => field === 'city').length)}
                 />
                 <EditButton
