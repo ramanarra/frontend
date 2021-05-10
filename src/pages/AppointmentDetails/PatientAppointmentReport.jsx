@@ -79,9 +79,10 @@ function PatientAppointmentReport({
   }, [paginationStart, upload])
 
   useEffect(() => {
+    console.log(patientList, patientList?.list, lastfileId)
     if (lastfileId) {
       patientList?.list?.map(function (o) {
-        if (lastfileId < o.id) selectedFiles.push(o)
+        // if (lastfileId < o.id) selectedFiles.push(o)
       })
       setFile([])
     }
@@ -115,7 +116,7 @@ function PatientAppointmentReport({
   }
 
   const handleUploadReport = (e) => {
-    setFileName(file[0].name)
+    // setFileName(file[0].name)
     const comments = report.comments
     const patientId = localStorage.getItem('patientId')
     file.map((value, index) => {
