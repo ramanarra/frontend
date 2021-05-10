@@ -266,7 +266,17 @@ function AppoinmentDetails() {
     moment(currentTime, 'DD/MM/YYYY HH:mm:ss A')
   )
 
-  const differenceInDays = moment.duration(difference)
+  let differenceInDays = moment.duration(difference)
+
+  const [seconds, setSeconds] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setSeconds(seconds => seconds + 1);
+      differenceInDays = moment.duration(difference)
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   const days =
     NumberToWords.toWords(differenceInDays.days()).charAt(0).toUpperCase() +
@@ -602,6 +612,7 @@ function AppoinmentDetails() {
                     >{`${minutes} more minutes to join`}</Typography>
                   ))
                 )}
+                <Typography style={{display: 'none'}}>{seconds}</Typography>
               </Box>
             </Box>
 

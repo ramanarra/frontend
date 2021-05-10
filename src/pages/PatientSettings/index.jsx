@@ -106,6 +106,17 @@ function PatientSettings() {
               name={name}
             />
           )}
+          {!data && (
+            <PatientDetails
+              patientDetails={data}
+              patientId={patientId}
+              onSave={onSave}
+              setReload={setReload}
+              reload={reload}
+              setName={setName}
+              name={name}
+            />
+          )}
         </Box>
       )}
       {loadPage && <CircularProgress className={classes.spinner} />}

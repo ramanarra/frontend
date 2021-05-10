@@ -407,7 +407,7 @@ const PatientSignup = (props) => {
             <Textfield
               name="country"
               label="Country"
-              placeholder="india"
+              placeholder="India"
               isRequired
               inputProps={{
                 ref: register({
