@@ -197,7 +197,7 @@ function ConfirmationPopUp({
                     <Typography
                       className={classes.value}
                       variant="h5"
-                    >{`${'Dr. '}${doctorName}`}</Typography>
+                    >{`${doctorName ? ('Dr. ' + doctorName) : ''}`}</Typography>
                   </Box>
                   <Box display="flex">
                     <Typography className={classes.fieldName}>Date:</Typography>
@@ -210,7 +210,7 @@ function ConfirmationPopUp({
                     <Typography
                       className={classes.value}
                       variant="h5"
-                    >{`${startTime}${'-'}${endTime}`}</Typography>
+                    >{`${startTime ? (startTime + '-') : ''}${endTime ? endTime : ''}`}</Typography>
                   </Box>
                 </Box>
               )}
@@ -232,15 +232,14 @@ function ConfirmationPopUp({
                       <Typography className={classes.errorMsg}>
                         {liveStatus
                           ? `${'Requested Doctor to Join Please wait...'}`
-                          : `${'Waiting for '}${'Dr. '}${doctorName}${' to come online'}`}
+                          : `${'Waiting for Dr. '}${doctorName && doctorName!= 'undefined' ? doctorName : ''}${' to come online'}`}
                       </Typography>
                     )
                   : localStorage.getItem('loginUser') === 'patient' && (
                       <Typography className={classes.message}>
                         {isPaused
                           ? 'Dr. ${doctorName} has placed you on hold'
-                          : `Take Online ${'Dr. '}
-                        ${doctorName} Consultation`}
+                          : `Please Join On Consultation Call ${doctorName && doctorName!= 'undefined' ? ('With Dr.'+ doctorName) : doctorName} `}
                       </Typography>
                     )}
               </Box>

@@ -6,7 +6,7 @@ import { Box } from '@material-ui/core'
 import OpenViduReact from '../../OpenViduCore/components/VideoRoomComponent'
 import ToolBarComponent from './Toolbar'
 import Sidebar from './Sidebar/index'
-import { setOpenSideBar } from '../../actions/doctor'
+import { setOpenSideBar, clearMessages } from '../../actions/doctor'
 
 function VideoConsultotion({
   token,
@@ -25,6 +25,7 @@ function VideoConsultotion({
   setPatientAppointmentId,
   setOpenSideBar,
   prescription,
+  clearMessages,
 }) {
   const [end, setEnd] = useState(false)
 
@@ -60,9 +61,9 @@ function VideoConsultotion({
 
   function leaveCall(status) {
     if (localStorage.getItem('loginUser') === 'doctor') {
-      if (appointmenttId) {
+      if (appointmenttId ?? appointmentId) {
         socket.emit('removePatientTokenByDoctor', {
-          appointmentId: appointmenttId,
+          appointmentId: appointmenttId ?? appointmentId,
           status: status,
         })
         socket.emit('removeSessionAndTokenByDoctor')
@@ -79,6 +80,7 @@ function VideoConsultotion({
         state: appointmentId,
       })
       socket.disconnect()
+      clearMessages({})
       // }
     }
   }
@@ -181,6 +183,7 @@ function VideoConsultotion({
 const mapDispatchToProps = (dispatch) => {
   return {
     setOpenSideBar: (data) => dispatch(setOpenSideBar(data)),
+    clearMessages: (data) => dispatch(clearMessages(data))
   }
 }
 

@@ -259,7 +259,7 @@ const Sidebar = ({
 
           {tab === 2 && (
             <MedicineList
-              appointmentId={selected}
+            appointmentId={selected || appointmentId}
               userRole={userRole}
               socket={socket}
             />
