@@ -494,6 +494,7 @@ function AppoinmentDetails() {
 
                 {reportOpen && (
                   <PatientAppointmentReport
+                    savedFiles={appointmentDetails?.reportDetail}
                     open={reportOpen}
                     setOpen={setReportOpen}
                     setItem={setItem}

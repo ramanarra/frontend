@@ -58,3 +58,7 @@ text-align: center;
     content: ' *';
     color: red;
 }
+
+.report-list-panel .table-wrap {
+    max-height: calc(100vh - 518px) !important;
+}
