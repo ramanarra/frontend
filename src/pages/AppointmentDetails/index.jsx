@@ -108,12 +108,13 @@ function AppoinmentDetails() {
       appointmentId: params.appointmentId,
     }
   }, [])
+
   const [appointmentDetails, reFetch] = useCustomFecth(
     METHOD.GET,
     URL.appointmentDoctorDetails,
     key
   )
-
+  
   useEffect(() => {
     let id = response?.data?.appointment?.appointmentdetails?.id
     setNewAppointmentId(id)
@@ -135,23 +136,47 @@ function AppoinmentDetails() {
       window.location.reload()
     }
   }, [newAppointmentId])
-  const { fetchDeleteReport, isDeleteReportLoading } = useFetch({
+
+/*   const { fetchDeleteReport, isDeleteReportLoading } = useFetch({
     name: 'deleteReport',
     method: 'PUT',
     url: URL.deleteApi,
     initLoad: false,
     onSuccess: reFetch,
-  })
+  }) */
+
+    //update report id to appointment
+    const { fetchDeleteReport, isDeleteReportLoading } = useFetch({
+      name: 'deleteReport',
+      method: 'PUT',
+      url: '/calendar/patient/reportId',
+      initLoad: false,
+      onSuccess: reFetch,
+    })
+  
   function handleReportSnackbarClose() {
     setItem(false)
     reFetch(true)
   }
+
   function hanldeDelete(data) {
+    const reports = appointmentDetails?.reportDetail ? [...appointmentDetails.reportDetail] : []
+    const filteredReports = reports.filter(report => report.id !== data.id)
+    const ids = []
+    filteredReports.map((a) => ids.push(a.id.toString()))
+
     fetchDeleteReport({
+      params: {
+        appointmentId: appointmentId,
+        insertId: ids.toString(),
+      },
+    })
+
+    /* fetchDeleteReport({
       params: {
         id: data.id,
       },
-    })
+    }) */
     setShowAlert(true)
   }
 
@@ -504,6 +529,7 @@ function AppoinmentDetails() {
 
                 {reportOpen && (
                   <PatientAppointmentReport
+                    savedFiles={appointmentDetails?.reportDetail}
                     open={reportOpen}
                     setOpen={setReportOpen}
                     setItem={setItem}

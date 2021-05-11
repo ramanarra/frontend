@@ -15,6 +15,7 @@ import {
   makeStyles,
   Avatar,
   Button,
+  Snackbar,
 } from '@material-ui/core'
 import { METHOD, URL } from '../../api'
 import EditButton from '../../components/EditButton'
@@ -23,6 +24,7 @@ import useManualFetch from '../../hooks/useManualFetch'
 
 import { Tooltip, UploadImageTip } from '../../components/Tooltip'
 import messages from '../../lib/iconMsg'
+import Alert from '@material-ui/lab/Alert'
 
 function PatientDetails({ patientDetails, patientId, onSave, setReload, reload, name, setName, ...rest }) {
   const classes = useStyle()
@@ -39,6 +41,8 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload, 
   })
   const history = useHistory()
   const [open, setOpen] = useState(false)
+  const [alertMsg, setAlertMsg] = useState(false)
+  const [showAlert, setShowAlert] = useState(false)
   const handlePopupMsg = () => {
     setOpen(true)
   }
@@ -82,15 +86,13 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload, 
       ...values,
       [event.target.name]: event.target.value,
     })
-    if (event.target.name === 'firstName') {
-      patientDetails = patientDetails ? patientDetails : {};
-      patientDetails['firstName'] = event.target.value;
+    /* if (event.target.name === 'firstName') {
+      patientDetails.firstName = event.target.value;
     }
 
     if (event.target.name === 'lastName') {
-      patientDetails = patientDetails ? patientDetails : {};
-      patientDetails['lastName'] = event.target.value;
-    }
+      patientDetails.lastName = event.target.value;
+    } */
     setContent({
       ...content,
       patientId: Number(patientId),
@@ -117,19 +119,27 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload, 
     setContent();
   }
 
-  function handleOnSave() {
+  function handleOnSave(key) {
     if (Object.keys(content).length != 0) {
-      setContent({
-        ...content,
-        patientId: Number(patientId),
-      })
-
-      setValues({
-        ...values,
-        content
-      })
-
-      onSave(content)
+      if (key && !content[key]) {
+        setShowAlert(true)
+        setAlertMsg('Empty data not allowed for required fields')
+      } else {
+        setShowAlert(false)
+        setAlertMsg('')
+        
+        setContent({
+          ...content,
+          patientId: Number(patientId),
+        })
+  
+        setValues({
+          ...values,
+          content
+        })
+  
+        onSave(content)
+      }
     }
     setContent({});
   }
@@ -162,9 +172,21 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload, 
     setOpenSpinner(false)
   }, [profile])
 
+  const handleSnackBarClose = () => {
+    setShowAlert(false)
+    setAlertMsg('')
+  }
 
   return (
     <Box className={classes.container}>
+      {/* {showAlert && <Alert severity="warning">{alertMsg}</Alert>} */}
+
+      <Snackbar open={showAlert} autoHideDuration={6000} onClose={handleSnackBarClose}>
+        <Alert onClose={handleSnackBarClose} severity="warning">
+          {alertMsg}
+        </Alert>
+      </Snackbar>
+      
       <Box display="flex">
 
         {/* profile photo edit */}
@@ -199,7 +221,7 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload, 
         <Box display="flex" className={classes.detailsContainer}>
           <Box className={classes.right}>
             <Box className={classes.box}>
-              <Typography className={classes.text}>First Name</Typography>
+              <Typography className={`${classes.text} required-field`}>First Name</Typography>
               <Box display="flex">
                 <TextField
                   name="firstName"
@@ -217,13 +239,13 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload, 
                   onChange={handleOnChange}
                   name={'firstName'}
                   disable={() => handleDisable("firstName")}
-                  save={handleOnSave}
+                  save={() => handleOnSave('firstName')}
                 />
               </Box>
             </Box>
 
             <Box className={classes.box}>
-              <Typography className={classes.text}>Last Name</Typography>
+              <Typography className={`${classes.text} required-field`}>Last Name</Typography>
               <Box display="flex">
                 <TextField
                   name="lastName"
@@ -241,7 +263,7 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload, 
                   onChange={handleOnChange}
                   name={'lastName'}
                   disable={() => handleDisable("lastName")}
-                  save={handleOnSave}
+                  save={() => handleOnSave('lastName')}
                 />
               </Box>
             </Box>
@@ -262,12 +284,12 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload, 
                   onChange={handleOnChange}
                   name={'landmark'}
                   disable={() => handleDisable("landmark")}
-                  save={handleOnSave}
+                  save={() => handleOnSave()}
                 />
               </Box>
             </Box>
             <Box className={classes.box}>
-              <Typography className={classes.text}>Country</Typography>
+              <Typography className={`${classes.text} required-field`}>Country</Typography>
               <Box display="flex">
                 <TextField
                   name={'country'}
@@ -285,7 +307,7 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload, 
                   onChange={handleOnChange}
                   name={'country'}
                   disable={() => handleDisable("country")}
-                  save={handleOnSave}
+                  save={() => handleOnSave('country')}
                 />
               </Box>
             </Box>
@@ -305,7 +327,7 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload, 
                   onChange={handleOnChange}
                   name={'registrationNumber'}
                   disable={() => handleDisable("registrationNumber")}
-                  save={handleOnSave}
+                  save={() => handleOnSave('registrationNumber')}
                 />
               </Box>
             </Box>
@@ -313,7 +335,7 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload, 
           </Box>
           <Box className={classes.left}>
             <Box className={classes.box}>
-              <Typography className={classes.text}>Address</Typography>
+              <Typography className={`${classes.text} required-field`}>Address</Typography>
               <Box display="flex">
                 <TextField
                   name="address"
@@ -328,12 +350,12 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload, 
                   name={'address'}
                   onChange={handleOnChange}
                   disable={() => handleDisable("address")}
-                  save={handleOnSave}
+                  save={() => handleOnSave('address')}
                 />
               </Box>
             </Box>
             <Box className={classes.box}>
-              <Typography className={classes.text}>State</Typography>
+              <Typography className={`${classes.text} required-field`}>State</Typography>
               <Box display="flex">
                 <TextField
                   name="state"
@@ -351,14 +373,14 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload, 
                   name={'state'}
                   onChange={handleOnChange}
                   disable={() => handleDisable("state")}
-                  save={handleOnSave}
+                  save={() => handleOnSave('state')}
                 />
               </Box>
             </Box>
 
             {/* Adding city  */}
             <Box className={classes.box}>
-              <Typography className={classes.text}>City</Typography>
+              <Typography className={`${classes.text} required-field`}>City</Typography>
               <Box display="flex">
                 <TextField
                   name="city"
@@ -376,13 +398,13 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload, 
                   name={'city'}
                   onChange={handleOnChange}
                   disable={() => handleDisable("city")}
-                  save={handleOnSave}
+                  save={() => handleOnSave('city')}
                 />
               </Box>
             </Box>
 
             <Box className={classes.box}>
-              <Typography className={classes.text}>Pincode</Typography>
+              <Typography className={`${classes.text} required-field`}>Pincode</Typography>
               <Box display="flex">
                 <TextField
                   name="pincode"
@@ -397,12 +419,12 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload, 
                   name={'pincode'}
                   onChange={handleOnChange}
                   disable={() => handleDisable("pincode")}
-                  save={handleOnSave}
+                  save={() => handleOnSave('pincode')}
                 />
               </Box>
             </Box>
             <Box className={classes.box}>
-              <Typography className={classes.text}>Email ID</Typography>
+              <Typography className={`${classes.text} required-field`}>Email ID</Typography>
               <Box display="flex">
                 <TextField
                   name="email"
@@ -417,7 +439,7 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload, 
                   name={'email'}
                   onChange={handleOnChange}
                   disable={() => handleDisable("email")}
-                  save={handleOnSave}
+                  save={() => handleOnSave('email')}
                 />
                 
               </Box>
@@ -429,7 +451,7 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload, 
         </Box>
          
       </Box>
-      
+
     </Box>
     
   )
