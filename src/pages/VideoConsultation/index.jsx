@@ -114,6 +114,8 @@ function VideoConsulation({ sendMessage, setVideoStatus }) {
           socket.emit('updateLiveStatusOfUser', { status: 'online' })
           // }
         }
+      } else if (data.Videostatus == 'paused') {
+        setIsJoinDisabled(true)
       }
     })
 
