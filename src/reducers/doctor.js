@@ -70,7 +70,8 @@ const doctor = (state = intialState, action) => {
           ...state,
           messages: {
             ...state?.messages,
-            [action.appointmentId]: [...stemp, action.data],
+            // [action.appointmentId]: [...stemp, action.data],
+            [action.appointmentId]: [action.data]
           },
         }
       } else {

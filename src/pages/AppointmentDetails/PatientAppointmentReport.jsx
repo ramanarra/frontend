@@ -80,6 +80,7 @@ function PatientAppointmentReport({
   }, [paginationStart, upload])
 
   useEffect(() => {
+    console.log(patientList, patientList?.list, lastfileId)
     if (lastfileId) {
       const tempArr = [...selectedFiles]
 
@@ -122,7 +123,7 @@ function PatientAppointmentReport({
   }
 
   const handleUploadReport = (e) => {
-    setFileName(file[0].name)
+    // setFileName(file[0].name)
     const comments = report.comments
     const patientId = localStorage.getItem('patientId')
     file.map((value, index) => {

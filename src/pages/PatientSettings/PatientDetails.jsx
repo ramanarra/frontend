@@ -50,27 +50,27 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload, 
 
   const [values, setValues] = useState({
     patientId: Number(patientId),
-    photo: patientDetails.photo,
-    //name: patientDetails.name,
-    firstName: patientDetails.firstName ?? '-',
-    lastName: patientDetails.lastName ? patientDetails.lastName : '-',
+    photo: patientDetails?.photo ?? '',
+    //name: patientDetails?.name,
+    firstName: patientDetails?.firstName ?? '-',
+    lastName: patientDetails?.lastName ? patientDetails?.lastName : '-',
 
-    landmark: patientDetails.landmark ? patientDetails.landmark : '-',
-    country: patientDetails.country ? patientDetails.country : '-',
-    registrationNumber: patientDetails.registrationNumber ? patientDetails.registrationNumber : '-',
-    address: patientDetails.address ? patientDetails.address : '-',
-    city: patientDetails.city ? patientDetails.city : '-',
-    state: patientDetails.state ? patientDetails.state : '-',
-    pincode: patientDetails.pincode ? patientDetails.pincode : '-',
-    email: patientDetails.email ? patientDetails.email : '-',
+    landmark: patientDetails?.landmark ? patientDetails?.landmark : '-',
+    country: patientDetails?.country ? patientDetails?.country : '-',
+    registrationNumber: patientDetails?.registrationNumber ? patientDetails?.registrationNumber : '-',
+    address: patientDetails?.address ? patientDetails?.address : '-',
+    city: patientDetails?.city ? patientDetails?.city : '-',
+    state: patientDetails?.state ? patientDetails?.state : '-',
+    pincode: patientDetails?.pincode ? patientDetails?.pincode : '-',
+    email: patientDetails?.email ? patientDetails?.email : '-',
 
   })
 
   useEffect(() => {
-    localStorage.setItem('patientName', `${patientDetails.firstName} ${patientDetails.lastName}`)
-    localStorage.setItem('photo', patientDetails.photo)
-    rest.setPatientName(`${patientDetails.firstName} ${patientDetails.lastName}`)
-    rest.setPatientProfile(patientDetails.photo)
+    localStorage.setItem('patientName', `${patientDetails?.firstName} ${patientDetails?.lastName}`)
+    localStorage.setItem('photo', patientDetails?.photo)
+    rest.setPatientName(`${patientDetails?.firstName} ${patientDetails?.lastName}`)
+    rest.setPatientProfile(patientDetails?.photo)
   }, [patientDetails])
 
 
@@ -96,7 +96,7 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload, 
     setContent({
       ...content,
       patientId: Number(patientId),
-      name: `${patientDetails.firstName} ${patientDetails.lastName}`,
+      name: `${patientDetails?.firstName} ${patientDetails?.lastName}`,
       [event.target.name]: event.target.value,
     })
     if (event.target.name === 'name') {
@@ -156,8 +156,8 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload, 
   }
 
   if (name && reload) {
-    //localStorage.setItem('patientName', patientDetails.name)
-    localStorage.setItem('patientName', `${patientDetails.firstName} ${patientDetails.lastName}`)
+    //localStorage.setItem('patientName', patientDetails?.name)
+    localStorage.setItem('patientName', `${patientDetails?.firstName} ${patientDetails?.lastName}`)
     setName(false)
     setReload(false)
     history.push('/patient/setting')
@@ -192,7 +192,7 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload, 
         {/* profile photo edit */}
         <Box className={classes.photoContainer} display="flex">
           <Avatar
-            src={patientDetails.photo}
+            src={patientDetails?.photo}
             className={classes.photo}
             alt="profile photo"
             name="photo"
@@ -228,7 +228,10 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload, 
                   className={classes.textField}
                   variant="outlined"
                   value={values.firstName}
-                  onChange={handleOnEdit}
+                  onChange={(e) => {
+                    e.target.value = e.target.value.replace(/[^A-Za-z ]/ig, '')
+                    handleOnEdit(e)
+                  }}
                   disabled={fieldName.length === 0 ? true : !Boolean(fieldName.filter((field) => field === 'firstName').length)}
                 />
                 <EditButton
@@ -249,7 +252,10 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload, 
                   className={classes.textField}
                   variant="outlined"
                   value={values.lastName}
-                  onChange={handleOnEdit}
+                  onChange={(e) => {
+                    e.target.value = e.target.value.replace(/[^A-Za-z ]/ig, '')
+                    handleOnEdit(e)
+                  }}
                   disabled={fieldName.length === 0 ? true : !Boolean(fieldName.filter((field) => field === 'lastName').length)}
                 />
                 <EditButton
@@ -290,7 +296,10 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload, 
                   className={classes.textField}
                   variant="outlined"
                   value={values.country}
-                  onChange={handleOnEdit}
+                  onChange={(e) => {
+                    e.target.value = e.target.value.replace(/[^A-Za-z ]/ig, '')
+                    handleOnEdit(e)
+                  }}
                   disabled={fieldName.length === 0 ? true : !Boolean(fieldName.filter((field) => field === 'country').length)}
                   />
                 <EditButton
@@ -353,7 +362,10 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload, 
                   className={classes.textField}
                   variant="outlined"
                   value={values.state}
-                  onChange={handleOnEdit}
+                  onChange={(e) => {
+                    e.target.value = e.target.value.replace(/[^A-Za-z ]/ig, '')
+                    handleOnEdit(e)
+                  }}
                   disabled={fieldName.length === 0 ? true : !Boolean(fieldName.filter((field) => field === 'state').length)}
                   />
                 <EditButton
@@ -375,7 +387,10 @@ function PatientDetails({ patientDetails, patientId, onSave, setReload, reload, 
                   className={classes.textField}
                   variant="outlined"
                   value={values.city}
-                  onChange={handleOnEdit}
+                  onChange={(e) => {
+                    e.target.value = e.target.value.replace(/[^A-Za-z ]/ig, '')
+                    handleOnEdit(e)
+                  }}
                   disabled={fieldName.length === 0 ? true : !Boolean(fieldName.filter((field) => field === 'city').length)}
                 />
                 <EditButton
