@@ -53,3 +53,12 @@ text-align: center;
     padding: 0 10px;
     color: rgb(99, 95, 95);
 }
+
+.required-field::after {
+    content: ' *';
+    color: red;
+}
+
+.report-list-panel .table-wrap {
+    max-height: calc(100vh - 518px) !important;
+}
