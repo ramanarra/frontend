@@ -53,3 +53,8 @@ text-align: center;
     padding: 0 10px;
     color: rgb(99, 95, 95);
 }
+
+.required-field::after {
+    content: ' *';
+    color: red;
+}
