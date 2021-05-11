@@ -34,13 +34,14 @@ function PatientAppointmentReport({
   handleUpload,
   upload,
   setUpload,
+  savedFiles
 }) {
   const classes = useStyle()
   const [file, setFile] = useState([])
   const [opens, setOpens] = useState(false)
   const [largeSizeOpens, setLargeSizeOpens] = useState(false)
   const [paginationStart, setPaginationStart] = useState(0)
-  const [selectedFiles, setSelectedFiles] = useState([])
+  const [selectedFiles, setSelectedFiles] = useState(savedFiles || [])
   const location = useLocation()
   const paginationLimit = 15
   const date = new Date()
@@ -81,12 +82,18 @@ function PatientAppointmentReport({
   useEffect(() => {
     console.log(patientList, patientList?.list, lastfileId)
     if (lastfileId) {
+      const tempArr = [...selectedFiles]
+
       patientList?.list?.map(function (o) {
-        // if (lastfileId < o.id) selectedFiles.push(o)
+        if (lastfileId < o.id) {
+          tempArr.push(o)
+        } 
       })
+      setSelectedFiles(tempArr)
       setFile([])
     }
   }, [patientList])
+
   const handlechange = (e) => {
     const items = [...e.target.files]
     let selectItem = []
@@ -264,26 +271,30 @@ function PatientAppointmentReport({
                               className="tbl-cell"
                               style={{ paddingLeft: 20, width: 30 }}
                             >
-                              {fileName === i.fileName && (
+                              {/* {fileName === i.fileName && (
                                 <Checkbox checked={true} />
-                              )}
-                              {fileName !== i.fileName && (
+                              )} */}
+                              {/* {fileName !== i.fileName && ( */}
                                 <Checkbox
+                                  // defaultChecked={selectedFiles.some((file) => file.id === i.id)}
+                                  checked={selectedFiles.some((file) => file.id === i.id)}
                                   onChange={(event) => {
+                                    const tempArr = [...selectedFiles]
+                                  
                                     if (event.target.checked) {
-                                      selectedFiles.push(i)
-                                      setSelectedFiles(selectedFiles)
-                                      console.log(selectedFiles)
+                                      tempArr.push(i)
+                                      setSelectedFiles(tempArr)
+                                      console.log(tempArr)
                                     } else {
-                                      const newSelectedList = selectedFiles.filter(
-                                        (file) => file.attachment !== i.attachment
+                                      const newSelectedList = tempArr.filter(
+                                        (file) => file.id !== i.id
                                       )
                                       setSelectedFiles(newSelectedList)
                                       console.log(selectedFiles)
                                     }
                                   }}
                                 />
-                              )}
+                              {/* )} */}
                             </td>
                             <td className="tbl-cell fileName">{i?.fileName}</td>
                             <td className="tbl-cell reportDate">
