@@ -275,16 +275,18 @@ function PatientAppointmentReport({
                               )} */}
                               {/* {fileName !== i.fileName && ( */}
                                 <Checkbox
-                                  defaultChecked={selectedFiles.some((file) => file.id === i.id)}
+                                  // defaultChecked={selectedFiles.some((file) => file.id === i.id)}
                                   checked={selectedFiles.some((file) => file.id === i.id)}
                                   onChange={(event) => {
+                                    const tempArr = [...selectedFiles]
+                                  
                                     if (event.target.checked) {
-                                      selectedFiles.push(i)
-                                      setSelectedFiles(selectedFiles)
-                                      console.log(selectedFiles)
+                                      tempArr.push(i)
+                                      setSelectedFiles(tempArr)
+                                      console.log(tempArr)
                                     } else {
-                                      const newSelectedList = selectedFiles.filter(
-                                        (file) => file.attachment !== i.attachment
+                                      const newSelectedList = tempArr.filter(
+                                        (file) => file.id !== i.id
                                       )
                                       setSelectedFiles(newSelectedList)
                                       console.log(selectedFiles)
