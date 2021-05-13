@@ -76,8 +76,9 @@ const useStyle = makeStyles((theme) => ({
   leftArrow: {
     width: 20,
     cursor: 'pointer',
-    height: '3.7%',
-    marginTop: 3,
+    paddingTop: '10px'
+    /* height: '3.7%',
+    marginTop: 3, */
   },
   imageUploadIcon: {},
 }))
