@@ -189,16 +189,19 @@ function PatientAppointmentReport({
   })
 
   const handleSave = () => {
-    selectedFiles.map((a) => ids.push(a.id.toString()))
 
-    fetchUpdateReport({
-      params: {
-        appointmentId: appointmentId,
-        insertId: ids.toString(),
-      },
-    })
-    setItem(true)
-    setOpen(false)
+    if (JSON.stringify(selectedFiles) !== JSON.stringify(savedFiles)) {
+      selectedFiles.map((a) => ids.push(a.id.toString()))
+
+      fetchUpdateReport({
+        params: {
+          appointmentId: appointmentId,
+          insertId: ids.toString(),
+        },
+      })
+      setItem(true)
+      setOpen(false)
+    }
   }
 
   const removeFile = (index) => {
