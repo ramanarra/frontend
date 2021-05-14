@@ -40,10 +40,28 @@ function VideoConsulation({ sendMessage, setVideoStatus }) {
   const isPaused = useMemo(() => location.state?.isPaused, [
     location.state?.isPaused,
   ])
-  const appointmentId = useMemo(() => location.state, [location.state])
-  const currentAppointmentId = location.state?.appointmentId
+  // const appointmentId = useMemo(() => location.state, [location.state])
+  const [appointmentId, setAppointmentId] = useState(location.state)
+  const [currentAppointmentId, setCurrentAppointmentId] = useState('')
+  // const currentAppointmentId = location.state?.appointmentId
 
-  const id = currentAppointmentId ? currentAppointmentId : appointmentId
+  // const id = currentAppointmentId ? currentAppointmentId : appointmentId
+  let id = ''
+
+  useEffect(() => {
+    if (location.state) {
+      setAppointmentId(location.state)
+      const currentAppId = location.state?.appointmentId
+      if (currentAppId) {
+        setCurrentAppointmentId(currentAppId)
+        id = currentAppId
+      } else {
+        id = appointmentId
+      }
+      
+    }
+  }, [location.state])
+
   useEffect(() => {
     //console.log("VideoConsultation useEffect1:");
     setOpen(true)
@@ -188,7 +206,7 @@ function VideoConsulation({ sendMessage, setVideoStatus }) {
     initLoad: false
   })
 //to get appointmentId for report
-  useEffect(() => {
+/*   useEffect(() => {
     //console.log("VideoConsultation useEffect 4 appointmentId:"+appointmentId);
     if(!!appointmentId) {
       fetchAppointmentReport({
@@ -197,8 +215,17 @@ function VideoConsulation({ sendMessage, setVideoStatus }) {
         }
       })
     }
-  }, [appointmentId])
+  }, [appointmentId]) */
 
+  useEffect(() => {
+    if(!!currentAppointmentId) {
+      fetchAppointmentReport({
+        params: {
+          appointmentId: currentAppointmentId
+        }
+      })
+    }
+  }, [currentAppointmentId])
 
   useEffect(() => {
     //to send reports to chat
