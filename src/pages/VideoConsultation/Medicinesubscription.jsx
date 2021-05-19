@@ -231,8 +231,8 @@ function Medicinesubscription({ open, handlesubscriptionclose, handleOnMedicine,
       <Dialog open={open} >
         <Box >
           <Box style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
-            <Grid container>
-              <Grid item xs={12}>
+            <Grid container style={{ background: "#0BB5FF", display: "flex", color:"white" }}>
+              <Grid item xs={12} >
                 <DialogTitle style={{ paddingBottom: 0 }} className={classes.title}>{`Dr. ${doctorData && doctorData.doctorList && doctorData.doctorList[0] && doctorData.doctorList[0].doctorName || ""}`}</DialogTitle>
               </Grid>
               <Grid item xs={12} style={{ paddingLeft: 25, fontSize: 14, paddingBottom: 10 }}>
@@ -241,14 +241,7 @@ function Medicinesubscription({ open, handlesubscriptionclose, handleOnMedicine,
             </Grid>
             <CloseIcon className={classes.closed} onClick={handlesubscriptionclose} />
           </Box>
-          <Grid container style={{ background: "#0BB5FF", display: "flex" }}>
-            <Grid item xs={8} style={{ fontSize: "12px", color: "white", paddingLeft: 25, paddingTop: 10, paddingBottom: 10 }}>
-              <span>{`Phone Number: +91 ${doctorData && doctorData.doctorList && doctorData.doctorList[0] && doctorData.doctorList[0].number || ""}`}</span>
-            </Grid>
-            <Grid item xs={4} style={{ fontSize: "12px", color: "white", paddingLeft: 25, paddingTop: 10, paddingBottom: 10, display: "flex", justifyContent: "flex-end", paddingRight: 35 }}>
-              <span>{`Reg No: ${doctorData && doctorData.doctorList && doctorData.doctorList[0] && doctorData.doctorList[0].registrationNumber || ""}`}</span>
-            </Grid>
-          </Grid>
+          
           <Box>
             {
               list.map((data, index) => < MedicinesubscriptionList subIndex={index} data={data}

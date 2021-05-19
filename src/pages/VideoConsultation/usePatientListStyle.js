@@ -49,7 +49,7 @@ const usePatientListStyle = makeStyles((theme) => ({
     // color: '#312f2f',
     color: '#666',
     position: 'relative',
-    display: 'none',
+    display: 'inline-flex',
     justifyContent: 'center',
     alignItems: 'center',
   },
