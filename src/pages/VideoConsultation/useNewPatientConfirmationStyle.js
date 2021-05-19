@@ -14,6 +14,7 @@ const useNewPatientConfirmationStyle = makeStyles(() => ({
     fontSize: 19,
     paddingTop: 15,
     color: '#4f4f4f',
+    textAlign: 'center',
   },
   buttons: {
     paddingTop: 40,
@@ -21,7 +22,7 @@ const useNewPatientConfirmationStyle = makeStyles(() => ({
     justifyContent: 'center',
   },
   cancelButton: {
-    padding: '8.5px 26px',
+    padding: '2px 15px',
     borderRadius: 20,
     backgroundColor: '#e1e0e0',
     marginRight: 15,
@@ -32,7 +33,7 @@ const useNewPatientConfirmationStyle = makeStyles(() => ({
     color: '#a8a8a8',
   },
   pauseButton: {
-    padding: '8.5px 26px',
+    padding: '2px 15px',
     borderRadius: 20,
     border: '1px solid #0bb5ff',
     marginRight: 15,
@@ -43,7 +44,7 @@ const useNewPatientConfirmationStyle = makeStyles(() => ({
     color: '#0bb5ff',
   },
   confirmButton: {
-    padding: '8.5px 38px',
+    padding: '2px 20px',
     borderRadius: 20,
     backgroundColor: '#0eabff',
     cursor: 'pointer',

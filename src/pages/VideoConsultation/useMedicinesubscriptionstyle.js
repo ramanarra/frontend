@@ -5,7 +5,7 @@ const useMedicinesubscriptionstyle = makeStyles(() => ({
     fontSize: '30px !important',
     '& h2': {
       fontSize: 20,
-      color: 'rgba(0, 0, 0, 0.87)',
+      color: 'white',
       fontSize: "25px",
       fontWeight: "bold"
     },

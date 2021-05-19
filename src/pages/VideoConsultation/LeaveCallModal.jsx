@@ -59,7 +59,7 @@ function LeaveCallModal({
           <Box>
             {patientAppointmentId ? (
               <Typography className={classes.text} variant="h5">
-                Is your Appoinment/Consultation with {patientName} is Completed?
+                Is your current Appoinment/Consultation with {patientName?patientName:"Patient"} is Completed?
               </Typography>
             ) : (
               <Typography className={classes.text} variant="h5">
@@ -73,7 +73,7 @@ function LeaveCallModal({
                 onClick={() => handleSUbmit('completed')}
               >
                 <Typography className={classes.confirmText}>
-                  Yes,Completed
+                  Yes, Completed, End Session
                 </Typography>
               </Box>
               <Box

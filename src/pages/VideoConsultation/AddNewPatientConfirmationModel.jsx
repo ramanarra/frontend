@@ -76,14 +76,14 @@ function AddNewPatientConfirmationModel({
           </Box>
           <Box>
             <Typography className={classes.text} variant="h5">
-              Finish consultation and join the next patient consultation.
+              Finished current consultation ?
             </Typography>
             <Box className={classes.buttons} display="flex">
               <Box
                 className={classes.pauseButton}
                 onClick={() => handlePause('paused')}
               >
-                <Typography className={classes.pauseText}>PAUSE</Typography>
+                <Typography className={classes.pauseText}>No, but take me to new patient!</Typography>
               </Box>
               <Box className={classes.cancelButton} onClick={handleClose}>
                 <Typography className={classes.cancelText}>CANCEL</Typography>
@@ -92,7 +92,7 @@ function AddNewPatientConfirmationModel({
                 className={classes.confirmButton}
                 onClick={() => handleSUbmit('completed')}
               >
-                <Typography className={classes.confirmText}>YES</Typography>
+                <Typography className={classes.confirmText}>Yes, take me to new patient.</Typography>
               </Box>
             </Box>
           </Box>
