@@ -6,6 +6,7 @@ const useRescheduleAppointmentStyle = makeStyles(() => ({
     '& .MuiDialog-paperWidthSm': {
       maxWidth: 1000,
     },
+    marginTop:'-90px'
   },
   header: {
     paddingTop: 15,
