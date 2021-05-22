@@ -40,7 +40,7 @@ function Item({ i, item }) {
           <div className={classes.adCode} style={{ float: 'right' }}>Use Code: {item.code}</div><br />
           <br />
           <div style={{ textAlign: "center" }}>
-            <h5>
+            <h5 style={{ textAlign: "center", padding: "0 68px"}}>
               {item.content}
             </h5>
           </div>
