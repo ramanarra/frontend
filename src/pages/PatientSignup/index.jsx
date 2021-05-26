@@ -155,6 +155,17 @@ const PatientSignup = (props) => {
     setGender(event.target.value)
   }
 
+  
+  const [isEyeVisible, setIsEyeVisible] = useState(false)
+
+  const type = isEyeVisible === true ? 'text' : 'password'
+
+
+  const handlePasswordVisibility = () => {
+    setIsEyeVisible(!isEyeVisible)
+  }
+
+
   return (
     <div className="patient-sign-up">
       <div className="logo-wrap">
@@ -443,9 +454,10 @@ const PatientSignup = (props) => {
             <Textfield
               name="password"
               label="Password"
-              type="password"
+              type={type}
               placeholder="********"
               onChange={handleChange}
+              setTypeChange={handlePasswordVisibility}
               isRequired
               inputProps={{
                 ref: register({
@@ -474,9 +486,11 @@ const PatientSignup = (props) => {
             <Textfield
               name="confirmpassword"
               label="Confirm Password"
-              type="password"
+              type={type}
               placeholder="********"
               isRequired
+              setTypeChange={handlePasswordVisibility}
+                   
               inputProps={{
                 ref: register({
                   required: 'Please enter your ConfirmPassword',
