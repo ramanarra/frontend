@@ -55,7 +55,7 @@ const AppointmentCard = ({ data, index, isPast }) => {
               {/* <span className="info-icon">
                 <AiOutlineInfoCircle />
               </span> */}
-              <span className="info-content">{preConsult}</span>
+              {/* <span className="info-content">{preConsult}</span> */}
             </div>
           )}
         </div>
