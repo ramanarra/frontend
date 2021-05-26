@@ -102,7 +102,7 @@ const DoctorInfoCard = ({ doctorDetail, doctorListInHospital, isHospital }) => {
         </Box>
       </Box>
 
-      <Box marginTop={2} display="flex" justifyContent="flex-end">
+      <Box marginTop={0} display="flex" justifyContent="flex-end">
         {!doctorDetail.doctorKey ? (
           <Button
             className={classes.hospitalButton}

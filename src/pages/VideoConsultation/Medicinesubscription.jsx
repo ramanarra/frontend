@@ -69,7 +69,7 @@ function MedicinesubscriptionList({ subIndex, data, handleOnMedicine, handleOnMe
             <Box style={{ fontSize: 14, display: 'flex', paddingBottom: '5px' }}>
               <Box style={{ position: 'relative' }}>Description<sup className="star-color" style={{ color: "red" }}>★</sup></Box>
               <Box style={{ position: 'relative', left: '106px' }}>Quantity</Box>
-              <Box style={{ position: 'relative', left: list?.length > 1 ? '95px':'226px' }}>Comments</Box>
+              <Box style={{ position: 'relative', left: list?.length > 1 ? '226px':'226px' }}>Comments</Box>
               <Box style={{ position: 'relative', left: '20px' }}></Box>
             </Box>
           </Box>

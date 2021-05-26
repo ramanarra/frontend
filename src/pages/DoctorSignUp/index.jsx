@@ -94,6 +94,16 @@ const DoctorSignUp = (props) => {
     }
     setError(false)
   }
+  const [isEyeVisible, setIsEyeVisible] = useState(false)
+
+  const type = isEyeVisible === true ? 'text' : 'password'
+
+
+  const handlePasswordVisibility = () => {
+    setIsEyeVisible(!isEyeVisible)
+  }
+
+
   return (
     <div className="patient-sign-up">
       <div className="logo-wrap">
@@ -314,7 +324,8 @@ const DoctorSignUp = (props) => {
             <Textfield
               name="password"
               label="Password"
-              type="password"
+              type={type}
+              setTypeChange={handlePasswordVisibility}
               placeholder="********"
               isRequired
               inputProps={{
@@ -342,7 +353,8 @@ const DoctorSignUp = (props) => {
             <Textfield
               name="ConfirmPassword"
               label="Confirm Password"
-              type="password"
+              type={type}
+              setTypeChange={handlePasswordVisibility}
               placeholder="********"
               // onChange={handleChange}
               isRequired

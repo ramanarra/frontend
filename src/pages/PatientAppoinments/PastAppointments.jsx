@@ -94,18 +94,18 @@ function PastAppointments() {
         className={classes.scrollContainter}
       >
         <Box className={classes.appointmentSlots}>
-        {appointmentsList &&
-          appointmentsList.map((appointmentDetail, index) => {
-            return (
-              <PatientAppointmentSlot
-                appointmentDetail={appointmentDetail}
-                borderColor={borderColors[index % 4]}
-                key={index}
-                past={true}
-              />
-            )
-          })}
-          </Box>
+          {appointmentsList &&
+            appointmentsList.map((appointmentDetail, index) => {
+              return (
+                <PatientAppointmentSlot
+                  appointmentDetail={appointmentDetail}
+                  borderColor={borderColors[index % 4]}
+                  key={index}
+                  past={true}
+                />
+              )
+            })}
+        </Box>
         {appointmentsList &&
           (appointmentsList.length === 0 || appointmentsList.StatusCode === 204) && (
             <Box className={classes.noappointmentsBox}>
@@ -114,13 +114,13 @@ function PastAppointments() {
                 className={classes.noappointmentsImage}
               />
               <Box>
-                <Button
+                {/* <Button
                   className={classes.button}
                   style={{ backgroundColor: '#0bb5ff' }}
                   onClick={handleOnClick}
                 >
                   Book Now
-                </Button>
+                </Button> */}
               </Box>
             </Box>
           )}
