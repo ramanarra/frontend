@@ -80,9 +80,9 @@ const Details = ({ params, headers }) => {
             </tbody>
           </table>
         </div>
-        <div className="edit-btn-wrap">
-          <Button className="edit-btn">Edit</Button>
-        </div>
+        {/*<div className="edit-btn-wrap">*/}
+        {/*  <Button className="edit-btn">Edit</Button>*/}
+        {/*</div>*/}
       </div>
     </div>
   )

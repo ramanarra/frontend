@@ -25,6 +25,7 @@ const Textfield = ({
   inputProps,
   isRequired,
   matLabel,
+  setTypeChange,
   ...rest
 }) => {
   const [textType, setType] = React.useState(type || 'text')
@@ -41,6 +42,7 @@ const Textfield = ({
   }
 
   const toggleType = () => {
+    setTypeChange()
     setType((prev) => (prev === 'text' ? 'password' : 'text'))
   }
 
@@ -55,7 +57,7 @@ const Textfield = ({
       )
     } else if (!!suffix) {
       return <InputAdornment position="end">{suffix}</InputAdornment>
-    } else if (!suffix && !!value && type?.toLowerCase() === 'password') {
+    } else if ((!suffix && !!value && type?.toLowerCase() === 'password') || type?.toLowerCase() == 'password' || type?.toLowerCase() == 'text') {
       return (
         <InputAdornment position="end">
           <IconButton className="pass-rvl-btn" onClick={toggleType} edge="end">
