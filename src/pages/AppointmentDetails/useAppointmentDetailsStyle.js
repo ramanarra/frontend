@@ -7,7 +7,7 @@ const useAppointmentDetailsStyle = makeStyles((theme) => ({
     },
     leftArrows:{
     width: 20,
-    marginTop: 35,
+    marginTop: 19,
     marginLeft: 8,
     },
    
