@@ -1,4 +1,12 @@
 FROM php:7.2.24-fpm
+
+RUN unlink /etc/timezone
+RUN ln -s /usr/share/zoneinfo/Asia/Kolkata /etc/timezone
+
+RUN unlink /etc/localtime
+RUN ln -s /usr/share/zoneinfo/Asia/Kolkata /etc/localtime
+
+
 RUN apt-get update -y
 RUN mkdir -p /var/www/html/
 # Install dependencies
